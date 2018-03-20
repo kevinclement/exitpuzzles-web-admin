@@ -9,14 +9,17 @@
             </v-card-title>
             <v-card-text class="logContent">
               <div class="scrollDiv">
-                <div v-for="log in logs">
+                <div v-for="log in logs2">
                   <span class="logLine">{{log.data}}</span>
                 </div>
               </div>
             </v-card-text>
             <v-card-text>
               Logs {{logs.length}} from 11/25/16 1:10 PM to 11/25/16 1:14 PM
-              <a @click="pageLogs()">next</a>
+              <a @click="first()">first</a>
+              <a @click="prev()">prev</a>
+              <a @click="next()">next</a>
+              <a @click="last()">last</a>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -39,6 +42,10 @@ let logsRef = db.ref('logs')
 let query = logsRef.orderByChild("timestamp").limitToFirst(limit);
 let lastTimestamp = null;
 
+let query2 = logsRef.orderByChild("timestamp").limitToFirst(limit).on("child_added", function(snapshot) {
+  console.log("test: " + snapshot.key + " : " + snapshot.val().timestamp);
+});
+
 query.on("child_added", updateTime);
 
 function updateTime(snapshot) {
@@ -50,9 +57,12 @@ function updateTime(snapshot) {
   lastTimestamp = log.timestamp
 }
 
+let logsRef2 = db.ref('logs').orderByChild("timestamp")
+
 export default {
   firebase: {
-    logs: query
+    logs: query,
+    logs2: logsRef2.limitToFirst(limit)
   },
 
   data () {
@@ -61,18 +71,22 @@ export default {
   },
 
   methods: {
-    pageLogs() {
+    setQuery(qts) {
+      let query = logsRef.orderByChild("timestamp").startAt(qts.toString()).limitToFirst(limit)
+      query.on("child_added", updateTime)
+      this.$bindAsArray('logs2', query)
+    },
 
-        // bump the last timestamp up by 1 second so it doesn't include data we've already seen
-        // NOTE: if we want true fidelity, we should write timestamps with milliseconds since this isn't foolproof
-        //       for now I'd rather see timestamps in the table with toString() formats
-        let qts = new Date(lastTimestamp);
-        qts.setSeconds(qts.getSeconds() + 1);
+    first() {
+      // I know the first ever time in the db, so just use that
+      this.setQuery(new Date("Mon Mar 19 2018 22:14:24 GMT-0700 (PDT)"));
+    },
 
-        // rebind the logs data to the new query
-        let query = logsRef.orderByChild("timestamp").startAt(qts.toString()).limitToFirst(limit)
-        query.on("child_added", updateTime)
-        this.$bindAsObject('logs', query);
+    next() {
+      let qts = new Date(lastTimestamp);
+      qts.setSeconds(qts.getSeconds() + 1);
+
+      this.setQuery(qts);
     }
   }
 }
