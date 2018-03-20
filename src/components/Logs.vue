@@ -9,7 +9,7 @@
             </v-card-title>
             <v-card-text class="logContent">
               <div class="scrollDiv">
-                <div v-for="log in logs2">
+                <div v-for="log in logs">
                   <span class="logLine">{{log.data}}</span>
                 </div>
               </div>
@@ -61,8 +61,7 @@ let logsRef2 = db.ref('logs').orderByChild("timestamp")
 
 export default {
   firebase: {
-    logs: query,
-    logs2: logsRef2.limitToFirst(limit)
+    logs: logsRef2.limitToFirst(limit)
   },
 
   data () {
@@ -83,6 +82,7 @@ export default {
     },
 
     next() {
+      // add 1 second to last timestamp to query the next set of data
       let qts = new Date(lastTimestamp);
       qts.setSeconds(qts.getSeconds() + 1);
 
