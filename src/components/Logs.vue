@@ -14,12 +14,17 @@
                 </div>
               </div>
             </v-card-text>
-            <v-card-text>
-              Logs {{logs.length}} from 11/25/16 1:10 PM to 11/25/16 1:14 PM
-              <a @click="first()">first</a>
-              <a @click="prev()">prev</a>
-              <a @click="next()">next</a>
-              <a @click="last()">last</a>
+            <v-card-text class="controlsRow">
+              <span>
+              Logs from 11/25/16 1:10 PM to 11/25/16 1:14 PM
+              </span>
+              <span class="controlsSpacer" />
+              <span class="controls">
+                <a @click="first()"><v-icon>first_page</v-icon></a>
+                <a @click="prev()"><v-icon>chevron_left</v-icon></a>
+                <a @click="next()"><v-icon>chevron_right</v-icon></a>
+                <a @click="last()"><v-icon>last_page</v-icon></a>
+              </span>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -115,6 +120,20 @@ export default {
 </script>
 
 <style scoped>
+.controlsRow {
+  display:flex;
+  flex-direction:row
+}
+.controlsSpacer {
+  flex-basis:0%;
+  flex-grow:1;
+  flex-shrink:1;
+  min-width:0px;
+}
+.controls > a {
+  padding-left: 10px;
+  padding-right: 10px;
+}
 .logSelect {
   padding: 0px;
 }
