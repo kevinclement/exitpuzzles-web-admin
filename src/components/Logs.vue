@@ -35,13 +35,11 @@ import Firebase from 'firebase'
 import config from '../../secrets/firebase-config'
 
 // Initialize Firebase
-let limit = 1
 let db = Firebase.initializeApp(config).database()
 let logsRef = db.ref('logs')
-let lastTimestamp = null;
 
 // TODO: REMOVE: only used for testing queries while developing
-let queryTmp = logsRef.orderByChild("timestamp").limitToFirst(limit).on("child_added", function(snapshot) {
+let queryTmp = logsRef.orderByChild("timestamp").limitToFirst(1).on("child_added", function(snapshot) {
   console.log("test: " + snapshot.key + " : " + snapshot.val().timestamp);
 });
 
@@ -49,7 +47,9 @@ export default {
 
   data () {
     return {
-      logs: []
+      limit: 1,
+      logs: [],
+      lastTimestamp: null
     }
   },
 
@@ -60,16 +60,17 @@ export default {
 
   methods: {
     setQuery(qts) {
-      let query = logsRef.orderByChild("timestamp").startAt(qts.toString()).limitToFirst(limit)
-      
+      let that = this;
+      let query = logsRef.orderByChild("timestamp").startAt(qts.toString()).limitToFirst(this.limit)
+
       // hookup handler to process each item in the snapshot
       query.on("child_added", function(snapshot) {
-        let log = snapshot.val();
+        let log = snapshot.val()
 
-        console.log(snapshot.key + " : " + log.timestamp + " : " + log.data);
+        console.log(snapshot.key + " : " + log.timestamp + " : " + log.data)
 
         // store the timestamp so we can page off it
-        lastTimestamp = log.timestamp
+        that.lastTimestamp = log.timestamp
       })
 
       // bind it to vue
@@ -83,7 +84,7 @@ export default {
 
     next() {
       // add 1 second to last timestamp to query the next set of data
-      let qts = new Date(lastTimestamp);
+      let qts = new Date(this.lastTimestamp);
       qts.setSeconds(qts.getSeconds() + 1);
 
       this.setQuery(qts);
