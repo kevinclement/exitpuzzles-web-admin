@@ -16,7 +16,7 @@
             </v-card-text>
             <v-card-text class="controlsRow">
               <span>
-              Logs from 11/25/16 1:10 PM to 11/25/16 1:14 PM
+                Logs from {{firstTimestampStr}} to {{lastTimestampStr}}
               </span>
               <span class="controlsSpacer" />
               <span class="controls">
@@ -45,13 +45,13 @@ let logsRef = db.ref('logs').orderByChild("timestamp")
 
 // TODO: REMOVE: only used for testing queries while developing
 // --------------------------------------------------------------------
-let queryTmp = db.ref('logs').orderByChild("timestamp").endAt("Mon Mar 19 2018 23:24:23 GMT-0700 (PDT)").limitToLast(1).on("child_added", function(snapshot) {
-  console.log("tmp1: " + snapshot.key + " : " + snapshot.val().timestamp);
-});
+// let queryTmp = db.ref('logs').orderByChild("timestamp").endAt("Mon Mar 19 2018 23:24:23 GMT-0700 (PDT)").limitToLast(1).on("child_added", function(snapshot) {
+//   console.log("tmp1: " + snapshot.key + " : " + snapshot.val().timestamp);
+// });
 
-let queryTmp2 = db.ref('logs').orderByChild("timestamp").startAt("Tue Mar 20 2018 00:20:01 GMT-0700 (PDT)").limitToLast(1).on("child_added", function(snapshot) {
-  console.log("tmp2: " + snapshot.key + " : " + snapshot.val().timestamp);
-});
+// let queryTmp2 = db.ref('logs').orderByChild("timestamp").startAt("Tue Mar 20 2018 00:20:01 GMT-0700 (PDT)").limitToLast(1).on("child_added", function(snapshot) {
+//   console.log("tmp2: " + snapshot.key + " : " + snapshot.val().timestamp);
+// });
 // --------------------------------------------------------------------
 
 export default {
@@ -60,7 +60,18 @@ export default {
     return {
       limit: 1,
       logs: [],
-      lastTimestamp: null
+      firstTimestamp: null,
+      lastTimestamp: null,
+      updating: false
+    }
+  },
+
+  computed: {
+    firstTimestampStr: function () {
+      return formatDate(new Date(this.firstTimestamp))
+    },
+    lastTimestampStr: function () {
+      return formatDate(new Date(this.lastTimestamp))
     }
   },
 
@@ -78,6 +89,13 @@ export default {
       query.on("child_added", function(snapshot) {
         let log = snapshot.val()
 
+        // track first item found
+        if (that.updating) {
+          that.updating = false
+          that.firstTimestamp = log.timestamp
+        }
+
+        // TODO: comment out when shipping
         console.log(snapshot.key + " : " + log.timestamp + " : " + log.data)
 
         // store the timestamp so we can page off it
@@ -85,6 +103,7 @@ export default {
       })
 
       // bind it to vue
+      this.updating = true
       this.$bindAsArray('logs', query)
     },
 
@@ -117,6 +136,28 @@ export default {
   }
 }
 
+// Helper function to display nice dates
+function formatDate(d) {
+  console.log('full: ' + d.toString())
+    let day = d.getDate();
+    let month = d.getMonth() + 1; //Months are zero based
+    let year = d.getFullYear();
+    let hour = d.getHours();
+    let minutes = d.getMinutes();
+    let amPM = "AM"
+
+    if (hour === 0) {
+      hour = 12;
+    } else if (hour >= 12) {
+      amPM = "PM"
+
+      if (hour !== 12) {
+        hour -= 12
+      }
+    }
+
+    return month + "/" + day + "/" + year + " " + hour + ":" + minutes + " " + amPM;
+}
 </script>
 
 <style scoped>
@@ -156,7 +197,6 @@ export default {
   display: flex;
   flex-direction: column;
 }
-
 .logContent {
   display: flex;
   flex:1;
