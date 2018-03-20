@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import Control from '@/components/Control'
 import Settings from '@/components/Settings'
 import Stats from '@/components/Stats'
