@@ -37,17 +37,19 @@ let app = Firebase.initializeApp(config)
 let db = app.database()
 let logsRef = db.ref('logs')
 let query = logsRef.orderByChild("timestamp").limitToFirst(limit);
+let lastTimestamp = null;
 
+query.on("child_added", updateTime);
 
-window.lastTimestamp = null;
+function updateTime(snapshot) {
+  let log = snapshot.val();
 
-query.on("child_added", function(snapshot) {
-  console.log(snapshot.key + " was " + snapshot.val().timestamp + "");
-  lastTimestamp = new Date(snapshot.val().timestamp);
+  console.log(snapshot.key + " : " + log.timestamp + " : " + log.data);
 
-  // bump last timestamp up 1 second so it will filter > this one
+  // bump last timestamp up 1 second so we can use it to filter 
+  lastTimestamp = new Date(log.timestamp);
   lastTimestamp.setSeconds(lastTimestamp.getSeconds() + 1);
-});
+}
 
 export default {
   firebase: {
@@ -62,16 +64,10 @@ export default {
   methods: {
     pageLogs() {
 
-        var query2 = logsRef.orderByChild("timestamp").startAt(window.lastTimestamp.toString()).limitToFirst(limit)
-        query2.on("child_added", function(snapshot) {
-          console.log('second query: ' + snapshot.key + ' : ' + snapshot.val().timestamp + ' -> ' + snapshot.val().data);
-          lastTimestamp = new Date(snapshot.val().timestamp);
+        var query2 = logsRef.orderByChild("timestamp").startAt(lastTimestamp.toString()).limitToFirst(limit)
+        query2.on("child_added", updateTime)
 
-          // bump last timestamp up 1 second so it will filter > this one
-          lastTimestamp.setSeconds(lastTimestamp.getSeconds() + 1);
-        })
-
-        this.$bindAsObject('logs', query2, null, () => console.log('ready'));
+        this.$bindAsObject('logs', query2);
     }
   }
 }
