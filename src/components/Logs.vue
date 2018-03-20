@@ -32,16 +32,16 @@ import Firebase from 'firebase'
 import config from '../../secrets/firebase-config'
 
 // Initialize Firebase
+let limit = 1
 let app = Firebase.initializeApp(config)
 let db = app.database()
 let logsRef = db.ref('logs')
-let limit = 1
+let query = logsRef.orderByChild("timestamp").limitToFirst(limit);
 
-let ref = db.ref("logs");
+
 window.lastTimestamp = null;
-let pagedLogs = ref.orderByChild("timestamp").limitToFirst(limit);
 
-ref.orderByChild("timestamp").limitToFirst(limit).on("child_added", function(snapshot) {
+query.on("child_added", function(snapshot) {
   console.log(snapshot.key + " was " + snapshot.val().timestamp + "");
   lastTimestamp = new Date(snapshot.val().timestamp);
 
@@ -51,7 +51,7 @@ ref.orderByChild("timestamp").limitToFirst(limit).on("child_added", function(sna
 
 export default {
   firebase: {
-    logs: pagedLogs
+    logs: query
   },
 
   data () {
@@ -62,8 +62,8 @@ export default {
   methods: {
     pageLogs() {
 
-        var query = ref.orderByChild("timestamp").startAt(window.lastTimestamp.toString()).limitToFirst(limit)
-        query.on("child_added", function(snapshot) {
+        var query2 = logsRef.orderByChild("timestamp").startAt(window.lastTimestamp.toString()).limitToFirst(limit)
+        query2.on("child_added", function(snapshot) {
           console.log('second query: ' + snapshot.key + ' : ' + snapshot.val().timestamp + ' -> ' + snapshot.val().data);
           lastTimestamp = new Date(snapshot.val().timestamp);
 
@@ -71,22 +71,10 @@ export default {
           lastTimestamp.setSeconds(lastTimestamp.getSeconds() + 1);
         })
 
-        this.$bindAsObject('logs', query, null, () => console.log('ready'));
-        
-        //.on("child_added", function(snapshot) {
-        //  console.log('second query: ' + snapshot.key + ' : ' + snapshot.val().timestamp + ' -> ' + snapshot.val().data);
-        //});
+        this.$bindAsObject('logs', query2, null, () => console.log('ready'));
     }
   }
 }
-
-//window.setTimeout(function() {
-//  console.log('doing a query at "' + window.lastTimestamp +'"')
-
-//  lgs.firebase.logs = ref.orderByChild("timestamp").startAt(window.lastTimestamp.toString()).limitToFirst(limit).on("child_added", function(snapshot) {
-//    console.log('second query: ' + snapshot.key + ' : ' + snapshot.val().timestamp);
-//  });
-//}, 2000)
 
 </script>
 
