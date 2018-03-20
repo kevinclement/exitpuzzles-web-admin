@@ -6,7 +6,6 @@
           <v-card height="100%" class="logCard">
             <v-card-title>
                 <h3 class="headline">Logs from pi</h3>
-                <v-btn @click="pageLogs()">button</v-btn>
             </v-card-title>
             <v-card-text class="logContent">
               <div class="scrollDiv">
@@ -17,6 +16,7 @@
             </v-card-text>
             <v-card-text>
               Logs {{logs.length}} from 11/25/16 1:10 PM to 11/25/16 1:14 PM
+              <a @click="pageLogs()">next</a>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -46,9 +46,8 @@ function updateTime(snapshot) {
 
   console.log(snapshot.key + " : " + log.timestamp + " : " + log.data);
 
-  // bump last timestamp up 1 second so we can use it to filter 
-  lastTimestamp = new Date(log.timestamp);
-  lastTimestamp.setSeconds(lastTimestamp.getSeconds() + 1);
+  // store the timestamp so we can page off it
+  lastTimestamp = log.timestamp
 }
 
 export default {
@@ -64,10 +63,16 @@ export default {
   methods: {
     pageLogs() {
 
-        var query2 = logsRef.orderByChild("timestamp").startAt(lastTimestamp.toString()).limitToFirst(limit)
-        query2.on("child_added", updateTime)
+        // bump the last timestamp up by 1 second so it doesn't include data we've already seen
+        // NOTE: if we want true fidelity, we should write timestamps with milliseconds since this isn't foolproof
+        //       for now I'd rather see timestamps in the table with toString() formats
+        let qts = new Date(lastTimestamp);
+        qts.setSeconds(qts.getSeconds() + 1);
 
-        this.$bindAsObject('logs', query2);
+        // rebind the logs data to the new query
+        let query = logsRef.orderByChild("timestamp").startAt(qts.toString()).limitToFirst(limit)
+        query.on("child_added", updateTime)
+        this.$bindAsObject('logs', query);
     }
   }
 }
