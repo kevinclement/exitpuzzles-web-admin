@@ -36,10 +36,10 @@ import config from '../../secrets/firebase-config'
 
 // Initialize Firebase
 let db = Firebase.initializeApp(config).database()
-let logsRef = db.ref('logs')
+let logsRef = db.ref('logs').orderByChild("timestamp")
 
 // TODO: REMOVE: only used for testing queries while developing
-let queryTmp = logsRef.orderByChild("timestamp").limitToFirst(1).on("child_added", function(snapshot) {
+let queryTmp = db.ref('logs').orderByChild("timestamp").limitToFirst(1).on("child_added", function(snapshot) {
   console.log("test: " + snapshot.key + " : " + snapshot.val().timestamp);
 });
 
@@ -59,9 +59,9 @@ export default {
   },
 
   methods: {
-    setQuery(qts) {
+    setQuery(query) {
+      // i <3 javascript
       let that = this;
-      let query = logsRef.orderByChild("timestamp").startAt(qts.toString()).limitToFirst(this.limit)
 
       // hookup handler to process each item in the snapshot
       query.on("child_added", function(snapshot) {
@@ -78,8 +78,11 @@ export default {
     },
 
     first() {
-      // I know the first ever time in the db, so just use that
-      this.setQuery(new Date("Mon Mar 19 2018 22:14:24 GMT-0700 (PDT)"));
+      this.setQuery(logsRef.limitToFirst(this.limit));
+    },
+
+    last() {
+      this.setQuery(logsRef.limitToLast(this.limit));
     },
 
     next() {
@@ -87,7 +90,8 @@ export default {
       let qts = new Date(this.lastTimestamp);
       qts.setSeconds(qts.getSeconds() + 1);
 
-      this.setQuery(qts);
+      let query = logsRef.startAt(qts.toString()).limitToFirst(this.limit)
+      this.setQuery(query);
     }
   }
 }
