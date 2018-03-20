@@ -39,9 +39,15 @@ let db = Firebase.initializeApp(config).database()
 let logsRef = db.ref('logs').orderByChild("timestamp")
 
 // TODO: REMOVE: only used for testing queries while developing
-let queryTmp = db.ref('logs').orderByChild("timestamp").limitToFirst(1).on("child_added", function(snapshot) {
-  console.log("test: " + snapshot.key + " : " + snapshot.val().timestamp);
+// --------------------------------------------------------------------
+let queryTmp = db.ref('logs').orderByChild("timestamp").endAt("Mon Mar 19 2018 23:24:23 GMT-0700 (PDT)").limitToLast(1).on("child_added", function(snapshot) {
+  console.log("tmp1: " + snapshot.key + " : " + snapshot.val().timestamp);
 });
+
+let queryTmp2 = db.ref('logs').orderByChild("timestamp").startAt("Tue Mar 20 2018 00:20:01 GMT-0700 (PDT)").limitToLast(1).on("child_added", function(snapshot) {
+  console.log("tmp2: " + snapshot.key + " : " + snapshot.val().timestamp);
+});
+// --------------------------------------------------------------------
 
 export default {
 
@@ -91,6 +97,16 @@ export default {
       qts.setSeconds(qts.getSeconds() + 1);
 
       let query = logsRef.startAt(qts.toString()).limitToFirst(this.limit)
+      this.setQuery(query);
+    },
+
+    prev() {
+      // remove 1 second on last timestamp, then use limit to last with that end
+      let qts = new Date(this.lastTimestamp);
+
+      qts.setSeconds(qts.getSeconds() - 1);
+
+      let query = logsRef.endAt(qts.toString()).limitToLast(this.limit)
       this.setQuery(query);
     }
   }
