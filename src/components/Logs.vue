@@ -42,7 +42,8 @@ let logsRef = db.ref('logs')
 let query = logsRef.orderByChild("timestamp").limitToFirst(limit);
 let lastTimestamp = null;
 
-let query2 = logsRef.orderByChild("timestamp").limitToFirst(limit).on("child_added", function(snapshot) {
+// TODO: REMOVE: only used for testing queries while developing
+let queryTmp = logsRef.orderByChild("timestamp").limitToFirst(limit).on("child_added", function(snapshot) {
   console.log("test: " + snapshot.key + " : " + snapshot.val().timestamp);
 });
 
@@ -57,15 +58,14 @@ function updateTime(snapshot) {
   lastTimestamp = log.timestamp
 }
 
-let logsRef2 = db.ref('logs').orderByChild("timestamp")
-
 export default {
   firebase: {
-    logs: logsRef2.limitToFirst(limit)
+    logs: query
   },
 
   data () {
     return {
+      logs: []
     }
   },
 
@@ -73,7 +73,7 @@ export default {
     setQuery(qts) {
       let query = logsRef.orderByChild("timestamp").startAt(qts.toString()).limitToFirst(limit)
       query.on("child_added", updateTime)
-      this.$bindAsArray('logs2', query)
+      this.$bindAsArray('logs', query)
     },
 
     first() {
