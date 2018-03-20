@@ -54,7 +54,7 @@ export default {
   },
 
   mounted() {
-    console.log('mounted');
+    // TODO: by default map to first log, probably should be last
     this.first();
   },
 
