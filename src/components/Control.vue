@@ -12,8 +12,8 @@
                   <v-flex xs12 md6>
                     <v-toolbar flat dense color="grey lighten-3">
                       <v-toolbar-title class="mx-0">Time</v-toolbar-title>
-                      <v-btn icon style=""><v-icon >update</v-icon></v-btn>
-                      <v-btn icon style=""><v-icon >snooze</v-icon></v-btn>
+                      <v-btn icon style="" title="Refresh timer"><v-icon >update</v-icon></v-btn>
+                      <v-btn icon style="" title="Set timer"><v-icon >snooze</v-icon></v-btn>
                     </v-toolbar>
 
                     <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">
