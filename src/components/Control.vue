@@ -10,9 +10,12 @@
         <v-card-text class="grey lighten-3">
                 <v-layout row wrap>
                   <v-flex xs12 md6>
-                    
-                    <h4>Time</h4>
-                    <div style="font-size:34px;font-family: Monaco, monospace">01:04:32</div>
+                    <v-toolbar flat dense color="grey lighten-3">
+                      <v-toolbar-title class="mx-0">Time</v-toolbar-title>
+                      <v-btn icon style=""><v-icon >update</v-icon></v-btn>
+                    </v-toolbar>
+
+                    <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">01:04:32</div>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-card>
