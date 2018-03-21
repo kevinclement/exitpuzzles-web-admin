@@ -13,9 +13,12 @@
                     <v-toolbar flat dense color="grey lighten-3">
                       <v-toolbar-title class="mx-0">Time</v-toolbar-title>
                       <v-btn icon style=""><v-icon >update</v-icon></v-btn>
+                      <v-btn icon style=""><v-icon >build</v-icon></v-btn>
                     </v-toolbar>
 
-                    <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">01:04:32</div>
+                    <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">
+                      01:04:32
+                    </div>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-card>
