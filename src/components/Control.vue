@@ -2,7 +2,6 @@
  <v-container fluid fill-height>
   <v-layout >
     <v-flex>
-
       <v-card>
         <v-toolbar card>
           <v-toolbar-title>TNT Status</v-toolbar-title>
@@ -40,7 +39,7 @@
                             <v-icon style="color:#F44336">error</v-icon>
                           </v-list-tile-content>
                         </v-list-tile>
-                        <v-divider></v-divider>
+                        <v-divider/>
                         <v-list-tile>
                           <v-list-tile-content>Key Solved:</v-list-tile-content>
                           <v-list-tile-content class="align-end">
@@ -61,9 +60,17 @@
               </v-card-text>
       </v-card>
 
+      <div>
+        <v-btn icon><v-icon >build</v-icon>1</v-btn>
+        <v-btn icon><v-icon >build</v-icon>2</v-btn>
+        <v-btn icon><v-icon >timeline</v-icon></v-btn>
+        <v-btn icon><v-icon >lock</v-icon></v-btn>
+        <v-btn icon><v-icon >cake</v-icon></v-btn>
+      </div>
     </v-flex>
   </v-layout>
 </v-container>
+
 
 </template>
 
