@@ -13,6 +13,7 @@
             <v-card-text class="logContent">
               <div class="scrollDiv">
                 <div v-for="log in logs">
+                  <span v-if="showTimeStamps">{{formatLogDate(log.timestamp)}}</span>
                   <span class="logLine">{{log.data}}</span>
                 </div>
               </div>
@@ -159,13 +160,14 @@ export default {
       this.setQuery(query);
     }, 
 
-    showHideTimeStamps() {
-
+    formatLogDate(ts) {
+      let d = new Date(ts)
+      return "[" + d.toLocaleString() + "] "
     }
   }
 }
 
-// Helper function to display nice dates
+// Helper functions to display nice dates
 function formatDate(d) {
     let day = d.getDate();
     let month = d.getMonth() + 1; //Months are zero based
