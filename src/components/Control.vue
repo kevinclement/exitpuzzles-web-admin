@@ -5,40 +5,60 @@
 
       <v-card>
         <v-toolbar card>
-          <v-toolbar-title>TNT</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items class="hidden-sm-and-down">
-            <v-btn flat>Link One</v-btn>
-          </v-toolbar-items>
+          <v-toolbar-title>TNT Status</v-toolbar-title>
         </v-toolbar>
 
-        <v-card-text>
+        <v-card-text class="grey lighten-3">
                 <v-layout row wrap>
                   <v-flex xs12 md6>
-                    <span>Scheme</span>
+                    <span>Time</span>
                     <v-switch primary label="Dark"></v-switch>
                   </v-flex>
-                  <v-flex xs12 md6>
-                    <span>Drawer</span>
-                    <v-radio-group column>
-                      <v-radio
-                        primary
-                      ></v-radio>
-                    </v-radio-group>
-                    <v-switch label="Clipped" primary></v-switch>
-                    <v-switch label="Floating"  primary></v-switch>
-                    <v-switch label="Mini"  primary></v-switch>
-                  </v-flex>
-                  <v-flex xs12 md6>
-                    <span>Footer</span>
-                    <v-switch label="Inset"  primary></v-switch>
+                  <v-flex xs12 sm6 md4>
+                    <v-card>
+                      <v-card-title>
+                        <h4>State</h4>
+                      </v-card-title>
+                      <v-divider></v-divider>
+
+                      <v-list dense>
+                        <v-list-tile>
+                          <v-list-tile-content>Toggle 1:</v-list-tile-content>
+                          <v-list-tile-content class="align-end">
+                            <v-icon style="color:#4CAF50">check_circle</v-icon>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile>
+                          <v-list-tile-content>Toggle 2:</v-list-tile-content>
+                          <v-list-tile-content class="align-end">
+                            <v-icon style="color:#BDBDBD">help</v-icon>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile>
+                          <v-list-tile-content>Wire:</v-list-tile-content>
+                          <v-list-tile-content class="align-end">
+                            <v-icon style="color:#F44336">error</v-icon>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                        <v-divider></v-divider>
+                        <v-list-tile>
+                          <v-list-tile-content>Key Solved:</v-list-tile-content>
+                          <v-list-tile-content class="align-end">
+                            <v-icon style="color:#4CAF50">done</v-icon>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile>
+                          <v-list-tile-content>All Solved:</v-list-tile-content>
+                          <v-list-tile-content class="align-end">
+                            <v-icon style="color:#4CAF50">done_all</v-icon>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                      </v-list>
+
+                    </v-card>
                   </v-flex>
                 </v-layout>
               </v-card-text>
-
-        <div data-app="data-app" class="application application--example pa-3 theme--light grey lighten-3">
-            foo
-        </div>
       </v-card>
 
     </v-flex>
