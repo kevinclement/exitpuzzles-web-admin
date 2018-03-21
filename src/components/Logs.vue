@@ -16,7 +16,7 @@
             </v-card-text>
             <v-card-text class="controlsRow">
               <span>
-                Logs from {{firstTimestampStr}} to {{lastTimestampStr}}
+                 Logs from {{firstTimestampStr}} to {{lastTimestampStr}}
               </span>
               <span class="controlsSpacer" />
               <span class="controls">
@@ -45,17 +45,21 @@ let logsRef = db.ref('logs').orderByChild("timestamp")
 
 // TODO: REMOVE: only used for testing queries while developing
 // --------------------------------------------------------------------
-// let queryTmp = db.ref('logs').orderByChild("timestamp").endAt("Mon Mar 19 2018 23:24:23 GMT-0700 (PDT)").limitToLast(1).on("child_added", function(snapshot) {
+// let queryTmp = db.ref('logs').endAt("Mon Mar 19 2018 23:24:23 GMT-0700 (PDT)").limitToLast(1).on("child_added", function(snapshot) {
 //   console.log("tmp1: " + snapshot.key + " : " + snapshot.val().timestamp);
 // });
 
-// let queryTmp2 = db.ref('logs').orderByChild("timestamp").startAt("Tue Mar 20 2018 00:20:01 GMT-0700 (PDT)").limitToLast(1).on("child_added", function(snapshot) {
+// let queryTmp2 = db.ref('logs').startAt("Tue Mar 20 2018 00:20:01 GMT-0700 (PDT)").limitToLast(1).on("child_added", function(snapshot) {
 //   console.log("tmp2: " + snapshot.key + " : " + snapshot.val().timestamp);
 // });
 // --------------------------------------------------------------------
 
 export default {
-
+  firebase: {
+    firstLog: db.ref('logs').limitToFirst(1),
+    lastLog: db.ref('logs').limitToLast(1)
+  },
+  
   data () {
     return {
       limit: 1,
@@ -116,6 +120,11 @@ export default {
     },
 
     next() {
+      // if we're at the end of the logs, ignore click
+      if (this.lastTimestamp === this.lastLog[0].timestamp) {
+        return;
+      }
+
       // add 1 second to last timestamp to query the next set of data
       let qts = new Date(this.lastTimestamp);
       qts.setSeconds(qts.getSeconds() + 1);
@@ -125,6 +134,12 @@ export default {
     },
 
     prev() {
+
+      // if we're at the beginning of the logs, ignore click
+      if (this.lastTimestamp === this.firstLog[0].timestamp) {
+        return;
+      }
+
       // remove 1 second on last timestamp, then use limit to last with that end
       let qts = new Date(this.lastTimestamp);
 
@@ -138,7 +153,6 @@ export default {
 
 // Helper function to display nice dates
 function formatDate(d) {
-  console.log('full: ' + d.toString())
     let day = d.getDate();
     let month = d.getMonth() + 1; //Months are zero based
     let year = d.getFullYear();
