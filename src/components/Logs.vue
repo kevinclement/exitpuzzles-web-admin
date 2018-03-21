@@ -4,8 +4,11 @@
       <v-layout>
         <v-flex>
           <v-card height="100%" class="logCard">
-            <v-card-title>
+            <v-card-title class="titleRow">
                 <h3 class="headline">Logs from pi</h3>
+                <span class="spacer" />
+                <a @click="showTimeStamps = !showTimeStamps">
+                  <v-icon v-bind:title="timestampButtonTitle">{{timestampButtonIcon}}</v-icon></a>
             </v-card-title>
             <v-card-text class="logContent">
               <div class="scrollDiv">
@@ -18,7 +21,7 @@
               <span>
                  Logs from {{firstTimestampStr}} to {{lastTimestampStr}}
               </span>
-              <span class="controlsSpacer" />
+              <span class="spacer" />
               <span class="controls">
                 <a @click="first()"><v-icon>first_page</v-icon></a>
                 <a @click="prev()"><v-icon>chevron_left</v-icon></a>
@@ -66,7 +69,8 @@ export default {
       logs: [],
       firstTimestamp: null,
       lastTimestamp: null,
-      updating: false
+      updating: false,
+      showTimeStamps: false
     }
   },
 
@@ -76,12 +80,18 @@ export default {
     },
     lastTimestampStr: function () {
       return formatDate(new Date(this.lastTimestamp))
+    },
+    timestampButtonTitle: function() {
+      return this.showTimeStamps ? "hide time stamps" : "show time stamps"
+    },
+    timestampButtonIcon: function() {
+      return this.showTimeStamps ? "timer" : "timer_off"
     }
   },
 
   mounted() {
-    // TODO: by default map to first log, probably should be last
-    this.first();
+    // default should be to be on last page, which should enable streaming
+    this.last();
   },
 
   methods: {
@@ -147,6 +157,10 @@ export default {
 
       let query = logsRef.endAt(qts.toString()).limitToLast(this.limit)
       this.setQuery(query);
+    }, 
+
+    showHideTimeStamps() {
+
     }
   }
 }
@@ -175,15 +189,15 @@ function formatDate(d) {
 </script>
 
 <style scoped>
-.controlsRow {
-  display:flex;
-  flex-direction:row
+.titleRow, .controlsRow  {
+  display: flex;
+  flex-direction: row
 }
-.controlsSpacer {
-  flex-basis:0%;
-  flex-grow:1;
-  flex-shrink:1;
-  min-width:0px;
+.spacer {
+  flex-basis: 0%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0px;
 }
 .controls > a {
   padding-left: 10px;
