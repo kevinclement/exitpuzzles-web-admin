@@ -10,8 +10,9 @@
         <v-card-text class="grey lighten-3">
                 <v-layout row wrap>
                   <v-flex xs12 md6>
-                    <span>Time</span>
-                    <v-switch primary label="Dark"></v-switch>
+                    
+                    <h4>Time</h4>
+                    <div style="font-size:34px;font-family: Monaco, monospace">01:04:32</div>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-card>
@@ -61,6 +62,7 @@
       </v-card>
 
       <div>
+        <v-btn icon><v-icon >timer</v-icon></v-btn>
         <v-btn icon><v-icon >build</v-icon>1</v-btn>
         <v-btn icon><v-icon >build</v-icon>2</v-btn>
         <v-btn icon><v-icon >timeline</v-icon></v-btn>
