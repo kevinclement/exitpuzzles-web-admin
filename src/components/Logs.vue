@@ -7,8 +7,9 @@
             <v-card-title class="titleRow">
                 <h3 class="headline">Logs from pi</h3>
                 <span class="spacer" />
-                <a @click="showTimeStamps = !showTimeStamps">
-                  <v-icon v-bind:title="timestampButtonTitle">{{timestampButtonIcon}}</v-icon></a>
+                <v-btn icon @click="showTimeStamps = !showTimeStamps">
+                  <v-icon v-bind:title="timestampButtonTitle">{{timestampButtonIcon}}</v-icon>
+                </v-btn>
             </v-card-title>
             <v-card-text class="logContent">
               <div class="scrollDiv">
