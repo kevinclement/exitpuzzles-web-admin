@@ -19,7 +19,7 @@
     <v-toolbar fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Exit Puzzles Admin</v-toolbar-title>
-      <v-breadcrumbs class="breadcrumbs">
+      <v-breadcrumbs v-if="false" class="breadcrumbs">
         <v-icon slot="divider">chevron_right</v-icon>
         <v-breadcrumbs-item
           v-for="bc in breadcrumbs"
