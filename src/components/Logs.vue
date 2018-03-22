@@ -46,7 +46,7 @@ import config from '../../secrets/firebase-config'
 
 // Initialize Firebase
 let db = Firebase.initializeApp(config).database()
-let logsRef = db.ref('logs').orderByChild("timestamp")
+let logsRef = db.ref('logs').orderByKey()
 
 // TODO: REMOVE: only used for testing queries while developing
 // --------------------------------------------------------------------
@@ -58,19 +58,15 @@ let logsRef = db.ref('logs').orderByChild("timestamp")
 //   console.log("tmp2: " + snapshot.key + " : " + snapshot.val().timestamp);
 // });
 // --------------------------------------------------------------------
-
-export default {
-  firebase: {
-    firstLog: db.ref('logs').limitToFirst(1),
-    lastLog: db.ref('logs').limitToLast(1)
-  },
-  
+export default {  
   data () {
     return {
-      limit: 1,
       logs: [],
-      firstTimestamp: null,
-      lastTimestamp: null,
+      limit: 1 + 1,
+      firstKey: null,
+      lastKey: null,
+      firstTime: null,
+      lastTime: null,
       updating: false,
       showTimeStamps: false
     }
@@ -78,10 +74,10 @@ export default {
 
   computed: {
     firstTimestampStr: function () {
-      return formatDate(new Date(this.firstTimestamp))
+      return formatDate(new Date(this.firstTime))
     },
     lastTimestampStr: function () {
-      return formatDate(new Date(this.lastTimestamp))
+      return formatDate(new Date(this.lastTime))
     },
     timestampButtonTitle: function() {
       return this.showTimeStamps ? "hide time stamps" : "show time stamps"
@@ -108,18 +104,21 @@ export default {
         // track first item found
         if (that.updating) {
           that.updating = false
-          that.firstTimestamp = log.timestamp
+          that.firstKey = snapshot.key
+          that.firstTime = log.timestamp
         }
 
         // TODO: comment out when shipping
         console.log(snapshot.key + " : " + log.timestamp + " : " + log.data)
 
         // store the timestamp so we can page off it
-        that.lastTimestamp = log.timestamp
-      })
+        that.lastKey = snapshot.key
+        that.lastTime = log.timestamp
+      });
 
       // bind it to vue
       this.updating = true
+      
       this.$bindAsArray('logs', query)
     },
 
@@ -132,33 +131,11 @@ export default {
     },
 
     next() {
-      // if we're at the end of the logs, ignore click
-      if (this.lastTimestamp === this.lastLog[0].timestamp) {
-        return;
-      }
-
-      // add 1 second to last timestamp to query the next set of data
-      let qts = new Date(this.lastTimestamp);
-      qts.setSeconds(qts.getSeconds() + 1);
-
-      let query = logsRef.startAt(qts.toString()).limitToFirst(this.limit)
-      this.setQuery(query);
+      this.setQuery(logsRef.startAt(this.lastKey).limitToFirst(this.limit));
     },
 
     prev() {
-
-      // if we're at the beginning of the logs, ignore click
-      if (this.lastTimestamp === this.firstLog[0].timestamp) {
-        return;
-      }
-
-      // remove 1 second on last timestamp, then use limit to last with that end
-      let qts = new Date(this.lastTimestamp);
-
-      qts.setSeconds(qts.getSeconds() - 1);
-
-      let query = logsRef.endAt(qts.toString()).limitToLast(this.limit)
-      this.setQuery(query);
+      this.setQuery(logsRef.endAt(this.firstKey).limitToLast(this.limit));
     }, 
 
     formatLogDate(ts) {
