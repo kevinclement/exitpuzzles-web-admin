@@ -46,7 +46,6 @@ import config from '../../secrets/firebase-config'
 
 // Initialize Firebase
 let db = Firebase.initializeApp(config).database()
-let logsRef = db.ref('logs').orderByKey()
 
 // TODO: REMOVE: only used for testing queries while developing
 // --------------------------------------------------------------------
@@ -68,7 +67,8 @@ export default {
       firstTime: null,
       lastTime: null,
       updating: false,
-      showTimeStamps: false
+      showTimeStamps: false,
+      logsRef: null
     }
   },
 
@@ -88,6 +88,8 @@ export default {
   },
 
   mounted() {
+    this.logsRef = db.ref('logs').orderByKey()
+
     // default should be to be on last page, which should enable streaming
     this.last();
   },
@@ -118,24 +120,23 @@ export default {
 
       // bind it to vue
       this.updating = true
-      
       this.$bindAsArray('logs', query)
     },
 
     first() {
-      this.setQuery(logsRef.limitToFirst(this.limit));
+      this.setQuery(this.logsRef.limitToFirst(this.limit));
     },
 
     last() {
-      this.setQuery(logsRef.limitToLast(this.limit));
+      this.setQuery(this.logsRef.limitToLast(this.limit));
     },
 
     next() {
-      this.setQuery(logsRef.startAt(this.lastKey).limitToFirst(this.limit));
+      this.setQuery(this.logsRef.startAt(this.lastKey).limitToFirst(this.limit));
     },
 
     prev() {
-      this.setQuery(logsRef.endAt(this.firstKey).limitToLast(this.limit));
+      this.setQuery(this.logsRef.endAt(this.firstKey).limitToLast(this.limit));
     }, 
 
     formatLogDate(ts) {
