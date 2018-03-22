@@ -62,7 +62,7 @@ export default {
   data () {
     return {
       logs: [],
-      limit: 1 + 1,
+      limit: 50 + 1,
       firstKey: null,
       lastKey: null,
       firstTime: null,
