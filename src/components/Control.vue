@@ -72,8 +72,8 @@
         <v-btn icon><v-icon >build</v-icon>1</v-btn>
         <v-btn icon><v-icon >build</v-icon>2</v-btn>
         <v-btn icon><v-icon >timeline</v-icon></v-btn>
-        <v-btn icon><v-icon >lock</v-icon></v-btn>
-        <v-btn icon @click="tmpclk()"><v-icon >cake</v-icon></v-btn>
+        <v-btn icon @click="tmpclk()"><v-icon >lock</v-icon></v-btn>
+        <v-btn icon @click="tmpclk2()"><v-icon >cake</v-icon></v-btn>
       </div>
     </v-flex>
   </v-layout>
@@ -100,7 +100,12 @@ export default {
   methods: {
     tmpclk() {
       this.controlsRef.push({
-         op: 'anOpFromWeb'
+         op: 'opt1'
+      });
+    },
+    tmpclk2() {
+      this.controlsRef.push({
+         op: 'opt2'
       });
     }
   }
