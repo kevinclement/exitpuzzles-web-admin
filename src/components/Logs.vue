@@ -164,7 +164,7 @@ function formatDate(d) {
       }
     }
 
-    return month + "/" + day + "/" + year + " " + hour + ":" + minutes + " " + amPM;
+    return month + "/" + day + "/" + year + " " + hour + ":" + ("0" + minutes).substr(-2,2) + " " + amPM;
 }
 </script>
 
