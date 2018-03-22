@@ -69,7 +69,7 @@
 
       <div>
         <v-btn icon><v-icon >timer</v-icon></v-btn>
-        <v-btn icon><v-icon >build</v-icon>1</v-btn>
+        <v-btn icon @click="ledtoggle()"><v-icon >build</v-icon>1</v-btn>
         <v-btn icon><v-icon >build</v-icon>2</v-btn>
         <v-btn icon><v-icon >timeline</v-icon></v-btn>
         <v-btn icon @click="tmpclk()"><v-icon >lock</v-icon></v-btn>
@@ -98,6 +98,11 @@ export default {
   },
 
   methods: {
+    ledtoggle() {
+      this.controlsRef.push({
+         op: 'led'
+      });
+    },
     tmpclk() {
       this.controlsRef.push({
          op: 'opt1'
