@@ -73,14 +73,39 @@
         <v-btn icon><v-icon >build</v-icon>2</v-btn>
         <v-btn icon><v-icon >timeline</v-icon></v-btn>
         <v-btn icon><v-icon >lock</v-icon></v-btn>
-        <v-btn icon><v-icon >cake</v-icon></v-btn>
+        <v-btn icon @click="tmpclk()"><v-icon >cake</v-icon></v-btn>
       </div>
     </v-flex>
   </v-layout>
 </v-container>
 
-
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      controlsRef: null
+    }
+  },
+
+  mounted() {
+    this.controlsRef = this.$root.$data.fbdb.ref('control')
+
+    // this.controlsRef.orderByChild('completed').equalTo(null).on("child_added", function(snapshot) {
+    //   console.log('control: ' + snapshot.val().op)
+    // });
+  },
+
+  methods: {
+    tmpclk() {
+      this.controlsRef.push({
+         op: 'anOpFromWeb'
+      });
+    }
+  }
+}
+</script>
 
 <style scoped>
 </style>
