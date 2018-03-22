@@ -39,25 +39,8 @@
 </template>
 
 <script>
-import Firebase from 'firebase'
 
-// TODO: secrets are not checked in, is there a cleaner way to do this?
-import config from '../../secrets/firebase-config'
-
-// Initialize Firebase
-let db = Firebase.initializeApp(config).database()
-
-// TODO: REMOVE: only used for testing queries while developing
-// --------------------------------------------------------------------
-// let queryTmp = db.ref('logs').endAt("Mon Mar 19 2018 23:24:23 GMT-0700 (PDT)").limitToLast(1).on("child_added", function(snapshot) {
-//   console.log("tmp1: " + snapshot.key + " : " + snapshot.val().timestamp);
-// });
-
-// let queryTmp2 = db.ref('logs').startAt("Tue Mar 20 2018 00:20:01 GMT-0700 (PDT)").limitToLast(1).on("child_added", function(snapshot) {
-//   console.log("tmp2: " + snapshot.key + " : " + snapshot.val().timestamp);
-// });
-// --------------------------------------------------------------------
-export default {  
+export default {
   data () {
     return {
       logs: [],
@@ -88,7 +71,7 @@ export default {
   },
 
   mounted() {
-    this.logsRef = db.ref('logs').orderByKey()
+    this.logsRef = this.$root.$data.fbdb.ref('logs').orderByKey()
 
     // default should be to be on last page, which should enable streaming
     this.last();
@@ -96,6 +79,7 @@ export default {
 
   methods: {
     setQuery(query) {
+
       // i <3 javascript
       let that = this;
 
