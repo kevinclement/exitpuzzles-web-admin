@@ -19,6 +19,23 @@
                     <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">
                       01:04:32
                     </div>
+
+                    <div style="display:flex">
+
+                      <v-flex xs6>
+                        <div style="display:block">
+                          <span>Scheme1</span>
+                          <v-switch primary label="Dark"></v-switch>
+                        </div>
+                      </v-flex>
+                      <v-flex xs6>
+                        <div style="display:block">
+                          <span>Scheme1</span>
+                          <v-switch primary label="Dark"></v-switch>
+                        </div>
+                      </v-flex>
+                    </div>
+
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-card>
