@@ -9,7 +9,14 @@ import Firebase from 'firebase'
 import VueFire from 'vuefire'
 
 // TODO: secrets are not checked in, is there a cleaner way to do this?
-import config from '../secrets/firebase-config'
+let config = {
+  apiKey: "AIzaSyBq1tyRDtpAkMFwi3ZIkS24cBBG3r0EUqU",
+  authDomain: "exitpuzzles-admin.firebaseapp.com",
+  databaseURL: "https://exitpuzzles-admin.firebaseio.com",
+  projectId: "exitpuzzles-admin",
+  storageBucket: "exitpuzzles-admin.appspot.com",
+  messagingSenderId: "927373652924"
+}
 
 // init firebase
 let db = Firebase.initializeApp(config).database()
