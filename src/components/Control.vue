@@ -326,13 +326,19 @@ export default {
     },
     refreshState() {
       // clear out icons to indicate reloading
-      this.toggle1State = this.toggle2State = this.wireState = 'unknown';
+      this.toggle1State     =
+        this.toggle2State   =
+        this.wireState      =
+        this.keySolvedState =
+        this.allSolvedState = STATE.UNKNOWN;
 
-      // TODO: write proper to db
+      // TODO: write/query proper to db
       setTimeout(() => {
-        this.hours = 1;
-        this.minutes = 9;
-        this.seconds = 22;
+        this.toggle1State   = STATE.OK;
+        this.toggle2State   = STATE.OK;
+        this.wireState      = STATE.OK;
+        this.keySolvedState = STATE.OK;
+        this.allSolvedState = STATE.OK;
       }, 1200);
     },
     setTimer() {
