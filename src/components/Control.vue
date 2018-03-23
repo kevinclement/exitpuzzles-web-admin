@@ -5,6 +5,8 @@
       <v-card>
         <v-toolbar card>
           <v-toolbar-title>TNT</v-toolbar-title>
+          <span class="spacer" />
+          <v-btn flat small color="red lighten-3" @click.native="resetTntDiag = true">Reset</v-btn>
         </v-toolbar>
 
         <v-card-text class="grey lighten-3">
@@ -161,6 +163,17 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <v-dialog v-model="resetTntDiag" max-width="410">
+    <v-card>
+      <v-card-title class="headline">Really reset the device?</v-card-title>
+      <v-card-text>This will reboot the device and all current state lost.  Are you <i>sure</i> you want to do that?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="resetTntDiag = false;">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="triggerReset">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
   <v-dialog v-model="resetTimeDiag" persistent max-width="360">
     <v-card>
       <v-card-title class="headline" style="padding-bottom:0px">Set new time</v-card-title>
@@ -208,6 +221,7 @@ export default {
       confirmKeyDiag: false,
       confirmWireDiag: false,
       resetTimeDiag: false,
+      resetTntDiag: false,
       setTime: {
         hour: null,
         minute: null,
@@ -386,6 +400,10 @@ export default {
          btn.id = 'wireLoading'
 
       }, 3000)
+    },
+    triggerReset() {
+      console.log('resetting device')
+      this.resetTntDiag = false;
     },
 
     switchErrorsClicked() {
