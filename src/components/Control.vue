@@ -173,6 +173,8 @@
 </template>
 
 <script>
+console.log('dev mode: ' + DEV_MODE);
+
 export default {
   data () {
     return {

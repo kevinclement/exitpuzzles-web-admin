@@ -26,6 +26,9 @@ Vue.use(VueFire)
 
 Vue.config.productionTip = false
 
+// set global to test for dev/prod mode
+window['DEV_MODE'] = process.env.NODE_ENV
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
