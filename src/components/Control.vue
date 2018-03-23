@@ -168,11 +168,11 @@
       <v-card-text>
         <table>
           <tr>
-            <td><input maxlength="2" type='number' placeholder="HH" min="0" max="99" required></input></td>
+            <td><input v-model="setTime.hour" maxlength="2" type='number' placeholder="HH" min="0" max="99" required></input></td>
             <td>:</td>
-            <td><input maxlength="2" type='number' placeholder="MM" min="0" max="59" required></input></td>
+            <td><input v-model="setTime.minute" maxlength="2" type='number' placeholder="MM" min="0" max="59" required></input></td>
             <td>:</td>
-            <td><input maxlength="2" type='number' placeholder="SS" min="0" max="59" required></input></td>
+            <td><input v-model="setTime.second" maxlength="2" type='number' placeholder="SS" min="0" max="59" required></input></td>
           </tr>
         </table>
       </v-card-text>
@@ -203,6 +203,11 @@ export default {
       confirmKeyDiag: false,
       confirmWireDiag: false,
       resetTimeDiag: true,
+      setTime: {
+        hour: null,
+        minute: null,
+        second: null
+      },
 
       // snack stuff
       snackbar: false,
@@ -315,7 +320,10 @@ export default {
       }, 1200);
     },
     setTimer() {
-      console.log('set timer')
+      this.hours = this.setTime.hour;
+      this.minutes = this.setTime.minute;
+      this.seconds = this.setTime.second;
+
       this.resetTimeDiag = false;
     },
 
