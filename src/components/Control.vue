@@ -21,17 +21,35 @@
                     </div>
 
                     <div style="display:flex">
-
                       <v-flex xs6>
                         <div style="display:block">
-                          <span>Scheme1</span>
-                          <v-switch primary label="Dark"></v-switch>
+                          <span>Key</span>
+                          <div>
+                          <v-btn class="ma-0" small color="accent" dark>Trigger</v-btn>
+                          </div>
                         </div>
                       </v-flex>
                       <v-flex xs6>
                         <div style="display:block">
-                          <span>Scheme1</span>
-                          <v-switch primary label="Dark"></v-switch>
+                          <span>Wires</span>
+                          <div>
+                          <v-btn class="ma-0" small color="accent" dark>Trigger</v-btn>
+                          </div>
+                        </div>
+                      </v-flex>
+                    </div>
+
+                    <div style="display:flex">
+                      <v-flex xs6>
+                        <div style="display:block">
+                          <span>Switch Errors</span>
+                          <v-switch primary label="Enabled"></v-switch>
+                        </div>
+                      </v-flex>
+                      <v-flex xs6>
+                        <div style="display:block">
+                          <span>Wire Errors</span>
+                          <v-switch primary label="Enabled"></v-switch>
                         </div>
                       </v-flex>
                     </div>
