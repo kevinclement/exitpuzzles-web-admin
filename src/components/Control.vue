@@ -39,7 +39,7 @@
                       </v-flex>
                     </div>
 
-                    <div style="display:flex">
+                    <div style="display:flex;margin-top:10px;">
                       <v-flex xs6>
                         <div style="display:block">
                           <span>Switch Errors</span>
