@@ -53,7 +53,17 @@
                         <div style="display:block">
                           <span>Key</span>
                           <div>
-                          <v-btn class="ma-0" small color="accent" dark @click.stop="confirmKeyDiag = true">Trigger</v-btn>
+                          <v-btn 
+                            id="keyLoading"
+                            class="ma-0"
+                            small dark color="accent"
+                            :loading="keyLoading"
+                            @click.native="confirmKeyDiag = true"
+                            :disabled="keyLoading"
+                            >
+                            Trigger
+                            <span slot="loader">Triggering...</span>
+                          </v-btn>
                           </div>
                         </div>
                       </v-flex>
@@ -154,7 +164,9 @@ export default {
       snackbar: false,
       snackColor: 'success',
       snackTimeout: 4000,
-      snackText: ''
+      snackText: '',
+      loader: null,
+      keyLoading:false
     }
   },
 
@@ -184,10 +196,20 @@ export default {
     },
     triggerKey() {
       this.confirmKeyDiag = false;
+      this.keyLoading = true;
+
+      // HACK: total hack to get around disabled styling.  don't have time to figure out proper
+      let btn = document.getElementById('keyLoading');
+      btn.id = 'disabled'
+
       setTimeout(() => {
-        this.snackText = 'Key triggered successfully.';
-        this.snackbar = true;
-      }, 1000)
+         this.snackText = 'Key triggered successfully.';
+         this.snackbar = true;
+         this.keyLoading = false;
+         btn.id = 'keyLoading'
+
+      }, 3000)
+
     },
     triggerWire() {
       this.confirmWireDiag = false;
@@ -201,4 +223,9 @@ export default {
 </script>
 
 <style scoped>
+#disabled {
+  background:rgba(0,0,0,.12) !important;
+  color: grey !important;
+  font-size: 10px;
+}
 </style>
