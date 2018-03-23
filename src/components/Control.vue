@@ -45,7 +45,7 @@
                     </v-toolbar>
 
                     <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">
-                      01:04:32
+                      {{formatTime(hours)}}:{{formatTime(minutes)}}:{{formatTime(seconds)}}
                     </div>
 
                     <div style="display:flex">
@@ -161,7 +161,7 @@
       </v-card>
 
       <div>
-        <v-btn icon><v-icon >timer</v-icon></v-btn>
+        <v-btn icon @click="timerEnabled = !timerEnabled"><v-icon >timer</v-icon></v-btn>
         <v-btn icon @click="ledtoggle()"><v-icon >build</v-icon>1</v-btn>
         <v-btn icon><v-icon >build</v-icon>2</v-btn>
         <v-btn icon><v-icon >timeline</v-icon></v-btn>
@@ -179,6 +179,7 @@ export default {
   data () {
     return {
       controlsRef: null,
+      timerEnabled: false, // TODO: turn on when time/refresh is clicked
 
       // confirm dialog
       confirmKeyDiag: false,
@@ -199,6 +200,9 @@ export default {
       wireErrors: false,
 
       // device status states
+      hours: 1,
+      minutes: 11,
+      seconds: 16,
       toggle1State: null,
       toggle2State: null,
       wireState: null,
@@ -220,9 +224,29 @@ export default {
   mounted() {
     this.controlsRef = this.$root.$data.fbdb.ref('control')
 
-    // this.controlsRef.orderByChild('completed').equalTo(null).on("child_added", function(snapshot) {
-    //   console.log('control: ' + snapshot.val().op)
-    // });
+    setInterval(() => {
+      if (!this.timerEnabled || (this.hours <= 0 && this.minutes <= 0 && this.seconds <= 0)) {
+        return;
+      }
+
+      this.seconds--;
+      if (this.seconds <= 0 && (this.minutes > 0 || this.hours > 0)) {
+
+        this.seconds = 59;
+        this.minutes--;
+
+        if (this.minutes < 0 && this.hours > 0) {
+          this.hours--;
+          this.minutes = 59;
+        }
+      }
+      
+      if (this.seconds <= 0 && this.minutes <= 0 && this.hours <= 0) {
+          console.log('boom!!!');
+          // TODO: boom blink, sound, animation?
+      }
+
+    }, 1000);
   },
 
   methods: {
@@ -309,8 +333,11 @@ export default {
     switchErrorsClicked() {
     },
     wireErrorsClicked() {
-    }
+    },
 
+    formatTime(num) {
+      return ("0" + num).substr(-2,2);
+    }
   }
 }
 </script>
