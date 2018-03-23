@@ -94,8 +94,10 @@ export default {
           that.firstTime = log.timestamp
         }
 
-        // TODO: comment out when shipping
-        console.log(snapshot.key + " : " + log.timestamp + " : " + log.data)
+        // only trace in dev mode
+        if (window.DEV_MODE) {
+          console.log(snapshot.key + " : " + log.timestamp + " : " + log.data)
+        }
 
         // store the timestamp so we can page off it
         that.lastKey = snapshot.key

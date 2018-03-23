@@ -241,8 +241,8 @@ export default {
       }
       
       if (this.seconds <= 0 && this.minutes <= 0 && this.hours <= 0) {
-          console.log('boom!!!');
           // TODO: boom blink, sound, animation?
+          console.log('boom!!!');
       }
 
     }, 1000);
