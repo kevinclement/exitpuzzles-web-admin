@@ -154,7 +154,7 @@ export default {
       snackbar: false,
       snackColor: 'success',
       snackTimeout: 4000,
-      snackText: 'Hello, I\'m a snackbar'
+      snackText: ''
     }
   },
 
@@ -184,11 +184,17 @@ export default {
     },
     triggerKey() {
       this.confirmKeyDiag = false;
-      this.snackbar = true;
+      setTimeout(() => {
+        this.snackText = 'Key triggered successfully.';
+        this.snackbar = true;
+      }, 1000)
     },
     triggerWire() {
       this.confirmWireDiag = false;
-      console.log('trigger wire')
+      setTimeout(() => {
+        this.snackText = 'Wire error triggered successfully.';
+        this.snackbar = true;
+      }, 1000)
     }
   }
 }
