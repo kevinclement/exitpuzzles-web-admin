@@ -164,7 +164,7 @@
         <v-btn icon @click="timerEnabled = !timerEnabled"><v-icon >timer</v-icon></v-btn>
         <v-btn icon @click="toggle1State = tmpToggle(toggle1State)"><v-icon >build</v-icon>1</v-btn>
         <v-btn icon @click="toggle2State = tmpToggle(toggle2State)"><v-icon >build</v-icon>2</v-btn>
-        <v-btn icon><v-icon >timeline</v-icon></v-btn>
+        <v-btn icon @click="wireState = tmpToggle(wireState)"><v-icon >timeline</v-icon></v-btn>
         <v-btn icon @click="tmpLock()"><v-icon >lock</v-icon></v-btn>
         <v-btn icon @click="tmpAll()"><v-icon >cake</v-icon></v-btn>
       </div>
