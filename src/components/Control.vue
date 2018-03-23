@@ -1,33 +1,5 @@
 <template>
  <v-container fluid fill-height>
-
-  <v-dialog v-model="confirmKeyDiag" max-width="410">
-    <v-card>
-      <v-card-title class="headline">Really trigger the key?</v-card-title>
-      <v-card-text>Are you sure you want to trigger launching of the key from the device?</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="confirmKeyDiag = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="triggerKey">Yes</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-  <v-dialog v-model="confirmWireDiag" max-width="410">
-    <v-card>
-      <v-card-title class="headline">Really trigger a wire error?</v-card-title>
-      <v-card-text>Are you sure you want to trigger a wrong wire error on the device?</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="confirmWireDiag = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="triggerWire">Yes</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-  <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
-      {{ snackText }}
-      <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
-  </v-snackbar>
-
   <v-layout >
     <v-flex>
       <v-card>
@@ -39,9 +11,9 @@
                 <v-layout row wrap>
                   <v-flex xs12 md6>
                     <v-toolbar flat dense color="grey lighten-3">
-                      <v-toolbar-title class="mx-0">Time</v-toolbar-title>
-                      <v-btn icon style="" title="Refresh timer"><v-icon >update</v-icon></v-btn>
-                      <v-btn icon style="" title="Set timer"><v-icon >snooze</v-icon></v-btn>
+                      <v-toolbar-title class="mx-0"><a @click.native="console.log('refresh')">Time</a></v-toolbar-title>
+                      <v-btn icon title="Refresh timer"><v-icon >update</v-icon></v-btn>
+                      <v-btn icon title="Set timer"><v-icon >snooze</v-icon></v-btn>
                     </v-toolbar>
 
                     <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">
@@ -168,12 +140,37 @@
       </div>
     </v-flex>
   </v-layout>
-</v-container>
+  <v-dialog v-model="confirmKeyDiag" max-width="410">
+    <v-card>
+      <v-card-title class="headline">Really trigger the key?</v-card-title>
+      <v-card-text>Are you sure you want to trigger launching of the key from the device?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="confirmKeyDiag = false;">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="triggerKey">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+  <v-dialog v-model="confirmWireDiag" max-width="410">
+    <v-card>
+      <v-card-title class="headline">Really trigger a wire error?</v-card-title>
+      <v-card-text>Are you sure you want to trigger a wrong wire error on the device?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="confirmWireDiag = false;">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="triggerWire">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+  <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
+      {{ snackText }}
+      <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
+  </v-snackbar>
 
+</v-container>
 </template>
 
 <script>
-
 export default {
   data () {
     return {
@@ -284,34 +281,6 @@ export default {
       }
     },
 
-    ledtoggle() {
-      //    op: 'opt1' || 'opt2'
-      this.controlsRef.push({
-         op: 'led'
-      });
-    },
-    tmpLock() {
-      this.keySolvedState = 'ok'
-    },
-    tmpToggle() {
-
-      this.toggle1State = 
-        this.toggle1State === null ? (Math.random()*101|0) % 2 == 0 ? 'ok' : 'bad' : 
-        this.toggle1State === 'ok' ? 'bad' : 'ok';
-
-      this.toggle2State = 
-        this.toggle2State === null ? (Math.random()*101|0) % 2 == 0 ? 'ok' : 'bad' : 
-        this.toggle2State === 'ok' ? 'bad' : 'ok';
-
-      this.wireState = 
-        this.wireState === null ? (Math.random()*101|0) % 2 == 0 ? 'ok' : 'bad' : 
-        this.wireState === 'ok' ? 'bad' : 'ok';
-    },
-    tmpAll() {
-      this.keySolvedState = 'ok'
-      this.allSolvedState = 'ok'
-    },
-
     triggerKey() {
       this.confirmKeyDiag = false;
       this.keyLoading = true;
@@ -358,6 +327,36 @@ export default {
 
     formatTime(num) {
       return ("0" + num).substr(-2,2);
+    },
+
+    // #######################################################
+    // ## Debug Methods ######################################
+    ledtoggle() {
+      //    op: 'opt1' || 'opt2'
+      this.controlsRef.push({
+         op: 'led'
+      });
+    },
+    tmpLock() {
+      this.keySolvedState = 'ok'
+    },
+    tmpToggle() {
+
+      this.toggle1State = 
+        this.toggle1State === null ? (Math.random()*101|0) % 2 == 0 ? 'ok' : 'bad' : 
+        this.toggle1State === 'ok' ? 'bad' : 'ok';
+
+      this.toggle2State = 
+        this.toggle2State === null ? (Math.random()*101|0) % 2 == 0 ? 'ok' : 'bad' : 
+        this.toggle2State === 'ok' ? 'bad' : 'ok';
+
+      this.wireState = 
+        this.wireState === null ? (Math.random()*101|0) % 2 == 0 ? 'ok' : 'bad' : 
+        this.wireState === 'ok' ? 'bad' : 'ok';
+    },
+    tmpAll() {
+      this.keySolvedState = 'ok'
+      this.allSolvedState = 'ok'
     }
   }
 }
