@@ -162,7 +162,7 @@
 
       <div>
         <v-btn icon @click="timerEnabled = !timerEnabled"><v-icon >timer</v-icon></v-btn>
-        <v-btn icon @click="ledtoggle()"><v-icon >build</v-icon>1</v-btn>
+        <v-btn icon @click=""><v-icon >build</v-icon>1</v-btn>
         <v-btn icon><v-icon >build</v-icon>2</v-btn>
         <v-btn icon><v-icon >timeline</v-icon></v-btn>
         <v-btn icon @click="tmpLock()"><v-icon >lock</v-icon></v-btn>
@@ -297,6 +297,9 @@ export default {
     triggerKey() {
       this.confirmKeyDiag = false;
       this.keyLoading = true;
+
+      // TODO: remove when done demoing
+      this.ledtoggle()
 
       // HACK: total hack to get around disabled styling.  don't have time to figure out proper
       let btn = document.getElementById('keyLoading');
