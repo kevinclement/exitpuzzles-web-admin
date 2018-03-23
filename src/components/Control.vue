@@ -23,6 +23,10 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
+      {{ snackText }}
+      <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
+  </v-snackbar>
 
   <v-layout >
     <v-flex>
@@ -146,7 +150,11 @@ export default {
     return {
       controlsRef: null,
       confirmKeyDiag: false,
-      confirmWireDiag: false
+      confirmWireDiag: false,
+      snackbar: false,
+      snackColor: 'success',
+      snackTimeout: 4000,
+      snackText: 'Hello, I\'m a snackbar'
     }
   },
 
@@ -176,7 +184,7 @@ export default {
     },
     triggerKey() {
       this.confirmKeyDiag = false;
-      console.log('trigger key')
+      this.snackbar = true;
     },
     triggerWire() {
       this.confirmWireDiag = false;
