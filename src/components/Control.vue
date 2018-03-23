@@ -161,7 +161,7 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-  <v-dialog v-model="resetTimeDiag" max-width="360">
+  <v-dialog v-model="resetTimeDiag" persistent max-width="360">
     <v-card>
       <v-card-title class="headline" style="padding-bottom:0px">Set new time</v-card-title>
       <v-card-text style="padding-top:5px">Enter new time to set timer to.</v-card-text>
@@ -202,7 +202,7 @@ export default {
       // dialogs
       confirmKeyDiag: false,
       confirmWireDiag: false,
-      resetTimeDiag: true,
+      resetTimeDiag: false,
       setTime: {
         hour: null,
         minute: null,
