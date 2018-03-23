@@ -122,19 +122,19 @@
 
                       <v-list dense>
                         <v-list-tile>
-                          <v-list-tile-content>Toggle 1:</v-list-tile-content>
+                          <v-list-tile-content :class="{ strikeIt: switchErrors }">Toggle 1:</v-list-tile-content>
                           <v-list-tile-content class="align-end">
                             <v-icon style="color:#4CAF50">check_circle</v-icon>
                           </v-list-tile-content>
                         </v-list-tile>
                         <v-list-tile>
-                          <v-list-tile-content>Toggle 2:</v-list-tile-content>
+                          <v-list-tile-content :class="{ strikeIt: switchErrors }">Toggle 2:</v-list-tile-content>
                           <v-list-tile-content class="align-end">
                             <v-icon style="color:#BDBDBD">help</v-icon>
                           </v-list-tile-content>
                         </v-list-tile>
                         <v-list-tile>
-                          <v-list-tile-content>Wire:</v-list-tile-content>
+                          <v-list-tile-content :class="{ strikeIt: wireErrors }">Wire:</v-list-tile-content>
                           <v-list-tile-content class="align-end">
                             <v-icon style="color:#F44336">error</v-icon>
                           </v-list-tile-content>
@@ -276,5 +276,8 @@ export default {
   background:rgba(0,0,0,.12) !important;
   color: grey !important;
   font-size: 10px;
+}
+.strikeIt {
+  text-decoration: line-through;
 }
 </style>
