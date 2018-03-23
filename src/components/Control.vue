@@ -12,7 +12,7 @@
             <v-flex xs12 md6>
               <v-toolbar flat dense color="grey lighten-3">
                 <v-toolbar-title class="mx-0"><a @click="refreshTimer()">Time</a></v-toolbar-title>
-                <v-btn icon title="Set timer" @click.native="setTimer()"><v-icon >snooze</v-icon></v-btn>
+                <v-btn icon title="Set timer" @click.native="resetTimeDiag = true"><v-icon >snooze</v-icon></v-btn>
               </v-toolbar>
 
               <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">
@@ -161,6 +161,17 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <v-dialog v-model="resetTimeDiag" max-width="410">
+    <v-card>
+      <v-card-title class="headline">RESET</v-card-title>
+      <v-card-text>RESET</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="resetTimeDiag = false;">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="setTimer">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
   <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
       {{ snackText }}
       <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
@@ -177,9 +188,10 @@ export default {
       timerEnabled: false, // TODO: turn on when time/refresh is clicked
       debugBar: false,
 
-      // confirm dialog
+      // dialogs
       confirmKeyDiag: false,
       confirmWireDiag: false,
+      resetTimeDiag: false,
 
       // snack stuff
       snackbar: false,
@@ -293,6 +305,7 @@ export default {
     },
     setTimer() {
       console.log('set timer')
+      this.resetTimeDiag = false;
     },
 
     triggerKey() {
