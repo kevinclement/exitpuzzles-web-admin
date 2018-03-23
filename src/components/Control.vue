@@ -91,13 +91,23 @@
                       <v-flex xs6>
                         <div style="display:block">
                           <span>Switch Errors</span>
-                          <v-switch primary label="Enabled"></v-switch>
+                          <v-switch 
+                            primary
+                            :label="switchErrorLabel"
+                            v-model="switchErrors"
+                            @click.native="switchErrorsClicked"
+                          ></v-switch>
                         </div>
                       </v-flex>
                       <v-flex xs6>
                         <div style="display:block">
                           <span>Wire Errors</span>
-                          <v-switch primary label="Enabled"></v-switch>
+                          <v-switch 
+                            primary
+                            :label="wireErrorLabel"
+                            v-model="wireErrors"
+                            @click.native="wireErrorsClicked"
+                          ></v-switch>
                         </div>
                       </v-flex>
                     </div>
@@ -177,7 +187,18 @@ export default {
       snackText: '',
       loader: null,
       keyLoading:false,
-      wireLoading:false
+      wireLoading:false,
+      switchErrors: false,
+      wireErrors: false
+    }
+  },
+
+  computed: {
+    switchErrorLabel: function () {
+      return this.switchErrors ? 'Disabled' : 'Enabled'
+    },
+    wireErrorLabel: function () {
+      return this.wireErrors ? 'Disabled' : 'Enabled'
     }
   },
 
@@ -239,8 +260,13 @@ export default {
          btn.id = 'wireLoading'
 
       }, 3000)
+    },
 
+    switchErrorsClicked() {
+    },
+    wireErrorsClicked() {
     }
+
   }
 }
 </script>
