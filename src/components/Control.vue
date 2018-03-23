@@ -32,7 +32,7 @@
     <v-flex>
       <v-card>
         <v-toolbar card>
-          <v-toolbar-title>TNT Status</v-toolbar-title>
+          <v-toolbar-title>TNT</v-toolbar-title>
         </v-toolbar>
 
         <v-card-text class="grey lighten-3">

@@ -41,16 +41,25 @@ export default {
   data () {
     return {
       drawer: false,
-      items: [
-        { title: 'Control', icon: 'pan_tool', url: '/control'},
-        { title: 'Settings', icon: 'settings', url: '/settings'},
-        { title: 'Stats', icon: 'poll', url: '/stats'},
-        { title: 'Logs', icon: 'dvr', url: '/logs'}
-      ],
+      items: [],
       breadcrumbs: [
         { text: 'Logs' },
         { text: 'a specific log' }
       ]
+    }
+  },
+
+  mounted() {
+
+    // dynamically build up navigation menu based on routes so we don't 
+    // have config in two places
+    for (let i=0; i < this.$router.options.routes.length; i++) {
+      let route = this.$router.options.routes[i]
+      let meta = route.meta
+
+      if (meta) {
+        this.items.push({ title: meta.title, icon: meta.icon, url: route.path})
+      }
     }
   },
 
