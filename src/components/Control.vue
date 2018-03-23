@@ -281,7 +281,15 @@ export default {
     },
 
     refreshTimer() {
-      console.log('refresh')
+      // clear out times to indicate were loading
+      this.hours = this.minutes = this.seconds = null;
+
+      // TODO: write proper to db
+      setTimeout(() => {
+        this.hours = 1;
+        this.minutes = 9;
+        this.seconds = 22;
+      }, 1200);
     },
     setTimer() {
       console.log('set timer')
@@ -332,6 +340,10 @@ export default {
     },
 
     formatTime(num) {
+      if (!num || num === null) {
+        return "--"
+      }
+
       return ("0" + num).substr(-2,2);
     },
 

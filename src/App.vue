@@ -6,7 +6,7 @@
       app
     >
       <v-list>
-        <v-list-tile v-for="item in items" :key="item.title" @click="navigate(item)">
+        <v-list-tile ripple v-for="item in items" :key="item.title" @click="navigate(item)">
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
