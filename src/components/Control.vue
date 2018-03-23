@@ -124,13 +124,13 @@
                         <v-list-tile>
                           <v-list-tile-content :class="{ strikeIt: switchErrors }">Toggle 1:</v-list-tile-content>
                           <v-list-tile-content class="align-end">
-                            <v-icon style="color:#4CAF50">check_circle</v-icon>
+                            <v-icon :style="{ color: iconColor(toggle1State) }">{{icon(toggle1State)}}</v-icon>
                           </v-list-tile-content>
                         </v-list-tile>
                         <v-list-tile>
                           <v-list-tile-content :class="{ strikeIt: switchErrors }">Toggle 2:</v-list-tile-content>
                           <v-list-tile-content class="align-end">
-                            <v-icon style="color:#BDBDBD">help</v-icon>
+                            <v-icon :style="{ color: iconColor(toggle2State) }">{{icon(toggle2State)}}</v-icon>
                           </v-list-tile-content>
                         </v-list-tile>
                         <v-list-tile>
@@ -189,7 +189,10 @@ export default {
       keyLoading:false,
       wireLoading:false,
       switchErrors: false,
-      wireErrors: false
+      wireErrors: false,
+      toggle1State: null,
+      toggle2State: null,
+      wireState: null
     }
   },
 
@@ -211,6 +214,25 @@ export default {
   },
 
   methods: {
+    icon: function(state) {
+      if (state === 'ok') {
+        return 'check_circle'
+      } else if (state === 'bad') {
+        return 'error'
+      } else {
+        return 'help'
+      }
+    },
+    iconColor: function(state) {
+      if (state === 'ok') {
+        return '#4CAF50'
+      } else if (state === 'bad') {
+        return '#F44336'
+      } else {
+        return '#BDBDBD'
+      }
+    },
+
     ledtoggle() {
       this.controlsRef.push({
          op: 'led'
