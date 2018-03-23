@@ -1,5 +1,29 @@
 <template>
  <v-container fluid fill-height>
+
+  <v-dialog v-model="confirmKeyDiag" max-width="410">
+    <v-card>
+      <v-card-title class="headline">Really trigger the key?</v-card-title>
+      <v-card-text>Are you sure you want to trigger launching of the key from the device?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="confirmKeyDiag = false;">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="triggerKey">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+  <v-dialog v-model="confirmWireDiag" max-width="410">
+    <v-card>
+      <v-card-title class="headline">Really trigger a wire error?</v-card-title>
+      <v-card-text>Are you sure you want to trigger a wrong wire error on the device?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="confirmWireDiag = false;">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="triggerWire">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
   <v-layout >
     <v-flex>
       <v-card>
@@ -25,7 +49,7 @@
                         <div style="display:block">
                           <span>Key</span>
                           <div>
-                          <v-btn class="ma-0" small color="accent" dark>Trigger</v-btn>
+                          <v-btn class="ma-0" small color="accent" dark @click.stop="confirmKeyDiag = true">Trigger</v-btn>
                           </div>
                         </div>
                       </v-flex>
@@ -33,7 +57,7 @@
                         <div style="display:block">
                           <span>Wires</span>
                           <div>
-                          <v-btn class="ma-0" small color="accent" dark>Trigger</v-btn>
+                          <v-btn class="ma-0" small color="accent" dark @click.stop="confirmWireDiag = true">Trigger</v-btn>
                           </div>
                         </div>
                       </v-flex>
@@ -120,7 +144,9 @@
 export default {
   data () {
     return {
-      controlsRef: null
+      controlsRef: null,
+      confirmKeyDiag: false,
+      confirmWireDiag: false
     }
   },
 
@@ -147,6 +173,14 @@ export default {
       this.controlsRef.push({
          op: 'opt2'
       });
+    },
+    triggerKey() {
+      this.confirmKeyDiag = false;
+      console.log('trigger key')
+    },
+    triggerWire() {
+      this.confirmWireDiag = false;
+      console.log('trigger wire')
     }
   }
 }
