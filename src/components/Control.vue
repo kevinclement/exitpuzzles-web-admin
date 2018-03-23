@@ -165,8 +165,8 @@
         <v-btn icon @click="ledtoggle()"><v-icon >build</v-icon>1</v-btn>
         <v-btn icon><v-icon >build</v-icon>2</v-btn>
         <v-btn icon><v-icon >timeline</v-icon></v-btn>
-        <v-btn icon @click="tmpclk()"><v-icon >lock</v-icon></v-btn>
-        <v-btn icon @click="tmpclk2()"><v-icon >cake</v-icon></v-btn>
+        <v-btn icon @click="tmpLock()"><v-icon >lock</v-icon></v-btn>
+        <v-btn icon @click="tmpAll()"><v-icon >cake</v-icon></v-btn>
       </div>
     </v-flex>
   </v-layout>
@@ -256,19 +256,19 @@ export default {
     },
 
     ledtoggle() {
+      //    op: 'opt1' || 'opt2'
       this.controlsRef.push({
          op: 'led'
       });
     },
-    tmpclk() {
-      this.controlsRef.push({
-         op: 'opt1'
-      });
+    tmpLock() {
+      // TODO: remove used for testing
+      this.keySolvedState = 'ok'
     },
-    tmpclk2() {
-      this.controlsRef.push({
-         op: 'opt2'
-      });
+    tmpAll() {
+      // TODO: remove used for testing
+      this.keySolvedState = 'ok'
+      this.allSolvedState = 'ok'
     },
     triggerKey() {
       this.confirmKeyDiag = false;
