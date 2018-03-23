@@ -161,18 +161,17 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-  <v-dialog v-model="resetTimeDiag" max-width="410">
+  <v-dialog v-model="resetTimeDiag" max-width="360">
     <v-card>
-      <v-card-title class="headline">Set new time</v-card-title>
-      <v-card-text>Enter new time to set timer to.</v-card-text>
+      <v-card-title class="headline" style="padding-bottom:0px">Set new time</v-card-title>
+      <v-card-text style="padding-top:5px">Enter new time to set timer to.</v-card-text>
       <v-card-text>
         <table>
           <tr>
-            <th>hours</th><th>minutes</th><th>seconds</th>
-          </tr>
-          <tr>
-            <td><input maxlength="2" type='number' placeholder="HH" min="0" max="99" required></input> : </td>
-            <td><input maxlength="2" type='number' placeholder="MM" min="0" max="59" required></input> : </td>
+            <td><input maxlength="2" type='number' placeholder="HH" min="0" max="99" required></input></td>
+            <td>:</td>
+            <td><input maxlength="2" type='number' placeholder="MM" min="0" max="59" required></input></td>
+            <td>:</td>
             <td><input maxlength="2" type='number' placeholder="SS" min="0" max="59" required></input></td>
           </tr>
         </table>
@@ -414,10 +413,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 table {
-  border: 1px solid black;
+  margin: 0 auto;
 }
 td {
-  background: lightgray;
   font-size: 34px;
   font-family: Monaco, monospace;
 }
@@ -427,7 +425,7 @@ td > input {
   font-size: 34px;
   font-family: Monaco, monospace;
   text-align: center;
-  border:1px solid black;
+  box-shadow: 0px 0px 18px rgba(0,0,0,0.2), 0 2px 18px 0 rgba(0,0,0,0.19) !important
 }
 #disabled {
   background:rgba(0,0,0,.12) !important;
