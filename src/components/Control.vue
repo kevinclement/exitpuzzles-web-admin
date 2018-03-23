@@ -8,128 +8,127 @@
         </v-toolbar>
 
         <v-card-text class="grey lighten-3">
-                <v-layout row wrap>
-                  <v-flex xs12 md6>
-                    <v-toolbar flat dense color="grey lighten-3">
-                      <v-toolbar-title class="mx-0"><a @click.native="console.log('refresh')">Time</a></v-toolbar-title>
-                      <v-btn icon title="Refresh timer"><v-icon >update</v-icon></v-btn>
-                      <v-btn icon title="Set timer"><v-icon >snooze</v-icon></v-btn>
-                    </v-toolbar>
+          <v-layout row wrap>
+            <v-flex xs12 md6>
+              <v-toolbar flat dense color="grey lighten-3">
+                <v-toolbar-title class="mx-0"><a @click="refreshTimer()">Time</a></v-toolbar-title>
+                <v-btn icon title="Set timer" @click.native="setTimer()"><v-icon >snooze</v-icon></v-btn>
+              </v-toolbar>
 
-                    <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">
-                      {{formatTime(hours)}}:{{formatTime(minutes)}}:{{formatTime(seconds)}}
+              <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">
+                {{formatTime(hours)}}:{{formatTime(minutes)}}:{{formatTime(seconds)}}
+              </div>
+
+              <div style="display:flex">
+                <v-flex xs6>
+                  <div style="display:block">
+                    <span>Key</span>
+                    <div>
+                    <v-btn 
+                      id="keyLoading"
+                      class="ma-0"
+                      small dark color="accent"
+                      :loading="keyLoading"
+                      @click.native="confirmKeyDiag = true"
+                      :disabled="keyLoading"
+                      >
+                      Trigger
+                      <span slot="loader">Triggering...</span>
+                    </v-btn>
                     </div>
-
-                    <div style="display:flex">
-                      <v-flex xs6>
-                        <div style="display:block">
-                          <span>Key</span>
-                          <div>
-                          <v-btn 
-                            id="keyLoading"
-                            class="ma-0"
-                            small dark color="accent"
-                            :loading="keyLoading"
-                            @click.native="confirmKeyDiag = true"
-                            :disabled="keyLoading"
-                            >
-                            Trigger
-                            <span slot="loader">Triggering...</span>
-                          </v-btn>
-                          </div>
-                        </div>
-                      </v-flex>
-                      <v-flex xs6>
-                        <div style="display:block">
-                          <span>Wires</span>
-                          <div>
-                          <v-btn 
-                            id="wireLoading"
-                            class="ma-0"
-                            small dark color="accent"
-                            :loading="wireLoading"
-                            @click.native="confirmWireDiag = true"
-                            :disabled="wireLoading"
-                            >
-                            Trigger
-                            <span slot="loader">Triggering...</span>
-                          </v-btn>
-                          </div>
-                        </div>
-                      </v-flex>
+                  </div>
+                </v-flex>
+                <v-flex xs6>
+                  <div style="display:block">
+                    <span>Wires</span>
+                    <div>
+                    <v-btn 
+                      id="wireLoading"
+                      class="ma-0"
+                      small dark color="accent"
+                      :loading="wireLoading"
+                      @click.native="confirmWireDiag = true"
+                      :disabled="wireLoading"
+                      >
+                      Trigger
+                      <span slot="loader">Triggering...</span>
+                    </v-btn>
                     </div>
+                  </div>
+                </v-flex>
+              </div>
 
-                    <div style="display:flex;margin-top:10px;">
-                      <v-flex xs6>
-                        <div style="display:block">
-                          <span>Switch Errors</span>
-                          <v-switch 
-                            primary
-                            :label="switchErrorLabel"
-                            v-model="switchErrors"
-                            @click.native="switchErrorsClicked"
-                          ></v-switch>
-                        </div>
-                      </v-flex>
-                      <v-flex xs6>
-                        <div style="display:block">
-                          <span>Wire Errors</span>
-                          <v-switch 
-                            primary
-                            :label="wireErrorLabel"
-                            v-model="wireErrors"
-                            @click.native="wireErrorsClicked"
-                          ></v-switch>
-                        </div>
-                      </v-flex>
-                    </div>
+              <div style="display:flex;margin-top:10px;">
+                <v-flex xs6>
+                  <div style="display:block">
+                    <span>Switch Errors</span>
+                    <v-switch 
+                      primary
+                      :label="switchErrorLabel"
+                      v-model="switchErrors"
+                      @click.native="switchErrorsClicked"
+                    ></v-switch>
+                  </div>
+                </v-flex>
+                <v-flex xs6>
+                  <div style="display:block">
+                    <span>Wire Errors</span>
+                    <v-switch 
+                      primary
+                      :label="wireErrorLabel"
+                      v-model="wireErrors"
+                      @click.native="wireErrorsClicked"
+                    ></v-switch>
+                  </div>
+                </v-flex>
+              </div>
 
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-card>
-                      <v-card-title>
-                        <h4>State</h4>
-                      </v-card-title>
-                      <v-divider></v-divider>
+            </v-flex>
+            <v-flex xs12 sm6 md4>
+              <v-card>
+                <v-card-title>
+                  <h4>State</h4>
+                </v-card-title>
+                <v-divider></v-divider>
 
-                      <v-list dense>
-                        <v-list-tile>
-                          <v-list-tile-content :class="{ strikeIt: switchErrors }">Toggle 1:</v-list-tile-content>
-                          <v-list-tile-content class="align-end">
-                            <v-icon :style="{ color: iconColor(toggle1State) }">{{icon(toggle1State)}}</v-icon>
-                          </v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                          <v-list-tile-content :class="{ strikeIt: switchErrors }">Toggle 2:</v-list-tile-content>
-                          <v-list-tile-content class="align-end">
-                            <v-icon :style="{ color: iconColor(toggle2State) }">{{icon(toggle2State)}}</v-icon>
-                          </v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                          <v-list-tile-content :class="{ strikeIt: wireErrors }">Wire:</v-list-tile-content>
-                          <v-list-tile-content class="align-end">
-                            <v-icon :style="{ color: iconColor(wireState) }">{{icon(wireState)}}</v-icon>
-                          </v-list-tile-content>
-                        </v-list-tile>
-                        <v-divider/>
-                        <v-list-tile>
-                          <v-list-tile-content>Key Solved:</v-list-tile-content>
-                          <v-list-tile-content class="align-end">
-                            <v-icon :style="{ color: iconColor(keySolvedState) }">{{icon(keySolvedState, 'key')}}</v-icon>
-                          </v-list-tile-content>
-                        </v-list-tile>
-                        <v-list-tile>
-                          <v-list-tile-content>All Solved:</v-list-tile-content>
-                          <v-list-tile-content class="align-end">
-                            <v-icon :style="{ color: iconColor(allSolvedState) }">{{icon(allSolvedState, 'all')}}</v-icon>
-                          </v-list-tile-content>
-                        </v-list-tile>
-                      </v-list>
+                <v-list dense>
+                  <v-list-tile>
+                    <v-list-tile-content :class="{ strikeIt: switchErrors }">Toggle 1:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">
+                      <v-icon :style="{ color: iconColor(toggle1State) }">{{icon(toggle1State)}}</v-icon>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content :class="{ strikeIt: switchErrors }">Toggle 2:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">
+                      <v-icon :style="{ color: iconColor(toggle2State) }">{{icon(toggle2State)}}</v-icon>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content :class="{ strikeIt: wireErrors }">Wire:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">
+                      <v-icon :style="{ color: iconColor(wireState) }">{{icon(wireState)}}</v-icon>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-divider/>
+                  <v-list-tile>
+                    <v-list-tile-content>Key Solved:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">
+                      <v-icon :style="{ color: iconColor(keySolvedState) }">{{icon(keySolvedState, 'key')}}</v-icon>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile>
+                    <v-list-tile-content>All Solved:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">
+                      <v-icon :style="{ color: iconColor(allSolvedState) }">{{icon(allSolvedState, 'all')}}</v-icon>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
 
-                    </v-card>
-                  </v-flex>
-                </v-layout>
-              </v-card-text>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-card-text>
       </v-card>
 
       <div v-if="debugBar">
@@ -279,6 +278,13 @@ export default {
       } else {
         return '#BDBDBD'
       }
+    },
+
+    refreshTimer() {
+      console.log('refresh')
+    },
+    setTimer() {
+      console.log('set timer')
     },
 
     triggerKey() {
