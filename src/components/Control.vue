@@ -160,7 +160,7 @@
               </v-card-text>
       </v-card>
 
-      <div>
+      <div v-if="debugBar">
         <v-btn icon @click="timerEnabled = !timerEnabled"><v-icon >timer</v-icon></v-btn>
         <v-btn icon @click="tmpToggle"><v-icon >timeline</v-icon></v-btn>
         <v-btn icon @click="tmpLock()"><v-icon >lock</v-icon></v-btn>
@@ -179,6 +179,7 @@ export default {
     return {
       controlsRef: null,
       timerEnabled: false, // TODO: turn on when time/refresh is clicked
+      debugBar: false,
 
       // confirm dialog
       confirmKeyDiag: false,
@@ -222,6 +223,11 @@ export default {
 
   mounted() {
     this.controlsRef = this.$root.$data.fbdb.ref('control')
+
+    // only show the debug bar if we have ?dbg or ?debug in the url
+    if (this.$route.query.dbg !== undefined || this.$route.query.debug !== undefined) {
+      this.debugBar = true;
+    }
 
     setInterval(() => {
       if (!this.timerEnabled || (this.hours <= 0 && this.minutes <= 0 && this.seconds <= 0)) {
