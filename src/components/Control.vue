@@ -136,20 +136,20 @@
                         <v-list-tile>
                           <v-list-tile-content :class="{ strikeIt: wireErrors }">Wire:</v-list-tile-content>
                           <v-list-tile-content class="align-end">
-                            <v-icon style="color:#F44336">error</v-icon>
+                            <v-icon :style="{ color: iconColor(wireState) }">{{icon(wireState)}}</v-icon>
                           </v-list-tile-content>
                         </v-list-tile>
                         <v-divider/>
                         <v-list-tile>
                           <v-list-tile-content>Key Solved:</v-list-tile-content>
                           <v-list-tile-content class="align-end">
-                            <v-icon style="color:#4CAF50">done</v-icon>
+                            <v-icon :style="{ color: iconColor(keySolvedState) }">{{icon(keySolvedState, 'key')}}</v-icon>
                           </v-list-tile-content>
                         </v-list-tile>
                         <v-list-tile>
                           <v-list-tile-content>All Solved:</v-list-tile-content>
                           <v-list-tile-content class="align-end">
-                            <v-icon style="color:#4CAF50">done_all</v-icon>
+                            <v-icon :style="{ color: iconColor(allSolvedState) }">{{icon(allSolvedState, 'all')}}</v-icon>
                           </v-list-tile-content>
                         </v-list-tile>
                       </v-list>
@@ -179,20 +179,32 @@ export default {
   data () {
     return {
       controlsRef: null,
+
+      // confirm dialog
       confirmKeyDiag: false,
       confirmWireDiag: false,
+
+      // snack stuff
       snackbar: false,
       snackColor: 'success',
       snackTimeout: 4000,
       snackText: '',
-      loader: null,
+
+      // loading states
       keyLoading:false,
       wireLoading:false,
+
+      // error toggles
       switchErrors: false,
       wireErrors: false,
+
+      // device status states
       toggle1State: null,
       toggle2State: null,
-      wireState: null
+      wireState: null,
+      keySolvedState: null,
+      allSolvedState: null
+
     }
   },
 
@@ -214,7 +226,17 @@ export default {
   },
 
   methods: {
-    icon: function(state) {
+    icon: function(state, type) {
+      // special case key
+      if (type === 'key') {
+        return state === 'ok' ? 'done' : ''
+      }
+
+      // special case all
+      if (type === 'all') {
+        return state === 'ok' ? 'done_all' : ''
+      }
+
       if (state === 'ok') {
         return 'check_circle'
       } else if (state === 'bad') {
