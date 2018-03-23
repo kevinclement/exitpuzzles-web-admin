@@ -172,8 +172,8 @@
           </tr>
           <tr>
             <td><input maxlength="2" type='number' placeholder="HH" min="0" max="99" required></input> : </td>
-            <td><input maxlength="2" type='text'></input> : </td>
-            <td><input maxlength="2" type='text'></input></td>
+            <td><input maxlength="2" type='number' placeholder="MM" min="0" max="59" required></input> : </td>
+            <td><input maxlength="2" type='number' placeholder="SS" min="0" max="59" required></input></td>
           </tr>
         </table>
       </v-card-text>
@@ -406,6 +406,13 @@ export default {
 </script>
 
 <style scoped>
+/* disable gui stepper in input box */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 table {
   border: 1px solid black;
 }
