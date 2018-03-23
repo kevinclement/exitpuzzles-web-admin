@@ -163,8 +163,20 @@
   </v-dialog>
   <v-dialog v-model="resetTimeDiag" max-width="410">
     <v-card>
-      <v-card-title class="headline">RESET</v-card-title>
-      <v-card-text>RESET</v-card-text>
+      <v-card-title class="headline">Set New Time</v-card-title>
+      <v-card-text>Enter new time to set timer to.</v-card-text>
+      <v-card-text>
+        <table>
+          <tr>
+            <th>hours</th><th>minutes</th><th>seconds</th>
+          </tr>
+          <tr>
+            <td><input maxlength="2" type='text' style="border:1px solid black;width:60px;"></input> : </td>
+            <td><input maxlength="2" type='text' style="border:1px solid black;width:60px;"></input> : </td>
+            <td><input maxlength="2" type='text' style="border:1px solid black;width:60px;"></input></td>
+          </tr>
+        </table>
+      </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" flat="flat" @click.native="resetTimeDiag = false;">No</v-btn>
@@ -191,7 +203,7 @@ export default {
       // dialogs
       confirmKeyDiag: false,
       confirmWireDiag: false,
-      resetTimeDiag: false,
+      resetTimeDiag: true,
 
       // snack stuff
       snackbar: false,
@@ -394,6 +406,21 @@ export default {
 </script>
 
 <style scoped>
+table {
+  border: 1px solid black;
+}
+td {
+  background: lightgray;
+  font-size: 34px;
+  font-family: Monaco, monospace;
+}
+td > input {
+  width: 55px;
+  height: 75px;
+  font-size: 34px;
+  font-family: Monaco, monospace;
+  text-align: center;
+}
 #disabled {
   background:rgba(0,0,0,.12) !important;
   color: grey !important;
