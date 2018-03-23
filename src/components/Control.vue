@@ -162,8 +162,8 @@
 
       <div>
         <v-btn icon @click="timerEnabled = !timerEnabled"><v-icon >timer</v-icon></v-btn>
-        <v-btn icon @click=""><v-icon >build</v-icon>1</v-btn>
-        <v-btn icon><v-icon >build</v-icon>2</v-btn>
+        <v-btn icon @click="toggle1State = tmpToggle(toggle1State)"><v-icon >build</v-icon>1</v-btn>
+        <v-btn icon @click="toggle2State = tmpToggle(toggle2State)"><v-icon >build</v-icon>2</v-btn>
         <v-btn icon><v-icon >timeline</v-icon></v-btn>
         <v-btn icon @click="tmpLock()"><v-icon >lock</v-icon></v-btn>
         <v-btn icon @click="tmpAll()"><v-icon >cake</v-icon></v-btn>
@@ -288,6 +288,16 @@ export default {
     tmpLock() {
       // TODO: remove used for testing
       this.keySolvedState = 'ok'
+    },
+    tmpToggle(tgl) {
+
+      if (tgl === null) {
+        return (Math.random()*101|0) % 2 == 0 ? 'ok' : 'bad'
+      } else if (tgl === 'ok') {
+        return 'bad'
+      } else {
+        return 'ok'
+      }
     },
     tmpAll() {
       // TODO: remove used for testing
