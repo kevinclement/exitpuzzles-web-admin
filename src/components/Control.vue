@@ -87,7 +87,7 @@
             <v-flex xs12 sm6 md4>
               <v-card>
                 <v-card-title>
-                  <h4>State</h4>
+                  <h4><a @click="refreshState()">State</a></h4>
                 </v-card-title>
                 <v-divider></v-divider>
 
@@ -192,6 +192,11 @@
 </template>
 
 <script>
+let STATE = {
+  UNKNOWN: 1,
+  OK: 2,
+  BAD: 3
+}
 export default {
   data () {
     return {
@@ -227,11 +232,11 @@ export default {
       hours: 1,
       minutes: 11,
       seconds: 16,
-      toggle1State: null,
-      toggle2State: null,
-      wireState: null,
-      keySolvedState: null,
-      allSolvedState: null
+      toggle1State: STATE.UNKNOWN,
+      toggle2State: STATE.UNKNOWN,
+      wireState: STATE.UNKNOWN,
+      keySolvedState: STATE.UNKNOWN,
+      allSolvedState: STATE.UNKNOWN
 
     }
   },
@@ -282,26 +287,26 @@ export default {
     icon: function(state, type) {
       // special case key
       if (type === 'key') {
-        return state === 'ok' ? 'done' : ''
+        return state === STATE.OK ? 'done' : ''
       }
 
       // special case all
       if (type === 'all') {
-        return state === 'ok' ? 'done_all' : ''
+        return state === STATE.OK ? 'done_all' : ''
       }
 
-      if (state === 'ok') {
+      if (state === STATE.OK) {
         return 'check_circle'
-      } else if (state === 'bad') {
+      } else if (state === STATE.BAD) {
         return 'error'
       } else {
-        return 'help'
+        return ''
       }
     },
     iconColor: function(state) {
-      if (state === 'ok') {
+      if (state === STATE.OK) {
         return '#4CAF50'
-      } else if (state === 'bad') {
+      } else if (state === STATE.BAD) {
         return '#F44336'
       } else {
         return '#BDBDBD'
@@ -311,6 +316,17 @@ export default {
     refreshTimer() {
       // clear out times to indicate were loading
       this.hours = this.minutes = this.seconds = null;
+
+      // TODO: write proper to db
+      setTimeout(() => {
+        this.hours = 1;
+        this.minutes = 9;
+        this.seconds = 22;
+      }, 1200);
+    },
+    refreshState() {
+      // clear out icons to indicate reloading
+      this.toggle1State = this.toggle2State = this.wireState = 'unknown';
 
       // TODO: write proper to db
       setTimeout(() => {
@@ -388,25 +404,25 @@ export default {
       });
     },
     tmpLock() {
-      this.keySolvedState = 'ok'
+      this.keySolvedState = STATE.OK
     },
     tmpToggle() {
 
       this.toggle1State = 
-        this.toggle1State === null ? (Math.random()*101|0) % 2 == 0 ? 'ok' : 'bad' : 
-        this.toggle1State === 'ok' ? 'bad' : 'ok';
+        this.toggle1State === STATE.UNKNOWN ? (Math.random()*101|0) % 2 == 0 ? STATE.OK : STATE.BAD : 
+        this.toggle1State === STATE.OK ? STATE.BAD : STATE.OK;
 
       this.toggle2State = 
-        this.toggle2State === null ? (Math.random()*101|0) % 2 == 0 ? 'ok' : 'bad' : 
-        this.toggle2State === 'ok' ? 'bad' : 'ok';
+        this.toggle2State ===  STATE.UNKNOWN ? (Math.random()*101|0) % 2 == 0 ? STATE.OK : STATE.BAD : 
+        this.toggle2State === STATE.OK ? STATE.BAD : STATE.OK;
 
       this.wireState = 
-        this.wireState === null ? (Math.random()*101|0) % 2 == 0 ? 'ok' : 'bad' : 
-        this.wireState === 'ok' ? 'bad' : 'ok';
+        this.wireState ===  STATE.UNKNOWN ? (Math.random()*101|0) % 2 == 0 ? STATE.OK : STATE.BAD : 
+        this.wireState === STATE.OK ? STATE.BAD : STATE.OK;
     },
     tmpAll() {
-      this.keySolvedState = 'ok'
-      this.allSolvedState = 'ok'
+      this.keySolvedState = STATE.OK
+      this.allSolvedState = STATE.OK
     }
   }
 }
