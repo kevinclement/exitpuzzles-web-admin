@@ -71,7 +71,17 @@
                         <div style="display:block">
                           <span>Wires</span>
                           <div>
-                          <v-btn class="ma-0" small color="accent" dark @click.stop="confirmWireDiag = true">Trigger</v-btn>
+                          <v-btn 
+                            id="wireLoading"
+                            class="ma-0"
+                            small dark color="accent"
+                            :loading="wireLoading"
+                            @click.native="confirmWireDiag = true"
+                            :disabled="wireLoading"
+                            >
+                            Trigger
+                            <span slot="loader">Triggering...</span>
+                          </v-btn>
                           </div>
                         </div>
                       </v-flex>
@@ -166,7 +176,8 @@ export default {
       snackTimeout: 4000,
       snackText: '',
       loader: null,
-      keyLoading:false
+      keyLoading:false,
+      wireLoading:false
     }
   },
 
@@ -202,6 +213,7 @@ export default {
       let btn = document.getElementById('keyLoading');
       btn.id = 'disabled'
 
+      // TODO: TMP: do the real work here
       setTimeout(() => {
          this.snackText = 'Key triggered successfully.';
          this.snackbar = true;
@@ -213,10 +225,21 @@ export default {
     },
     triggerWire() {
       this.confirmWireDiag = false;
+      this.wireLoading = true;
+
+      // HACK: total hack to get around disabled styling.  don't have time to figure out proper
+      let btn = document.getElementById('wireLoading');
+      btn.id = 'disabled'
+
+      // TODO: TMP: do the real work here
       setTimeout(() => {
-        this.snackText = 'Wire error triggered successfully.';
-        this.snackbar = true;
-      }, 1000)
+         this.snackText = 'Wire error triggered successfully.';
+         this.snackbar = true;
+         this.wireLoading = false;
+         btn.id = 'wireLoading'
+
+      }, 3000)
+
     }
   }
 }
