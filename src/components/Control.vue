@@ -171,9 +171,9 @@
             <th>hours</th><th>minutes</th><th>seconds</th>
           </tr>
           <tr>
-            <td><input maxlength="2" type='text' style="border:1px solid black;width:60px;"></input> : </td>
-            <td><input maxlength="2" type='text' style="border:1px solid black;width:60px;"></input> : </td>
-            <td><input maxlength="2" type='text' style="border:1px solid black;width:60px;"></input></td>
+            <td><input maxlength="2" type='number' placeholder="HH" min="0" max="99" required></input> : </td>
+            <td><input maxlength="2" type='text'></input> : </td>
+            <td><input maxlength="2" type='text'></input></td>
           </tr>
         </table>
       </v-card-text>
@@ -415,11 +415,12 @@ td {
   font-family: Monaco, monospace;
 }
 td > input {
-  width: 55px;
+  width: 75px;
   height: 75px;
   font-size: 34px;
   font-family: Monaco, monospace;
   text-align: center;
+  border:1px solid black;
 }
 #disabled {
   background:rgba(0,0,0,.12) !important;
