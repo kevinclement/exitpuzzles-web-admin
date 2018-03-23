@@ -402,7 +402,7 @@ export default {
       }, 3000)
     },
     triggerReset() {
-      console.log('resetting device')
+      // TODO: actually issue the reset operation
       this.resetTntDiag = false;
     },
 
