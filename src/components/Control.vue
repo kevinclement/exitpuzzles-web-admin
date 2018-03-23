@@ -163,7 +163,7 @@
   </v-dialog>
   <v-dialog v-model="resetTimeDiag" max-width="410">
     <v-card>
-      <v-card-title class="headline">Set New Time</v-card-title>
+      <v-card-title class="headline">Set new time</v-card-title>
       <v-card-text>Enter new time to set timer to.</v-card-text>
       <v-card-text>
         <table>
