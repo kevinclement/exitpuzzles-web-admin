@@ -4,7 +4,7 @@
   <!-- morse code -->
   <v-card class="morseCard">
     <v-toolbar card>
-      <v-toolbar-title>Morse Code {{clicks}}</v-toolbar-title>
+      <v-toolbar-title>Morse Code {{touched}}</v-toolbar-title>
       <span class="spacer" />
     </v-toolbar>
 
@@ -17,7 +17,7 @@
       class="elevation-1"
       >
         <template slot="items" slot-scope="props">
-          <td @click="clicksample">{{ props.item.message }}</td>
+          <td @touchstart="touchstart" @touchend="touchend">{{ props.item.message }}</td>
           <td class="text-xs-right ">
             <v-btn icon class="mx-0" @click="deleteItem(props.item)">
               <v-icon color="pink">delete</v-icon>
@@ -38,7 +38,8 @@
 <script>
   export default {
     data: () => ({
-      clicks: '',   
+      touchWatch: null,
+      touched: '',
       dialog: false,
       headers: [
         {
@@ -131,8 +132,19 @@
           }
         ]
       },
-      clicksample() {
-        this.clicks = new Date();
+      touchstart() {
+        this.touchWatch = new Date().getTime();
+        console.log('start')
+      },
+      touchend() {
+        let now = new Date().getTime();
+        let elapsed = now - this.touchWatch
+        if (elapsed > 1000) {
+          this.touched = 'touched!'
+        } else {
+          this.touched = ''
+        }
+        console.log('end:' + elapsed)
       },
       editItem (item) {
         this.editedIndex = this.items.indexOf(item)
