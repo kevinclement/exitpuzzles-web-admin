@@ -77,7 +77,7 @@
       initialize () {
         this.items = [
           {
-            message: 'Cigar labels spell something'
+            message: '12345678901234561234567890123456'
           },
           {
             message: 'Translate on chalkboard 1st'
