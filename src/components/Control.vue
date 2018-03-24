@@ -1,5 +1,9 @@
 <template>
-  <control-tnt></control-tnt>
+  <v-container fluid>
+      <control-tnt></control-tnt>
+      <control-morse></control-morse>
+    </div>
+  </v-container>
 </template>
 
 <script>

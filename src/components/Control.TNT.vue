@@ -1,7 +1,8 @@
 <template>
- <v-container fluid fill-height>
-  <v-layout >
+
     <v-flex>
+
+      <!-- tnt card -->
       <v-card>
         <v-toolbar card>
           <v-toolbar-title>TNT</v-toolbar-title>
@@ -133,75 +134,16 @@
         </v-card-text>
       </v-card>
 
+      <!-- debug bar -->
       <div v-if="debugBar">
         <v-btn icon @click="timerEnabled = !timerEnabled"><v-icon >timer</v-icon></v-btn>
         <v-btn icon @click="tmpToggle"><v-icon >timeline</v-icon></v-btn>
         <v-btn icon @click="tmpLock()"><v-icon >lock</v-icon></v-btn>
         <v-btn icon @click="tmpAll()"><v-icon >cake</v-icon></v-btn>
       </div>
-    </v-flex>
-  </v-layout>
-  <v-dialog v-model="confirmKeyDiag" max-width="410">
-    <v-card>
-      <v-card-title class="headline">Really trigger the key?</v-card-title>
-      <v-card-text>Are you sure you want to trigger launching of the key from the device?</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="confirmKeyDiag = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="triggerKey">Yes</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-  <v-dialog v-model="confirmWireDiag" max-width="410">
-    <v-card>
-      <v-card-title class="headline">Really trigger a wire error?</v-card-title>
-      <v-card-text>Are you sure you want to trigger a wrong wire error on the device?</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="confirmWireDiag = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="triggerWire">Yes</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-  <v-dialog v-model="resetTntDiag" max-width="410">
-    <v-card>
-      <v-card-title class="headline">Really reset the device?</v-card-title>
-      <v-card-text>This will reboot the device and all current state lost.  Are you <i>sure</i> you want to do that?</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="resetTntDiag = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="triggerReset">Yes</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-  <v-dialog v-model="resetTimeDiag" persistent max-width="360">
-    <v-card>
-      <v-card-title class="headline" style="padding-bottom:0px">Set new time</v-card-title>
-      <v-card-text style="padding-top:5px">Enter new time to set timer to.</v-card-text>
-      <v-card-text>
-        <table>
-          <tr>
-            <td><input v-model="setTime.hour" maxlength="2" type='number' placeholder="HH" min="0" max="99" required></input></td>
-            <td>:</td>
-            <td><input v-model="setTime.minute" maxlength="2" type='number' placeholder="MM" min="0" max="59" required></input></td>
-            <td>:</td>
-            <td><input v-model="setTime.second" maxlength="2" type='number' placeholder="SS" min="0" max="59" required></input></td>
-          </tr>
-        </table>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="resetTimeDiag = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="setTimer">Yes</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-  <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
-      {{ snackText }}
-      <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
-  </v-snackbar>
 
-</v-container>
+    </v-flex>
+
 </template>
 
 <script>
