@@ -4,7 +4,7 @@
   <!-- morse code -->
   <v-card class="morseCard">
     <v-toolbar card>
-      <v-toolbar-title>Morse Code</v-toolbar-title>
+      <v-toolbar-title>Morse Code {{clicks}}</v-toolbar-title>
       <span class="spacer" />
     </v-toolbar>
 
@@ -17,7 +17,7 @@
       class="elevation-1"
       >
         <template slot="items" slot-scope="props">
-          <td>{{ props.item.message }}</td>
+          <td @click="clicksample">{{ props.item.message }}</td>
           <td class="text-xs-right ">
             <v-btn icon class="mx-0" @click="deleteItem(props.item)">
               <v-icon color="pink">delete</v-icon>
@@ -38,6 +38,7 @@
 <script>
   export default {
     data: () => ({
+      clicks: '',   
       dialog: false,
       headers: [
         {
@@ -82,9 +83,56 @@
             message: 'Still waiting for a code...'
           },
           {
+            message: 'Translate on chalkboard 1st'
+          },
+          {
+            message: 'Still waiting for a code...'
+          },
+          {
+            message: 'Translate on chalkboard 1st'
+          },
+          {
+            message: 'Still waiting for a code...'
+          },
+          {
+            message: 'Translate on chalkboard 1st'
+          },
+          {
+            message: 'Still waiting for a code...'
+          },
+          {
+            message: 'Translate on chalkboard 1st'
+          },
+          {
+            message: 'Still waiting for a code...'
+          },
+          {
+            message: 'Translate on chalkboard 1st'
+          },
+          {
+            message: 'Still waiting for a code...'
+          },
+          {
+            message: 'Translate on chalkboard 1st'
+          },
+          {
+            message: 'Still waiting for a code...'
+          },
+          
+          {
+            message: 'Translate on chalkboard 1st'
+          },
+          {
+            message: 'Still waiting for a code...'
+          },
+
+          {
             message: 'Make sure you Add ALL books'
           }
         ]
+      },
+      clicksample() {
+        this.clicks = new Date();
       },
       editItem (item) {
         this.editedIndex = this.items.indexOf(item)
