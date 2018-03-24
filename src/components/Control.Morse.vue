@@ -6,7 +6,9 @@
     <v-toolbar card>
       <v-toolbar-title>Morse Code</v-toolbar-title>
       <span class="spacer" />
-      <v-btn flat small color="blue darken-2" @click.native="">Edit</v-btn>
+      
+      <v-btn icon title="Set timer" @click.native="resetTimeDiag = true"><v-icon >edit</v-icon></v-btn>
+      <v-btn icon title="Set timer" @click.native="resetTimeDiag = true"><v-icon >add</v-icon></v-btn>
     </v-toolbar>
 
     <v-card-text class="grey lighten-3">
@@ -135,7 +137,7 @@
         console.log('start')
       },
       touchend() {
-        console.log('end:' + elapsed)
+        console.log('end:')
       },
       editItem (item) {
         this.editedIndex = this.items.indexOf(item)
