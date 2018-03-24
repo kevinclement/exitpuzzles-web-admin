@@ -6,6 +6,7 @@
     <v-toolbar card>
       <v-toolbar-title>Morse Code</v-toolbar-title>
       <span class="spacer" />
+      <v-btn flat small color="blue darken-2" @click.native="">Edit</v-btn>
     </v-toolbar>
 
     <v-card-text class="grey lighten-3">
