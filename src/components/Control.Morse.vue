@@ -7,8 +7,8 @@
       <v-toolbar-title>Morse Code</v-toolbar-title>
       <span class="spacer" />
       
-      <v-btn icon title="Set timer" @click.native="resetTimeDiag = true"><v-icon >edit</v-icon></v-btn>
-      <v-btn icon title="Set timer" @click.native="resetTimeDiag = true"><v-icon >add</v-icon></v-btn>
+      <v-btn icon title="Edit messages" @click.native="editMode = !editMode"><v-icon >edit</v-icon></v-btn>
+      <v-btn icon title="Add a message" @click.native=""><v-icon >add</v-icon></v-btn>
     </v-toolbar>
 
     <v-card-text class="grey lighten-3">
@@ -23,7 +23,7 @@
           <td @touchstart="touchstart" @touchend="touchend">{{ props.item.message }}</td>
           <td class="text-xs-right ">
             <v-btn icon class="mx-0" @click="deleteItem(props.item)">
-              <v-icon color="pink">delete</v-icon>
+              <v-icon v-if="editMode" color="pink">delete</v-icon>
             </v-btn>
           </td>
         </template>
@@ -42,6 +42,7 @@
   export default {
     data: () => ({
       dialog: false,
+      editMode: false,
       headers: [
         {
           text: 'Message',
