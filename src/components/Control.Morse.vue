@@ -13,6 +13,7 @@
       :headers="headers"
       :items="items"
       hide-actions
+      hide-headers
       class="elevation-1"
       >
         <template slot="items" slot-scope="props">
@@ -72,34 +73,16 @@
       initialize () {
         this.items = [
           {
-            message: 'Frozen Yogurt'
+            message: 'Cigar labels spell something'
           },
           {
-            message: 'Ice cream sandwich'
+            message: 'Translate on chalkboard 1st'
           },
           {
-            message: 'Eclair'
+            message: 'Still waiting for a code...'
           },
           {
-            message: 'Cupcake'
-          },
-          {
-            message: 'Gingerbread'
-          },
-          {
-            message: 'Jelly bean'
-          },
-          {
-            message: 'Lollipop'
-          },
-          {
-            message: 'Honeycomb'
-          },
-          {
-            message: 'Donut'
-          },
-          {
-            message: 'KitKat'
+            message: 'Make sure you Add ALL books'
           }
         ]
       },
