@@ -4,7 +4,7 @@
   <!-- morse code -->
   <v-card class="morseCard">
     <v-toolbar card>
-      <v-toolbar-title>Morse Code {{touched}}</v-toolbar-title>
+      <v-toolbar-title>Morse Code</v-toolbar-title>
       <span class="spacer" />
     </v-toolbar>
 
@@ -38,8 +38,6 @@
 <script>
   export default {
     data: () => ({
-      touchWatch: null,
-      touched: '',
       dialog: false,
       headers: [
         {
@@ -133,17 +131,9 @@
         ]
       },
       touchstart() {
-        this.touchWatch = new Date().getTime();
         console.log('start')
       },
       touchend() {
-        let now = new Date().getTime();
-        let elapsed = now - this.touchWatch
-        if (elapsed > 1000) {
-          this.touched = 'touched!'
-        } else {
-          this.touched = ''
-        }
         console.log('end:' + elapsed)
       },
       editItem (item) {
