@@ -73,7 +73,7 @@
       >
         <template slot="items" slot-scope="props">
           <td>
-            <a v-if="editMode" @click="editItem(props.item)">{{ props.item.line1 }} {{ props.item.line2 }}</a>
+            <a v-if="editMode" @click="editItem(props.item)">{{ props.item.line1 }}<br/>{{ props.item.line2 }}</a>
             <span v-if="!editMode">{{ props.item.line1 }}<br/>{{ props.item.line2 }}</span>
           </td>
           <td class="text-xs-right ">
