@@ -169,7 +169,7 @@
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
-      sendClue (item) {
+      sendClue () {
         this.operationsRef.push({
           command: 'clue',
           data: { line1: this.clueToSend.line1, line2: this.clueToSend.line2 }
@@ -203,9 +203,10 @@
         if (this.editedIndex > -1) {
           this.morseCluesRef.child(this.editedItem.id).set({ line1: this.editedItem.line1, line2: this.editedItem.line2})
         } else if (this.adhoc) {
-          // NOOP for now
+          this.clueToSend = this.editedItem
+          this.sendClue()
         } else {
-          this.morseCluesRef.push(this.editedItem);
+          this.morseCluesRef.push(this.editedItem)
         }
         this.close()
       }
