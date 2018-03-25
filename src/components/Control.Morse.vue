@@ -185,7 +185,6 @@
 
         // tell firedb to remove item
         this.morseCluesRef.child(id).remove();
-
       },
       close () {
         this.dialog = false
@@ -197,11 +196,11 @@
       },
       save () {
         if (this.editedIndex > -1) {
-          Object.assign(this.items[this.editedIndex], this.editedItem)
+          this.morseCluesRef.child(this.editedItem.id).set({ line1: this.editedItem.line1, line2: this.editedItem.line2})
         } else if (this.adhoc) {
           // NOOP for now
         } else {
-          this.items.push(this.editedItem)
+          this.morseCluesRef.push(this.editedItem);
         }
         this.close()
       }
