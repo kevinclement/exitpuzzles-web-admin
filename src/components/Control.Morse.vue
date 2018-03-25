@@ -27,7 +27,7 @@
     </v-card>
   </v-dialog>
 
-  <!-- confirm dialog -->
+  <!-- confirm delete dialog -->
   <v-dialog v-model="clueDiag" max-width="410">
     <v-card>
       <v-card-title class="headline">Really delete the clue?</v-card-title>
@@ -36,6 +36,19 @@
         <v-spacer></v-spacer>
         <v-btn color="primary" flat="flat" @click.native="clueDiag = false">No</v-btn>
         <v-btn color="primary" flat="flat" @click.native="deleteClue">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
+  <!-- send confirm dialog -->
+  <v-dialog v-model="clueSendDiag" max-width="410">
+    <v-card>
+      <v-card-title class="headline">Send the clue?</v-card-title>
+      <v-card-text>Are you sure you want to send the clue to the device?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="clueSendDiag = false">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="sendClue">Yes</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -67,7 +80,7 @@
             <v-btn v-if="editMode" icon class="mx-0" @click="clueDiag = true; clueToDelete = props.item">
               <v-icon  color="red lighten-1">delete</v-icon>
             </v-btn>
-            <v-btn v-if="!editMode" icon class="mx-0" @click="sendClue(props.item)">
+            <v-btn v-if="!editMode" icon class="mx-0" @click="clueSendDiag = true; clueToSend = props.item">
               <v-icon  color="blue accent-1">announcement</v-icon>
             </v-btn>
           </td>
@@ -88,6 +101,8 @@
     data: () => ({
       adhoc: false,
       confirmDeleteDiag: false,
+      clueSendDiag: false,
+      clueToSend: null,
       dialog: false,
       editMode: false,
       items: [],
@@ -126,6 +141,10 @@
           {
             line1: 'Cigar labels',
             line2: 'Spell something'
+          },
+          {
+            line1: 'Cigar labels 2',
+            line2: 'Spell something'
           }
 
         ]
@@ -136,7 +155,10 @@
         this.dialog = true
       },
       sendClue (item) {
-        console.log('sending clue' + item.line1 + ' ' + item.line2);
+        console.log('sending clue' + this.clueToSend.line1 + ' ' + this.clueToSend.line2);
+
+        this.clueSendDiag = false;
+        this.clueToSend = null;
       },
       adhocSend() {
         this.adhoc = true
@@ -149,10 +171,10 @@
       },
       close () {
         this.dialog = false
-        this.adhoc = false
         setTimeout(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
+          this.adhoc = false
         }, 300)
       },
       save () {
