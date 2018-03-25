@@ -6,7 +6,8 @@
     <v-toolbar card>
       <v-toolbar-title>Morse Code</v-toolbar-title>
       <span class="spacer" />
-      
+
+      <v-btn icon title="Add a message" @click.native=""><v-icon >message</v-icon></v-btn>
       <v-btn icon title="Edit messages" @click.native="editMode = !editMode"><v-icon >edit</v-icon></v-btn>
       <v-btn icon title="Add a message" @click.native=""><v-icon >add</v-icon></v-btn>
     </v-toolbar>
