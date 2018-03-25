@@ -61,7 +61,7 @@
         <template slot="items" slot-scope="props">
           <td>
             <a v-if="editMode" @click="editItem(props.item)">{{ props.item.line1 }} {{ props.item.line2 }}</a>
-            <span v-if="!editMode">{{ props.item.line1 }} {{ props.item.line2 }}</span>
+            <span v-if="!editMode">{{ props.item.line1 }}<br/>{{ props.item.line2 }}</span>
           </td>
           <td class="text-xs-right ">
             <v-btn v-if="editMode" icon class="mx-0" @click="clueDiag = true; clueToDelete = props.item">
