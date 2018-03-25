@@ -56,7 +56,7 @@
   <!-- morse code -->
   <v-card class="morseCard">
     <v-toolbar card>
-      <v-toolbar-title>Morse Code</v-toolbar-title>
+      <v-toolbar-title>Morse Code {{ios}}</v-toolbar-title>
       <span class="spacer" />
 
       <v-btn icon title="Send a message" @click.native="adhocSend"><v-icon >message</v-icon></v-btn>
@@ -68,7 +68,7 @@
       <div class="elevation-1">
         <table class="datatable table">
           <tbody>
-            <tr v-for="item in items">
+            <tr class="clueRow" v-for="item in items">
               <td>
                 <a v-if="editMode" @click="editItem(item)">{{ item.line1 }}<br/>{{ item.line2 }}</a>
                 <span v-if="!editMode">{{ item.line1 }}<br/>{{ item.line2 }}</span>
@@ -95,6 +95,7 @@
 <script>
   export default {
     data: () => ({
+      ios: false,
       adhoc: false,
       confirmDeleteDiag: false,
       clueSendDiag: false,
@@ -133,6 +134,7 @@
     },
     created () {
       this.initialize()
+      this.ios = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
     },
     methods: {
       initialize () {
@@ -188,10 +190,15 @@
       }
     }
   }
+
 </script>
 
 <style scoped>
 .morseCard {
   margin-top: 30px;
+}
+@media (max-width: 900px) {
+  .clueRow:hover {
+  }
 }
 </style>
