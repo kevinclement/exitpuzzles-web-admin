@@ -95,6 +95,7 @@
 <script>
   export default {
     data: () => ({
+      morseCluesRef: null,
       ios: false,
       adhoc: false,
       confirmDeleteDiag: false,
@@ -133,23 +134,34 @@
       }
     },
     created () {
-      this.initialize()
       this.ios = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+
+      this.morseCluesRef = this.$root.$data.fbdb.ref('morse/clues')
+
+      let that = this
+      this.morseCluesRef.on('child_added', function(data) {
+        let clue = data.val()
+        that.items.push({'id':data.key, ...clue})
+      })
+
+      this.morseCluesRef.on('child_changed', function(data) {
+        let clue = data.val()
+        let aClue = that.items.find((clue) => {
+          return clue.id === data.key;
+        })
+
+        aClue.line1 = clue.line1;
+        aClue.line2 = clue.line2;
+      });
+
+      this.morseCluesRef.on('child_removed', function(data) {
+        that.items = that.items.filter((clue) => {
+          return clue.id !== data.key;
+        })
+      });
+
     },
     methods: {
-      initialize () {
-        this.items = [
-          {
-            line1: 'Cigar labels',
-            line2: 'Spell something'
-          },
-          {
-            line1: 'Cigar labels 2',
-            line2: 'Spell something'
-          }
-
-        ]
-      },
       editItem (item) {
         this.editedIndex = this.items.indexOf(item)
         this.editedItem = Object.assign({}, item)
