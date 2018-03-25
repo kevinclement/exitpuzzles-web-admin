@@ -64,31 +64,27 @@
       <v-btn icon title="Add a message" @click.native="dialog=true"><v-icon>add</v-icon></v-btn>
     </v-toolbar>
 
-    <v-card-text class="grey lighten-3">
-      <v-data-table
-      :items="items"
-      hide-actions
-      hide-headers
-      class="elevation-1"
-      >
-        <template slot="items" slot-scope="props">
-          <td>
-            <a v-if="editMode" @click="editItem(props.item)">{{ props.item.line1 }}<br/>{{ props.item.line2 }}</a>
-            <span v-if="!editMode">{{ props.item.line1 }}<br/>{{ props.item.line2 }}</span>
-          </td>
-          <td class="text-xs-right ">
-            <v-btn v-if="editMode" icon class="mx-0" @click="clueDiag = true; clueToDelete = props.item">
-              <v-icon  color="red lighten-1">delete</v-icon>
-            </v-btn>
-            <v-btn v-if="!editMode" icon class="mx-0" @click="clueSendDiag = true; clueToSend = props.item">
-              <v-icon  color="blue accent-1">announcement</v-icon>
-            </v-btn>
-          </td>
-        </template>
-        <template slot="no-data">
-          <v-btn color="primary" @click="initialize">Reset</v-btn>
-        </template>
-      </v-data-table>
+    <v-card-text class="grey lighten-3 ">
+      <div class="elevation-1">
+        <table class="datatable table">
+          <tbody>
+            <tr v-for="item in items">
+              <td>
+                <a v-if="editMode" @click="editItem(item)">{{ item.line1 }}<br/>{{ item.line2 }}</a>
+                <span v-if="!editMode">{{ item.line1 }}<br/>{{ item.line2 }}</span>
+              </td>
+              <td class="text-xs-right ">
+                <v-btn v-if="editMode" icon class="mx-0" @click="clueDiag = true; clueToDelete = item">
+                  <v-icon  color="red lighten-1">delete</v-icon>
+                </v-btn>
+                <v-btn v-if="!editMode" icon class="mx-0" @click="clueSendDiag = true; clueToSend = item">
+                  <v-icon  color="blue accent-1">announcement</v-icon>
+                </v-btn>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </v-card-text>
 
   </v-card>
