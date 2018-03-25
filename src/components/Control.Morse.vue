@@ -96,6 +96,7 @@
   export default {
     data: () => ({
       morseCluesRef: null,
+      operationsRef: null,
       ios: false,
       adhoc: false,
       confirmDeleteDiag: false,
@@ -137,6 +138,7 @@
       this.ios = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 
       this.morseCluesRef = this.$root.$data.fbdb.ref('morse/clues')
+      this.operationsRef = this.$root.$data.fbdb.ref('operations')
 
       let that = this
       this.morseCluesRef.on('child_added', function(data) {
@@ -168,7 +170,10 @@
         this.dialog = true
       },
       sendClue (item) {
-        console.log('sending clue' + this.clueToSend.line1 + ' ' + this.clueToSend.line2);
+        this.operationsRef.push({
+          command: 'clue',
+          data: { line1: this.clueToSend.line1, line2: this.clueToSend.line2 }
+        });
 
         this.clueSendDiag = false;
         this.clueToSend = null;
