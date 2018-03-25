@@ -178,9 +178,14 @@
         this.dialog = true
       },
       deleteClue() {
-        console.log('deleting ' + this.clueToDelete.line1 + ' ' + this.clueToDelete.line2);
+        let id = this.clueToDelete.id;
+
         this.clueToDelete = null;
         this.clueDiag = false;
+
+        // tell firedb to remove item
+        this.morseCluesRef.child(id).remove();
+
       },
       close () {
         this.dialog = false
