@@ -1,7 +1,7 @@
 <template>
  
 <v-flex>
-  <!-- dialogs -->
+  <!-- add/edit/adhoc dialog -->
   <v-dialog v-model="dialog" max-width="500px">
     <v-card>
       <v-card-title>
@@ -27,6 +27,19 @@
     </v-card>
   </v-dialog>
 
+  <!-- confirm dialog -->
+  <v-dialog v-model="clueDiag" max-width="410">
+    <v-card>
+      <v-card-title class="headline">Really delete the clue?</v-card-title>
+      <v-card-text>Are you sure you want permanently remove the clue from the system?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="clueDiag = false">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="deleteClue">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
   <!-- morse code -->
   <v-card class="morseCard">
     <v-toolbar card>
@@ -48,7 +61,7 @@
         <template slot="items" slot-scope="props">
           <td>{{ props.item.line1 }} {{ props.item.line2 }}</td>
           <td class="text-xs-right ">
-            <v-btn v-if="editMode" icon class="mx-0" @click="deleteItem(props.item)">
+            <v-btn v-if="editMode" icon class="mx-0" @click="clueDiag = true; clueToDelete = props.item">
               <v-icon  color="red lighten-1">delete</v-icon>
             </v-btn>
             <v-btn v-if="!editMode" icon class="mx-0" @click="sendClue(props.item)">
@@ -70,9 +83,13 @@
 <script>
   export default {
     data: () => ({
+      adhoc: false,
+      confirmDeleteDiag: false,
       dialog: false,
       editMode: false,
       items: [],
+      clueDiag: false,
+      clueToDelete: null,
       editedIndex: -1,
       editedItem: {
         line1: '',
@@ -85,7 +102,11 @@
     }),
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'New Clue' : 'Edit Clue'
+        if (this.adhoc) {
+          return 'Send Clue';
+        } else {
+          return this.editedIndex === -1 ? 'New Clue' : 'Edit Clue'
+        }
       }
     },
     watch: {
@@ -115,14 +136,17 @@
         console.log('sending clue' + item.line1 + ' ' + item.line2);
       },
       adhocSend() {
-        console.log('adhoc');
+        this.adhoc = true
+        this.dialog = true
       },
-      deleteItem (item) {
-        const index = this.items.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.items.splice(index, 1)
+      deleteClue() {
+        console.log('deleting ' + this.clueToDelete.line1 + ' ' + this.clueToDelete.line2);
+        this.clueToDelete = null;
+        this.clueDiag = false;
       },
       close () {
         this.dialog = false
+        this.adhoc = false
         setTimeout(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
@@ -131,6 +155,8 @@
       save () {
         if (this.editedIndex > -1) {
           Object.assign(this.items[this.editedIndex], this.editedItem)
+        } else if (this.adhoc) {
+          // NOOP for now
         } else {
           this.items.push(this.editedItem)
         }
