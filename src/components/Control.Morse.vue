@@ -11,10 +11,10 @@
         <v-container grid-list-md>
           <v-layout wrap>
             <v-flex xs12>
-              <v-text-field label="Line 1" v-model="editedItem.line1"></v-text-field>
+              <v-text-field maxlength="16" label="Line 1" v-model="editedItem.line1"></v-text-field>
             </v-flex>
             <v-flex xs12>
-              <v-text-field label="Line 2" v-model="editedItem.line2"></v-text-field>
+              <v-text-field maxlength="16" label="Line 2" v-model="editedItem.line2"></v-text-field>
             </v-flex>
           </v-layout>
         </v-container>
