@@ -20,10 +20,13 @@
       class="elevation-1"
       >
         <template slot="items" slot-scope="props">
-          <td @touchstart="touchstart" @touchend="touchend">{{ props.item.message }}</td>
+          <td>{{ props.item.line1 }} {{ props.item.line2 }}</td>
           <td class="text-xs-right ">
-            <v-btn icon class="mx-0" @click="deleteItem(props.item)">
-              <v-icon v-if="editMode" color="pink">delete</v-icon>
+            <v-btn v-if="editMode" icon class="mx-0" @click="deleteItem(props.item)">
+              <v-icon  color="pink">delete</v-icon>
+            </v-btn>
+            <v-btn v-if="!editMode" icon class="mx-0" @click="sendClue(props.item)">
+              <v-icon  color="blue accent-1">announcement</v-icon>
             </v-btn>
           </td>
         </template>
@@ -77,73 +80,19 @@
       initialize () {
         this.items = [
           {
-            message: '12345678901234561234567890123456'
-          },
-          {
-            message: 'Translate on chalkboard 1st'
-          },
-          {
-            message: 'Still waiting for a code...'
-          },
-          {
-            message: 'Translate on chalkboard 1st'
-          },
-          {
-            message: 'Still waiting for a code...'
-          },
-          {
-            message: 'Translate on chalkboard 1st'
-          },
-          {
-            message: 'Still waiting for a code...'
-          },
-          {
-            message: 'Translate on chalkboard 1st'
-          },
-          {
-            message: 'Still waiting for a code...'
-          },
-          {
-            message: 'Translate on chalkboard 1st'
-          },
-          {
-            message: 'Still waiting for a code...'
-          },
-          {
-            message: 'Translate on chalkboard 1st'
-          },
-          {
-            message: 'Still waiting for a code...'
-          },
-          {
-            message: 'Translate on chalkboard 1st'
-          },
-          {
-            message: 'Still waiting for a code...'
-          },
-          
-          {
-            message: 'Translate on chalkboard 1st'
-          },
-          {
-            message: 'Still waiting for a code...'
-          },
-
-          {
-            message: 'Make sure you Add ALL books'
+            line1: 'Cigar labels',
+            line2: 'Spell something'
           }
+
         ]
-      },
-      touchstart() {
-        console.log('start')
-      },
-      touchend() {
-        console.log('end:')
       },
       editItem (item) {
         this.editedIndex = this.items.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
+      },
+      sendClue (item) {
+        console.log('sending clue' + item.line1 + ' ' + item.line2);
       },
       deleteItem (item) {
         const index = this.items.indexOf(item)
