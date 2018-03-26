@@ -280,13 +280,7 @@ export default {
       that.hours = time.hours;
       that.minutes = time.minutes;
       that.seconds = time.seconds;
-      
-      console.log('time: ' + snapshot.val().hours + ':'+ snapshot.val().minutes + ':' + snapshot.val().seconds);
     });
-    // this.tntRef.child('time').on('child_changed', function(data) { 
-    //   console.log('change: ' + data.key + ' -> '  + data.val());
-    //   that[data.key] = data.val();
-    // });
 
     // only show the debug bar if we have ?dbg or ?debug in the url
     if (this.$route.query.dbg !== undefined || this.$route.query.debug !== undefined) {
