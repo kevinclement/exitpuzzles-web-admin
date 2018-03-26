@@ -216,6 +216,7 @@ export default {
   data () {
     return {
       operationsRef: null,
+      tntRef: null,
       timerEnabled: false, // TODO: turn on when time/refresh is clicked
       debugBar: false,
 
@@ -239,6 +240,7 @@ export default {
       // loading states
       keyLoading:false,
       wireLoading:false,
+      timeLoaded: false,
 
       // error toggles
       switchErrors: false,
@@ -268,6 +270,23 @@ export default {
 
   mounted() {
     this.operationsRef = this.$root.$data.fbdb.ref('operations')
+    this.tntRef = this.$root.$data.fbdb.ref('tnt')
+    
+    let that = this;
+    this.tntRef.child('time').on('value', function(snapshot) {
+      let time = snapshot.val();
+      if (time == null || !that.timeLoaded) return
+
+      that.hours = time.hours;
+      that.minutes = time.minutes;
+      that.seconds = time.seconds;
+      
+      console.log('time: ' + snapshot.val().hours + ':'+ snapshot.val().minutes + ':' + snapshot.val().seconds);
+    });
+    // this.tntRef.child('time').on('child_changed', function(data) { 
+    //   console.log('change: ' + data.key + ' -> '  + data.val());
+    //   that[data.key] = data.val();
+    // });
 
     // only show the debug bar if we have ?dbg or ?debug in the url
     if (this.$route.query.dbg !== undefined || this.$route.query.debug !== undefined) {
@@ -332,13 +351,9 @@ export default {
     refreshTimer() {
       // clear out times to indicate were loading
       this.hours = this.minutes = this.seconds = null;
+      this.timeLoaded = true;
 
-      // TODO: write proper to db
-      setTimeout(() => {
-        this.hours = 1;
-        this.minutes = 9;
-        this.seconds = 22;
-      }, 1200);
+      this.operationsRef.push({ command: 'refreshTime' });
     },
     refreshState() {
       // clear out icons to indicate reloading
@@ -424,10 +439,7 @@ export default {
     // #######################################################
     // ## Debug Methods ######################################
     ledtoggle() {
-      //    op: 'opt1' || 'opt2'
-      this.operationsRef.push({
-         command: 'led'
-      });
+      this.operationsRef.push({ command: 'led' });
     },
     tmpLock() {
       this.keySolvedState = STATE.OK
