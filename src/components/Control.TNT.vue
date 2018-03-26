@@ -280,6 +280,8 @@ export default {
       that.hours = time.hours;
       that.minutes = time.minutes;
       that.seconds = time.seconds;
+
+      that.timerEnabled = true;
     });
 
     // only show the debug bar if we have ?dbg or ?debug in the url
