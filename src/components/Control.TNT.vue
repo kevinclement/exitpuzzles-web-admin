@@ -215,7 +215,7 @@ let STATE = {
 export default {
   data () {
     return {
-      controlsRef: null,
+      operationsRef: null,
       timerEnabled: false, // TODO: turn on when time/refresh is clicked
       debugBar: false,
 
@@ -267,7 +267,7 @@ export default {
   },
 
   mounted() {
-    this.controlsRef = this.$root.$data.fbdb.ref('control')
+    this.operationsRef = this.$root.$data.fbdb.ref('operations')
 
     // only show the debug bar if we have ?dbg or ?debug in the url
     if (this.$route.query.dbg !== undefined || this.$route.query.debug !== undefined) {
@@ -425,8 +425,8 @@ export default {
     // ## Debug Methods ######################################
     ledtoggle() {
       //    op: 'opt1' || 'opt2'
-      this.controlsRef.push({
-         op: 'led'
+      this.operationsRef.push({
+         command: 'led'
       });
     },
     tmpLock() {
