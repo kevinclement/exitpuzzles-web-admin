@@ -217,7 +217,7 @@ export default {
     return {
       operationsRef: null,
       tntRef: null,
-      timerEnabled: false, // TODO: turn on when time/refresh is clicked
+      timerEnabled: false,
       debugBar: false,
 
       // dialogs
@@ -343,12 +343,12 @@ export default {
 
       // special case key
       if (type === 'key') {
-        return state === STATE.OK ? 'done' : empty_icon
+        return state === STATE.OK ? 'done' : ''
       }
 
       // special case all
       if (type === 'all') {
-        return state === STATE.OK ? 'done_all' : empty_icon
+        return state === STATE.OK ? 'done_all' : ''
       }
 
       if (state === STATE.OK) {
