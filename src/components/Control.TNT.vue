@@ -288,7 +288,12 @@ export default {
 
     this.tntRef.child('state').on('value', function(snapshot) {
       let state = snapshot.val();
-      if (state == null || !that.stateLoaded) return
+      if (state == null) return;
+      if (!that.stateLoaded) {
+        // ignore first load since it has stale data
+        that.stateLoaded = true;
+        return;
+      }
 
         that.toggle1State   = state.toggle1;
         that.toggle2State   = state.toggle2;
@@ -325,6 +330,11 @@ export default {
       }
 
     }, 1000);
+
+    // trigger time and state refreshes as if clicked
+    // NOTE: might have to disable this when it goes live, depends on experience
+    this.refreshTimer();
+    this.refreshState();
   },
 
   methods: {
@@ -373,7 +383,6 @@ export default {
         this.wireState      =
         this.keySolvedState =
         this.allSolvedState = STATE.UNKNOWN;
-      this.stateLoaded = true;
 
       this.operationsRef.push({ command: 'refreshState' });
     },
