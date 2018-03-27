@@ -312,7 +312,6 @@ export default {
       }
 
       this.seconds--
-      console.log(" h: " + this.hours + ' m: ' + this.minutes + " : " + this.seconds);
       if (this.seconds <= 0 && (this.minutes > 0 || this.hours > 0)) {
 
         this.seconds = 59
