@@ -272,10 +272,6 @@ export default {
       this.seconds = time.seconds;
 
       this.timerEnabled = true;
-
-      if (!this.snack) {
-        this.snack = () => {}
-      }
     });
 
     this.tntRef.child('state').on('value', (snapshot) => {
