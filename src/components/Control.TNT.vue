@@ -308,7 +308,8 @@ export default {
     }
 
     setInterval(() => {
-      if (!this.timerEnabled || (this.hours <= 0 && this.minutes <= 0 && this.seconds <= 0)) {
+      // turn off timer if its been solved or our time is not positive
+      if (!this.timerEnabled || this.allSolvedState === STATE.OK ||  (this.hours <= 0 && this.minutes <= 0 && this.seconds <= 0)) {
         return;
       }
 
