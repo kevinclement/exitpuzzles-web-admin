@@ -208,6 +208,7 @@ let STATE = {
   BAD: 3
 }
 export default {
+  props: ['snack'],
   data () {
     return {
       operationsRef: null,
@@ -271,6 +272,10 @@ export default {
       this.seconds = time.seconds;
 
       this.timerEnabled = true;
+
+      if (!this.snack) {
+        this.snack = () => {}
+      }
     });
 
     this.tntRef.child('state').on('value', (snapshot) => {
@@ -414,8 +419,7 @@ export default {
         if (command.received) {
 
           // pop snack letting user know  we triggered it
-          this.$parent.snackText = 'Key triggered successfully.'
-          this.$parent.snackbar = true
+          this.snack('Key triggered successfully.')
           this.keyLoading = false
           btn.id = 'keyLoading'
 
@@ -439,8 +443,7 @@ export default {
         if (command.received) {
 
           // pop snack letting user know  we triggered it
-          this.$parent.snackText = 'Wire error triggered successfully.';
-          this.$parent.snackbar = true;
+          this.snack('Wire error triggered successfully.')
           this.wireLoading = false;
           btn.id = 'wireLoading'
 
@@ -462,8 +465,7 @@ export default {
             this.keySolvedState = 
             this.allSolvedState = STATE.UNKNOWN
 
-          this.$parent.snackText = 'Device reset successfully.';
-          this.$parent.snackbar = true;
+          this.snack('Device reset successfully.')
         }
       });
 
@@ -478,8 +480,7 @@ export default {
         this.operationsRef.push({ command: 'switchErrors' }).on("value", (snapshot) => {
 
           if (snapshot.val().received) {
-            this.$parent.snackText = 'Switch errors disabled successfully.';
-            this.$parent.snackbar = true;
+            this.snack('Switch errors disabled successfully.')
           }
         });
       }
@@ -490,8 +491,7 @@ export default {
         this.operationsRef.push({ command: 'wireErrors' }).on("value", (snapshot) => {
 
           if (snapshot.val().received) {
-            this.$parent.snackText = 'Wire errors disabled successfully.';
-            this.$parent.snackbar = true;
+            this.snack('Wire errors disabled successfully.')
           }
         });
       }

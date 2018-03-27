@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-      <control-tnt></control-tnt>
+      <control-tnt :snack="showSnack"></control-tnt>
       <control-morse></control-morse>
       <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
         {{ snackText }}
@@ -26,6 +26,14 @@ export default {
 
     }
   },
+
+  methods: {
+    showSnack(msg) {
+      this.snackText = msg 
+      this.snackbar = true
+    }
+  },
+
 
   components: {
     'control-tnt': TNT,
