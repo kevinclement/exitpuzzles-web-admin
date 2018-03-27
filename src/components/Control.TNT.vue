@@ -311,18 +311,20 @@ export default {
         return;
       }
 
-      this.seconds--;
+      this.seconds--
+      console.log(" h: " + this.hours + ' m: ' + this.minutes + " : " + this.seconds);
       if (this.seconds <= 0 && (this.minutes > 0 || this.hours > 0)) {
 
-        this.seconds = 59;
-        this.minutes--;
+        this.seconds = 59
+        this.minutes--
 
         if (this.minutes < 0 && this.hours > 0) {
-          this.hours--;
-          this.minutes = 59;
+          this.hours--
+          this.minutes = 59
         }
+
       }
-      
+
       if (this.seconds <= 0 && this.minutes <= 0 && this.hours <= 0) {
           // TODO: boom blink, sound, animation?
           console.log('boom!!!');
@@ -508,7 +510,7 @@ export default {
     },
 
     formatTime(num) {
-      if (!num || num === null) {
+      if (num < 0 || num === null) {
         return "--"
       }
 
