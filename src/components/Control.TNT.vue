@@ -272,34 +272,32 @@ export default {
   mounted() {
     this.operationsRef = this.$root.$data.fbdb.ref('operations')
     this.tntRef = this.$root.$data.fbdb.ref('tnt')
-    
-    let that = this;
 
-    this.tntRef.child('time').on('value', function(snapshot) {
+    this.tntRef.child('time').on('value', (snapshot) => {
       let time = snapshot.val();
-      if (time == null || !that.timeLoaded) return
+      if (time == null || !this.timeLoaded) return
 
-      that.hours = time.hours;
-      that.minutes = time.minutes;
-      that.seconds = time.seconds;
+      this.hours = time.hours;
+      this.minutes = time.minutes;
+      this.seconds = time.seconds;
 
-      that.timerEnabled = true;
+      this.timerEnabled = true;
     });
 
-    this.tntRef.child('state').on('value', function(snapshot) {
+    this.tntRef.child('state').on('value', (snapshot) => {
       let state = snapshot.val();
       if (state == null) return;
-      if (!that.stateLoaded) {
+      if (!this.stateLoaded) {
         // ignore first load since it has stale data
-        that.stateLoaded = true;
+        this.stateLoaded = true;
         return;
       }
 
-        that.toggle1State   = state.toggle1;
-        that.toggle2State   = state.toggle2;
-        that.wireState      = state.wire;
-        that.keySolvedState = state.keySolved;
-        that.allSolvedState = state.allSolved;
+        this.toggle1State   = state.toggle1;
+        this.toggle2State   = state.toggle2;
+        this.wireState      = state.wire;
+        this.keySolvedState = state.keySolved;
+        this.allSolvedState = state.allSolved;
     });
 
     // only show the debug bar if we have ?dbg or ?debug in the url
@@ -398,7 +396,6 @@ export default {
     triggerKey() {
       this.confirmKeyDiag = false;
       this.keyLoading = true;
-      let that = this;
 
       // TODO: remove when done demoing
       // this.ledtoggle()
@@ -407,16 +404,16 @@ export default {
       let btn = document.getElementById('keyLoading');
       btn.id = 'disabled'
 
-      this.operationsRef.push({ command: 'triggerKey' }).on("value", function(snapshot) {
+      this.operationsRef.push({ command: 'triggerKey' }).on("value", (snapshot) => {
         let command = snapshot.val()
 
         // check for received, that means pi registered it
         if (command.received) {
 
           // pop snack letting user know  we triggered it
-          that.snackText = 'Key triggered successfully.';
-          that.snackbar = true;
-          that.keyLoading = false;
+          this.snackText = 'Key triggered successfully.'
+          this.snackbar = true
+          this.keyLoading = false
           btn.id = 'keyLoading'
 
           // disable further update notifications
@@ -427,22 +424,21 @@ export default {
     triggerWire() {
       this.confirmWireDiag = false;
       this.wireLoading = true;
-      let that = this;
 
       // HACK: total hack to get around disabled styling.  don't have time to figure out proper
       let btn = document.getElementById('wireLoading');
       btn.id = 'disabled'
 
-      this.operationsRef.push({ command: 'triggerWire' }).on("value", function(snapshot) {
+      this.operationsRef.push({ command: 'triggerWire' }).on("value", (snapshot) => {
         let command = snapshot.val()
 
         // check for received, that means pi registered it
         if (command.received) {
 
           // pop snack letting user know  we triggered it
-          that.snackText = 'Wire error triggered successfully.';
-          that.snackbar = true;
-          that.wireLoading = false;
+          this.snackText = 'Wire error triggered successfully.';
+          this.snackbar = true;
+          this.wireLoading = false;
           btn.id = 'wireLoading'
 
           // disable further update notifications
@@ -451,22 +447,20 @@ export default {
       });
     },
     triggerReset() {
-      let that = this;
+      this.operationsRef.push({ command: 'triggerDeviceReset' }).on("value", (snapshot) => {
 
-      this.operationsRef.push({ command: 'triggerDeviceReset' }).on("value", function(snapshot) {
-        
         if (snapshot.val().received) {
           // reset all internal state
-          that.hours = that.minutes = that.seconds = null
-          that.switchErrors = that.wireErrors = false
-          that.toggle1State     =
-            that.toggle2State   =
-            that.wireState      = 
-            that.keySolvedState = 
-            that.allSolvedState = STATE.UNKNOWN
+          this.hours = this.minutes = this.seconds = null
+          this.switchErrors = this.wireErrors = false
+          this.toggle1State     =
+            this.toggle2State   =
+            this.wireState      = 
+            this.keySolvedState = 
+            this.allSolvedState = STATE.UNKNOWN
 
-          that.snackText = 'Device reset successfully.';
-          that.snackbar = true;
+          this.snackText = 'Device reset successfully.';
+          this.snackbar = true;
         }
       });
 
@@ -474,31 +468,27 @@ export default {
     },
 
     switchErrorsClicked() {
-      let that = this;
-
       // TODO: should really be in state object, but requires more logic on arduino side
       // so for now we only look at 'true' and send an op for it since all I can do right now
       // is turn this on
       if (this.switchErrors) {
-        this.operationsRef.push({ command: 'switchErrors' }).on("value", function(snapshot) {
+        this.operationsRef.push({ command: 'switchErrors' }).on("value", (snapshot) => {
 
           if (snapshot.val().received) {
-            that.snackText = 'Switch errors disabled successfully.';
-            that.snackbar = true;
+            this.snackText = 'Switch errors disabled successfully.';
+            this.snackbar = true;
           }
         });
       }
     },
     wireErrorsClicked() {
-      let that = this;
-
       // TODO: same as switch errors, should be in state but requires arduino change
       if (this.wireErrors) {
-        this.operationsRef.push({ command: 'wireErrors' }).on("value", function(snapshot) {
+        this.operationsRef.push({ command: 'wireErrors' }).on("value", (snapshot) => {
 
           if (snapshot.val().received) {
-            that.snackText = 'Wire errors disabled successfully.';
-            that.snackbar = true;
+            this.snackText = 'Wire errors disabled successfully.';
+            this.snackbar = true;
           }
         });
       }
