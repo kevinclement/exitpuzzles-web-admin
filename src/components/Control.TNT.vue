@@ -329,14 +329,16 @@ export default {
 
   methods: {
     icon: function(state, type) {
+      let empty_icon = this.stateLoaded ? 'help' : '' // first load don't show any icons
+
       // special case key
       if (type === 'key') {
-        return state === STATE.OK ? 'done' : ''
+        return state === STATE.OK ? 'done' : empty_icon
       }
 
       // special case all
       if (type === 'all') {
-        return state === STATE.OK ? 'done_all' : ''
+        return state === STATE.OK ? 'done_all' : empty_icon
       }
 
       if (state === STATE.OK) {
@@ -344,7 +346,7 @@ export default {
       } else if (state === STATE.BAD) {
         return 'error'
       } else {
-        return ''
+        return empty_icon
       }
     },
     iconColor: function(state) {
