@@ -140,25 +140,24 @@
       this.morseCluesRef = this.$root.$data.fbdb.ref('morse/clues')
       this.operationsRef = this.$root.$data.fbdb.ref('operations')
 
-      let that = this
-      this.morseCluesRef.on('child_added', function(data) {
-        let clue = data.val()
-        that.items.push({'id':data.key, ...clue})
+      this.morseCluesRef.on('child_added', (snapshot) => {
+        let clue = snapshot.val()
+        this.items.push({'id':snapshot.key, ...clue})
       })
 
-      this.morseCluesRef.on('child_changed', function(data) {
-        let clue = data.val()
-        let aClue = that.items.find((clue) => {
-          return clue.id === data.key;
+      this.morseCluesRef.on('child_changed', (snapshot) => {
+        let clue = snapshot.val()
+        let aClue = this.items.find((clue) => {
+          return clue.id === snapshot.key;
         })
 
         aClue.line1 = clue.line1;
         aClue.line2 = clue.line2;
       });
 
-      this.morseCluesRef.on('child_removed', function(data) {
-        that.items = that.items.filter((clue) => {
-          return clue.id !== data.key;
+      this.morseCluesRef.on('child_removed', (snapshot) => {
+        this.items = this.items.filter((clue) => {
+          return clue.id !== snapshot.key;
         })
       });
 
