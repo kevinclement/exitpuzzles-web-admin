@@ -417,19 +417,28 @@ export default {
     triggerWire() {
       this.confirmWireDiag = false;
       this.wireLoading = true;
+      let that = this;
 
       // HACK: total hack to get around disabled styling.  don't have time to figure out proper
       let btn = document.getElementById('wireLoading');
       btn.id = 'disabled'
 
-      // TODO: TMP: do the real work here
-      setTimeout(() => {
-         this.snackText = 'Wire error triggered successfully.';
-         this.snackbar = true;
-         this.wireLoading = false;
-         btn.id = 'wireLoading'
+      this.operationsRef.push({ command: 'triggerWire' }).on("value", function(snapshot) {
+        let command = snapshot.val()
 
-      }, 3000)
+        // check for received, that means pi registered it
+        if (command.received) {
+
+          // pop snack letting user know  we triggered it
+          that.snackText = 'Wire error triggered successfully.';
+          that.snackbar = true;
+          that.wireLoading = false;
+          btn.id = 'wireLoading'
+
+          // disable further update notifications
+          snapshot.ref.off()
+        }
+      });
     },
     triggerReset() {
       // TODO: actually issue the reset operation
