@@ -386,11 +386,24 @@ export default {
       this.operationsRef.push({ command: 'refreshState' });
     },
     setTimer() {
-      this.hours = this.setTime.hour;
-      this.minutes = this.setTime.minute;
-      this.seconds = this.setTime.second;
 
+      // clear it out to indicate server interaction
       this.resetTimeDiag = false;
+      this.hours = this.minutes = this.seconds = null;
+
+      this.operationsRef.push({ command: 'setTime' }).on("value", (snapshot) => {
+        let command = snapshot.val()
+
+        if (command.received) {
+
+          this.hours = this.setTime.hour;
+          this.minutes = this.setTime.minute;
+          this.seconds = this.setTime.second;
+
+          // disable further update notifications
+          snapshot.ref.off()
+        }
+      });
     },
 
     triggerKey() {
