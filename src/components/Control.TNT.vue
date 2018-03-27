@@ -197,11 +197,6 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-  <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
-      {{ snackText }}
-      <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
-  </v-snackbar>
-
   </v-flex>
 
 </template>
@@ -230,12 +225,6 @@ export default {
         minute: null,
         second: null
       },
-
-      // snack stuff
-      snackbar: false,
-      snackColor: 'success',
-      snackTimeout: 4000,
-      snackText: '',
 
       // loading states
       keyLoading:false,
@@ -425,8 +414,8 @@ export default {
         if (command.received) {
 
           // pop snack letting user know  we triggered it
-          this.snackText = 'Key triggered successfully.'
-          this.snackbar = true
+          this.$parent.snackText = 'Key triggered successfully.'
+          this.$parent.snackbar = true
           this.keyLoading = false
           btn.id = 'keyLoading'
 
@@ -450,8 +439,8 @@ export default {
         if (command.received) {
 
           // pop snack letting user know  we triggered it
-          this.snackText = 'Wire error triggered successfully.';
-          this.snackbar = true;
+          this.$parent.snackText = 'Wire error triggered successfully.';
+          this.$parent.snackbar = true;
           this.wireLoading = false;
           btn.id = 'wireLoading'
 
@@ -473,8 +462,8 @@ export default {
             this.keySolvedState = 
             this.allSolvedState = STATE.UNKNOWN
 
-          this.snackText = 'Device reset successfully.';
-          this.snackbar = true;
+          this.$parent.snackText = 'Device reset successfully.';
+          this.$parent.snackbar = true;
         }
       });
 
@@ -489,8 +478,8 @@ export default {
         this.operationsRef.push({ command: 'switchErrors' }).on("value", (snapshot) => {
 
           if (snapshot.val().received) {
-            this.snackText = 'Switch errors disabled successfully.';
-            this.snackbar = true;
+            this.$parent.snackText = 'Switch errors disabled successfully.';
+            this.$parent.snackbar = true;
           }
         });
       }
@@ -501,8 +490,8 @@ export default {
         this.operationsRef.push({ command: 'wireErrors' }).on("value", (snapshot) => {
 
           if (snapshot.val().received) {
-            this.snackText = 'Wire errors disabled successfully.';
-            this.snackbar = true;
+            this.$parent.snackText = 'Wire errors disabled successfully.';
+            this.$parent.snackbar = true;
           }
         });
       }
