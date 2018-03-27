@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
       <control-tnt :snack="showSnack"></control-tnt>
-      <control-morse></control-morse>
+      <control-morse :snack="showSnack"></control-morse>
       <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
         {{ snackText }}
       <v-btn dark flat @click.native="snackbar = false">Close</v-btn>

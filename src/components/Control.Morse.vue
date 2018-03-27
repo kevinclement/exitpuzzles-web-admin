@@ -94,6 +94,7 @@
 
 <script>
   export default {
+    props: ['snack'],
     data: () => ({
       morseCluesRef: null,
       operationsRef: null,
@@ -169,13 +170,21 @@
         this.dialog = true
       },
       sendClue () {
-        this.operationsRef.push({
-          command: 'clue',
-          data: { line1: this.clueToSend.line1, line2: this.clueToSend.line2 }
-        });
-
         this.clueSendDiag = false;
         this.clueToSend = null;
+
+        this.operationsRef.push({ command: 'clue' }).on("value", (snapshot) => {
+          let command = snapshot.val()
+
+          if (command.received) {
+
+            // pop snack letting user know  we triggered it
+            this.snack('Clue sent successfully.')
+
+            // disable further update notifications
+            snapshot.ref.off()
+          }
+        });
       },
       adhocSend() {
         this.adhoc = true
