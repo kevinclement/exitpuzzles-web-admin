@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-slide-y-transition mode="out-in">
       <v-layout column align-center>
-        stats
+        TODO: add stats for completed teams.  includes top for day, week, month, alltime
       </v-layout>
     </v-slide-y-transition>
   </v-container>
