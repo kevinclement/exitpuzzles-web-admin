@@ -247,9 +247,9 @@ export default {
       wireErrors: false,
 
       // device status states
-      hours: 1,
-      minutes: 11,
-      seconds: 16,
+      hours: null,
+      minutes: null,
+      seconds: null,
       toggle1State: STATE.UNKNOWN,
       toggle2State: STATE.UNKNOWN,
       wireState: STATE.UNKNOWN,
