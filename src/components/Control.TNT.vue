@@ -388,23 +388,31 @@ export default {
     triggerKey() {
       this.confirmKeyDiag = false;
       this.keyLoading = true;
+      let that = this;
 
       // TODO: remove when done demoing
-      this.ledtoggle()
+      // this.ledtoggle()
 
       // HACK: total hack to get around disabled styling.  don't have time to figure out proper
       let btn = document.getElementById('keyLoading');
       btn.id = 'disabled'
 
-      // TODO: TMP: do the real work here
-      setTimeout(() => {
-         this.snackText = 'Key triggered successfully.';
-         this.snackbar = true;
-         this.keyLoading = false;
-         btn.id = 'keyLoading'
+      this.operationsRef.push({ command: 'triggerKey' }).on("value", function(snapshot) {
+        let command = snapshot.val()
 
-      }, 3000)
+        // check for received, that means pi registered it
+        if (command.received) {
 
+          // pop snack letting user know  we triggered it
+          that.snackText = 'Key triggered successfully.';
+          that.snackbar = true;
+          that.keyLoading = false;
+          btn.id = 'keyLoading'
+
+          // disable further update notifications
+          snapshot.ref.off()
+        }
+      });
     },
     triggerWire() {
       this.confirmWireDiag = false;
