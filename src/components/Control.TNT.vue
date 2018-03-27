@@ -441,7 +441,25 @@ export default {
       });
     },
     triggerReset() {
-      // TODO: actually issue the reset operation
+      let that = this;
+
+      this.operationsRef.push({ command: 'triggerDeviceReset' }).on("value", function(snapshot) {
+        
+        if (snapshot.val().received) {
+          // reset all internal state
+          that.hours = that.minutes = that.seconds = null
+          that.switchErrors = that.wireErrors = false
+          that.toggle1State     =
+            that.toggle2State   =
+            that.wireState      = 
+            that.keySolvedState = 
+            that.allSolvedState = STATE.UNKNOWN
+
+          that.snackText = 'Device reset successfully.';
+          that.snackbar = true;
+        }
+      });
+
       this.resetTntDiag = false;
     },
 
