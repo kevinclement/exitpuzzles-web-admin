@@ -446,8 +446,34 @@ export default {
     },
 
     switchErrorsClicked() {
+      let that = this;
+
+      // TODO: should really be in state object, but requires more logic on arduino side
+      // so for now we only look at 'true' and send an op for it since all I can do right now
+      // is turn this on
+      if (this.switchErrors) {
+        this.operationsRef.push({ command: 'switchErrors' }).on("value", function(snapshot) {
+
+          if (snapshot.val().received) {
+            that.snackText = 'Switch errors disabled successfully.';
+            that.snackbar = true;
+          }
+        });
+      }
     },
     wireErrorsClicked() {
+      let that = this;
+
+      // TODO: same as switch errors, should be in state but requires arduino change
+      if (this.wireErrors) {
+        this.operationsRef.push({ command: 'wireErrors' }).on("value", function(snapshot) {
+
+          if (snapshot.val().received) {
+            that.snackText = 'Wire errors disabled successfully.';
+            that.snackbar = true;
+          }
+        });
+      }
     },
 
     formatTime(num) {
