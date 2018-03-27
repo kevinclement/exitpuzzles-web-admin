@@ -241,6 +241,7 @@ export default {
       keyLoading:false,
       wireLoading:false,
       timeLoaded: false,
+      stateLoaded: false,
 
       // error toggles
       switchErrors: false,
@@ -273,6 +274,7 @@ export default {
     this.tntRef = this.$root.$data.fbdb.ref('tnt')
     
     let that = this;
+
     this.tntRef.child('time').on('value', function(snapshot) {
       let time = snapshot.val();
       if (time == null || !that.timeLoaded) return
@@ -282,6 +284,17 @@ export default {
       that.seconds = time.seconds;
 
       that.timerEnabled = true;
+    });
+
+    this.tntRef.child('state').on('value', function(snapshot) {
+      let state = snapshot.val();
+      if (state == null || !that.stateLoaded) return
+
+        that.toggle1State   = state.toggle1;
+        that.toggle2State   = state.toggle2;
+        that.wireState      = state.wire;
+        that.keySolvedState = state.keySolved;
+        that.allSolvedState = state.allSolved;
     });
 
     // only show the debug bar if we have ?dbg or ?debug in the url
@@ -358,15 +371,9 @@ export default {
         this.wireState      =
         this.keySolvedState =
         this.allSolvedState = STATE.UNKNOWN;
+      this.stateLoaded = true;
 
-      // TODO: write/query proper to db
-      setTimeout(() => {
-        this.toggle1State   = STATE.OK;
-        this.toggle2State   = STATE.OK;
-        this.wireState      = STATE.OK;
-        this.keySolvedState = STATE.OK;
-        this.allSolvedState = STATE.OK;
-      }, 1200);
+      this.operationsRef.push({ command: 'refreshState' });
     },
     setTimer() {
       this.hours = this.setTime.hour;
