@@ -80,18 +80,15 @@ export default {
   methods: {
     setQuery(query) {
 
-      // i <3 javascript
-      let that = this;
-
       // hookup handler to process each item in the snapshot
-      query.on("child_added", function(snapshot) {
+      query.on("child_added", (snapshot) => {
         let log = snapshot.val()
 
         // track first item found
-        if (that.updating) {
-          that.updating = false
-          that.firstKey = snapshot.key
-          that.firstTime = log.timestamp
+        if (this.updating) {
+          this.updating = false
+          this.firstKey = snapshot.key
+          this.firstTime = log.timestamp
         }
 
         // only trace in dev mode
@@ -100,8 +97,8 @@ export default {
         }
 
         // store the timestamp so we can page off it
-        that.lastKey = snapshot.key
-        that.lastTime = log.timestamp
+        this.lastKey = snapshot.key
+        this.lastTime = log.timestamp
       });
 
       // bind it to vue
