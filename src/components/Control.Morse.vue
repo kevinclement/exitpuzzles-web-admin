@@ -71,6 +71,7 @@
     </v-toolbar>
 
     <v-card-text class="grey lighten-3 ">
+      <v-subheader >Pre-solved Clues</v-subheader>
       <div class="elevation-1">
         <table class="datatable table">
           <tbody>
@@ -90,6 +91,28 @@
             </tr>
           </tbody>
         </table>
+        </div>
+        <v-subheader style="margin-top:20px" >Post-solved Clues</v-subheader>
+        <div class="elevation-1">
+        <table class="datatable table">
+          <tbody>
+            <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="item in items">
+              <td>
+                <a v-if="editMode" @click="editItem(item)">{{ item.line1 }}<br/>{{ item.line2 }}</a>
+                <span v-if="!editMode">{{ item.line1 }}<br/>{{ item.line2 }}</span>
+              </td>
+              <td class="text-xs-right ">
+                <v-btn v-if="editMode" icon class="mx-0" @click="clueDiag = true; clueToDelete = item">
+                  <v-icon  color="red lighten-1">delete</v-icon>
+                </v-btn>
+                <v-btn v-if="!editMode" icon class="mx-0" @click="clueSendDiag = true; clueToSend = item">
+                  <v-icon :color="chatColor(item.errorType)">{{chatIcon(item.errorType)}}</v-icon>
+                </v-btn>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
       </div>
     </v-card-text>
 
