@@ -78,7 +78,7 @@
       <div class="elevation-1">
         <table class="datatable table">
           <tbody>
-            <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="item in items">
+            <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="item in preClues">
               <td>
                 <a v-if="editPre" @click="editItem(item)">{{ item.line1 }}<br/>{{ item.line2 }}</a>
                 <span v-if="!editPre">{{ item.line1 }}<br/>{{ item.line2 }}</span>
@@ -106,7 +106,7 @@
         <div class="elevation-1">
         <table class="datatable table">
           <tbody>
-            <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="item in items">
+            <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="item in preClues">
               <td>
                 <a v-if="editPost" @click="editItem(item)">{{ item.line1 }}<br/>{{ item.line2 }}</a>
                 <span v-if="!editPost">{{ item.line1 }}<br/>{{ item.line2 }}</span>
@@ -147,7 +147,7 @@
       timeType: null,
       editPre: false,
       editPost: false,
-      items: [],
+      preClues: [],
       clueDiag: false,
       clueToDelete: null,
       editedIndex: -1,
@@ -189,12 +189,12 @@
 
       this.morseCluesPreRef.on('child_added', (snapshot) => {
         let clue = snapshot.val()
-        this.items.push({'id':snapshot.key, ...clue})
+        this.preClues.push({'id':snapshot.key, ...clue})
       })
 
       this.morseCluesPreRef.on('child_changed', (snapshot) => {
         let clue = snapshot.val()
-        let aClue = this.items.find((clue) => {
+        let aClue = this.preClues.find((clue) => {
           return clue.id === snapshot.key;
         })
 
@@ -205,7 +205,7 @@
 
       this.morseCluesPreRef.on('child_removed', (snapshot) => {
 
-        this.items = this.items.filter((clue) => {
+        this.preClues = this.preClues.filter((clue) => {
           return clue.id !== snapshot.key;
         })
       });
@@ -219,7 +219,7 @@
         return error ? 'red lighten-1' : 'blue accent-1'
       },
       editItem (item) {
-        this.editedIndex = this.items.indexOf(item)
+        this.editedIndex = this.preClues.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
