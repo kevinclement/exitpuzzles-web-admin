@@ -106,7 +106,7 @@
         <div class="elevation-1">
         <table class="datatable table">
           <tbody>
-            <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="clue in preClues">
+            <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="clue in postClues">
               <td>
                 <a v-if="editPost" @click="editItem(clue)">{{ clue.line1 }}<br/>{{ clue.line2 }}</a>
                 <span v-if="!editPost">{{ clue.line1 }}<br/>{{ clue.line2 }}</span>
@@ -148,9 +148,9 @@
       editPre: false,
       editPost: false,
       preClues: [],
+      postClues: [],
       clueDiag: false,
       clueToDelete: null,
-      editedIndex: -1,
       editedClue: {
         line1: '',
         line2: '',
@@ -168,7 +168,7 @@
         if (this.adhoc) {
           return 'Send ' + timeTypeStr + ' Clue';
         } else {
-          return this.editedIndex === -1 ? 'New ' + timeTypeStr + ' Clue' : 'Edit ' + timeTypeStr + ' Clue'
+          return this.editedClue.line1 === '' ? 'New ' + timeTypeStr + ' Clue' : 'Edit ' + timeTypeStr + ' Clue'
         }
       },
       saveSendTxt () {
@@ -191,6 +191,10 @@
         let clue = snapshot.val()
         this.preClues.push({'id':snapshot.key, ...clue})
       })
+      this.morseCluesPostRef.on('child_added', (snapshot) => {
+        let clue = snapshot.val()
+        this.postClues.push({'id':snapshot.key, ...clue})
+      })
 
       this.morseCluesPreRef.on('child_changed', (snapshot) => {
         let clue = snapshot.val()
@@ -202,10 +206,24 @@
         aClue.line2 = clue.line2;
         aClue.errorType = clue.errorType;
       });
+      this.morseCluesPostRef.on('child_changed', (snapshot) => {
+        let clue = snapshot.val()
+        let aClue = this.postClues.find((clue) => {
+          return clue.id === snapshot.key;
+        })
+
+        aClue.line1 = clue.line1;
+        aClue.line2 = clue.line2;
+        aClue.errorType = clue.errorType;
+      });
 
       this.morseCluesPreRef.on('child_removed', (snapshot) => {
-
         this.preClues = this.preClues.filter((clue) => {
+          return clue.id !== snapshot.key;
+        })
+      });
+      this.morseCluesPostRef.on('child_removed', (snapshot) => {
+        this.postClues = this.postClues.filter((clue) => {
           return clue.id !== snapshot.key;
         })
       });
@@ -219,7 +237,6 @@
         return error ? 'red lighten-1' : 'blue accent-1'
       },
       editItem (clue) {
-        this.editedIndex = this.preClues.indexOf(clue)
         this.editedClue = Object.assign({}, clue)
         this.dialog = true
       },
@@ -251,24 +268,36 @@
         this.clueDiag = false;
 
         // tell firedb to remove clue
-        this.morseCluesPreRef.child(id).remove();
+        if (this.timeType === 'pre') {
+          this.morseCluesPreRef.child(id).remove();
+        } else {
+          this.morseCluesPostRef.child(id).remove();
+        }
       },
       close () {
         this.dialog = false
         setTimeout(() => {
           this.editedClue = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
           this.adhoc = false
         }, 300)
       },
       save () {
-        if (this.editedIndex > -1) {
-          this.morseCluesPreRef.child(this.editedClue.id).set({ line1: this.editedClue.line1, line2: this.editedClue.line2, errorType: this.editedClue.errorType})
+        if (this.editedClue.id) {
+          let et = this.editedClue.errorType ? true : false;
+          if (this.timeType === 'pre') {
+            this.morseCluesPreRef.child(this.editedClue.id).set({ line1: this.editedClue.line1, line2: this.editedClue.line2, errorType: et})
+          } else {
+            this.morseCluesPostRef.child(this.editedClue.id).set({ line1: this.editedClue.line1, line2: this.editedClue.line2, errorType: et})
+          }
         } else if (this.adhoc) {
           this.clueToSend = this.editedClue
           this.sendClue()
         } else {
-          this.morseCluesPreRef.push(this.editedClue)
+          if (this.timeType === 'pre') {
+            this.morseCluesPreRef.push(this.editedClue)
+          } else {
+            this.morseCluesPostRef.push(this.editedClue)
+          }
         }
         this.close()
       }
