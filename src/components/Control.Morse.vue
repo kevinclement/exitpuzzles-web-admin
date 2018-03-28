@@ -78,7 +78,7 @@
                   <v-icon  color="red lighten-1">delete</v-icon>
                 </v-btn>
                 <v-btn v-if="!editMode" icon class="mx-0" @click="clueSendDiag = true; clueToSend = item">
-                  <v-icon  color="blue accent-1">announcement</v-icon>
+                  <v-icon :color="chatColor(item.type)">{{chatIcon(item.type)}}</v-icon>
                 </v-btn>
               </td>
             </tr>
@@ -164,6 +164,12 @@
 
     },
     methods: {
+      chatIcon (type) {
+        return (type && type === "error") ? 'announcement' : 'chat_bubble'
+      },
+      chatColor (type) {
+        return (type && type === "error") ? 'red lighten-1' : 'blue accent-1'
+      },
       editItem (item) {
         this.editedIndex = this.items.indexOf(item)
         this.editedItem = Object.assign({}, item)
