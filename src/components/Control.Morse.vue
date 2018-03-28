@@ -11,15 +11,15 @@
         <v-container grid-list-md>
           <v-layout wrap>
             <v-flex xs12>
-              <v-text-field maxlength="16" label="Line 1" v-model="editedItem.line1"></v-text-field>
+              <v-text-field maxlength="16" label="Line 1" v-model="editedClue.line1"></v-text-field>
             </v-flex>
             <v-flex xs12>
-              <v-text-field maxlength="16" label="Line 2" v-model="editedItem.line2"></v-text-field>
+              <v-text-field maxlength="16" label="Line 2" v-model="editedClue.line2"></v-text-field>
             </v-flex>
             <v-flex xs12>
               <v-checkbox
                     label="Error Clue"
-                    v-model="editedItem.errorType"
+                    v-model="editedClue.errorType"
                    ></v-checkbox>
             </v-flex>
           </v-layout>
@@ -78,17 +78,17 @@
       <div class="elevation-1">
         <table class="datatable table">
           <tbody>
-            <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="item in preClues">
+            <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="clue in preClues">
               <td>
-                <a v-if="editPre" @click="editItem(item)">{{ item.line1 }}<br/>{{ item.line2 }}</a>
-                <span v-if="!editPre">{{ item.line1 }}<br/>{{ item.line2 }}</span>
+                <a v-if="editPre" @click="editItem(clue)">{{ clue.line1 }}<br/>{{ clue.line2 }}</a>
+                <span v-if="!editPre">{{ clue.line1 }}<br/>{{ clue.line2 }}</span>
               </td>
               <td class="text-xs-right ">
-                <v-btn v-if="editPre" icon class="mx-0" @click="clueDiag = true; clueToDelete = item">
+                <v-btn v-if="editPre" icon class="mx-0" @click="clueDiag = true; clueToDelete = clue">
                   <v-icon  color="red lighten-1">delete</v-icon>
                 </v-btn>
-                <v-btn v-if="!editPre" icon class="mx-0" @click="clueSendDiag = true; clueToSend = item">
-                  <v-icon :color="chatColor(item.errorType)">{{chatIcon(item.errorType)}}</v-icon>
+                <v-btn v-if="!editPre" icon class="mx-0" @click="clueSendDiag = true; clueToSend = clue">
+                  <v-icon :color="chatColor(clue.errorType)">{{chatIcon(clue.errorType)}}</v-icon>
                 </v-btn>
               </td>
             </tr>
@@ -106,17 +106,17 @@
         <div class="elevation-1">
         <table class="datatable table">
           <tbody>
-            <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="item in preClues">
+            <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="clue in preClues">
               <td>
-                <a v-if="editPost" @click="editItem(item)">{{ item.line1 }}<br/>{{ item.line2 }}</a>
-                <span v-if="!editPost">{{ item.line1 }}<br/>{{ item.line2 }}</span>
+                <a v-if="editPost" @click="editItem(clue)">{{ clue.line1 }}<br/>{{ clue.line2 }}</a>
+                <span v-if="!editPost">{{ clue.line1 }}<br/>{{ clue.line2 }}</span>
               </td>
               <td class="text-xs-right ">
-                <v-btn v-if="editPost" icon class="mx-0" @click="clueDiag = true; clueToDelete = item">
+                <v-btn v-if="editPost" icon class="mx-0" @click="clueDiag = true; clueToDelete = clue">
                   <v-icon  color="red lighten-1">delete</v-icon>
                 </v-btn>
-                <v-btn v-if="!editPost" icon class="mx-0" @click="clueSendDiag = true; clueToSend = item">
-                  <v-icon :color="chatColor(item.errorType)">{{chatIcon(item.errorType)}}</v-icon>
+                <v-btn v-if="!editPost" icon class="mx-0" @click="clueSendDiag = true; clueToSend = clue">
+                  <v-icon :color="chatColor(clue.errorType)">{{chatIcon(clue.errorType)}}</v-icon>
                 </v-btn>
               </td>
             </tr>
@@ -151,7 +151,7 @@
       clueDiag: false,
       clueToDelete: null,
       editedIndex: -1,
-      editedItem: {
+      editedClue: {
         line1: '',
         line2: '',
         errorType: false
@@ -218,9 +218,9 @@
       chatColor (error) {
         return error ? 'red lighten-1' : 'blue accent-1'
       },
-      editItem (item) {
-        this.editedIndex = this.preClues.indexOf(item)
-        this.editedItem = Object.assign({}, item)
+      editItem (clue) {
+        this.editedIndex = this.preClues.indexOf(clue)
+        this.editedClue = Object.assign({}, clue)
         this.dialog = true
       },
       sendClue () {
@@ -250,25 +250,25 @@
         this.clueToDelete = null;
         this.clueDiag = false;
 
-        // tell firedb to remove item
+        // tell firedb to remove clue
         this.morseCluesPreRef.child(id).remove();
       },
       close () {
         this.dialog = false
         setTimeout(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedClue = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
           this.adhoc = false
         }, 300)
       },
       save () {
         if (this.editedIndex > -1) {
-          this.morseCluesPreRef.child(this.editedItem.id).set({ line1: this.editedItem.line1, line2: this.editedItem.line2, errorType: this.editedItem.errorType})
+          this.morseCluesPreRef.child(this.editedClue.id).set({ line1: this.editedClue.line1, line2: this.editedClue.line2, errorType: this.editedClue.errorType})
         } else if (this.adhoc) {
-          this.clueToSend = this.editedItem
+          this.clueToSend = this.editedClue
           this.sendClue()
         } else {
-          this.morseCluesPreRef.push(this.editedItem)
+          this.morseCluesPreRef.push(this.editedClue)
         }
         this.close()
       }
