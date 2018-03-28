@@ -72,7 +72,7 @@
       <v-subheader >
         Pre-solved Clues
         <span class="spacer" />
-        <v-btn icon title="Edit messages" @click.native="editPre = !editPre"><v-icon >edit</v-icon></v-btn>
+        <v-btn icon title="Edit messages" @click.native="timeType = 'pre'; editPre = !editPre"><v-icon >edit</v-icon></v-btn>
         <v-btn icon title="Add a message" @click.native="timeType = 'pre'; dialog=true"><v-icon>add</v-icon></v-btn>
       </v-subheader>
       <div class="elevation-1">
@@ -99,7 +99,7 @@
       <v-subheader style="margin-top:20px" >
           Post-solved Clues
           <span class="spacer" />
-          <v-btn icon title="Edit messages" @click.native="editPost = !editPost"><v-icon >edit</v-icon></v-btn>
+          <v-btn icon title="Edit messages" @click.native="timeType = 'post'; editPost = !editPost"><v-icon >edit</v-icon></v-btn>
           <v-btn icon title="Add a message" @click.native="timeType = 'post'; dialog=true"><v-icon>add</v-icon></v-btn>
         </v-subheader>
 
@@ -135,7 +135,8 @@
   export default {
     props: ['snack'],
     data: () => ({
-      morseCluesRef: null,
+      morseCluesPreRef: null,
+      morseCluesPostRef: null,
       operationsRef: null,
       ios: false,
       adhoc: false,
@@ -182,15 +183,16 @@
     created () {
       this.ios = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 
-      this.morseCluesRef = this.$root.$data.fbdb.ref('morse/clues')
+      this.morseCluesPreRef = this.$root.$data.fbdb.ref('morse/cluesPre')
+      this.morseCluesPostRef = this.$root.$data.fbdb.ref('morse/cluesPost')
       this.operationsRef = this.$root.$data.fbdb.ref('operations')
 
-      this.morseCluesRef.on('child_added', (snapshot) => {
+      this.morseCluesPreRef.on('child_added', (snapshot) => {
         let clue = snapshot.val()
         this.items.push({'id':snapshot.key, ...clue})
       })
 
-      this.morseCluesRef.on('child_changed', (snapshot) => {
+      this.morseCluesPreRef.on('child_changed', (snapshot) => {
         let clue = snapshot.val()
         let aClue = this.items.find((clue) => {
           return clue.id === snapshot.key;
@@ -201,7 +203,8 @@
         aClue.errorType = clue.errorType;
       });
 
-      this.morseCluesRef.on('child_removed', (snapshot) => {
+      this.morseCluesPreRef.on('child_removed', (snapshot) => {
+
         this.items = this.items.filter((clue) => {
           return clue.id !== snapshot.key;
         })
@@ -248,7 +251,7 @@
         this.clueDiag = false;
 
         // tell firedb to remove item
-        this.morseCluesRef.child(id).remove();
+        this.morseCluesPreRef.child(id).remove();
       },
       close () {
         this.dialog = false
@@ -260,12 +263,12 @@
       },
       save () {
         if (this.editedIndex > -1) {
-          this.morseCluesRef.child(this.editedItem.id).set({ line1: this.editedItem.line1, line2: this.editedItem.line2, errorType: this.editedItem.errorType})
+          this.morseCluesPreRef.child(this.editedItem.id).set({ line1: this.editedItem.line1, line2: this.editedItem.line2, errorType: this.editedItem.errorType})
         } else if (this.adhoc) {
           this.clueToSend = this.editedItem
           this.sendClue()
         } else {
-          this.morseCluesRef.push(this.editedItem)
+          this.morseCluesPreRef.push(this.editedItem)
         }
         this.close()
       }
