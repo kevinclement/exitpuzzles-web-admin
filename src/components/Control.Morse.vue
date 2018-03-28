@@ -16,6 +16,12 @@
             <v-flex xs12>
               <v-text-field maxlength="16" label="Line 2" v-model="editedItem.line2"></v-text-field>
             </v-flex>
+            <v-flex xs12>
+              <v-checkbox
+                    label="Error Clue"
+                    v-model="editedItem.errorType"
+                   ></v-checkbox>
+            </v-flex>
           </v-layout>
         </v-container>
       </v-card-text>
@@ -78,7 +84,7 @@
                   <v-icon  color="red lighten-1">delete</v-icon>
                 </v-btn>
                 <v-btn v-if="!editMode" icon class="mx-0" @click="clueSendDiag = true; clueToSend = item">
-                  <v-icon :color="chatColor(item.type)">{{chatIcon(item.type)}}</v-icon>
+                  <v-icon :color="chatColor(item.errorType)">{{chatIcon(item.errorType)}}</v-icon>
                 </v-btn>
               </td>
             </tr>
@@ -111,11 +117,13 @@
       editedIndex: -1,
       editedItem: {
         line1: '',
-        line2: ''
+        line2: '',
+        errorType: false
       },
       defaultItem: {
         line1: '',
-        line2: ''
+        line2: '',
+        errorType: false
       }
     }),
     computed: {
@@ -154,6 +162,7 @@
 
         aClue.line1 = clue.line1;
         aClue.line2 = clue.line2;
+        aClue.errorType = clue.errorType;
       });
 
       this.morseCluesRef.on('child_removed', (snapshot) => {
@@ -164,11 +173,11 @@
 
     },
     methods: {
-      chatIcon (type) {
-        return (type && type === "error") ? 'announcement' : 'chat_bubble'
+      chatIcon (error) {
+        return error ? 'announcement' : 'chat_bubble'
       },
-      chatColor (type) {
-        return (type && type === "error") ? 'red lighten-1' : 'blue accent-1'
+      chatColor (error) {
+        return error ? 'red lighten-1' : 'blue accent-1'
       },
       editItem (item) {
         this.editedIndex = this.items.indexOf(item)
@@ -215,7 +224,7 @@
       },
       save () {
         if (this.editedIndex > -1) {
-          this.morseCluesRef.child(this.editedItem.id).set({ line1: this.editedItem.line1, line2: this.editedItem.line2})
+          this.morseCluesRef.child(this.editedItem.id).set({ line1: this.editedItem.line1, line2: this.editedItem.line2, errorType: this.editedItem.errorType})
         } else if (this.adhoc) {
           this.clueToSend = this.editedItem
           this.sendClue()
