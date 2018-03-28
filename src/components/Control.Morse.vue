@@ -66,25 +66,28 @@
       <span class="spacer" />
 
       <v-btn icon title="Send a message" @click.native="adhocSend"><v-icon >message</v-icon></v-btn>
-      <v-btn icon title="Edit messages" @click.native="editMode = !editMode"><v-icon >edit</v-icon></v-btn>
-      <v-btn icon title="Add a message" @click.native="dialog=true"><v-icon>add</v-icon></v-btn>
     </v-toolbar>
 
     <v-card-text class="grey lighten-3 ">
-      <v-subheader >Pre-solved Clues</v-subheader>
+      <v-subheader >
+        Pre-solved Clues
+        <span class="spacer" />
+        <v-btn icon title="Edit messages" @click.native="editPre = !editPre"><v-icon >edit</v-icon></v-btn>
+        <v-btn icon title="Add a message" @click.native="dialog=true"><v-icon>add</v-icon></v-btn>
+      </v-subheader>
       <div class="elevation-1">
         <table class="datatable table">
           <tbody>
             <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="item in items">
               <td>
-                <a v-if="editMode" @click="editItem(item)">{{ item.line1 }}<br/>{{ item.line2 }}</a>
-                <span v-if="!editMode">{{ item.line1 }}<br/>{{ item.line2 }}</span>
+                <a v-if="editPre" @click="editItem(item)">{{ item.line1 }}<br/>{{ item.line2 }}</a>
+                <span v-if="!editPre">{{ item.line1 }}<br/>{{ item.line2 }}</span>
               </td>
               <td class="text-xs-right ">
-                <v-btn v-if="editMode" icon class="mx-0" @click="clueDiag = true; clueToDelete = item">
+                <v-btn v-if="editPre" icon class="mx-0" @click="clueDiag = true; clueToDelete = item">
                   <v-icon  color="red lighten-1">delete</v-icon>
                 </v-btn>
-                <v-btn v-if="!editMode" icon class="mx-0" @click="clueSendDiag = true; clueToSend = item">
+                <v-btn v-if="!editPre" icon class="mx-0" @click="clueSendDiag = true; clueToSend = item">
                   <v-icon :color="chatColor(item.errorType)">{{chatIcon(item.errorType)}}</v-icon>
                 </v-btn>
               </td>
@@ -92,20 +95,27 @@
           </tbody>
         </table>
         </div>
-        <v-subheader style="margin-top:20px" >Post-solved Clues</v-subheader>
+
+      <v-subheader style="margin-top:20px" >
+          Post-solved Clues
+          <span class="spacer" />
+          <v-btn icon title="Edit messages" @click.native="editPost = !editPost"><v-icon >edit</v-icon></v-btn>
+          <v-btn icon title="Add a message" @click.native="dialog=true"><v-icon>add</v-icon></v-btn>
+        </v-subheader>
+
         <div class="elevation-1">
         <table class="datatable table">
           <tbody>
             <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="item in items">
               <td>
-                <a v-if="editMode" @click="editItem(item)">{{ item.line1 }}<br/>{{ item.line2 }}</a>
-                <span v-if="!editMode">{{ item.line1 }}<br/>{{ item.line2 }}</span>
+                <a v-if="editPost" @click="editItem(item)">{{ item.line1 }}<br/>{{ item.line2 }}</a>
+                <span v-if="!editPost">{{ item.line1 }}<br/>{{ item.line2 }}</span>
               </td>
               <td class="text-xs-right ">
-                <v-btn v-if="editMode" icon class="mx-0" @click="clueDiag = true; clueToDelete = item">
+                <v-btn v-if="editPost" icon class="mx-0" @click="clueDiag = true; clueToDelete = item">
                   <v-icon  color="red lighten-1">delete</v-icon>
                 </v-btn>
-                <v-btn v-if="!editMode" icon class="mx-0" @click="clueSendDiag = true; clueToSend = item">
+                <v-btn v-if="!editPost" icon class="mx-0" @click="clueSendDiag = true; clueToSend = item">
                   <v-icon :color="chatColor(item.errorType)">{{chatIcon(item.errorType)}}</v-icon>
                 </v-btn>
               </td>
@@ -133,7 +143,8 @@
       clueSendDiag: false,
       clueToSend: null,
       dialog: false,
-      editMode: false,
+      editPre: false,
+      editPost: false,
       items: [],
       clueDiag: false,
       clueToDelete: null,
