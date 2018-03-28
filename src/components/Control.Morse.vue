@@ -73,7 +73,7 @@
         Pre-solved Clues
         <span class="spacer" />
         <v-btn icon title="Edit messages" @click.native="editPre = !editPre"><v-icon >edit</v-icon></v-btn>
-        <v-btn icon title="Add a message" @click.native="dialog=true"><v-icon>add</v-icon></v-btn>
+        <v-btn icon title="Add a message" @click.native="timeType = 'pre'; dialog=true"><v-icon>add</v-icon></v-btn>
       </v-subheader>
       <div class="elevation-1">
         <table class="datatable table">
@@ -100,7 +100,7 @@
           Post-solved Clues
           <span class="spacer" />
           <v-btn icon title="Edit messages" @click.native="editPost = !editPost"><v-icon >edit</v-icon></v-btn>
-          <v-btn icon title="Add a message" @click.native="dialog=true"><v-icon>add</v-icon></v-btn>
+          <v-btn icon title="Add a message" @click.native="timeType = 'post'; dialog=true"><v-icon>add</v-icon></v-btn>
         </v-subheader>
 
         <div class="elevation-1">
@@ -143,6 +143,7 @@
       clueSendDiag: false,
       clueToSend: null,
       dialog: false,
+      timeType: null,
       editPre: false,
       editPost: false,
       items: [],
@@ -162,10 +163,11 @@
     }),
     computed: {
       formTitle () {
+        let timeTypeStr = this.timeType === 'pre' ? 'Pre-Solved' : 'Post-Solved'
         if (this.adhoc) {
-          return 'Send Clue';
+          return 'Send ' + timeTypeStr + ' Clue';
         } else {
-          return this.editedIndex === -1 ? 'New Clue' : 'Edit Clue'
+          return this.editedIndex === -1 ? 'New ' + timeTypeStr + ' Clue' : 'Edit ' + timeTypeStr + ' Clue'
         }
       },
       saveSendTxt () {
