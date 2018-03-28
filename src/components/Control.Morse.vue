@@ -166,7 +166,7 @@
       formTitle () {
         let timeTypeStr = this.timeType === 'pre' ? 'Pre-Solved' : 'Post-Solved'
         if (this.adhoc) {
-          return 'Send ' + timeTypeStr + ' Clue';
+          return 'Send Clue';
         } else {
           return this.editedClue.line1 === '' ? 'New ' + timeTypeStr + ' Clue' : 'Edit ' + timeTypeStr + ' Clue'
         }
