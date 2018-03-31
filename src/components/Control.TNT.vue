@@ -382,7 +382,7 @@ export default {
       this.resetTimeDiag = false;
       this.hours = this.minutes = this.seconds = null;
 
-      this.operationsRef.push({ command: 'setTime' }).on("value", (snapshot) => {
+      this.operationsRef.push({ command: 'setTime', data: { hours: this.setTime.hour, minutes: this.setTime.minute, seconds: this.setTime.second } }).on("value", (snapshot) => {
         let command = snapshot.val()
 
         if (command.received) {
