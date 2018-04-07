@@ -211,7 +211,6 @@ export default {
   props: ['snack'],
   data () {
     return {
-      operationsRef: null,
       tntRef: null,
       timerEnabled: false,
       debugBar: false,
@@ -260,7 +259,7 @@ export default {
   },
 
   mounted() {
-    this.operationsRef = this.$root.$data.fbdb.ref('operations')
+    this.operations = this.$root.$data.operations
     this.tntRef = this.$root.$data.fbdb.ref('tnt')
 
     this.tntRef.child('time').on('value', (snapshot) => {
@@ -364,7 +363,7 @@ export default {
       this.hours = this.minutes = this.seconds = null;
       this.timeLoaded = true;
 
-      this.operationsRef.push({ command: 'refreshTime' });
+      this.operations.add({ command: 'refreshTime' })
     },
     refreshState() {
       // clear out icons to indicate reloading
@@ -374,7 +373,7 @@ export default {
         this.keySolvedState =
         this.allSolvedState = STATE.UNKNOWN;
 
-      this.operationsRef.push({ command: 'refreshState' });
+      this.operations.add({ command: 'refreshState' })
     },
     setTimer() {
 
@@ -382,7 +381,7 @@ export default {
       this.resetTimeDiag = false;
       this.hours = this.minutes = this.seconds = null;
 
-      this.operationsRef.push({ command: 'setTime', data: { hours: this.setTime.hour, minutes: this.setTime.minute, seconds: this.setTime.second } }).on("value", (snapshot) => {
+      this.operations.add({ command: 'setTime', data: { hours: this.setTime.hour, minutes: this.setTime.minute, seconds: this.setTime.second } }).on("value", (snapshot) => {
         let command = snapshot.val()
 
         if (command.received) {
@@ -408,7 +407,7 @@ export default {
       let btn = document.getElementById('keyLoading');
       btn.id = 'disabled'
 
-      this.operationsRef.push({ command: 'triggerKey' }).on("value", (snapshot) => {
+      this.operations.add({ command: 'triggerKey' }).on("value", (snapshot) => {
         let command = snapshot.val()
 
         // check for received, that means pi registered it
@@ -432,7 +431,7 @@ export default {
       let btn = document.getElementById('wireLoading');
       btn.id = 'disabled'
 
-      this.operationsRef.push({ command: 'triggerWire' }).on("value", (snapshot) => {
+      this.operations.add({ command: 'triggerWire' }).on("value", (snapshot) => {
         let command = snapshot.val()
 
         // check for received, that means pi registered it
@@ -449,7 +448,7 @@ export default {
       });
     },
     triggerReset() {
-      this.operationsRef.push({ command: 'triggerDeviceReset' }).on("value", (snapshot) => {
+      this.operations.add({ command: 'triggerDeviceReset' }).on("value", (snapshot) => {
 
         if (snapshot.val().received) {
           // reset all internal state
@@ -473,7 +472,7 @@ export default {
       // so for now we only look at 'true' and send an op for it since all I can do right now
       // is turn this on
       if (this.switchErrors) {
-        this.operationsRef.push({ command: 'switchErrors' }).on("value", (snapshot) => {
+        this.operations.add({ command: 'switchErrors' }).on("value", (snapshot) => {
 
           if (snapshot.val().received) {
             this.snack('Switch errors disabled successfully.')
@@ -484,7 +483,7 @@ export default {
     wireErrorsClicked() {
       // TODO: same as switch errors, should be in state but requires arduino change
       if (this.wireErrors) {
-        this.operationsRef.push({ command: 'wireErrors' }).on("value", (snapshot) => {
+        this.operations.add({ command: 'wireErrors' }).on("value", (snapshot) => {
 
           if (snapshot.val().received) {
             this.snack('Wire errors disabled successfully.')
@@ -504,7 +503,7 @@ export default {
     // #######################################################
     // ## Debug Methods ######################################
     ledtoggle() {
-      this.operationsRef.push({ command: 'led' });
+      this.operations.add({ command: 'led' });
     },
     tmpLock() {
       this.keySolvedState = STATE.OK
