@@ -96,6 +96,12 @@
 
               <v-list dense>
                 <v-list-tile>
+                  <v-list-tile-content>Light:</v-list-tile-content>
+                  <v-list-tile-content class="align-end">
+                    <v-icon :style="{ color: '#FFC107' }">{{icon(lightState, 'light')}}</v-icon>
+                  </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile>
                   <v-list-tile-content :class="{ strikeIt: switchErrors }">Toggle 1:</v-list-tile-content>
                   <v-list-tile-content class="align-end">
                     <v-icon :style="{ color: iconColor(toggle1State) }">{{icon(toggle1State)}}</v-icon>
@@ -240,6 +246,7 @@ export default {
       hours: null,
       minutes: null,
       seconds: null,
+      lightState: STATE.UNKNOWN,
       toggle1State: STATE.UNKNOWN,
       toggle2State: STATE.UNKNOWN,
       wireState: STATE.UNKNOWN,
@@ -282,6 +289,7 @@ export default {
         return;
       }
 
+        this.lightState = state.lightDetected ? STATE.OK : STATE.UNKNOWN;
         this.toggle1State   = state.toggle1;
         this.toggle2State   = state.toggle2;
         this.wireState      = state.wire;
@@ -340,6 +348,11 @@ export default {
         return state === STATE.OK ? 'done_all' : ''
       }
 
+      // special case light
+      if (type === 'light') {
+        return state === STATE.OK ? 'lightbulb_outline' : ''
+      }
+
       if (state === STATE.OK) {
         return 'check_circle'
       } else if (state === STATE.BAD) {
@@ -367,7 +380,8 @@ export default {
     },
     refreshState() {
       // clear out icons to indicate reloading
-      this.toggle1State     =
+      this.lightState       =
+        this.toggle1State   =
         this.toggle2State   =
         this.wireState      =
         this.keySolvedState =
@@ -454,7 +468,8 @@ export default {
           // reset all internal state
           this.hours = this.minutes = this.seconds = null
           this.switchErrors = this.wireErrors = false
-          this.toggle1State     =
+          this.lightState       =
+            this.toggle1State   =
             this.toggle2State   =
             this.wireState      = 
             this.keySolvedState = 
