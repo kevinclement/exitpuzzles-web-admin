@@ -185,7 +185,7 @@
 
       this.morseCluesPreRef = this.$root.$data.fbdb.ref('morse/cluesPre')
       this.morseCluesPostRef = this.$root.$data.fbdb.ref('morse/cluesPost')
-      this.operationsRef = this.$root.$data.fbdb.ref('operations')
+      this.operations = this.$root.$data.operations
 
       this.morseCluesPreRef.on('child_added', (snapshot) => {
         let clue = snapshot.val()
@@ -244,7 +244,7 @@
         this.clueSendDiag = false;
         this.clueToSend = null;
 
-        this.operationsRef.push({ command: 'clue' }).on("value", (snapshot) => {
+        this.operations.add({ command: 'clue' }).on("value", (snapshot) => {
           let command = snapshot.val()
 
           if (command.received) {
