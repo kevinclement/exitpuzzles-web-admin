@@ -4,6 +4,6 @@ export default class Operations {
     }
 
     add(op) {
-        return this.operationsRef.push(op);
+        return this.operationsRef.push({ ...op, created: (new Date()).getTime()});
     }
 }
