@@ -86,6 +86,15 @@
               </v-flex>
             </div>
 
+            <div style="display:flex;margin-bottom:15px">
+              <v-flex xs6>
+                <div style="display:block">
+                  <span>Last Password</span>
+                  <div style="font-size:18px;font-family: Monaco, monospace;">{{lastPassword}}</div>
+                </div>
+              </v-flex>
+            </div>
+
           </v-flex>
           <v-flex xs12 sm6 md4>
             <v-card>
@@ -263,6 +272,23 @@ export default {
     },
     wireErrorLabel: function () {
       return this.wireErrors ? 'Disabled' : 'Enabled'
+    },
+    lastPassword: function() {
+
+      // split out the parts of the password to make them easier to parse
+      // this matches the same way clues are given
+      let code1 = this.lastBadPassword.substring(0,1)
+          code1 = code1 === '' ? 'x' : code1
+      let code2 = this.lastBadPassword.substring(1,3)
+          code2 = code2 === '' ? 'xx' : code2
+      let code3 = this.lastBadPassword.substring(3,6)
+          code3 = code3 === '' ? 'xxx' : code3
+      let code4 = this.lastBadPassword.substring(6,10)
+          code4 = code4 === '' ? 'xxxx' : code4
+      let code5 = this.lastBadPassword.substring(10,15)
+          code5 = code5 === '' ? 'xxxxx' : code5
+
+      return code1 + '-' + code2 + '-' + code3 + '-' + code4 + '-' + code5
     }
   },
 
@@ -321,7 +347,6 @@ export default {
           this.hours--
           this.minutes = 59
         }
-
       }
 
       if (this.seconds <= 0 && this.minutes <= 0 && this.hours <= 0) {
