@@ -229,7 +229,6 @@ export default {
   data () {
     return {
       tntRef: null,
-      timerEnabled: false,
       debugBar: false,
 
       // dialogs
@@ -269,6 +268,9 @@ export default {
   },
 
   computed: {
+    timerEnabled: function() {
+      return (this.hours !== null && this.minutes !== null && this.seconds !== null) && this.timeLeftInSeconds > 0
+    },
     switchErrorLabel: function () {
       return this.switchErrors ? 'Disabled' : 'Enabled'
     },
@@ -334,7 +336,6 @@ export default {
       let elapsed = Math.floor(((new Date()).getTime() - ts) / 1000)
 
       this.timeLeftInSeconds = (h * 3600) + (m * 60) + s  - elapsed
-      this.timerEnabled = true
       this.timerTimeStamp = ts;
 
       // TMP ###########################################
@@ -369,16 +370,12 @@ export default {
 
     setInterval(() => {
       // turn off timer if its been solved or our time is not positive
-      if (!this.timerEnabled || this.allSolvedState === STATE.OK || this.timeLeftInSeconds <= 0) {
+      if (!this.timerEnabled || this.allSolvedState === STATE.OK) {
         return;
       }
 
       this.timeLeftInSeconds--
     }, 1000);
-
-    // trigger time and state refreshes as if clicked
-    // NOTE: might have to disable this when it goes live, depends on experience
-    //this.refreshTimer();
   },
 
   methods: {
@@ -460,19 +457,9 @@ export default {
       this.resetTimeDiag = false;
       this.hours = this.minutes = this.seconds = null;
 
-      this.operations.add({ command: 'setTime', data: { hours: this.setTime.hour, minutes: this.setTime.minute, seconds: this.setTime.second } }).on("value", (snapshot) => {
-        let command = snapshot.val()
-
-        if (command.received) {
-
-          this.hours = this.setTime.hour;
-          this.minutes = this.setTime.minute;
-          this.seconds = this.setTime.second;
-
-          // disable further update notifications
-          snapshot.ref.off()
-        }
-      });
+      this.operations.add({ 
+        command: 'setTime',
+        data: { hours: this.setTime.hour, minutes: this.setTime.minute, seconds: this.setTime.second } });
     },
 
     triggerKey() {
