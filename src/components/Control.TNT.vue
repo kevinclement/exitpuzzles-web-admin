@@ -414,9 +414,6 @@ export default {
       this.confirmKeyDiag = false;
       this.keyLoading = true;
 
-      // TODO: remove when done demoing
-      // this.ledtoggle()
-
       // HACK: total hack to get around disabled styling.  don't have time to figure out proper
       let btn = document.getElementById('keyLoading');
       btn.id = 'disabled'
@@ -517,9 +514,6 @@ export default {
 
     // #######################################################
     // ## Debug Methods ######################################
-    ledtoggle() {
-      this.operations.add({ command: 'led' });
-    },
     tmpLock() {
       this.keySolvedState = STATE.OK
     },
