@@ -87,7 +87,7 @@
             </div>
 
             <div style="display:flex;margin-bottom:15px">
-              <v-flex xs6>
+              <v-flex xs12>
                 <div style="display:block">
                   <span>Last Password</span>
                   <div style="font-size:18px;font-family: Monaco, monospace;">
