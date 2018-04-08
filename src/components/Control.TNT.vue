@@ -127,7 +127,7 @@
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
-                  <v-list-tile-content>All Solved:</v-list-tile-content>
+                  <v-list-tile-content>All Solved: {{timeLeftSolved}}</v-list-tile-content>
                   <v-list-tile-content class="align-end">
                     <v-icon :style="{ color: iconColor(allSolvedState) }">{{icon(allSolvedState, 'all')}}</v-icon>
                   </v-list-tile-content>
@@ -251,8 +251,9 @@ export default {
       toggle2State: STATE.UNKNOWN,
       wireState: STATE.UNKNOWN,
       keySolvedState: STATE.UNKNOWN,
-      allSolvedState: STATE.UNKNOWN
-
+      allSolvedState: STATE.UNKNOWN,
+      lastBadPassword: '',
+      timeLeftSolved: ''
     }
   },
 
@@ -289,12 +290,14 @@ export default {
         return;
       }
 
-        this.lightState = state.lightDetected ? STATE.OK : STATE.UNKNOWN;
-        this.toggle1State   = state.toggle1;
-        this.toggle2State   = state.toggle2;
-        this.wireState      = state.wire;
-        this.keySolvedState = state.keySolved;
-        this.allSolvedState = state.allSolved;
+        this.lightState      = state.lightDetected ? STATE.OK : STATE.UNKNOWN;
+        this.toggle1State    = state.toggle1;
+        this.toggle2State    = state.toggle2;
+        this.wireState       = state.wire;
+        this.keySolvedState  = state.keySolved;
+        this.allSolvedState  = state.allSolved;
+        this.lastBadPassword = state.lastBadPassword;
+        this.timeLeftSolved  = state.timeLeftSolved;
     });
 
     // only show the debug bar if we have ?dbg or ?debug in the url
@@ -386,6 +389,7 @@ export default {
         this.wireState      =
         this.keySolvedState =
         this.allSolvedState = STATE.UNKNOWN;
+      this.lastBadPassword = this.timeLeftSolved = ''
 
       this.operations.add({ command: 'refreshState' })
     },
@@ -471,6 +475,7 @@ export default {
             this.wireState      = 
             this.keySolvedState = 
             this.allSolvedState = STATE.UNKNOWN
+          this.lastBadPassword = this.timeLeftSolved = ''
 
           this.snack('Device reset successfully.')
         }
