@@ -5,7 +5,10 @@
     <!-- tnt card -->
     <v-card>
       <v-toolbar card>
-        <v-toolbar-title>TNT</v-toolbar-title>
+        <v-toolbar-title>
+          TNT
+          <v-icon v-if="!isConnected" style="margin-bottom:4px;margin-left:7px;color:red" title="Device disconnected">report_problem</v-icon>
+        </v-toolbar-title>
         <span class="spacer" />
         <v-btn flat small color="red lighten-3" @click.native="resetTntDiag = true">Reset</v-btn>
       </v-toolbar>
@@ -261,7 +264,9 @@ export default {
       lastBadPassword: '',
       timeLeftSolved: '',
       timerTimeStamp: null,
-      timeLeftInSeconds: 0
+      timeLeftInSeconds: 0,
+      isConnected: true,
+      lastActivity: null,
     }
   },
 
@@ -321,6 +326,20 @@ export default {
   mounted() {
     this.operations = this.$root.$data.operations
     this.tntRef = this.$root.$data.fbdb.ref('tnt')
+
+    this.tntRef.child('isConnected').on('value', (snapshot) => {
+      let isConnected = snapshot.val()
+      if (isConnected == null) return
+
+      this.isConnected = isConnected
+    });
+
+    this.tntRef.child('lastActivity').on('value', (snapshot) => {
+      let lastActivity = snapshot.val()
+      if (lastActivity == null) return
+
+      this.lastActivity = lastActivity
+    });
 
     this.tntRef.child('time').on('value', (snapshot) => {
       let time = snapshot.val();
