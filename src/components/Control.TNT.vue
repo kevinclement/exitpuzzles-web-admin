@@ -247,7 +247,6 @@ export default {
       keyLoading:false,
       wireLoading:false,
       timeLoaded: false,
-      stateLoaded: false,
 
       // error toggles
       switchErrors: false,
@@ -330,11 +329,6 @@ export default {
     this.tntRef.child('state').on('value', (snapshot) => {
       let state = snapshot.val();
       if (state == null) return;
-      if (!this.stateLoaded) {
-        // ignore first load since it has stale data
-        this.stateLoaded = true;
-        return;
-      }
 
         this.lightState      = state.lightDetected ? STATE.OK : STATE.UNKNOWN;
         this.toggle1State    = state.toggle1;
@@ -379,13 +373,10 @@ export default {
     // trigger time and state refreshes as if clicked
     // NOTE: might have to disable this when it goes live, depends on experience
     this.refreshTimer();
-    this.refreshState();
   },
 
   methods: {
     icon: function(state, type) {
-      let empty_icon = this.stateLoaded ? 'help' : '' // first load don't show any icons
-
       // special case key
       if (type === 'key') {
         return state === STATE.OK ? 'done' : ''
@@ -406,7 +397,7 @@ export default {
       } else if (state === STATE.BAD) {
         return 'error'
       } else {
-        return empty_icon
+        return ''
       }
     },
     iconColor: function(state) {
