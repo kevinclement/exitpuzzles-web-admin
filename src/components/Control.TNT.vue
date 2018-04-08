@@ -246,7 +246,6 @@ export default {
       // loading states
       keyLoading:false,
       wireLoading:false,
-      timeLoaded: false,
 
       // error toggles
       switchErrors: false,
@@ -263,7 +262,9 @@ export default {
       keySolvedState: STATE.UNKNOWN,
       allSolvedState: STATE.UNKNOWN,
       lastBadPassword: '',
-      timeLeftSolved: ''
+      timeLeftSolved: '',
+      timerTimeStamp: null,
+      timeLeftInSeconds: 0
     }
   },
 
@@ -311,19 +312,40 @@ export default {
     }
   },
 
+  watch: {
+    timeLeftInSeconds: function(newTime) {
+      this.timeFromSeconds(newTime)
+    }
+  },
+
   mounted() {
     this.operations = this.$root.$data.operations
     this.tntRef = this.$root.$data.fbdb.ref('tnt')
 
     this.tntRef.child('time').on('value', (snapshot) => {
       let time = snapshot.val();
-      if (time == null || !this.timeLoaded) return
+      if (time == null) return
 
-      this.hours = time.hours;
-      this.minutes = time.minutes;
-      this.seconds = time.seconds;
+      // update might be partial, so fill out from our state
+      let h = time.hours ? time.hours : this.hours
+      let m = time.minutes ? time.minutes : this.minutes
+      let s = time.seconds ? time.seconds : this.seconds
+      let ts = time.timestamp ? time.timestamp : this.timerTimeStamp
+      let elapsed = Math.floor(((new Date()).getTime() - ts) / 1000)
 
-      this.timerEnabled = true;
+      this.timeLeftInSeconds = (h * 3600) + (m * 60) + s  - elapsed
+      this.timerEnabled = true
+      this.timerTimeStamp = ts;
+
+      // TMP ###########################################
+      let hours = Math.floor(elapsed / 3600);
+      elapsed = elapsed - hours * 3600;
+      let minutes = Math.floor(elapsed / 60);
+      let seconds = elapsed - minutes * 60;
+
+      console.log('total: ' + elapsed + ' => hours: ' + hours + ' minutes: ' + minutes + ' seconds: ' + seconds)
+      // ###############################################
+
     });
 
     this.tntRef.child('state').on('value', (snapshot) => {
@@ -343,39 +365,43 @@ export default {
     // only show the debug bar if we have ?dbg or ?debug in the url
     if (this.$route.query.dbg !== undefined || this.$route.query.debug !== undefined) {
       this.debugBar = true;
-    }
+    }    
 
     setInterval(() => {
       // turn off timer if its been solved or our time is not positive
-      if (!this.timerEnabled || this.allSolvedState === STATE.OK ||  (this.hours <= 0 && this.minutes <= 0 && this.seconds <= 0)) {
+      if (!this.timerEnabled || this.allSolvedState === STATE.OK || this.timeLeftInSeconds <= 0) {
         return;
       }
 
-      this.seconds--
-      if (this.seconds <= 0 && (this.minutes > 0 || this.hours > 0)) {
-
-        this.seconds = 59
-        this.minutes--
-
-        if (this.minutes < 0 && this.hours > 0) {
-          this.hours--
-          this.minutes = 59
-        }
-      }
-
-      if (this.seconds <= 0 && this.minutes <= 0 && this.hours <= 0) {
-          // TODO: boom blink, sound, animation?
-          console.log('boom!!!');
-      }
-
+      this.timeLeftInSeconds--
     }, 1000);
 
     // trigger time and state refreshes as if clicked
     // NOTE: might have to disable this when it goes live, depends on experience
-    this.refreshTimer();
+    //this.refreshTimer();
   },
 
   methods: {
+    timeFromSeconds: function(ts) {
+      // if we ever go past time, just set it all to 0
+      if (ts <= 0) {
+        this.hours = this.minutes = this.seconds = 0
+        return
+      }
+
+      // given time in seconds, split out hours, minutes, seconds
+      let hours = Math.floor(ts / 3600);
+      ts = ts - hours * 3600;
+      let minutes = Math.floor(ts / 60);
+      let seconds = ts - minutes * 60;
+
+      //console.log('total: ' + ts + ' => hours: ' + hours + ' minutes: ' + minutes + ' seconds: ' + seconds)
+
+      // set it on our state object to update the UI
+      this.hours = hours;
+      this.minutes = minutes;
+      this.seconds = seconds;
+    },
     icon: function(state, type) {
       // special case key
       if (type === 'key') {
@@ -413,7 +439,6 @@ export default {
     refreshTimer() {
       // clear out times to indicate were loading
       this.hours = this.minutes = this.seconds = null;
-      this.timeLoaded = true;
 
       this.operations.add({ command: 'refreshTime' })
     },
