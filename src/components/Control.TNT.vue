@@ -337,16 +337,6 @@ export default {
 
       this.timeLeftInSeconds = (h * 3600) + (m * 60) + s  - elapsed
       this.timerTimeStamp = ts;
-
-      // TMP ###########################################
-      let hours = Math.floor(elapsed / 3600);
-      elapsed = elapsed - hours * 3600;
-      let minutes = Math.floor(elapsed / 60);
-      let seconds = elapsed - minutes * 60;
-
-      console.log('total: ' + elapsed + ' => hours: ' + hours + ' minutes: ' + minutes + ' seconds: ' + seconds)
-      // ###############################################
-
     });
 
     this.tntRef.child('state').on('value', (snapshot) => {
@@ -587,6 +577,14 @@ export default {
     tmpAll() {
       this.keySolvedState = STATE.OK
       this.allSolvedState = STATE.OK
+    },
+    tmpCalcTimeElapsed(elapsed) {
+      let hours = Math.floor(elapsed / 3600);
+      elapsed = elapsed - hours * 3600;
+      let minutes = Math.floor(elapsed / 60);
+      let seconds = elapsed - minutes * 60;
+
+      console.log('total: ' + elapsed + ' => hours: ' + hours + ' minutes: ' + minutes + ' seconds: ' + seconds)
     }
   }
 }
