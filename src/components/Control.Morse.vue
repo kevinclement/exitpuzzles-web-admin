@@ -62,7 +62,8 @@
   <!-- morse code -->
   <v-card class="morseCard">
     <v-toolbar card>
-      <v-toolbar-title>Morse Code</v-toolbar-title>
+      <v-toolbar-title>Morse Code
+        <v-icon v-if="!isConnected" style="margin-bottom:4px;margin-left:7px;color:red" title="Device disconnected">report_problem</v-icon></v-toolbar-title>
       <span class="spacer" />
 
       <v-btn icon title="Send a message" @click.native="adhocSend"><v-icon >message</v-icon></v-btn>
@@ -160,7 +161,8 @@
         line1: '',
         line2: '',
         errorType: false
-      }
+      },
+      isConnected: true
     }),
     computed: {
       formTitle () {
@@ -186,6 +188,14 @@
       this.morseCluesPreRef = this.$root.$data.fbdb.ref('morse/cluesPre')
       this.morseCluesPostRef = this.$root.$data.fbdb.ref('morse/cluesPost')
       this.operations = this.$root.$data.operations
+
+      this.$root.$data.fbdb.ref('morse').child('isConnected').on('value', (snapshot) => {
+        console.log('iscon ' + snapshot.val())
+        let isConnected = snapshot.val()
+        if (isConnected == null) return
+
+        this.isConnected = isConnected
+      })
 
       this.morseCluesPreRef.on('child_added', (snapshot) => {
         let clue = snapshot.val()

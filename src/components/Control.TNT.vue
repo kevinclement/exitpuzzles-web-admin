@@ -265,8 +265,7 @@ export default {
       timeLeftSolved: '',
       timerTimeStamp: null,
       timeLeftInSeconds: 0,
-      isConnected: true,
-      lastActivity: null,
+      isConnected: true
     }
   },
 
@@ -332,13 +331,6 @@ export default {
       if (isConnected == null) return
 
       this.isConnected = isConnected
-    });
-
-    this.tntRef.child('lastActivity').on('value', (snapshot) => {
-      let lastActivity = snapshot.val()
-      if (lastActivity == null) return
-
-      this.lastActivity = lastActivity
     });
 
     this.tntRef.child('time').on('value', (snapshot) => {
