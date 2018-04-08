@@ -90,7 +90,9 @@
               <v-flex xs6>
                 <div style="display:block">
                   <span>Last Password</span>
-                  <div style="font-size:18px;font-family: Monaco, monospace;">{{lastPassword}}</div>
+                  <div style="font-size:18px;font-family: Monaco, monospace;">
+                    <span :class='{ ip: !pass1valid }'>{{pass1}}</span>-<span :class='{ ip: !pass2valid }'>{{pass2}}</span>-<span :class='{ ip: !pass3valid }'>{{pass3}}</span>-<span :class='{ ip: !pass4valid }'>{{pass4}}</span>-<span :class='{ ip: !pass5valid }'>{{pass5}}</span>
+                  </div>
                 </div>
               </v-flex>
             </div>
@@ -273,22 +275,40 @@ export default {
     wireErrorLabel: function () {
       return this.wireErrors ? 'Disabled' : 'Enabled'
     },
-    lastPassword: function() {
-
-      // split out the parts of the password to make them easier to parse
-      // this matches the same way clues are given
-      let code1 = this.lastBadPassword.substring(0,1)
-          code1 = code1 === '' ? 'x' : code1
-      let code2 = this.lastBadPassword.substring(1,3)
-          code2 = code2 === '' ? 'xx' : code2
-      let code3 = this.lastBadPassword.substring(3,6)
-          code3 = code3 === '' ? 'xxx' : code3
-      let code4 = this.lastBadPassword.substring(6,10)
-          code4 = code4 === '' ? 'xxxx' : code4
-      let code5 = this.lastBadPassword.substring(10,15)
-          code5 = code5 === '' ? 'xxxxx' : code5
-
-      return code1 + '-' + code2 + '-' + code3 + '-' + code4 + '-' + code5
+    pass1: function() {
+      let code = this.lastBadPassword.substring(0,1)
+      return code === '' ? 'x' : code
+    },
+    pass2: function() {
+      let code = this.lastBadPassword.substring(1,3)
+      return code === '' ? 'xx' : code
+    },
+    pass3: function() {
+      let code = this.lastBadPassword.substring(3,6)
+      return code === '' ? 'xxx' : code
+    },
+    pass4: function() {
+      let code = this.lastBadPassword.substring(6,10)
+      return code === '' ? 'xxxx' : code
+    },
+    pass5: function() {
+      let code =this.lastBadPassword.substring(10,15)
+      return code === '' ? 'xxxxx' : code
+    },
+    pass1valid: function() {
+      return this.pass1 === '4' || this.pass1 === 'x'
+    },
+    pass2valid: function() {
+      return this.pass2 === '19' || this.pass2 === 'xx'
+    },
+    pass3valid: function() {
+      return this.pass3 === '268' || this.pass3 === 'xxx'
+    },
+    pass4valid: function() {
+      return this.pass4 === '0284' || this.pass4 === 'xxxx'
+    },
+    pass5valid: function() {
+      return this.pass5 === '53464' || this.pass5 === 'xxxxx'
     }
   },
 
@@ -599,5 +619,8 @@ td > input {
 }
 .strikeIt {
   text-decoration: line-through;
+}
+.ip {
+  color:#EF5350
 }
 </style>
