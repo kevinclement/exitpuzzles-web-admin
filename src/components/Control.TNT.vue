@@ -246,10 +246,6 @@ export default {
       keyLoading:false,
       wireLoading:false,
 
-      // error toggles
-      switchErrors: false,
-      wireErrors: false,
-
       // device status states
       hours: null,
       minutes: null,
@@ -260,6 +256,8 @@ export default {
       wireState: STATE.UNKNOWN,
       keySolvedState: STATE.UNKNOWN,
       allSolvedState: STATE.UNKNOWN,
+      switchErrors: false,
+      wireErrors: false,
       lastBadPassword: '',
       timeLeftSolved: '',
       timerTimeStamp: null,
@@ -351,6 +349,8 @@ export default {
         this.allSolvedState  = state.allSolved;
         this.lastBadPassword = state.lastBadPassword;
         this.timeLeftSolved  = state.timeLeftSolved;
+        this.switchErrors    = state.switchErrors;
+        this.wireErrors      = state.wireErrors;
     });
 
     // only show the debug bar if we have ?dbg or ?debug in the url
@@ -504,17 +504,6 @@ export default {
       this.operations.add({ command: 'triggerDeviceReset' }).on("value", (snapshot) => {
 
         if (snapshot.val().received) {
-          // reset all internal state
-          this.hours = this.minutes = this.seconds = null
-          this.switchErrors = this.wireErrors = false
-          this.lightState       =
-            this.toggle1State   =
-            this.toggle2State   =
-            this.wireState      = 
-            this.keySolvedState = 
-            this.allSolvedState = STATE.UNKNOWN
-          this.lastBadPassword = this.timeLeftSolved = ''
-
           this.snack('Device reset successfully.')
         }
       });
