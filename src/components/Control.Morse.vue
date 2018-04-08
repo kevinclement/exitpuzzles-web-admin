@@ -241,10 +241,11 @@
         this.dialog = true
       },
       sendClue () {
+        let clue = this.clueToSend;
         this.clueSendDiag = false;
         this.clueToSend = null;
 
-        this.operations.add({ command: 'clue' }).on("value", (snapshot) => {
+        this.operations.add({ command: 'clue', clue: clue }).on("value", (snapshot) => {
           let command = snapshot.val()
 
           if (command.received) {
