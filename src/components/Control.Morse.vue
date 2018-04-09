@@ -1,26 +1,22 @@
 <template>
- 
 <v-flex>
   <!-- add/edit/adhoc dialog -->
   <v-dialog v-model="dialog" max-width="500px">
     <v-card>
       <v-card-title>
-        <span class="headline">{{ formTitle }}</span>
+        <span class="headline">{{ form.title }}</span>
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md>
           <v-layout wrap>
             <v-flex xs12>
-              <v-text-field maxlength="16" label="Line 1" v-model="editedClue.line1"></v-text-field>
+              <v-text-field maxlength="16" label="Line 1" v-model="form.clue.line1"></v-text-field>
             </v-flex>
             <v-flex xs12>
-              <v-text-field maxlength="16" label="Line 2" v-model="editedClue.line2"></v-text-field>
+              <v-text-field maxlength="16" label="Line 2" v-model="form.clue.line2"></v-text-field>
             </v-flex>
             <v-flex xs12>
-              <v-checkbox
-                    label="Error Clue"
-                    v-model="editedClue.errorType"
-                   ></v-checkbox>
+              <v-checkbox label="Error Clue" v-model="form.clue.errorType"></v-checkbox>
             </v-flex>
           </v-layout>
         </v-container>
@@ -33,28 +29,15 @@
     </v-card>
   </v-dialog>
 
-  <!-- confirm delete dialog -->
-  <v-dialog v-model="clueDiag" max-width="410">
+  <!-- confirm dialog -->
+  <v-dialog v-model="confirmDiag" max-width="410">
     <v-card>
-      <v-card-title class="headline">Really delete the clue?</v-card-title>
-      <v-card-text>Are you sure you want permanently remove the clue from the system?</v-card-text>
+      <v-card-title class="headline">{{confirm.title}}</v-card-title>
+      <v-card-text>{{confirm.text}}</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="clueDiag = false">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="deleteClue">Yes</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-
-  <!-- send confirm dialog -->
-  <v-dialog v-model="clueSendDiag" max-width="410">
-    <v-card>
-      <v-card-title class="headline">Send the clue?</v-card-title>
-      <v-card-text>Are you sure you want to send the clue to the device?</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="clueSendDiag = false">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="sendClue">Yes</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="confirmDiag = false">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="confirmed">Yes</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -63,116 +46,47 @@
   <v-card class="morseCard">
     <v-toolbar card>
       <v-toolbar-title>Morse Code
-        <v-icon v-if="!isConnected" style="margin-bottom:4px;margin-left:7px;color:red" title="Device disconnected">report_problem</v-icon></v-toolbar-title>
+        <v-icon v-if="!isConnected" class="notConnected" title="Device disconnected">report_problem</v-icon></v-toolbar-title>
       <span class="spacer" />
-
-      <v-btn icon title="Send a message" @click.native="adhocSend"><v-icon >message</v-icon></v-btn>
+      <v-btn icon title="Send a message" @click.native="adhocForm"><v-icon >message</v-icon></v-btn>
     </v-toolbar>
 
-    <v-card-text class="grey lighten-3 ">
-      <v-subheader >
-        Pre-solved Clues
-        <span class="spacer" />
-        <v-btn icon title="Edit messages" @click.native="timeType = 'pre'; editPre = !editPre"><v-icon >edit</v-icon></v-btn>
-        <v-btn icon title="Add a message" @click.native="timeType = 'pre'; dialog=true"><v-icon>add</v-icon></v-btn>
-      </v-subheader>
-      <div class="elevation-1">
-        <table class="datatable table">
-          <tbody>
-            <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="clue in preClues">
-              <td>
-                <a v-if="editPre" @click="editItem(clue)">{{ clue.line1 }}<br/>{{ clue.line2 }}</a>
-                <span v-if="!editPre">{{ clue.line1 }}<br/>{{ clue.line2 }}</span>
-              </td>
-              <td class="text-xs-right ">
-                <v-btn v-if="editPre" icon class="mx-0" @click="clueDiag = true; clueToDelete = clue">
-                  <v-icon  color="red lighten-1">delete</v-icon>
-                </v-btn>
-                <v-btn v-if="!editPre" icon class="mx-0" @click="clueSendDiag = true; clueToSend = clue">
-                  <v-icon :color="chatColor(clue.errorType)">{{chatIcon(clue.errorType)}}</v-icon>
-                </v-btn>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-
-      <v-subheader style="margin-top:20px" >
-          Post-solved Clues
-          <span class="spacer" />
-          <v-btn icon title="Edit messages" @click.native="timeType = 'post'; editPost = !editPost"><v-icon >edit</v-icon></v-btn>
-          <v-btn icon title="Add a message" @click.native="timeType = 'post'; dialog=true"><v-icon>add</v-icon></v-btn>
-        </v-subheader>
-
-        <div class="elevation-1">
-        <table class="datatable table">
-          <tbody>
-            <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="clue in postClues">
-              <td>
-                <a v-if="editPost" @click="editItem(clue)">{{ clue.line1 }}<br/>{{ clue.line2 }}</a>
-                <span v-if="!editPost">{{ clue.line1 }}<br/>{{ clue.line2 }}</span>
-              </td>
-              <td class="text-xs-right ">
-                <v-btn v-if="editPost" icon class="mx-0" @click="clueDiag = true; clueToDelete = clue">
-                  <v-icon  color="red lighten-1">delete</v-icon>
-                </v-btn>
-                <v-btn v-if="!editPost" icon class="mx-0" @click="clueSendDiag = true; clueToSend = clue">
-                  <v-icon :color="chatColor(clue.errorType)">{{chatIcon(clue.errorType)}}</v-icon>
-                </v-btn>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-      </div>
-    </v-card-text>
+    <control-morse-category 
+      title="Pre-solved"
+      :editForm="editForm"
+      :confirm="confirmForm"
+      :send="send"
+      :clueRef="presolvedRef"></control-morse-category>
 
   </v-card>
 </v-flex>
-
 </template>
 
 <script>
+  import MorseCategory from '@/components/Control.Morse.Category'
+
   export default {
     props: ['snack'],
     data: () => ({
-      morseCluesPreRef: null,
-      morseCluesPostRef: null,
+      form: {
+        title: '',
+        clue: { line1: '', line2: '', errorType: false },
+        callback: null
+      },
+      confirm: {
+        title: '',
+        text: ''
+      },
+      confirmCallback: null,
+      presolvedRef: null,
       operationsRef: null,
       ios: false,
       adhoc: false,
-      confirmDeleteDiag: false,
-      clueSendDiag: false,
-      clueToSend: null,
       dialog: false,
-      timeType: null,
-      editPre: false,
-      editPost: false,
-      preClues: [],
-      postClues: [],
-      clueDiag: false,
-      clueToDelete: null,
-      editedClue: {
-        line1: '',
-        line2: '',
-        errorType: false
-      },
-      defaultItem: {
-        line1: '',
-        line2: '',
-        errorType: false
-      },
+      confirmDiag: false,
       isConnected: true
     }),
     computed: {
-      formTitle () {
-        let timeTypeStr = this.timeType === 'pre' ? 'Pre-Solved' : 'Post-Solved'
-        if (this.adhoc) {
-          return 'Send Clue';
-        } else {
-          return this.editedClue.line1 === '' ? 'New ' + timeTypeStr + ' Clue' : 'Edit ' + timeTypeStr + ' Clue'
-        }
-      },
       saveSendTxt () {
         return this.adhoc ? 'Send' : 'Save'
       }
@@ -185,132 +99,84 @@
     created () {
       this.ios = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 
-      this.morseCluesPreRef = this.$root.$data.fbdb.ref('morse/cluesPre')
-      this.morseCluesPostRef = this.$root.$data.fbdb.ref('morse/cluesPost')
       this.operations = this.$root.$data.operations
+      this.presolvedRef = this.$root.$data.fbdb.ref('morse/clues/1/clues')
 
       this.$root.$data.fbdb.ref('morse').child('isConnected').on('value', (snapshot) => {
         let isConnected = snapshot.val()
         if (isConnected == null) return
-
         this.isConnected = isConnected
       })
-
-      this.morseCluesPreRef.on('child_added', (snapshot) => {
-        let clue = snapshot.val()
-        this.preClues.push({'id':snapshot.key, ...clue})
-      })
-      this.morseCluesPostRef.on('child_added', (snapshot) => {
-        let clue = snapshot.val()
-        this.postClues.push({'id':snapshot.key, ...clue})
-      })
-
-      this.morseCluesPreRef.on('child_changed', (snapshot) => {
-        let clue = snapshot.val()
-        let aClue = this.preClues.find((clue) => {
-          return clue.id === snapshot.key;
-        })
-
-        aClue.line1 = clue.line1;
-        aClue.line2 = clue.line2;
-        aClue.errorType = clue.errorType;
-      });
-      this.morseCluesPostRef.on('child_changed', (snapshot) => {
-        let clue = snapshot.val()
-        let aClue = this.postClues.find((clue) => {
-          return clue.id === snapshot.key;
-        })
-
-        aClue.line1 = clue.line1;
-        aClue.line2 = clue.line2;
-        aClue.errorType = clue.errorType;
-      });
-
-      this.morseCluesPreRef.on('child_removed', (snapshot) => {
-        this.preClues = this.preClues.filter((clue) => {
-          return clue.id !== snapshot.key;
-        })
-      });
-      this.morseCluesPostRef.on('child_removed', (snapshot) => {
-        this.postClues = this.postClues.filter((clue) => {
-          return clue.id !== snapshot.key;
-        })
-      });
-
     },
     methods: {
-      chatIcon (error) {
-        return error ? 'announcement' : 'chat_bubble'
-      },
-      chatColor (error) {
-        return error ? 'red lighten-1' : 'blue accent-1'
-      },
-      editItem (clue) {
-        this.editedClue = Object.assign({}, clue)
+      editForm(form) {
+        this.form = form
         this.dialog = true
       },
-      sendClue () {
-        let clue = this.clueToSend;
-        this.clueSendDiag = false;
-        this.clueToSend = null;
-
-        this.operations.add({ command: 'clue', clue: clue }).on("value", (snapshot) => {
-          let command = snapshot.val()
-
-          if (command.received) {
-
-            // pop snack letting user know  we triggered it
-            this.snack('Clue sent successfully.')
-
-            // disable further update notifications
-            snapshot.ref.off()
-          }
-        });
-      },
-      adhocSend() {
+      adhocForm() {
+        this.form.title = 'Send Clue'
         this.adhoc = true
         this.dialog = true
       },
-      deleteClue() {
-        let id = this.clueToDelete.id;
-
-        this.clueToDelete = null;
-        this.clueDiag = false;
-
-        // tell firedb to remove clue
-        if (this.timeType === 'pre') {
-          this.morseCluesPreRef.child(id).remove();
+      confirmForm(isDelete, callback) {
+        if (isDelete) {
+          this.confirm.title = 'Really delete the clue?'
+          this.confirm.text  = 'Are you sure you want permanently remove the clue from the system?'
         } else {
-          this.morseCluesPostRef.child(id).remove();
+          this.confirm.title = 'Send the clue?'
+          this.confirm.text  = 'Are you sure you want to send the clue to the device?'
         }
+
+        this.confirmDiag = true
+        this.confirmCallback = callback
+      },
+      confirmed() {
+        this.confirmDiag = false
+        this.confirmCallback()
       },
       close () {
         this.dialog = false
         setTimeout(() => {
-          this.editedClue = Object.assign({}, this.defaultItem)
           this.adhoc = false
+          this.form.title = this.form.clue.line1 = this.form.clue.line2 = ''
+          this.form.clue.errorType = false
         }, 300)
       },
       save () {
-        if (this.editedClue.id) {
-          let et = this.editedClue.errorType ? true : false;
-          if (this.timeType === 'pre') {
-            this.morseCluesPreRef.child(this.editedClue.id).set({ line1: this.editedClue.line1, line2: this.editedClue.line2, errorType: et})
-          } else {
-            this.morseCluesPostRef.child(this.editedClue.id).set({ line1: this.editedClue.line1, line2: this.editedClue.line2, errorType: et})
-          }
-        } else if (this.adhoc) {
-          this.clueToSend = this.editedClue
-          this.sendClue()
+        this.form.clue.errorType = this.form.clue.errorType ? true : false;
+
+        if (this.adhoc) {
+          this.send(this.form.clue, true)
         } else {
-          if (this.timeType === 'pre') {
-            this.morseCluesPreRef.push(this.editedClue)
-          } else {
-            this.morseCluesPostRef.push(this.editedClue)
-          }
+          this.form.callback(this.form.clue)
         }
+
         this.close()
-      }
+      },
+      send(clue, adhoc) {
+        let sendOp = () => {
+          this.operations.add({ command: 'clue', clue: clue }).on("value", (snapshot) => {
+            let command = snapshot.val()
+            if (command.received) {
+              // pop snack letting user know  we triggered it
+              this.snack('Clue sent successfully.')
+              // disable further update notifications
+              snapshot.ref.off()
+            }
+          });
+        }
+
+        if (adhoc) {
+          sendOp()
+        } else {
+          this.confirmForm(false, sendOp);
+        }
+      },
+
+    },
+
+    components: {
+      'control-morse-category': MorseCategory
     }
   }
 </script>
@@ -319,12 +185,9 @@
 .morseCard {
   margin-top: 30px;
 }
-
-.clueRow {
-  user-select: none;
+.notConnected {
+  margin-bottom:4px;
+  margin-left:7px;
+  color:red
 }
-.clueRowIos {
-  background: #fff !important;
-}
-
 </style>
