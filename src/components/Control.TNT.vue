@@ -22,7 +22,7 @@
             </v-toolbar>
 
             <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">
-              {{formatTime(hours)}}:{{formatTime(minutes)}}:{{formatTime(seconds)}}
+              {{timer}}
             </div>
 
             <div style="display:flex">
@@ -72,6 +72,7 @@
                     primary
                     :label="switchErrorLabel"
                     v-model="switchErrors"
+                    :disabled="!isConnected"
                     @click.native="switchErrorsClicked"
                   ></v-switch>
                 </div>
@@ -83,6 +84,7 @@
                     primary
                     :label="wireErrorLabel"
                     v-model="wireErrors"
+                    :disabled="!isConnected"
                     @click.native="wireErrorsClicked"
                   ></v-switch>
                 </div>
@@ -270,6 +272,13 @@ export default {
   },
 
   computed: {
+    timer: function() {
+      if (!this.isConnected) {
+        return "--:--:--"
+      }
+
+      return this.formatTime(this.hours) + ':' + this.formatTime(this.minutes) + ':' + this.formatTime(this.seconds)
+    },
     timerEnabled: function() {
       return (this.hours !== null && this.minutes !== null && this.seconds !== null) && this.timeLeftInSeconds > 0
     },
@@ -401,6 +410,9 @@ export default {
       this.seconds = seconds;
     },
     icon: function(state, type) {
+      // if offline, dont show icons
+      if (!this.isConnected) return ''
+
       // special case key
       if (type === 'key') {
         return state === STATE.OK ? 'done' : ''
