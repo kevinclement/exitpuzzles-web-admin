@@ -51,12 +51,14 @@
       <v-btn icon title="Send a message" @click.native="adhocForm"><v-icon >message</v-icon></v-btn>
     </v-toolbar>
 
-    <control-morse-category 
-      title="Pre-solved"
-      :editForm="editForm"
-      :confirm="confirmForm"
-      :send="send"
-      :clueRef="presolvedRef"></control-morse-category>
+    <div v-for="cat in categories">
+      <control-morse-category 
+        :title="cat.name"
+        :editForm="editForm"
+        :confirm="confirmForm"
+        :send="send"
+        :clueRef="cat.ref"/>
+    </div>
 
   </v-card>
 </v-flex>
@@ -78,9 +80,8 @@
         text: ''
       },
       confirmCallback: null,
-      presolvedRef: null,
+      categories: [],
       operationsRef: null,
-      ios: false,
       adhoc: false,
       dialog: false,
       confirmDiag: false,
@@ -97,10 +98,21 @@
       }
     },
     created () {
-      this.ios = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
-
       this.operations = this.$root.$data.operations
-      this.presolvedRef = this.$root.$data.fbdb.ref('morse/clues/1/clues')
+
+      this.$root.$data.fbdb.ref('morse').child('clues').on('value', (snapshot) => {
+        let clues = snapshot.val()
+        if (clues == null) return
+
+        let cats = []
+        Object.keys(clues).forEach(key => {
+          cats.push( { 
+            name: clues[key].name,
+            ref: this.$root.$data.fbdb.ref('morse/clues/' + key + '/clues')
+          })
+        })
+        this.categories = cats
+      })
 
       this.$root.$data.fbdb.ref('morse').child('isConnected').on('value', (snapshot) => {
         let isConnected = snapshot.val()
