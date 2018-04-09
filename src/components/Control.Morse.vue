@@ -190,7 +190,6 @@
       this.operations = this.$root.$data.operations
 
       this.$root.$data.fbdb.ref('morse').child('isConnected').on('value', (snapshot) => {
-        console.log('iscon ' + snapshot.val())
         let isConnected = snapshot.val()
         if (isConnected == null) return
 

@@ -334,7 +334,7 @@ export default {
     });
 
     this.tntRef.child('time').on('value', (snapshot) => {
-      let time = snapshot.val();
+      let time = snapshot.val()
       if (time == null) return
 
       // update might be partial, so fill out from our state
@@ -344,24 +344,24 @@ export default {
       let ts = time.timestamp ? time.timestamp : this.timerTimeStamp
       let elapsed = Math.floor(((new Date()).getTime() - ts) / 1000)
 
-      this.timeLeftInSeconds = (h * 3600) + (m * 60) + s  - elapsed
-      this.timerTimeStamp = ts;
+      this.timeLeftInSeconds = (h * 3600) + (m * 60) + s - elapsed
+      this.timerTimeStamp = ts
     });
 
     this.tntRef.child('state').on('value', (snapshot) => {
-      let state = snapshot.val();
-      if (state == null) return;
+      let state = snapshot.val()
+      if (state == null) return
 
-        this.lightState      = state.lightDetected ? STATE.OK : STATE.UNKNOWN;
-        this.toggle1State    = state.toggle1;
-        this.toggle2State    = state.toggle2;
-        this.wireState       = state.wire;
-        this.keySolvedState  = state.keySolved;
-        this.allSolvedState  = state.allSolved;
-        this.lastBadPassword = state.lastBadPassword;
-        this.timeLeftSolved  = state.timeLeftSolved;
-        this.switchErrors    = state.switchErrors;
-        this.wireErrors      = state.wireErrors;
+      this.lightState      = state.lightDetected ? STATE.OK : STATE.UNKNOWN
+      this.toggle1State    = state.toggle1
+      this.toggle2State    = state.toggle2
+      this.wireState       = state.wire
+      this.keySolvedState  = state.keySolved
+      this.allSolvedState  = state.allSolved
+      this.lastBadPassword = state.lastBadPassword
+      this.timeLeftSolved  = state.timeLeftSolved
+      this.switchErrors    = state.switchErrors
+      this.wireErrors      = state.wireErrors
     });
 
     // only show the debug bar if we have ?dbg or ?debug in the url
@@ -462,7 +462,6 @@ export default {
         command: 'setTime',
         data: { hours: this.setTime.hour, minutes: this.setTime.minute, seconds: this.setTime.second } });
     },
-
     triggerKey() {
       this.confirmKeyDiag = false;
       this.keyLoading = true;
@@ -521,11 +520,7 @@ export default {
 
       this.resetTntDiag = false;
     },
-
     switchErrorsClicked() {
-      // TODO: should really be in state object, but requires more logic on arduino side
-      // so for now we only look at 'true' and send an op for it since all I can do right now
-      // is turn this on
       if (this.switchErrors) {
         this.operations.add({ command: 'switchErrors' }).on("value", (snapshot) => {
 
@@ -536,7 +531,6 @@ export default {
       }
     },
     wireErrorsClicked() {
-      // TODO: same as switch errors, should be in state but requires arduino change
       if (this.wireErrors) {
         this.operations.add({ command: 'wireErrors' }).on("value", (snapshot) => {
 
