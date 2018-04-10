@@ -24,7 +24,7 @@
       <router-view/>
     </v-content>
     <v-content v-if="!authenticated">
-      <login />
+      <login :callback="loggedIn"/>
     </v-content>
   </v-app>
 </template>
@@ -37,13 +37,14 @@ export default {
     return {
       drawer: false,
       items: [],
+      user: null
     }
-    
   },
+
   computed: {
-      authenticated () {
-        return this.$root.$data.authenticated
-      }
+    authenticated () {
+        return this.user !== null
+    }
   },
 
   mounted() {
@@ -63,6 +64,9 @@ export default {
   methods: {
     navigate: function (item) {
       this.$router.push(item.url)
+    }, 
+    loggedIn: function(user) {
+      this.user = user
     }
   },
 

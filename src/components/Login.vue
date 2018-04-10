@@ -27,6 +27,7 @@ const auth = new GoTrue({
 });
 
 export default {
+  props: ['callback'],
   data () {
     return {
         user: '',
@@ -40,6 +41,7 @@ export default {
     login() {
         auth.login(this.user, this.password).then(user => {
             console.log("Logged in as %s", user.email)
+            this.callback(user)
         }, error => {
             this.errorMessage = error.message.replace(/.*:/, '')
             console.log("Failed to log in: %o", error)
