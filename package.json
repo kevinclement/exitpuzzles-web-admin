@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "firebase": "^4.11.0",
+    "gotrue-js": "^0.9.20",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuefire": "^1.4.5",

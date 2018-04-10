@@ -4,14 +4,15 @@
         <v-flex xs12 sm8 md4>
         <v-card class="elevation-12">
             <v-card-text>
-            <v-form>
-                <v-text-field prepend-icon="person" name="login" label="Login" type="text"></v-text-field>
-                <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password"></v-text-field>
-            </v-form>
+                <v-form>
+                    <v-text-field prepend-icon="person" v-model="user" name="login" label="Login" type="text"></v-text-field>
+                    <v-text-field prepend-icon="lock" v-model="password" name="password" label="Password" id="password" type="password"></v-text-field>
+                </v-form>
             </v-card-text>
             <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="accent">Login</v-btn>
+                <span v-if="errorMessage !== ''" style="padding-left:16px;color:#E53935">* {{errorMessage}}</span>
+                <v-spacer></v-spacer>
+                <v-btn color="accent" @click="login">Login</v-btn>
             </v-card-actions>
         </v-card>
         </v-flex>
@@ -19,3 +20,31 @@
     </v-container>
 </template>
 
+<script>
+import GoTrue from 'gotrue-js'
+const auth = new GoTrue({
+  APIUrl: 'https://admin.exitpuzzles.com/.netlify/identity'
+});
+
+export default {
+  data () {
+    return {
+        user: '',
+        password: '',
+        errorMessage: ''
+    }
+  },
+  computed: {
+  },
+  methods: {
+    login() {
+        auth.login(this.user, this.password).then(user => {
+            console.log("Logged in as %s", user.email)
+        }, error => {
+            this.errorMessage = error.message.replace(/.*:/, '')
+            console.log("Failed to log in: %o", error)
+        })
+      }
+  }
+}
+</script>
