@@ -3,8 +3,8 @@
     <v-navigation-drawer
       v-model="drawer"
       fixed
-      app
-    >
+      app 
+      v-if="authenticated">
       <v-list>
         <v-list-tile ripple v-for="item in items" :key="item.title" @click="navigate(item)">
           <v-list-tile-action>
@@ -17,36 +17,33 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar fixed app>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon v-if="authenticated" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Exit Puzzles Admin</v-toolbar-title>
-      <v-breadcrumbs v-if="false" class="breadcrumbs">
-        <v-icon slot="divider">chevron_right</v-icon>
-        <v-breadcrumbs-item
-          v-for="bc in breadcrumbs"
-          :key="bc.text"
-          :disabled="bc.disabled"
-        >
-          {{ bc.text }}
-        </v-breadcrumbs-item>
-      </v-breadcrumbs>
     </v-toolbar>
-    <v-content>
+    <v-content v-if="authenticated">
       <router-view/>
+    </v-content>
+    <v-content v-if="!authenticated">
+      <login />
     </v-content>
   </v-app>
 </template>
 
 <script>
+import Login from '@/components/Login'
+
 export default {
   data () {
     return {
       drawer: false,
       items: [],
-      breadcrumbs: [
-        { text: 'Logs' },
-        { text: 'a specific log' }
-      ]
     }
+    
+  },
+  computed: {
+      authenticated () {
+        return this.$root.$data.authenticated
+      }
   },
 
   mounted() {
@@ -67,6 +64,10 @@ export default {
     navigate: function (item) {
       this.$router.push(item.url)
     }
+  },
+
+  components: {
+    'login': Login
   },
 
   name: 'App'
