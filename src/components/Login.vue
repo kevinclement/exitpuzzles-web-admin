@@ -37,9 +37,16 @@ export default {
   },
   computed: {
   },
+  mounted() {
+      let user = auth.currentUser();
+      if (user) {
+          console.log("Auto login as %s", user.email)
+          this.callback(user)
+      }
+  },
   methods: {
     login() {
-        auth.login(this.user, this.password).then(user => {
+        auth.login(this.user, this.password, true).then(user => {
             console.log("Logged in as %s", user.email)
             this.callback(user)
         }, error => {

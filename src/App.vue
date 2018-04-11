@@ -63,10 +63,18 @@ export default {
 
   methods: {
     navigate: function (item) {
-      this.$router.push(item.url)
+      if (item.url === 'logout') {
+        this.user.logout().then(
+          response => this.user = null,
+          error => console.log("Failed to logout user: %o", error)
+        );
+      } else {
+        this.$router.push(item.url)
+      }
     }, 
     loggedIn: function(user) {
       this.user = user
+      this.items.push({ title: "User: " + this.user.email, icon: "accessible", url: 'logout'})
     }
   },
 
