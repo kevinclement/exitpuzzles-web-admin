@@ -12,7 +12,7 @@
             <v-card-actions>
                 <span v-if="errorMessage !== ''" style="padding-left:16px;color:#E53935">* {{errorMessage}}</span>
                 <v-spacer></v-spacer>
-                <v-btn color="accent" @click="login">Login</v-btn>
+                <v-btn color="accent" @click="login">Sign in</v-btn>
             </v-card-actions>
         </v-card>
         </v-flex>

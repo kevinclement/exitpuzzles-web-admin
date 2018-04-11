@@ -5,13 +5,24 @@
       fixed
       app 
       v-if="authenticated">
-      <v-list>
+      <v-list subheader>
+        <v-subheader>Signed in as {{user.user_metadata.full_name}}</v-subheader>
+        <v-divider></v-divider>
         <v-list-tile ripple v-for="item in items" :key="item.title" @click="navigate(item)">
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-divider></v-divider>
+        <v-list-tile ripple @click="logOut()">
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Sign out</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -63,18 +74,16 @@ export default {
 
   methods: {
     navigate: function (item) {
-      if (item.url === 'logout') {
-        this.user.logout().then(
-          response => this.user = null,
-          error => console.log("Failed to logout user: %o", error)
-        );
-      } else {
-        this.$router.push(item.url)
-      }
+      this.$router.push(item.url)
     }, 
     loggedIn: function(user) {
       this.user = user
-      this.items.push({ title: "User: " + this.user.email, icon: "accessible", url: 'logout'})
+    },
+    logOut() {
+      this.user.logout().then(
+        response => this.user = null,
+        error => console.log("Failed to logout user: %o", error)
+      );
     }
   },
 
