@@ -1,0 +1,233 @@
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import Vue from 'vue'
+import App from './App'
+import router from './router'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import Firebase from 'firebase'
+import VueFire from 'vuefire'
+import Operations from './Operations'
+import GoTrue from 'gotrue-js'
+const auth = new GoTrue({
+  APIUrl: 'https://admin.exitpuzzles.com/.netlify/identity'
+});
+
+// TODO: secrets are not checked in, is there a cleaner way to do this?
+let config = {
+  apiKey: "AIzaSyBq1tyRDtpAkMFwi3ZIkS24cBBG3r0EUqU",
+  authDomain: "exitpuzzles-admin.firebaseapp.com",
+  databaseURL: "https://exitpuzzles-admin.firebaseio.com",
+  projectId: "exitpuzzles-admin",
+  storageBucket: "exitpuzzles-admin.appspot.com",
+  messagingSenderId: "927373652924"
+}
+
+let email = 'kevin.clement+admin@gmail.com'
+let password = ''
+//let email = 'kevin.clement+nettest1@gmail.com'
+//let password = ''
+
+// auth.login(email, password).then(
+//    user => {
+//      console.log("Logged in as %s", user.email)
+//      console.dir(user)
+//      console.log('is admin: ' + user.admin !== null)
+
+//      user.adminUsers()
+//       .then((userData) => {
+//          console.log('ud:' + userData.users)
+         
+//       })
+
+//      // test user: 4ad9f937-6c76-4d36-a8f1-dde2bb74f4d1
+//     //  const user2 = { id: '4ad9f937-6c76-4d36-a8f1-dde2bb74f4d1' }
+//     //  user.admin.getUser(user2).then( 
+//     //    user => console.log("User object: %o", user),
+//     //    error => console.log("Failed to retrieve user: %o", error)
+//     //  )
+//     //  user.admin.list(audience).then(
+//     //    users => console.log("List of users: %o", users),
+//     //    error => console.log("Failed to get list of users: %o", error)
+//     //  )
+
+//    },
+//    error => console.log("Failed to log in: %o", error)
+// )
+
+// ----------------------------------------------------------------------------
+// ## REGISTER USER (requires sight not be invite-only)
+// auth.signup('kevin.clement+nettest2@gmail.com', '').then(user => {
+//   console.log('user created: ' + user.email)
+// }, err => {
+//   console.log('ERR:' + err.msg)
+// })
+// ## LOGIN
+//let email = 'kevin.clement@gmail.com'
+// let password = 'b0ssdj311'
+// auth.login(email, password).then(
+//   user => console.log("Logged in as %s", user.email),
+//   error => console.log("Failed to log in: %o", error)
+// )
+// Use `auth.login(email, password, true)` to save to localStorage
+
+// ## ACCEPT INVITE
+
+// auth.acceptInvite('UNLxzeHZHecWf6S0VY6MNQ', '')
+//     .then(user => {
+//       console.log('user:')
+//       console.dir(user)
+//       // store.saving = false;
+//       // store.invite_token = null;
+//       // store.user = user;
+//       // store.modal.page = "user";
+//     })
+
+// ## RECOVERY
+// auth.requestPasswordRecovery('kevin.clement@gmail.com').then(
+//     response => console.log("Recovery email sent"),
+//     error => console.log("Error sending recovery mail: %o", error)
+//  );
+
+// auth.recover('dCztNnXKE0NjnVzsUIY4cw').then(
+//    user => console.log("Logged in as %s", user.email),
+//    error => console.log("Failed to verify recover token: %o", error)
+// );
+
+// ##Password
+// user
+//     .update({ password })
+//     .then(user => {
+//       store.user = user;
+//       store.recovered_user = null;
+//       store.modal.page = "user";
+//       store.saving = false;
+//     })
+//     .catch(store.setError);
+
+
+// ## ADMIN
+// const admin = user.admin // User must have the 'admin' role
+
+// admin.list(audience).then(
+//   users => console.log("List of users: %o", users),
+//   error => console.log("Failed to get list of users: %o", error)
+// )
+
+// const user = { id: 1234 }
+// admin.getUser(user).then( 
+//   user => console.log("User object: %o", user),
+//   error => console.log("Failed to retrieve user: %o", error)
+// )
+
+// // Admins updating email does not require a confirmation step
+// const attributes = {email: newEmail, password: newPassword}
+// admin.updateUser(user, attributes).then(
+//   user => console.log("Updated user: %o", user),
+//   error => console.log("Failed to update user: %o", error)
+// )
+
+// admin.createUser(email, password, attributes = {}).then(
+//   user => console.log("Created user user: %o", user),
+//   error => console.log("Failed to create user: %o", error)
+// )
+
+// admin.deleteUser(user).then(
+//   user => console.log("Deleted user user: %o", user),
+//   error => console.log("Failed to delete user: %o", error)
+// )
+
+// ----------------------------------------------------------------------------
+
+
+
+// auth.confirm('bqmLQ4lYippUO8ugL3iPWw').then(
+//   user => console.log("Logged in as %s", user.email),
+//   error => console.log("Failed to log in: %o", error)
+// );
+
+//import netlifyIdentity from "netlify-identity-widget";
+
+//netlifyIdentity.init();
+
+// netlifyIdentity.init({
+//   container: "#netlify-modal" // defaults to document.body,
+// });
+
+//netlifyIdentity.open(); // open the modal
+//netlifyIdentity.open("login"); // open the modal to the login tab
+//netlifyIdentity.open("signup"); // open the modal to the signup tab
+
+// netlifyIdentity.on("init", user => console.log(user));
+// netlifyIdentity.on("login", login => console.log(user));
+// netlifyIdentity.on("logout", () => console.log("Logged out"));
+// netlifyIdentity.on("error", err => console.error("Logged out"));
+// netlifyIdentity.on("open", () => console.log("Widget opened"));
+// netlifyIdentity.on("close", () => console.log("Widget closed"));
+
+// Close the modal
+//netlifyIdentity.close();
+
+// Logout the user
+//netlifyIdentity.logout();
+
+// Access the underlying gotrue instance.
+// Note that doing things directly through gotrue brings a risk of getting out of
+// sync between your state and the widgets state.
+//netlifyIdentity.gotrue;
+
+
+// auth.signup('kevin.clement@gmail.com', '').then(
+//   response => console.log("Confirmation email sent"),
+//   error => console.log("Error during signup: %o", error.msg)
+// );
+
+//auth.loginExternalUrl('google')
+
+// const user = auth.currentUser()
+// user.jwt().then(
+//   token => console.log("Current token: %s", token),
+//   error => console.log("Failed to get token: %o", error)
+// );
+
+
+// init firebase
+let db = Firebase.initializeApp(config).database()
+let operations = new Operations(db)
+
+Vue.use(Vuetify)
+Vue.use(VueFire)
+
+Vue.config.productionTip = false
+
+// set global to test for dev/prod mode
+window['DEV_MODE'] = process.env.NODE_ENV
+
+/* eslint-disable no-new */
+if (true) {
+new Vue({
+  el: '#app',
+  router,
+  components: { App },
+  template: '<App/>',
+  data: {
+    fbdb: db,
+    operations: operations,
+    authenticated: false
+  },
+  beforeCreate: function() {
+    setTimeout(() => {
+      //netlifyIdentity.open(); // open the modal
+      //this.authenticated = true
+    }, 2000)
+
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   if (user) {
+    //     this.user = user
+    //     this.$bindAsArray('items', db.ref(`items/${user.uid}`))
+    //   }
+    //   this.loading = false
+    // })
+  },
+})
+}
