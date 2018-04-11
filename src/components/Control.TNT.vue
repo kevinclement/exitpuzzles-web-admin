@@ -15,7 +15,7 @@
 
       <v-card-text class="grey lighten-3">
         <v-layout row wrap>
-          <v-flex xs12 md6>
+          <v-flex id="tntSection" xs12 md6>
             <v-toolbar flat dense color="grey lighten-3">
               <v-toolbar-title class="mx-0"><a @click="refreshTimer()">Time</a></v-toolbar-title>
               <v-btn icon title="Set timer" @click.native="resetTimeDiag = true"><v-icon >snooze</v-icon></v-btn>
@@ -629,5 +629,11 @@ td > input {
 }
 .ip {
   color:#EF5350
+}
+
+@media (min-width: 500px) {
+  #tntSection {
+    flex-basis:50%;
+  }
 }
 </style>
