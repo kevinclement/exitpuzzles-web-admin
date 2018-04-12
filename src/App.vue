@@ -31,10 +31,10 @@
       <v-toolbar-side-icon v-if="authenticated" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Exit Puzzles Admin</v-toolbar-title>
     </v-toolbar>
-    <v-content v-if="authenticated">
+    <v-content v-if="authenticated || anonymousRoute">
       <router-view/>
     </v-content>
-    <v-content v-if="!authenticated">
+    <v-content v-if="!authenticated && !anonymousRoute">
       <login :callback="loggedIn"/>
     </v-content>
   </v-app>
@@ -54,12 +54,14 @@ export default {
 
   computed: {
     authenticated () {
-        return this.user !== null
+      return this.user !== null
+    }, 
+    anonymousRoute () {
+      return this.$router.currentRoute.meta && this.$router.currentRoute.meta.anonymous
     }
   },
 
   mounted() {
-
     // dynamically build up navigation menu based on routes so we don't 
     // have config in two places
     for (let i=0; i < this.$router.options.routes.length; i++) {
