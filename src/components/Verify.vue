@@ -9,12 +9,13 @@
             <v-card-text>
                 <v-form>
                     <v-text-field prepend-icon="lock" v-model="password" name="password" label="Password" id="password" type="password"></v-text-field>
+                    <v-text-field prepend-icon=" " v-model="confirm" name="confirm" label="Confirm Password" id="confirm" type="password"></v-text-field>
                 </v-form>
             </v-card-text>
             <v-card-actions>
                 <span v-if="errorMessage !== ''" style="padding-left:16px;color:#E53935">* {{errorMessage}}</span>
                 <v-spacer></v-spacer>
-                <v-btn color="accent" @click="verify">Create Password</v-btn>
+                <v-btn color="accent" @click="verify" :disabled="this.password === ''">Create</v-btn>
             </v-card-actions>
         </v-card>
         </v-flex>
@@ -29,22 +30,23 @@ export default {
   data () {
     return {
         password: '',
-        errorMessage: ''
+        errorMessage: '',
+        confirm: ''
     }
   },
   methods: {
       verify() {
+          if (this.password !== this.confirm) {
+              this.errorMessage = 'passwords don\'t match'
+          } else {
+              this.errorMessage = ''
+          }
+
           console.log('doing verify on ' + this.token + ' setting password to ' + this.password)
         //   this.$root.$data.auth.acceptInvite(this.token, this.password, true).then(user =>) {
         //       console.log('user ' + user.email + ' verified redirecting to root')
-        //       // todo: redirect
+        //       this.$router.push('/')
         //   }, this.errorMessage = error.message.replace(/.*:/, '') )
-
-        setTimeout(() => {
-            console.log('fake redirect')
-            this.$router.push('/')
-
-        }, 3000)
       }
   }
 }
