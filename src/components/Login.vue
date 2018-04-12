@@ -22,7 +22,6 @@
 
 <script>
 export default {
-  props: ['callback'],
   data () {
     return {
         user: '',
@@ -36,14 +35,14 @@ export default {
       let user = this.$root.$data.auth.currentUser();
       if (user) {
           console.log("Auto login as %s", user.email)
-          this.callback(user)
+          this.$root.$data.loggedInCallback(user)
       }
   },
   methods: {
     login() {
         this.$root.$data.auth.login(this.user, this.password, true).then(user => {
             console.log("Logged in as %s", user.email)
-            this.callback(user)
+            this.$root.$data.loggedInCallback(user)
         }, error => {
             this.errorMessage = error.message.replace(/.*:/, '')
             console.log("Failed to log in: %o", error)

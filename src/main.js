@@ -46,6 +46,7 @@ new Vue({
   data: {
     fbdb: db,
     operations: operations,
-    auth: auth
+    auth: auth,
+    loggedInCallback: null
   }
 })

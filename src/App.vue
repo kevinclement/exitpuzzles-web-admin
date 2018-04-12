@@ -35,7 +35,7 @@
       <router-view/>
     </v-content>
     <v-content v-if="!authenticated && !anonymousRoute">
-      <login :callback="loggedIn"/>
+      <login/>
     </v-content>
   </v-app>
 </template>
@@ -72,6 +72,8 @@ export default {
         this.items.push({ title: meta.title, icon: meta.icon, url: route.path})
       }
     }
+
+    this.$root.$data.loggedInCallback = this.loggedIn
   },
 
   methods: {
