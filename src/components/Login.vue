@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     login() {
-        auth.login(this.user, this.password, true).then(user => {
+        this.$root.$data.auth.login(this.user, this.password, true).then(user => {
             console.log("Logged in as %s", user.email)
             this.callback(user)
         }, error => {

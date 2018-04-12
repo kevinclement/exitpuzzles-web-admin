@@ -68,7 +68,7 @@ export default {
       let route = this.$router.options.routes[i]
       let meta = route.meta
 
-      if (meta) {
+      if (meta && !meta.anonymous) {
         this.items.push({ title: meta.title, icon: meta.icon, url: route.path})
       }
     }
