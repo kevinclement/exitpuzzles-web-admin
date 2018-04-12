@@ -44,6 +44,7 @@ export default {
 
           this.$root.$data.auth.acceptInvite(this.token, this.password, true).then(user => {
               console.log('user ' + user.email + ' verified redirecting to root')
+              this.$root.$data.loggedInCallback(user)
               this.$router.push('/')
           }, () => { this.errorMessage = error.message.replace(/.*:/, '') })
       }
