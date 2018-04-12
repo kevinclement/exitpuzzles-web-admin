@@ -31,18 +31,13 @@
       <v-toolbar-side-icon v-if="authenticated" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Exit Puzzles Admin</v-toolbar-title>
     </v-toolbar>
-    <v-content v-if="authenticated || anonymousRoute">
+    <v-content>
       <router-view/>
-    </v-content>
-    <v-content v-if="!authenticated && !anonymousRoute">
-      <login/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import Login from '@/components/Login'
-
 export default {
   data () {
     return {
@@ -80,8 +75,6 @@ export default {
     if (currentUser) {
         console.log("Auto login as %s", currentUser.email)
         this.user = currentUser
-    } else {
-      this.$router.push('/Login')
     }
   },
 
@@ -91,14 +84,13 @@ export default {
     }, 
     logOut() {
       this.user.logout().then(
-        response => this.user = null,
+        response => { 
+          this.user = null
+          this.$router.push('/login')
+        },
         error => console.log("Failed to logout user: %o", error)
       );
     }
-  },
-
-  components: {
-    'login': Login
   },
 
   name: 'App'
