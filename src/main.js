@@ -10,22 +10,13 @@ import VueFire from 'vuefire'
 import Operations from './Operations'
 import GoTrue from 'gotrue-js'
 
-// TODO: secrets are not checked in, is there a cleaner way to do this?
-let config = {
-  apiKey: "AIzaSyBq1tyRDtpAkMFwi3ZIkS24cBBG3r0EUqU",
-  authDomain: "exitpuzzles-admin.firebaseapp.com",
-  databaseURL: "https://exitpuzzles-admin.firebaseio.com",
-  projectId: "exitpuzzles-admin",
-  storageBucket: "exitpuzzles-admin.appspot.com",
-  messagingSenderId: "927373652924"
-}
-
 // init auth
 const auth = new GoTrue({
   APIUrl: 'https://admin.exitpuzzles.com/.netlify/identity'
 });
 
 // init firebase
+let config = { databaseURL: "https://exitpuzzles-admin.firebaseio.com" }
 let db = Firebase.initializeApp(config).database()
 let operations = new Operations(db)
 
