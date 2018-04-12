@@ -73,16 +73,22 @@ export default {
       }
     }
 
-    this.$root.$data.loggedInCallback = this.loggedIn
+    this.$root.$data.loggedInCallback = (user) => { this.user = user }
+
+    // check if auth was saved
+    let currentUser = this.$root.$data.auth.currentUser();
+    if (currentUser) {
+        console.log("Auto login as %s", currentUser.email)
+        this.user = currentUser
+    } else {
+      this.$router.push('/Login')
+    }
   },
 
   methods: {
     navigate: function (item) {
       this.$router.push(item.url)
     }, 
-    loggedIn: function(user) {
-      this.user = user
-    },
     logOut() {
       this.user.logout().then(
         response => this.user = null,

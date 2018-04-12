@@ -29,20 +29,12 @@ export default {
         errorMessage: ''
     }
   },
-  computed: {
-  },
-  mounted() {
-      let user = this.$root.$data.auth.currentUser();
-      if (user) {
-          console.log("Auto login as %s", user.email)
-          this.$root.$data.loggedInCallback(user)
-      }
-  },
   methods: {
     login() {
         this.$root.$data.auth.login(this.user, this.password, true).then(user => {
             console.log("Logged in as %s", user.email)
             this.$root.$data.loggedInCallback(user)
+            this.$router.push('/')
         }, error => {
             this.errorMessage = error.message.replace(/.*:/, '')
             console.log("Failed to log in: %o", error)
