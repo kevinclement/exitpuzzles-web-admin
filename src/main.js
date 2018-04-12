@@ -8,6 +8,7 @@ import 'vuetify/dist/vuetify.min.css'
 import Firebase from 'firebase'
 import VueFire from 'vuefire'
 import Operations from './Operations'
+import GoTrue from 'gotrue-js'
 
 // TODO: secrets are not checked in, is there a cleaner way to do this?
 let config = {
@@ -18,6 +19,11 @@ let config = {
   storageBucket: "exitpuzzles-admin.appspot.com",
   messagingSenderId: "927373652924"
 }
+
+// init auth
+const auth = new GoTrue({
+  APIUrl: 'https://admin.exitpuzzles.com/.netlify/identity'
+});
 
 // init firebase
 let db = Firebase.initializeApp(config).database()
@@ -39,6 +45,7 @@ new Vue({
   template: '<App/>',
   data: {
     fbdb: db,
-    operations: operations
+    operations: operations,
+    auth: auth
   }
 })
