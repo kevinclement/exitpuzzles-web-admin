@@ -42,11 +42,10 @@ export default {
               this.errorMessage = ''
           }
 
-          console.log('doing verify on ' + this.token + ' setting password to ' + this.password)
-        //   this.$root.$data.auth.acceptInvite(this.token, this.password, true).then(user =>) {
-        //       console.log('user ' + user.email + ' verified redirecting to root')
-        //       this.$router.push('/')
-        //   }, this.errorMessage = error.message.replace(/.*:/, '') )
+          this.$root.$data.auth.acceptInvite(this.token, this.password, true).then(user => {
+              console.log('user ' + user.email + ' verified redirecting to root')
+              this.$router.push('/')
+          }, () => { this.errorMessage = error.message.replace(/.*:/, '') })
       }
   }
 }
