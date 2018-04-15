@@ -1,8 +1,11 @@
-# exitpuzzles-web-admin
+# Exit Puzzles Web Administration
 
-> Exit Puzzles Admin site
+> This app controls operations for escape room exit puzzles.  Allows control of the different rooms devices, status, etc.  
 
-## Build Setup
+![Device Control](doc/control.png)
+![System Logging](doc/log.png)
+
+## Developer Setup
 
 ``` bash
 # install dependencies
@@ -17,5 +20,3 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
