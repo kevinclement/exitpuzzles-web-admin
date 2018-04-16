@@ -2,7 +2,7 @@
 
 > This app controls operations for escape room exit puzzles.  Allows control of the different rooms devices, status, etc.  
 
-| ![System Logging](doc/log.png) | ![Device Control](doc/control.png) |
+![Sample](doc/both.png)
 
 
 ## Developer Setup
