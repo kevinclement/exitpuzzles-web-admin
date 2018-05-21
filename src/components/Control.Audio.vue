@@ -15,7 +15,7 @@
 
           <v-flex xs12 sm6>
 
-            <v-btn color="blue accent-1" fab dark v-for="file in files" :key="file.file">
+            <v-btn color="blue accent-1" fab dark v-for="file in files" :key="file.file" @click.native="play(file)">
               <v-icon>{{file.icon}}</v-icon>
             </v-btn>
 
@@ -45,6 +45,18 @@ export default {
   },
 
   methods: {
+    play(file) {
+
+      this.operations.add({ command: 'audio', file: file }).on("value", (snapshot) => {
+        let command = snapshot.val()
+        if (command.received) {
+          // pop snack letting user know  we triggered it
+          this.snack('Playing \'' + file.file + '\'.')
+          // disable further update notifications
+          snapshot.ref.off()
+        }
+      });
+    }
   },
 
   mounted() {
@@ -53,9 +65,7 @@ export default {
 
     this.audioRef.on("child_added", (snapshot) => {
       var audio = snapshot.val();
-      console.log('a: ' + audio.file)
       this.files.push(audio)
-
     });
     //this.audioRef.push({ name: 'File 1', icon: 'filter_1', file: 'TBD2.wav'});
 
