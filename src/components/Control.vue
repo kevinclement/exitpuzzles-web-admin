@@ -10,6 +10,7 @@
       </v-alert>
       <control-tnt :snack="showSnack"></control-tnt>
       <control-morse :snack="showSnack"></control-morse>
+      <control-audio :snack="showSnack"></control-audio>
       <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
         {{ snackText }}
       <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
@@ -21,6 +22,7 @@
 <script>
 import TNT from '@/components/Control.TNT'
 import Morse from '@/components/Control.Morse'
+import Audio from '@/components/Control.Audio'
 
 // how much time before we know pi isn't connected (in seconds)
 const PI_TIMEOUT_SECONDS = 65
@@ -80,7 +82,8 @@ export default {
 
   components: {
     'control-tnt': TNT,
-    'control-morse': Morse
+    'control-morse': Morse,
+    'control-audio': Audio
   }
 }
 </script>
