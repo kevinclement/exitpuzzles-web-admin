@@ -15,20 +15,8 @@
 
           <v-flex xs12 sm6>
 
-            <v-btn color="blue accent-1" fab dark>
-              <v-icon>filter_1</v-icon>
-            </v-btn>
-            <v-btn color="blue accent-1" fab dark>
-              <v-icon>filter_2</v-icon>
-            </v-btn>
-            <v-btn color="blue accent-1" fab dark>
-              <v-icon>filter_3</v-icon>
-            </v-btn>
-            <v-btn color="blue accent-1" fab dark>
-              <v-icon>filter_4</v-icon>
-            </v-btn>
-            <v-btn color="blue accent-1" fab dark>
-              <v-icon>filter_5</v-icon>
+            <v-btn color="blue accent-1" fab dark v-for="file in files" :key="file.file">
+              <v-icon>{{file.icon}}</v-icon>
             </v-btn>
 
           </v-flex>
@@ -45,7 +33,8 @@ export default {
   props: ['snack'],
   data () {
     return {
-      audioRef: null
+      audioRef: null,
+      files: []
     }
   },
 
@@ -61,6 +50,14 @@ export default {
   mounted() {
     this.operations = this.$root.$data.operations
     this.audioRef = this.$root.$data.fbdb.ref('audio')
+
+    this.audioRef.on("child_added", (snapshot) => {
+      var audio = snapshot.val();
+      console.log('a: ' + audio.file)
+      this.files.push(audio)
+
+    });
+    //this.audioRef.push({ name: 'File 1', icon: 'filter_1', file: 'TBD2.wav'});
 
     // this.audioRef.child('time').on('value', (snapshot) => {
     //   let time = snapshot.val()
