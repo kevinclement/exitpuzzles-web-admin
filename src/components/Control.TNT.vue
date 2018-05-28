@@ -156,14 +156,6 @@
       </v-card-text>
     </v-card>
 
-    <!-- debug bar -->
-    <div v-if="debugBar">
-      <v-btn icon @click="timerEnabled = !timerEnabled"><v-icon >timer</v-icon></v-btn>
-      <v-btn icon @click="tmpToggle"><v-icon >timeline</v-icon></v-btn>
-      <v-btn icon @click="tmpLock()"><v-icon >lock</v-icon></v-btn>
-      <v-btn icon @click="tmpAll()"><v-icon >cake</v-icon></v-btn>
-    </div>
-
     <v-dialog v-model="confirmKeyDiag" max-width="410">
     <v-card>
       <v-card-title class="headline">Really trigger the key?</v-card-title>
@@ -234,7 +226,6 @@ export default {
   data () {
     return {
       tntRef: null,
-      debugBar: false,
 
       // dialogs
       confirmKeyDiag: false,
@@ -378,11 +369,6 @@ export default {
       this.switchErrors    = state.switchErrors
       this.wireErrors      = state.wireErrors
     });
-
-    // only show the debug bar if we have ?dbg or ?debug in the url
-    if (this.$route.query.dbg !== undefined || this.$route.query.debug !== undefined) {
-      this.debugBar = true;
-    }    
 
     setInterval(() => {
       // turn off timer if its been solved or our time is not positive
@@ -566,38 +552,6 @@ export default {
 
       return ("0" + num).substr(-2,2);
     },
-
-    // #######################################################
-    // ## Debug Methods ######################################
-    tmpLock() {
-      this.keySolvedState = STATE.OK
-    },
-    tmpToggle() {
-
-      this.toggle1State = 
-        this.toggle1State === STATE.UNKNOWN ? (Math.random()*101|0) % 2 == 0 ? STATE.OK : STATE.BAD : 
-        this.toggle1State === STATE.OK ? STATE.BAD : STATE.OK;
-
-      this.toggle2State = 
-        this.toggle2State ===  STATE.UNKNOWN ? (Math.random()*101|0) % 2 == 0 ? STATE.OK : STATE.BAD : 
-        this.toggle2State === STATE.OK ? STATE.BAD : STATE.OK;
-
-      this.wireState = 
-        this.wireState ===  STATE.UNKNOWN ? (Math.random()*101|0) % 2 == 0 ? STATE.OK : STATE.BAD : 
-        this.wireState === STATE.OK ? STATE.BAD : STATE.OK;
-    },
-    tmpAll() {
-      this.keySolvedState = STATE.OK
-      this.allSolvedState = STATE.OK
-    },
-    tmpCalcTimeElapsed(elapsed) {
-      let hours = Math.floor(elapsed / 3600);
-      elapsed = elapsed - hours * 3600;
-      let minutes = Math.floor(elapsed / 60);
-      let seconds = elapsed - minutes * 60;
-
-      console.log('total: ' + elapsed + ' => hours: ' + hours + ' minutes: ' + minutes + ' seconds: ' + seconds)
-    }
   }
 }
 </script>
