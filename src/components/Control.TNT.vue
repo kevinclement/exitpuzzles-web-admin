@@ -279,6 +279,12 @@ export default {
 
       return this.formatTime(this.hours) + ':' + this.formatTime(this.minutes) + ':' + this.formatTime(this.seconds)
     },
+    lastPass: function() {
+      if (!this.isConnected) {
+        return ''
+      }
+      return this.lastBadPassword
+    },
     timerEnabled: function() {
       return (this.hours !== null && this.minutes !== null && this.seconds !== null) && this.timeLeftInSeconds > 0
     },
@@ -289,23 +295,23 @@ export default {
       return this.wireErrors ? 'Disabled' : 'Enabled'
     },
     pass1: function() {
-      let code = this.lastBadPassword.substring(0,1)
+      let code = this.lastPass.substring(0,1)
       return code === '' ? 'x' : code
     },
     pass2: function() {
-      let code = this.lastBadPassword.substring(1,3)
+      let code = this.lastPass.substring(1,3)
       return code === '' ? 'xx' : code
     },
     pass3: function() {
-      let code = this.lastBadPassword.substring(3,6)
+      let code = this.lastPass.substring(3,6)
       return code === '' ? 'xxx' : code
     },
     pass4: function() {
-      let code = this.lastBadPassword.substring(6,10)
+      let code = this.lastPass.substring(6,10)
       return code === '' ? 'xxxx' : code
     },
     pass5: function() {
-      let code =this.lastBadPassword.substring(10,15)
+      let code =this.lastPass.substring(10,15)
       return code === '' ? 'xxxxx' : code
     },
     pass1valid: function() {
