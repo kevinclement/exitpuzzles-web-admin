@@ -13,7 +13,7 @@
       <v-card-text class="grey lighten-3">
         <v-layout row wrap>
 
-          <v-flex xs12 sm6>
+          <v-flex >
 
             <v-btn color="blue accent-1" fab dark v-for="file in files" :key="file.file" @click.native="play(file)">
               <v-icon>{{file.icon}}</v-icon>
