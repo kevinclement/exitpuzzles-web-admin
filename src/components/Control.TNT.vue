@@ -315,7 +315,7 @@ export default {
       return this.pass3 === '268' || this.pass3 === 'xxx'
     },
     pass4valid: function() {
-      return this.pass4 === '0284' || this.pass4 === 'xxxx'
+      return this.pass4 === '1284' || this.pass4 === 'xxxx'
     },
     pass5valid: function() {
       return this.pass5 === '53464' || this.pass5 === 'xxxxx'
