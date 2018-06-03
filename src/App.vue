@@ -29,7 +29,7 @@
     </v-navigation-drawer>
     <v-toolbar fixed app>
       <v-toolbar-side-icon v-if="authenticated" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Exit Puzzles Admin</v-toolbar-title>
+      <v-toolbar-title>Exit Puzzles Admin <span class="devMode">{{ devmode }}</span></v-toolbar-title>
     </v-toolbar>
     <v-content>
       <router-view/>
@@ -50,7 +50,16 @@ export default {
   computed: {
     authenticated () {
       return this.user !== null
-    }, 
+    },
+
+    devmode () {
+      if (process.env.NODE_ENV === 'development') {
+        return '<DEV MODE>'
+      }
+
+      return ''
+    },
+
     anonymousRoute () {
       return this.$router.currentRoute.meta && this.$router.currentRoute.meta.anonymous
     }
@@ -100,6 +109,11 @@ export default {
 <style scoped>
 .breadcrumbs {
   margin-left: 60px;
+}
+
+.devMode {
+  color:green;
+  padding-left:5px;
 }
 </style>
 

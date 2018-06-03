@@ -16,7 +16,8 @@ const auth = new GoTrue({
 });
 
 // init firebase
-let config = { databaseURL: "https://exitpuzzles-admin.firebaseio.com" }
+let dbUrl = process.env.NODE_ENV === 'development' ? "https://exitpuzzles-admin-dev.firebaseio.com" : "https://exitpuzzles-admin.firebaseio.com"
+let config = { databaseURL: dbUrl }
 let db = Firebase.initializeApp(config).database()
 let operations = new Operations(db)
 
