@@ -1,0 +1,538 @@
+[x] need to come up with a way to test with a different db now that its live
+[ ] need a way to mock pi responses when using test website
+
+[ ] can't click on 'error clue' when ad-hoc morse
+[ ] allow categories to be collapsed
+[ ] 4-xxxx highlights red, even though bomb code allows for a bunch of different options
+[ ] audio: 'replace red wire in c 2'
+[ ] add button for new audio
+[ ] automatically trigger 5 min, 3 minutes, etc from pi
+[ ] some weird combonation button press he's doing as a work around right now.  either need new combined audio, or automation
+[ ] total time taken: 70 minutes - time left
+[ ] bug: send undefined when not set in first digit
+   info: set time: setting time to undefined:22:13 ...
+   info: bluetooth: tnt: > set undefined:22:13 
+   info: set time: done.
+[ ] offline icon for morse is a different color, its black
+
+[ ] empty password should show something in UI
+[ ] on disconnect, all solved still shows last time
+[ ] when tnt is disconnected after switch errors, ui is wrong until it comes online
+[ ] audio playing from web site
+
+bomb bugs:
+  only do toggle error when trunk lid is open
+  write out state when red wire is replaced correctly
+  light state doesn't show correctly when trunk lid is opened after a reset
+
+[ ] write disconnect log or something so I can track how often it drops connection from wifi
+
+[ ] feature: if I hook up to bomb, don't play sounds when lid is closed
+[ ] bug: timer can be incorrect
+  [ ] need to take into account penalties
+  [ ] need to take into account speed up when permanent penalty is on
+   
+Audio:
+  [ ] allow for multiple files to be played at once
+  [ ] do I need a toggle for start/stop?  
+  [ ] update audio from kyle
+  [ ] settings for audio in web
+    [ ] upload to db
+    [ ] set name,icon,toggle
+
+
+Later:
+
+[ ] add readme for exitpuzzles-pi
+
+[ ] cleanup: move inline css in control to styles section
+[ ] nit: when a dialog shows up, it changes overflow of page and scoll goes a way, then jitters back
+[ ] nit: pi: should operate/response be renamed to send/receive or write/read?
+[ ] nit: pi: should onLine be renamed to onReadLine
+[ ] seems like some state bug when pull wire, but then it gets restored
+  [ ] looks like nothing comes over wire about it being replaced, so I can't infer it is fixed
+
+later:
+
+[ ] on startup, query for nearby bluetooth
+[ ] post found bluetooth to db
+[ ] post log with device connection status to help with debugging?
+  [ ] can I check status with /dev/rfcomm, or something else?
+
+[ ] view for settings
+  [ ] shows found nearby devices
+  [ ] allows for them to be paired and unpaired
+  [ ] allows for them to have a friendly name
+[ ] view for records
+  [ ] fun addition, store stats or records of past teams
+
+#######################################################################
+## NOTES
+#######################################################################
+
+// To add WiFi:
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+
+// SMB 
+192.168.1.4  - 2.4ghz
+192.168.1.15 - 5ghz
+raspberry/pi
+rasp
+
+// To turn off service
+sudo systemctl stop exitpuzzles.service
+
+// Kyles Network:
+ssid: ExitPuzzles
+pass: bossdj311
+admin login: admin/b0ssdj
+
+// network info
+ifconfig
+sudo ifconfig wlan1 down - turns off other dongle
+iwconfig - shows network info
+
+// network: debug wpa_config
+ps aux | grep wpa_su
+sudo kill 428 - process running wlan1
+sudo wpa_supplicant -i wlan1 -c /etc/wpa_supplicant/wpa_supplicant.conf -dd
+
+// Bluetooth IDs
+tnt:   20:16:03:10:17:88
+morse: A4:D5:78:69:BE:69
+
+// Bluetooth stuff
+hcitool scan
+sdptool records 24:0A:C4:05:C5:E6 
+
+sudo rfcomm bind rfcomm0 A4:D5:78:69:BE:69
+
+// Audio (manually)
+aplay audio/1.wav
+amixer set PCM 93%
+amixer sget PCM
+sudo alsactl store
+
+// Generate audio warnings
+say -v Samantha "hello" -o hello.wav --data-format=LEF32@22050
+say -v Samantha "Warning, 1 minute to detonation" -o countdown_1min.wav --data-format=LEF32@22050
+
+// ObiHai Voip
+192.168.1.7
+admin/admin
+
+#######################################################################
+## SETUP 
+#######################################################################
+
+setup instructions:
+  default booted raspberry with software preinstalled on sd card
+  joined wifi, enabled ssh via gui
+  installed rdp:
+    sudo apt-get install tightvncserver
+    sudo apt-get install xrdp
+  install screen
+    // used for testing coms with bluetooth devices
+    sudo apt-get install screen
+  enable windows sharing
+    sudo apt-get install samba samba-common-bin    
+    mkdir ~/code
+    sudo smbpasswd -a pi
+      // set password to 'rasp'
+    sudo nano /etc/samba/smb.conf
+    
+    // find wins support = no, and change to yes
+    // add section to share area
+    [PiCode]
+    comment=Raspberry Pi Share for code
+    path=/home/pi/code
+    browseable=Yes
+    writeable=Yes
+    only guest=no
+    create mask=0777
+    directory mask=0777
+    public=no  
+    
+    // can then login from windows using \\<ip>, raspberry\pi, rasp
+    ssh login is bossras311
+  
+  // manually setting up bluetooth connections
+  //  TODO: should be able to use bluetoothctl.js to automate some of this
+  //        just not a priority when other things to do to
+  pair with devices
+    bluetoothctl
+    power on
+    agent on
+    default-agent
+    scan on
+    
+    // find the addr of device to pair
+    scan off
+    pair xx-xx-xx-xx-xx-xx
+    trust xx-xx-xx-xx-xx-xx
+  mount device to port
+    sudo rfcomm bind rfcomm0 xx-xx-xx-xx-xx-xx
+    // can test by 'cat /dev/rfccomm0
+    // add same line to /etc/rc.local to have it auto connect when the bluetooth boots
+  
+  // sample arduino I used: 00:12:10:26:19:32
+  
+  install bluetooth packages:
+    sudo apt-get install build-essential libbluetooth-dev
+    npm install bluetooth-serial-port
+
+  // install ngrok and config systemd
+  authtoken: 4sFm84upJfKzHVHn9UUwG_41CthiuG5MwigEnim3F1m
+  https://raw.githubusercontent.com/mbobakov/ngrok-systemd/master/ngrok.service
+
+  // ESP32 test
+  24:0A:C4:05:C5:E6 ESP32test
+  sudo rfcomm bind rfcomm1 24:0A:C4:05:C5:E6
+  
+  // alternative scanning method
+  hcitool scan
+  sdptool records 24:0A:C4:05:C5:E6 
+
+  // note: for this device, I needed to use channel 2 as that was the serial port that showed in records
+  sudo rfcomm bind  1 24:0A:C4:05:C5:E6 2 
+
+  // bomb:
+    20:16:03:10:17:88
+
+  // led light:  
+    F8:1D:78:63:3F:EC
+  
+  // esp test device 
+    24:0A:C4:05:C5:E6
+    sdptool records 24:0A:C4:05:C5:E6
+    
+subnet: 192.168.1.10
+client: tcp://0.tcp.ngrok.io:15866
+password: quantmoon639
+--------------------------------------------
+[x] test with arduino program that can take input and change output
+  [x] have node program take input and change communication with arduino
+[x] paging: starting state (probably last)
+[x] streaming: figure out plan and code
+[x] paging: cover end boundaries
+[x] paging: design use icons to the right
+[x] paging: log date/time footer
+[x] define routes and icons and titles
+  [x] logs
+  [x] control
+  [x] settings
+[x] header
+  [x] title: Exit Puzzles Admin
+  [x] section title: Logs
+[x] design logs
+  [x] log area grows with size of window, essentially maximum size
+  [x] paging controls
+  [x] toggles
+    [/] white/vs black
+    [/] font increase/decrease
+    [x] show/hide timestamp
+    [/] download
+  [x] 'Logs from' <select> header
+  [x] body in proper format and background black
+    [x] copy from kubernetes font used
+[x] log functionality
+  [x] how does paging play out with streaming?
+    [x] do we use limitToLast to keep only the last 50 or so?
+  [x] log contents
+  [x] paging: figure out proper paging logic when I'm not tired.  
+  [x] paging: get branch working that uses mount stuff.  need to look into watch crap when im not tired it wasn't working 1st mount
+  [x] read from firebase
+
+[/] do I even need multiple logs? what is difference between pi and morse, etc?
+    punted for now until I prove need
+    [ ] maybe all the logs would be coming from pi, but I'd want to filter based on device actions?  
+          show me only the commands and such for talking with morse code
+    [ ] fix spacing around select box
+    [ ] dont have select box stretch to fill
+    [ ] make it default to one of the options (pi should be default)
+[/] breadcrump in header
+  // turned off for now until I prove need
+  [ ] do I want to use it?
+[/] hide title when on small device, only show breadcrumbs  
+  // punted since we don't have breadcrumbs
+[/] remove margin/padding when hiding title
+[x] Prove e2e:
+  log from pi that it connected to bluetooth
+  click a button in web ui, that in turn causes pi to issue a command to arduino
+  response of arduino shows up in logs
+  response of arduino shows up in ui (structured)
+  for fun: turn a led on from web
+[x] bug: bad minutes in log time: 'Logs from 3/21/2018 5:0 PM'
+[x] logs: set total paging set (50?)
+[x] publish site to something, either azure or play with other providers
+  [x] netflify, now, gce?
+[x] dns to site to make it easier to load
+control design
+  [x] time display  
+  [x] time sync/refresh
+  [x] time set
+  [x] status 
+    [x] toggle1
+    [x] toggle2
+    [x] wire
+    [x] key solved
+    [x] all done  
+  [x] reset      
+  [x] trigger key
+  [x] trigger error that wires are incorrect
+  [x] disable toggle error and penalty
+  [x] disable bad wire error and penalty
+  [x] trigger key
+    [x] confirmation
+    [x] loading
+    [x] toast on complete
+  [x] trigger wires
+    [x] confirmation
+    [x] loading
+    [x] toast on complete
+Controls behaviors:
+  [x] switch errors
+      [x] change toggle
+      [x] change text
+      [x] strike out toggle states
+  [x] wire errors  
+      [x] change toggle
+      [x] change text
+      [x] strike out wire states
+[x] key solved state
+[x] all solved state
+[x] control: use loaders for control buttons 
+[x] control: all states for loading/pass/fail
+  [x] lookup code for what is currently supported
+
+      Serial.println("Available commands:");
+      Serial.println("  reset         - resets the bomb back to start");
+      Serial.println("  time          - print how much time is left on the bomb");
+      Serial.println("  set HH:MM:SS  - set the time on the bomb to hours (HH), minutes (MM), and seconds (SS)");
+      Serial.println("  key           - override and trigger release of key");
+      Serial.println("  stop          - override that will turn off toggle error and penalty");
+      Serial.println("  stopwire      - override that will turn off bad wire error and penalty");
+      Serial.println("  wires         - trigger an error that wires are incorrect");
+      Serial.println("  status        - check some internal state");    
+[x] @ means feedback
+[x] # means newline
+[x] client side clock
+[x] wire up debug buttons
+[x] investigate dbg options for vue
+  [x] debug toolbar
+  [x] console.log statements
+[x] ?dbg in url for status debug button
+[x] does vue system have something to allow #ifdev for dev to do console.log with
+[x] change tnt status to 'tnt'
+[x] move logs to 2nd option in list
+[x] cleanup: remove redundant data for routes.  its in both app and router now
+[/] control: support for touch/tap to fix weirdness in iphone
+[x] refresh time
+  [x] use Time as an anchor instead of refresh button
+  [x] load state
+[x] set time
+  [x] confirmation dialog for change timer
+  [x] client side validation
+  [x] should it be modal?
+[x] state refresh
+  [x] state title is clickable to trigger refresh
+  [x] reset all icons to ??
+  [x] icons should start as empty?
+[x] reset
+  [x] big button with confirmation somewhere
+[x] Morse Design  
+  [x] change 'save' button to read 'send' when adhoc
+  [x] send confirmation
+  [x] edit dialog
+  [x] delete confirmation
+  [x] adhoc dialog  
+  [x] just make line1 and line2 on new lines
+  [x] remove hover stuff on mobile
+  [/] alternate row color?
+  [x] cleanup stuff i pasted from sample  
+  [x] max size per line (16 characters)
+
+  [x] maybe default mode has button which sends the command (on confirm)
+    [x] then there is an edit mode, that shows delete button and makes items anchors linked to edit them
+  [x] precanned messages
+    [x] line 1
+    [x] line 2
+    [x] display line1 + line 2
+  [x] adhoc message icon
+[x] favicon
+[x] cleanup: split into a few other components?
+[x] nit: timezones should all be in PST or convert them on the client
+  [x] seems like its pst currently
+[x] set time to db/pi
+  [x] set null while its operating
+  [x] then have pi confirm/set in db
+Sync Logic:
+[x] state 
+  [x] nit: tnt: when refreshing state, use ? in icons to indicate its running
+[x] key trigger
+[x] wire trigger
+[x] switch errors
+[x] wire errors
+[x] clue received/sent status update in ui with snack or something else
+[x] reset bomb
+  [x] when receieved or completed I should clear all internal state
+[x] write all operations to database
+[x] handle state queries coming back from db
+  [x] update page with state, either mirrored in data or directly tied to db
+[x] consume ops from db and make call into pi
+  [x] db should probably have a received timestamp, and maybe a client sent, pi sent?, status?, arduino accepted?
+[x] listen for controls/ops changes in control page, and use that to trigger showing snackbar
+[x] update pi to use 'operations' instead of 'control'
+[x] trigger refreshTime and refreshState onload
+[x] only start client side timer if !allSolved 
+[x] cleanup: move that to lambdas
+[x] setTime command
+[x] move snackbar to parent control
+[x] snackbar for clue send
+[x] snack for switch and wire errors applied?
+[x] question: do we refresh timer by default on load?
+[x] question: do we refresh state by default on load?
+[x] select framework (vue?)
+[x] select ux framework 
+  material design
+  bootstrap
+  other?
+[x] select db (firebase?)
+[x] needs to work in mobile layouts
+[x] deployment model
+[x] dns
+[x] authentication?
+[x] view for logs
+  [ ] prob select dropdown like k8s to switch between logs
+    [ ] log for server
+    [ ] log for tnt
+    [ ] log for morse
+[x] view for controls
+  [x] do we want single page for all of it, or tabs or something else?
+  [x] controls for morse
+    [x] precanned messages
+    [x] adhoc messages
+  [x] controls for bomb
+    [x] lookup code for what is currently supported
+[x] add support for feedback vs error in morse clue
+  [x] checkbox in adhoc and edit/new for error
+[x] add clue sections
+  [x] pre-solved
+  [x] post-solved    
+[x] add code to arduino to fully fake api and response.  this should allow me to finish pi code
+[x] more logging for pi?
+[x] one command at a time
+  [x] need to move into a broker, where we push/pop commands from db to bluetooth, right now I believe loop is too fast so
+      bluetooth gets all the commands on the same write stream
+  [x] bug: when not launched for a while, sends a whole bunch of commands, 'ledledled'
+[x] git push node app
+[x] serial.print is in different parts of the app, so need to be able to handle those and
+    either update stuff, or just log it to the debugger and move on
+    can cause problems if it comes while we're listening to responses, just have to deal with it without a change to arduino
+[x] question: snack on received command or when command is executed and carried out by pi?
+[\] presetup wifi device and hook up pi to it?
+  [\] could then figure out how to punch out and connnect to pi remotely from here
+[/] harden: need to protect against on/off/on/off in toggles?  could disable them
+[x] dont need to do findserial thing since i'm hard coding anyway, just hardcode channel number
+[x] remove that stuff in bluetooth, use lambda
+[x] add 2nd pi with morse replies and change pi to parse those
+[x] bug: when reconnecting, its printing 'ultimate bomb' twice (could lead to other problems)  
+[x] maybe move to doing single line parsing for refreshstate
+        then i could have a default handler that does nothing but log
+[x] bug: if refreshed while its offline and node thinks its connected, node will get confused and can't recover            
+[x] run canHandle when operation is queue'd not scheduled and then only ops the device can handle will be reported and operated on
+[x] move is running from a bool to obj with last running operation
+[x] when connected take any isRunning ops + any queued ops and 'complete' them in db
+      this should cover both initial boot cases where we have stale ops, and cases where bluetooth drops / reconnects and we have queued ops
+      also limits it to only nuke operations device can handle
+[x] clear queue when we establish bluetooth connection
+[x] figure out what serial lines tnt has now
+[x] stream when serial port sees wires and changes
+      light status comes over serial, add something to status
+      entered code comes over serial, add something in ui too
+[x] feature: trunk open
+    [x] add it to the ui in status
+    [x] add parser/update for it
+    [x] maybe reset stored status on connection?  that seems fine given how he will use it, just won't stay properly up to date
+[x] feature: time completed
+[x] add a 2nd arduino to test end2end
+[x] feature: bad code entered
+[x] send clue to bluetooth
+  [x] need to translate \n into # (should be done on pi side)
+[x] switch time over to timestamps to allow for getting current time without asking for it
+[x] put switches into db
+store switch and wire errors in db so i can reset them on bluetooth connection
+reset button on client just does the db reset, and state change will update all ui objects
+[x] feature: handle online/offline states in webui
+    from pi, every 1 minute, store a timestamp in db.  
+    in client, every 1 second, check to make sure heartbeat isn't past threshhold, if it is, mark it offline
+  [x] feature: when the arduino devices go offline and i'm reconnecting them, I can mark that in the db and key off it too
+      this would cover the case where they can't reconnect.  normal case has them reconnecting quickly, but thats fine       
+[x] feature: overall status checks
+    [x] is pi okay (globally)
+    [x] are both bluetooth devices connected  
+    [/] button and dialog to check bluetooth status of devices
+      [ ] show pi status
+      [ ] show pi started time
+      [ ] show bluetooth status
+      [ ] show bluetooth last connected
+      [ ] show bluetooth last command success
+      [ ] show bluetooth last command success time
+[x] more end to end testing and hardening
+    [x] need to test robustness of both turning arduino off and turning pi off, make sure it handles it all proper with reconnect
+    [x] pay attention to what happens in web ui.  do we want to do more 'resets' when devices come online, both pi and arduino?
+    [\] do we want to use completed instead of received for the toasts?
+    [\] do we need a timeout for toasts, or error or something?
+    [x] harden: on page load, handle gracefull if pi isn't running and responding
+      [x] alertbar at the top?
+      [x] do we do a ping/pong to the pi
+[\] fun: boom sound, blink, animation?
+[x] switch and wire errors behave like a toggle, but don't survive through refresh
+[x] when tnt disconnects, clear out client state 
+[x] feature: better support for the way he handles clues (3 levels, but possibly n-levels/groups) 
+  [x] auth
+    [x] auth component
+        [x] login/password fields
+        [x] login button
+    [ ] login makes call into auth.login
+	[x] success sets auth true
+	[x] failed shows error string
+  [x] login info somewhere
+  [x] logout somewhere    
+  [x] fix logout location / text
+  [x] autosubmit form on enter in password 
+  [x] create kyles account
+[x] auth protection for site
+  [\] add user to log lines
+  [x] if using netflify it might come for free
+  [\] need to auth protect firebase too
+[x] secrets cleanup  
+[x] when pi is setup, how can I connect to it remotely?  punch hole through nat
+[x] run node app in background on startup
+[x] prob don't need to spam connecting status as often as I am when I'm done since kyle will have stuff off most of the time
+  [x] prob want to sleep the logs for these messages until connection is reestablished after a few non connects
+[x] turn off file log since it might grow too big?
+[x] larger try/catch logging for whole app logging to db
+[x] need to protect against crashes happening in handlers
+[x] cleanup: do I want a class/mod for operations and typings
+[\] can I make rfcomm lib more responsive to disconnects?  is there a sig somewhere I can look at
+[x] cleanup: search both code bases for TODO
+[x] fix readme
+  [x] add screenshot of control, maybe of logs
+[x] in room: test ssh tunnel/vpn
+[x] in room: update code with bluetooth addresses
+[x] ability to play from node
+[x] fixed 5 audio files
+[x] clicking button in UI plays audio
+[x] in room: end-to-end tests in room with state changes/online/offline
+[x] figure out differences in git for the server.  why does it show a bunch of differences
+[x] bug: last password doesn't reset when it goes offline
+[x] bug: plugged in bomb, then started raspberry server.  
+    it connected, but state reflected on website showed old stuff
+    didnt reset when 'connected'
+    - just forced reset on bluetooth connect
+[x] full clear on 'connected' instead of relying on text in serial?
+[x] remove tmp code in vue site
+[\] feature: trace '+' when we update database to make debugging easier
+[x] save amixer setting
+[x] 1284 shouldn't be red
