@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Control from '@/components/Control'
 import Settings from '@/components/Settings'
 import Stats from '@/components/Stats'
+import Mock from '@/components/Mock'
 import Logs from '@/components/Logs'
 import Verify from '@/components/Verify'
 import Login from '@/components/Login'
@@ -23,6 +24,7 @@ let router = new Router({
     { path: '/logs',                      component: Logs,     meta: { title: 'Logs',     icon: 'dvr'      } },
     { path: '/settings',                  component: Settings, meta: { title: 'Settings', icon: 'settings' } },
     { path: '/stats',                     component: Stats,    meta: { title: 'Stats',    icon: 'poll'     } },
+    { path: '/mock',                      component: Mock,                                                  },
     { path: '/',                          component: Control,                                                }
   ]
 })
