@@ -1,8 +1,7 @@
 [x] need to come up with a way to test with a different db now that its live
 [ ] need a way to mock pi responses when using test website
 
-[ ] can't click on 'error clue' when ad-hoc morse
-[ ] allow categories to be collapsed
+[x] allow categories to be collapsed
 [ ] 4-xxxx highlights red, even though bomb code allows for a bunch of different options
 [ ] audio: 'replace red wire in c 2'
 [ ] add button for new audio
@@ -13,9 +12,10 @@
    info: set time: setting time to undefined:22:13 ...
    info: bluetooth: tnt: > set undefined:22:13 
    info: set time: done.
-[ ] offline icon for morse is a different color, its black
+[ ] add title text for audio icons
 
 [ ] empty password should show something in UI
+
 [ ] on disconnect, all solved still shows last time
 [ ] when tnt is disconnected after switch errors, ui is wrong until it comes online
 [ ] audio playing from web site
@@ -536,3 +536,5 @@ reset button on client just does the db reset, and state change will update all 
 [\] feature: trace '+' when we update database to make debugging easier
 [x] save amixer setting
 [x] 1284 shouldn't be red
+[\] can't click on 'error clue' when ad-hoc morse
+[\] offline icon for morse is a different color, its black

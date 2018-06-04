@@ -1,12 +1,12 @@
 <template>
     <v-card-text class="grey lighten-3 ">
       <v-subheader >
-        {{ title }} Clues
+        <div class="header" @click="headerExpCol"><v-icon>{{ headerIcon }}</v-icon> {{ title }} Clues</div>
         <span class="spacer" />
         <v-btn icon title="Edit messages" @click.native="editMode = !editMode"><v-icon >edit</v-icon></v-btn>
         <v-btn icon title="Add a message" @click.native="add"><v-icon>add</v-icon></v-btn>
       </v-subheader>
-      <div class="elevation-1">
+      <div class="elevation-1" v-if="showClues">
         <table class="datatable table">
           <tbody>
             <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="clue in clues">
@@ -39,7 +39,9 @@
       clueDiag: false,
       clueSendDiag: false,
       clueToDelete: null,
-      clueToSend: null
+      clueToSend: null,
+      headerIcon: 'expand_less',
+      showClues: true
     }),
     computed: {
     },
@@ -101,11 +103,19 @@
       chatColor (error) {
         return error ? 'red lighten-1' : 'blue accent-1'
       },
+      headerExpCol() {
+        this.headerIcon = this.headerIcon === 'expand_more' ? 'expand_less' : 'expand_more'
+        this.showClues = !this.showClues
+      }
     }
   }
 </script>
 
 <style scoped>
+.header {
+  cursor: pointer;
+  user-select: none;
+}
 .clueRow {
   user-select: none;
 }
