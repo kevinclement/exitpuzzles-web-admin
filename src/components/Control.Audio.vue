@@ -13,11 +13,14 @@
       <v-card-text class="grey lighten-3">
         <v-layout row wrap>
 
-          <v-flex >
+          <v-flex>
 
-            <v-btn :color="iconBackground(file)" fab dark v-for="file in files" :key="file.file" @click.native="play(file)">
-              <v-icon :color="iconForeground(file)">{{file.icon}}</v-icon>
-            </v-btn>
+            <v-tooltip bottom light open-delay="1000" v-for="file in files" :key="file.file">
+                <v-btn fab dark slot="activator" :color="iconBackground(file)" @click.native="play(file)">
+                  <v-icon :color="iconForeground(file)">{{file.icon}}</v-icon>
+                </v-btn>
+                <span>{{file.name}}</span>
+            </v-tooltip>
 
           </v-flex>
 
