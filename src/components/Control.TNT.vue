@@ -143,7 +143,7 @@
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
-                  <v-list-tile-content>All Solved: {{timeLeft}}</v-list-tile-content>
+                  <v-list-tile-content>All Solved: {{timeLeftSolved}}</v-list-tile-content>
                   <v-list-tile-content class="align-end">
                     <v-icon :style="{ color: iconColor(allSolvedState) }">{{icon(allSolvedState, 'all')}}</v-icon>
                   </v-list-tile-content>
@@ -299,12 +299,6 @@ export default {
 
       return this.formatTime(this.hours) + ':' + this.formatTime(this.minutes) + ':' + this.formatTime(this.seconds)
     },
-    lastPass: function() {
-      if (!this.isConnected) {
-        return ''
-      }
-      return this.lastBadPassword
-    },
     timerEnabled: function() {
       return (this.hours !== null && this.minutes !== null && this.seconds !== null) && this.timeLeftInSeconds > 0
     },
@@ -315,23 +309,23 @@ export default {
       return this.wireErrors ? 'Disabled' : 'Enabled'
     },
     pass1: function() {
-      let code = this.lastPass.substring(0,1)
+      let code = this.lastBadPassword.substring(0,1)
       return code === '' ? 'x' : code
     },
     pass2: function() {
-      let code = this.lastPass.substring(1,3)
+      let code = this.lastBadPassword.substring(1,3)
       return code === '' ? 'xx' : code
     },
     pass3: function() {
-      let code = this.lastPass.substring(3,6)
+      let code = this.lastBadPassword.substring(3,6)
       return code === '' ? 'xxx' : code
     },
     pass4: function() {
-      let code = this.lastPass.substring(6,10)
+      let code = this.lastBadPassword.substring(6,10)
       return code === '' ? 'xxxx' : code
     },
     pass5: function() {
-      let code =this.lastPass.substring(10,15)
+      let code =this.lastBadPassword.substring(10,15)
       return code === '' ? 'xxxxx' : code
     },
     pass1valid: function() {
@@ -352,24 +346,17 @@ export default {
     pass5valid: function() {
       return this.pass5 === '53464' || this.pass5 === 'xxxxx'
     },
-    timeLeft: function() {
-      if (!this.isConnected) {
-        return ''
-      }
-
-      return this.timeLeftSolved
-    },
     timeTaken: function() {
-      if (this.timeLeft) {
+      if (this.timeLeftSolved) {
         let totalTimeMinutes = 0;
         let totalTimeSeconds = 0;
 
         // split out parts 
-        let parts = this.timeLeft.split(':')
+        let parts = this.timeLeftSolved.split(':')
 
         // if I couldn't parse it, something funny, just don't show it
         if (parts.length !== 3) {
-          console.log("WARN: weird format of time left, ignoring.  time left was " + this.timeLeft)
+          console.log("WARN: weird format of time left, ignoring.  time left was " + this.timeLeftSolved)
           return ''
         }
 
@@ -425,13 +412,11 @@ export default {
 
       this.isConnected = isConnected
 
-      // if coming online, map all the states back
-      if (this.isConnected) {
-        if (this.lastStateSnapshot) {
-          this.updateState(this.lastStateSnapshot)
-        }
-      } else {
+      // if offline, clear state
+      if (!this.isConnected) {
         this.updateState()
+      } else if (this.lastStateSnapshot) {
+        this.updateState(this.lastStateSnapshot)
       }
     });
 
