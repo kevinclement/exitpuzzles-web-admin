@@ -200,6 +200,6 @@
 .notConnected {
   margin-bottom:4px;
   margin-left:7px;
-  color:red
+  color:red !important;
 }
 </style>
