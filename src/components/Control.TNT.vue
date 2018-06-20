@@ -414,21 +414,9 @@ export default {
       if (state == null) return
 
         this.lastStateSnapshot = state;
-
-        // TODO: helper function
         if (this.isConnected) {
-          this.lightState      = this.lastStateSnapshot.lightDetected ? STATE.OK : STATE.UNKNOWN
-          this.toggle1State    = this.lastStateSnapshot.toggle1
-          this.toggle2State    = this.lastStateSnapshot.toggle2
-          this.wireState       = this.lastStateSnapshot.wire
-          this.keySolvedState  = this.lastStateSnapshot.keySolved
-          this.allSolvedState  = this.lastStateSnapshot.allSolved
-          this.lastBadPassword = this.lastStateSnapshot.lastBadPassword
-          this.timeLeftSolved  = this.lastStateSnapshot.timeLeftSolved
-          this.switchErrors    = this.lastStateSnapshot.switchErrors
-          this.wireErrors      = this.lastStateSnapshot.wireErrors
+          this.updateState(this.lastStateSnapshot)
         }
-
     });
 
     this.tntRef.child('isConnected').on('value', (snapshot) => {
@@ -440,21 +428,10 @@ export default {
       // if coming online, map all the states back
       if (this.isConnected) {
         if (this.lastStateSnapshot) {
-          this.lightState      = this.lastStateSnapshot.lightDetected ? STATE.OK : STATE.UNKNOWN
-          this.toggle1State    = this.lastStateSnapshot.toggle1
-          this.toggle2State    = this.lastStateSnapshot.toggle2
-          this.wireState       = this.lastStateSnapshot.wire
-          this.keySolvedState  = this.lastStateSnapshot.keySolved
-          this.allSolvedState  = this.lastStateSnapshot.allSolved
-          this.lastBadPassword = this.lastStateSnapshot.lastBadPassword
-          this.timeLeftSolved  = this.lastStateSnapshot.timeLeftSolved
-          this.switchErrors    = this.lastStateSnapshot.switchErrors
-          this.wireErrors      = this.lastStateSnapshot.wireErrors
+          this.updateState(this.lastStateSnapshot)
         }
       } else {
-          // TODO: cleanup all other weird isOnline hacks
-          this.switchErrors = false
-          this.wireErrors = false
+        this.updateState()
       }
     });
 
@@ -549,15 +526,32 @@ export default {
     },
     refreshState() {
       // clear out icons to indicate reloading
-      this.lightState       =
-        this.toggle1State   =
-        this.toggle2State   =
-        this.wireState      =
-        this.keySolvedState =
-        this.allSolvedState = STATE.UNKNOWN;
-      this.lastBadPassword = this.timeLeftSolved = ''
-
+      this.updateState()
       this.operations.add({ command: 'refreshState' })
+    },
+
+    updateState(state) {
+      if (!state) {
+        this.lightState       =
+          this.toggle1State   =
+          this.toggle2State   =
+          this.wireState      =
+          this.keySolvedState =
+          this.allSolvedState = STATE.UNKNOWN;
+        this.lastBadPassword  = this.timeLeftSolved = ''
+        this.switchErrors     = this.wireErrors = false
+      } else {
+          this.lightState      = state.lightDetected ? STATE.OK : STATE.UNKNOWN
+          this.toggle1State    = state.toggle1
+          this.toggle2State    = state.toggle2
+          this.wireState       = state.wire
+          this.keySolvedState  = state.keySolved
+          this.allSolvedState  = state.allSolved
+          this.lastBadPassword = state.lastBadPassword
+          this.timeLeftSolved  = state.timeLeftSolved
+          this.switchErrors    = state.switchErrors
+          this.wireErrors      = state.wireErrors
+      }
     },
 
     validateTimer(section) {
