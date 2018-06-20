@@ -409,6 +409,28 @@ export default {
     this.operations = this.$root.$data.operations
     this.tntRef = this.$root.$data.fbdb.ref('tnt')
 
+    this.tntRef.child('state').on('value', (snapshot) => {
+      let state = snapshot.val()
+      if (state == null) return
+
+        this.lastStateSnapshot = state;
+
+        // TODO: helper function
+        if (this.isConnected) {
+          this.lightState      = this.lastStateSnapshot.lightDetected ? STATE.OK : STATE.UNKNOWN
+          this.toggle1State    = this.lastStateSnapshot.toggle1
+          this.toggle2State    = this.lastStateSnapshot.toggle2
+          this.wireState       = this.lastStateSnapshot.wire
+          this.keySolvedState  = this.lastStateSnapshot.keySolved
+          this.allSolvedState  = this.lastStateSnapshot.allSolved
+          this.lastBadPassword = this.lastStateSnapshot.lastBadPassword
+          this.timeLeftSolved  = this.lastStateSnapshot.timeLeftSolved
+          this.switchErrors    = this.lastStateSnapshot.switchErrors
+          this.wireErrors      = this.lastStateSnapshot.wireErrors
+        }
+
+    });
+
     this.tntRef.child('isConnected').on('value', (snapshot) => {
       let isConnected = snapshot.val()
       if (isConnected == null) return
@@ -416,13 +438,23 @@ export default {
       this.isConnected = isConnected
 
       // if coming online, map all the states back
-      // TODO: cleanup all other weird isOnline hacks
       if (this.isConnected) {
         if (this.lastStateSnapshot) {
-          this.switchErrors = this.lastStateSnapshot.switchErrors
+          this.lightState      = this.lastStateSnapshot.lightDetected ? STATE.OK : STATE.UNKNOWN
+          this.toggle1State    = this.lastStateSnapshot.toggle1
+          this.toggle2State    = this.lastStateSnapshot.toggle2
+          this.wireState       = this.lastStateSnapshot.wire
+          this.keySolvedState  = this.lastStateSnapshot.keySolved
+          this.allSolvedState  = this.lastStateSnapshot.allSolved
+          this.lastBadPassword = this.lastStateSnapshot.lastBadPassword
+          this.timeLeftSolved  = this.lastStateSnapshot.timeLeftSolved
+          this.switchErrors    = this.lastStateSnapshot.switchErrors
+          this.wireErrors      = this.lastStateSnapshot.wireErrors
         }
       } else {
+          // TODO: cleanup all other weird isOnline hacks
           this.switchErrors = false
+          this.wireErrors = false
       }
     });
 
@@ -439,24 +471,6 @@ export default {
 
       this.timeLeftInSeconds = (h * 3600) + (m * 60) + s - elapsed
       this.timerTimeStamp = ts
-    });
-
-    this.tntRef.child('state').on('value', (snapshot) => {
-      let state = snapshot.val()
-      if (state == null) return
-
-      this.lightState      = state.lightDetected ? STATE.OK : STATE.UNKNOWN
-      this.toggle1State    = state.toggle1
-      this.toggle2State    = state.toggle2
-      this.wireState       = state.wire
-      this.keySolvedState  = state.keySolved
-      this.allSolvedState  = state.allSolved
-      this.lastBadPassword = state.lastBadPassword
-      this.timeLeftSolved  = state.timeLeftSolved
-      this.switchErrors    = state.switchErrors
-      this.wireErrors      = state.wireErrors
-
-      this.lastStateSnapshot = state;
     });
 
     setInterval(() => {
