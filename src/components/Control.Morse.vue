@@ -51,13 +51,15 @@
       <v-btn icon title="Send a message" @click.native="adhocForm"><v-icon >message</v-icon></v-btn>
     </v-toolbar>
 
-    <div v-for="cat in categories">
+    <div v-for="(cat, index) in categories">
       <control-morse-category 
         :title="cat.name"
         :editForm="editForm"
         :confirm="confirmForm"
         :send="send"
-        :clueRef="cat.ref"/>
+        :clueRef="cat.ref"
+        :expandedByDefault="index === 0"
+        />
     </div>
 
   </v-card>

@@ -6,7 +6,7 @@
         <v-btn icon title="Edit messages" @click.native="editMode = !editMode"><v-icon >edit</v-icon></v-btn>
         <v-btn icon title="Add a message" @click.native="add"><v-icon>add</v-icon></v-btn>
       </v-subheader>
-      <div class="elevation-1" v-if="showClues">
+      <div class="elevation-1" v-if="expanded">
         <table class="datatable table">
           <tbody>
             <tr class="clueRow" :class="{ clueRowIos: ios }" v-for="clue in clues">
@@ -31,7 +31,15 @@
 
 <script>
   export default {
-    props: ['title', 'clueRef', 'editForm', 'confirm', 'send'],
+    props: {
+      title: String,
+      clueRef: Object,
+      editForm: Function,
+      confirm: Function,
+      send: Function,
+      expandedByDefault: { type: Boolean, default: true }
+    },
+
     data: () => ({
       ios: false,
       editMode: false,
@@ -40,14 +48,20 @@
       clueSendDiag: false,
       clueToDelete: null,
       clueToSend: null,
-      headerIcon: 'expand_less',
-      showClues: true
+      expandedLocal: true
     }),
     computed: {
+      headerIcon() {
+        return this.expanded ? 'expand_less' : 'expand_more'
+      },
+      expanded() {
+        return this.expandedLocal;
+      }
     },
     watch: {
     },
     created () {
+      this.expandedLocal = this.expandedByDefault
       this.ios = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 
       this.clueRef.on('child_added', (snapshot) => {
@@ -104,8 +118,7 @@
         return error ? 'red lighten-1' : 'blue accent-1'
       },
       headerExpCol() {
-        this.headerIcon = this.headerIcon === 'expand_more' ? 'expand_less' : 'expand_more'
-        this.showClues = !this.showClues
+        this.expandedLocal = !this.expandedLocal
       }
     }
   }
