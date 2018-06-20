@@ -1,3 +1,12 @@
+To Test with Kyle:
+  new audio file
+  device going offline does the right thing on website
+  sending empty password from device operates as expected in UI treatment
+  automatically playing sounds for events
+    what are some problems you could get into with timer?
+  automatic sounds don't play if closed
+  how does it sound with other device playing ahah, and I'm playing ahah through big speaker?
+
 [x] need a way to mock pi responses when using test website
 
 [x] allow categories to be collapsed
@@ -15,8 +24,6 @@
 [x] on disconnect, all solved still shows last time
 [x] when tnt is disconnected after switch errors, ui is wrong until it comes online
 
-[ ] when refreshing on iphone, shows offline for a split second.  kyle mentioned on desktop too
-
 [ ] update new audio in live db
 
 [ ] empty password should show something in UI
@@ -26,14 +33,30 @@
   I think I can change pi code to write xxxxxxxxx and use that.  then when I see an empty string in db, I know its from someone
   to fullly light this up I'll need to coordinate update to pi code and web code with kyle present to fully test it
   
-[ ] automatically trigger 5 min, 3 minutes, etc from pi
-  [ ] some weird combonation button press he's doing as a work around right now.  either need new combined audio, or automation
-  [ ] feature: if I hook up to bomb, don't play sounds when lid is closed
+[ ] automatically trigger audio from pi
+  [ ] timer for time based alerts
+    [ ] 10
+    [ ] 5
+    [ ] 3
+    [ ] 1
+  [ ] event based
+    [ ] ahah
+    [ ] bad toggles
+    [ ] bad wires
+    [ ] bad c2 wire?
+    [ ] success
+    [ ] failure
+
+  [ ] don't play sounds when lid is closed
+  [ ] some weird combination button press he's doing as a work around right now.  either need new combined audio, or automation
+    [ ] check log to see what audio combos hes doing
+
+
 [ ] audio/music playing from web site
-[ ] write disconnect log or something so I can track how often it drops connection from wifi
-[ ] bug: timer can be incorrect
+[ ] bug: client side timer can be incorrect
   [ ] need to take into account penalties
   [ ] need to take into account speed up when permanent penalty is on
+[ ] write disconnect log or something so I can track how often it drops connection from wifi
 
 bomb bugs:
   only do toggle error when trunk lid is open
@@ -546,3 +569,4 @@ reset button on client just does the db reset, and state change will update all 
 [x] 1284 shouldn't be red
 [\] can't click on 'error clue' when ad-hoc morse
 [\] offline icon for morse is a different color, its black
+[x] when refreshing on iphone, shows offline for a split second.  kyle mentioned on desktop too

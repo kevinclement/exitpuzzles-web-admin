@@ -280,7 +280,7 @@ export default {
       allSolvedState: STATE.UNKNOWN,
       switchErrors: false,
       wireErrors: false,
-      lastBadPassword: '',
+      lastBadPassword: 'xxxxxxxxxxxxxxx',
       timeLeftSolved: '',
       timerTimeStamp: null,
       timeLeftInSeconds: 0,
@@ -309,42 +309,52 @@ export default {
       return this.wireErrors ? 'Disabled' : 'Enabled'
     },
     pass1: function() {
+      if (this.lastBadPassword === '') return '#'
+
       let code = this.lastBadPassword.substring(0,1)
       return code === '' ? 'x' : code
     },
     pass2: function() {
+      if (this.lastBadPassword === '') return '##'
+
       let code = this.lastBadPassword.substring(1,3)
       return code === '' ? 'xx' : code
     },
     pass3: function() {
+      if (this.lastBadPassword === '') return '###'
+
       let code = this.lastBadPassword.substring(3,6)
       return code === '' ? 'xxx' : code
     },
     pass4: function() {
+      if (this.lastBadPassword === '') return '####'
+
       let code = this.lastBadPassword.substring(6,10)
       return code === '' ? 'xxxx' : code
     },
     pass5: function() {
+      if (this.lastBadPassword === '') return '#####'
+
       let code =this.lastBadPassword.substring(10,15)
       return code === '' ? 'xxxxx' : code
     },
     pass1valid: function() {
-      return this.pass1 === '4' || this.pass1 === 'x'
+      return this.pass1 === '4' || this.pass1 === 'x' || this.pass1 === '#'
     },
     pass2valid: function() {
-      return this.pass2 === '19' || this.pass2 === 'xx'
+      return this.pass2 === '19' || this.pass2 === 'xx' || this.pass2 === '##'
     },
     pass3valid: function() {
-      return this.pass3 === '268' || this.pass3 === 'xxx'
+      return this.pass3 === '268' || this.pass3 === 'xxx' || this.pass3 === '###'
     },
     pass4valid: function() {
       // HACK: total hack we have in place in bomb code currently to allow any digit in 1st character
       var hackpass4 = this.pass4.substring(1,4)
 
-      return hackpass4 === '284' || this.pass4 === 'xxxx'
+      return hackpass4 === '284' || this.pass4 === 'xxxx' || this.pass4 === '####'
     },
     pass5valid: function() {
-      return this.pass5 === '53464' || this.pass5 === 'xxxxx'
+      return this.pass5 === '53464' || this.pass5 === 'xxxxx' || this.pass5 === '#####'
     },
     timeTaken: function() {
       if (this.timeLeftSolved) {
@@ -523,7 +533,8 @@ export default {
           this.wireState      =
           this.keySolvedState =
           this.allSolvedState = STATE.UNKNOWN;
-        this.lastBadPassword  = this.timeLeftSolved = ''
+        this.lastBadPassword  = 'xxxxxxxxxxxxxxx'
+        this.timeLeftSolved   = ''
         this.switchErrors     = this.wireErrors = false
       } else {
           this.lightState      = state.lightDetected ? STATE.OK : STATE.UNKNOWN
