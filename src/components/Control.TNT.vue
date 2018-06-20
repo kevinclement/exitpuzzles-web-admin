@@ -148,6 +148,11 @@
                     <v-icon :style="{ color: iconColor(allSolvedState) }">{{icon(allSolvedState, 'all')}}</v-icon>
                   </v-list-tile-content>
                 </v-list-tile>
+                <v-list-tile v-if="timeTaken">
+                  <v-list-tile-content class="align-end">
+                    Total Time: {{timeTaken}}
+                  </v-list-tile-content>
+                </v-list-tile>
               </v-list>
 
             </v-card>
@@ -343,6 +348,44 @@ export default {
     },
     pass5valid: function() {
       return this.pass5 === '53464' || this.pass5 === 'xxxxx'
+    },
+    timeTaken: function() {
+      if (this.timeLeftSolved) {
+        let totalTimeMinutes = 0;
+        let totalTimeSeconds = 0;
+
+        // split out parts 
+        let parts = this.timeLeftSolved.split(':')
+
+        // if I couldn't parse it, something funny, just don't show it
+        if (parts.length !== 3) {
+          console.log("WARN: weird format of time left, ignoring.  time left was " + this.timeLeftSolved)
+          return ''
+        }
+
+        let hoursLeft = parseInt(parts[0])
+        if (hoursLeft === 0) {
+          totalTimeMinutes = 70
+        } else {
+          totalTimeMinutes = 10
+        }
+
+        let minutesLeft = parseInt(parts[1])
+        totalTimeMinutes -= minutesLeft
+
+        let secondsLeft = parseInt(parts[2])
+        totalTimeSeconds -= secondsLeft
+
+        if (secondsLeft !== 0) {
+          totalTimeMinutes--
+          totalTimeSeconds = 60 - secondsLeft
+        }
+
+        return totalTimeMinutes + " minutes, " + totalTimeSeconds + " seconds"
+      }
+      else {
+        return ''
+      }
     }
   },
 

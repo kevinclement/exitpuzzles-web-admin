@@ -11,13 +11,13 @@
    info: set time: setting time to undefined:22:13 ...
    info: bluetooth: tnt: > set undefined:22:13 
    info: set time: done.
+[x] report total time taken: 70 minutes - time left
 [ ] update new audio in live db
 
-[ ] total time taken: 70 minutes - time left
+[ ] on disconnect, all solved still shows last time
 [ ] empty password should show something in UI
 [ ] when refreshing on iphone, shows offline for a split second.  kyle mentioned on desktop too
 
-[ ] on disconnect, all solved still shows last time
 [ ] when tnt is disconnected after switch errors, ui is wrong until it comes online
 
 [ ] automatically trigger 5 min, 3 minutes, etc from pi
