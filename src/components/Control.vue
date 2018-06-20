@@ -25,7 +25,7 @@ import Morse from '@/components/Control.Morse'
 import Audio from '@/components/Control.Audio'
 
 // how much time before we know pi isn't connected (in seconds)
-const PI_TIMEOUT_SECONDS = 65
+const PI_TIMEOUT_SECONDS = 95
 
 export default {
   data () {
