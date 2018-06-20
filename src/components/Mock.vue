@@ -3,6 +3,7 @@
     <v-slide-y-transition mode="out-in">
       <v-layout>
         <v-flex xs2>
+          <v-checkbox v-model="connected" label="Connected"></v-checkbox>
           <v-text-field v-model="lastBadPassword" label="Last Password"></v-text-field>
           <v-checkbox v-model="lightDetected" label="Light Detected"></v-checkbox>
           <v-checkbox v-model="toggle1" label="Toggle 1"></v-checkbox>
@@ -28,6 +29,8 @@
 
   export default {
     data: () => ({
+      connected: false,
+
       lastBadPassword: '',
 
       lightDetected: false,
@@ -43,6 +46,13 @@
     mounted() {
       this.morseRef = this.$root.$data.fbdb.ref('morse')
       this.tntRef = this.$root.$data.fbdb.ref('tnt')
+
+      this.tntRef.on('value', (snapshot) => {
+        let state = snapshot.val()
+        if (state == null) return
+
+        this.connected = state.isConnected
+      })
 
       this.tntRef.child('state').on('value', (snapshot) => {
         let state = snapshot.val()
@@ -79,6 +89,10 @@
             timeLeftSolved: this.timeLeftSolved
           }
         )
+
+        this.tntRef.update({
+          isConnected: this.connected
+        })
       }
     }
   }
