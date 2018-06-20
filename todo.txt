@@ -1,23 +1,23 @@
 [x] need to come up with a way to test with a different db now that its live
-[ ] need a way to mock pi responses when using test website
-
+[x] need a way to mock pi responses when using test website
 [x] allow categories to be collapsed
-[ ] 4-xxxx highlights red, even though bomb code allows for a bunch of different options
+
 [ ] audio: 'replace red wire in c 2'
-[ ] add button for new audio
-[ ] automatically trigger 5 min, 3 minutes, etc from pi
-[ ] some weird combonation button press he's doing as a work around right now.  either need new combined audio, or automation
-[ ] total time taken: 70 minutes - time left
+  [ ] add button for it
+[ ] 4-xxxx highlights red, even though bomb code allows for a bunch of different options
 [ ] bug: send undefined when not set in first digit
    info: set time: setting time to undefined:22:13 ...
    info: bluetooth: tnt: > set undefined:22:13 
    info: set time: done.
+[ ] total time taken: 70 minutes - time left
 [ ] add title text for audio icons
-
 [ ] empty password should show something in UI
 
 [ ] on disconnect, all solved still shows last time
 [ ] when tnt is disconnected after switch errors, ui is wrong until it comes online
+
+[ ] automatically trigger 5 min, 3 minutes, etc from pi
+  [ ] some weird combonation button press he's doing as a work around right now.  either need new combined audio, or automation
 [ ] audio playing from web site
 
 bomb bugs:
@@ -114,6 +114,7 @@ amixer sget PCM
 sudo alsactl store
 
 // Generate audio warnings
+# can speed up or down with -r.  I think 200 is default, latest one I did was 155
 say -v Samantha "hello" -o hello.wav --data-format=LEF32@22050
 say -v Samantha "Warning, 1 minute to detonation" -o countdown_1min.wav --data-format=LEF32@22050
 

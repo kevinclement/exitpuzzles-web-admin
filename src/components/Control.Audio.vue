@@ -15,8 +15,8 @@
 
           <v-flex >
 
-            <v-btn color="blue accent-1" fab dark v-for="file in files" :key="file.file" @click.native="play(file)">
-              <v-icon>{{file.icon}}</v-icon>
+            <v-btn :color="iconBackground(file)" fab dark v-for="file in files" :key="file.file" @click.native="play(file)">
+              <v-icon :color="iconForeground(file)">{{file.icon}}</v-icon>
             </v-btn>
 
           </v-flex>
@@ -56,6 +56,15 @@ export default {
           snapshot.ref.off()
         }
       });
+    },
+
+    iconForeground(file) {
+      return file.foreground ? file.foreground : ''
+    },
+
+    iconBackground(file) {
+      var bg = file.background ? file.background : 'blue'
+      return bg + ' accent-1'
     }
   },
 
@@ -64,7 +73,9 @@ export default {
     this.audioRef = this.$root.$data.fbdb.ref('audio')
 
     // TMP: used to build out files in DB
-    //this.audioRef.push({ name: 'File 1', icon: 'filter_1', file: 'TBD2.wav'});
+    // for (var i=0;i<11;i++) {
+    //   this.audioRef.child(i).set({ name: 'File ' + i, icon: 'filter_1', file: 'file.wav'});
+    //}
 
     this.audioRef.on("child_added", (snapshot) => {
       var audio = snapshot.val();
