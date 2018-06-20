@@ -143,7 +143,7 @@
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
-                  <v-list-tile-content>All Solved: {{timeLeftSolved}}</v-list-tile-content>
+                  <v-list-tile-content>All Solved: {{timeLeft}}</v-list-tile-content>
                   <v-list-tile-content class="align-end">
                     <v-icon :style="{ color: iconColor(allSolvedState) }">{{icon(allSolvedState, 'all')}}</v-icon>
                   </v-list-tile-content>
@@ -349,17 +349,24 @@ export default {
     pass5valid: function() {
       return this.pass5 === '53464' || this.pass5 === 'xxxxx'
     },
+    timeLeft: function() {
+      if (!this.isConnected) {
+        return ''
+      }
+
+      return this.timeLeftSolved
+    },
     timeTaken: function() {
-      if (this.timeLeftSolved) {
+      if (this.timeLeft) {
         let totalTimeMinutes = 0;
         let totalTimeSeconds = 0;
 
         // split out parts 
-        let parts = this.timeLeftSolved.split(':')
+        let parts = this.timeLeft.split(':')
 
         // if I couldn't parse it, something funny, just don't show it
         if (parts.length !== 3) {
-          console.log("WARN: weird format of time left, ignoring.  time left was " + this.timeLeftSolved)
+          console.log("WARN: weird format of time left, ignoring.  time left was " + this.timeLeft)
           return ''
         }
 
