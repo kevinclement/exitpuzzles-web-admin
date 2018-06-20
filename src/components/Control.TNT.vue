@@ -315,7 +315,10 @@ export default {
       return this.pass3 === '268' || this.pass3 === 'xxx'
     },
     pass4valid: function() {
-      return this.pass4 === '1284' || this.pass4 === 'xxxx'
+      // HACK: total hack we have in place in bomb code currently to allow any digit in 1st character
+      var hackpass4 = this.pass4.substring(1,4)
+
+      return hackpass4 === '284' || this.pass4 === 'xxxx'
     },
     pass5valid: function() {
       return this.pass5 === '53464' || this.pass5 === 'xxxxx'

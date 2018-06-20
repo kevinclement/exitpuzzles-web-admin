@@ -1,16 +1,18 @@
-[x] need to come up with a way to test with a different db now that its live
 [x] need a way to mock pi responses when using test website
-[x] allow categories to be collapsed
 
-[ ] audio: 'replace red wire in c 2'
-  [ ] add button for it
-[ ] 4-xxxx highlights red, even though bomb code allows for a bunch of different options
+[x] allow categories to be collapsed
+[x] fix icon color in morse, its black 
+[x] audio: 'replace red wire in c 2'
+  [x] add button for it
+[x] add tooltip text for audio icons when  you hover over them
+[x] allow for DEV mode, so I don't modify real db
+[x] 4-xxxx highlights red, even though bomb code allows for a bunch of different options
+
 [ ] bug: send undefined when not set in first digit
    info: set time: setting time to undefined:22:13 ...
    info: bluetooth: tnt: > set undefined:22:13 
    info: set time: done.
 [ ] total time taken: 70 minutes - time left
-[ ] add title text for audio icons
 [ ] empty password should show something in UI
 
 [ ] on disconnect, all solved still shows last time
