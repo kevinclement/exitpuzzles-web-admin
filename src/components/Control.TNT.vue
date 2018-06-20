@@ -196,11 +196,18 @@
       <v-card-text>
         <table>
           <tr>
-            <td><input v-model="setTime.hour" maxlength="2" type='number' placeholder="HH" min="0" max="99" required></input></td>
+            <td><input v-model="setTime.hour" :class="{ invalidTime: !setTimeValid.hour.isvalid }" maxlength="2" type='number' placeholder="HH" min="0" max="99" required @change="validateTimer('hour')"></input></td>
             <td>:</td>
-            <td><input v-model="setTime.minute" maxlength="2" type='number' placeholder="MM" min="0" max="59" required></input></td>
+            <td><input v-model="setTime.minute" :class="{ invalidTime: !setTimeValid.minute.isvalid }" maxlength="2" type='number' placeholder="MM" min="0" max="59" required @change="validateTimer('minute')"></input></td>
             <td>:</td>
-            <td><input v-model="setTime.second" maxlength="2" type='number' placeholder="SS" min="0" max="59" required></input></td>
+            <td><input v-model="setTime.second" :class="{ invalidTime: !setTimeValid.second.isvalid }" maxlength="2" type='number' placeholder="SS" min="0" max="59" required @change="validateTimer('second')"></input></td>
+          </tr>
+          <tr class="errorRow">
+            <td><span v-if="!setTimeValid.hour.isvalid">{{setTimeValid.hour.msg}}</span></td>
+            <td></td>
+            <td><span v-if="!setTimeValid.minute.isvalid">{{setTimeValid.minute.msg}}</span></td>
+            <td></td>
+            <td><span v-if="!setTimeValid.second.isvalid">{{setTimeValid.second.msg}}</span></td>
           </tr>
         </table>
       </v-card-text>
@@ -236,6 +243,20 @@ export default {
         hour: null,
         minute: null,
         second: null
+      },
+      setTimeValid: {
+        hour: { 
+          isvalid: true,
+          msg: ''
+        },
+        minute: { 
+          isvalid: true,
+          msg: ''
+        },
+        second: { 
+          isvalid: true,
+          msg: ''
+        },
       },
 
       // loading states
@@ -459,15 +480,75 @@ export default {
 
       this.operations.add({ command: 'refreshState' })
     },
+
+    validateTimer(section) {
+      let valid = true
+
+      // check hour
+      if (!section || section === 'hour') {
+        if (this.setTime.hour === null || this.setTime.hour === "") {
+          this.setTimeValid.hour.isvalid = false
+          this.setTimeValid.hour.msg = 'required'
+          valid = false
+        } else if (this.setTime.hour < 0 || this.setTime.hour >= 99) {
+          this.setTimeValid.hour.isvalid = false
+          this.setTimeValid.hour.msg = 'invalid'
+          valid = false
+        } else {
+          this.setTimeValid.hour.isvalid = true
+          this.setTimeValid.hour.msg = ''
+        }
+      }
+
+      // check minute
+      if (!section || section === 'minute') {
+        if (this.setTime.minute === null || this.setTime.minute === "") {
+          this.setTimeValid.minute.isvalid = false
+          this.setTimeValid.minute.msg = 'required'
+          valid = false
+        } else if (this.setTime.minute < 0 || this.setTime.minute >= 60) {
+          this.setTimeValid.minute.isvalid = false
+          this.setTimeValid.minute.msg = 'invalid'
+          valid = false
+        } else {
+          this.setTimeValid.minute.isvalid = true
+          this.setTimeValid.minute.msg = ''
+        }
+      }
+
+      // check seconds
+      if (!section || section === 'second') {
+        if (this.setTime.second === null || this.setTime.second === "") {
+          this.setTimeValid.second.isvalid = false
+          this.setTimeValid.second.msg = 'required'
+          valid = false
+        } else if (this.setTime.second < 0 || this.setTime.second >= 60) {
+          this.setTimeValid.second.isvalid = false
+          this.setTimeValid.second.msg = 'invalid'
+          valid = false
+        } else {
+          this.setTimeValid.second.isvalid = true
+          this.setTimeValid.second.msg = ''
+        }
+      }
+
+      return valid
+    },
+
     setTimer() {
+
+      // check if valid
+      if (!this.validateTimer()) {
+        return
+      }
 
       // clear it out to indicate server interaction
       this.resetTimeDiag = false;
       this.hours = this.minutes = this.seconds = null;
 
       this.operations.add({ 
-        command: 'setTime',
-        data: { hours: this.setTime.hour, minutes: this.setTime.minute, seconds: this.setTime.second } });
+         command: 'setTime',
+         data: { hours: this.setTime.hour, minutes: this.setTime.minute, seconds: this.setTime.second } });
     },
     triggerKey() {
       this.confirmKeyDiag = false;
@@ -570,6 +651,12 @@ input[type=number]::-webkit-outer-spin-button {
 table {
   margin: 0 auto;
 }
+.errorRow > td {
+  font-size:12px;
+  color:red;
+  padding-left:11px;
+  padding-top:3px
+}
 td {
   font-size: 34px;
   font-family: Monaco, monospace;
@@ -582,6 +669,10 @@ td > input {
   text-align: center;
   box-shadow: 0px 0px 18px rgba(0,0,0,0.2), 0 2px 18px 0 rgba(0,0,0,0.19) !important
 }
+.invalidTime {
+  box-shadow: 0px 0px 18px rgba(0,0,0,0.2), 0 2px 18px 0 #E57373 !important
+}
+
 #disabled {
   background:rgba(0,0,0,.12) !important;
   color: grey !important;

@@ -7,13 +7,14 @@
 [x] add tooltip text for audio icons when  you hover over them
 [x] allow for DEV mode, so I don't modify real db
 [x] 4-xxxx highlights red, even though bomb code allows for a bunch of different options
-
-[ ] bug: send undefined when not set in first digit
+[x] bug: send undefined when not set in first digit
    info: set time: setting time to undefined:22:13 ...
    info: bluetooth: tnt: > set undefined:22:13 
    info: set time: done.
+
 [ ] total time taken: 70 minutes - time left
 [ ] empty password should show something in UI
+[ ] when refreshing on iphone, shows offline for a split second.  kyle mentioned on desktop too
 
 [ ] on disconnect, all solved still shows last time
 [ ] when tnt is disconnected after switch errors, ui is wrong until it comes online
