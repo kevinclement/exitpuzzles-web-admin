@@ -11,6 +11,7 @@
    info: set time: setting time to undefined:22:13 ...
    info: bluetooth: tnt: > set undefined:22:13 
    info: set time: done.
+[ ] update new audio in live db
 
 [ ] total time taken: 70 minutes - time left
 [ ] empty password should show something in UI
@@ -21,6 +22,7 @@
 
 [ ] automatically trigger 5 min, 3 minutes, etc from pi
   [ ] some weird combonation button press he's doing as a work around right now.  either need new combined audio, or automation
+  [ ] feature: if I hook up to bomb, don't play sounds when lid is closed
 [ ] audio playing from web site
 
 bomb bugs:
@@ -30,7 +32,6 @@ bomb bugs:
 
 [ ] write disconnect log or something so I can track how often it drops connection from wifi
 
-[ ] feature: if I hook up to bomb, don't play sounds when lid is closed
 [ ] bug: timer can be incorrect
   [ ] need to take into account penalties
   [ ] need to take into account speed up when permanent penalty is on
@@ -38,11 +39,10 @@ bomb bugs:
 Audio:
   [ ] allow for multiple files to be played at once
   [ ] do I need a toggle for start/stop?  
-  [ ] update audio from kyle
-  [ ] settings for audio in web
-    [ ] upload to db
-    [ ] set name,icon,toggle
-
+  [x] update audio from kyle
+  [x] settings for audio in web
+    [x] upload to db
+    [x] set name,icon,toggle
 
 Later:
 
