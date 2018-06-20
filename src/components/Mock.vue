@@ -4,6 +4,8 @@
       <v-layout>
         <v-flex xs2>
           <v-checkbox v-model="connected" label="Connected"></v-checkbox>
+          <v-checkbox v-model="switchErrors" label="Switch Errors"></v-checkbox>
+          <v-checkbox v-model="wireErrors" label="Wire Errors"></v-checkbox>
           <v-text-field v-model="lastBadPassword" label="Last Password"></v-text-field>
           <v-checkbox v-model="lightDetected" label="Light Detected"></v-checkbox>
           <v-checkbox v-model="toggle1" label="Toggle 1"></v-checkbox>
@@ -30,6 +32,9 @@
   export default {
     data: () => ({
       connected: false,
+      
+      switchErrors: false,
+      wireErrors: false,
 
       lastBadPassword: '',
 
@@ -58,6 +63,9 @@
         let state = snapshot.val()
         if (state == null) return
 
+        this.switchErrors    = state.switchErrors
+        this.wireErrors      = state.wireErrors
+
         this.lastBadPassword = state.lastBadPassword
         this.lightDetected   = state.lightDetected
         this.toggle1 = state.toggle1 === STATE.OK
@@ -67,9 +75,6 @@
         this.allSolved = state.allSolved === STATE.OK
 
         this.timeLeftSolved  = state.timeLeftSolved
-
-        // this.switchErrors    = state.switchErrors
-        // this.wireErrors      = state.wireErrors
       })
     },
 
@@ -77,6 +82,9 @@
       save() {
         this.tntRef.child('state').update(
           {
+            switchErrors: this.switchErrors,
+            wireErrors: this.wireErrors,
+
             lastBadPassword: this.lastBadPassword,
 
             lightDetected: this.lightDetected,

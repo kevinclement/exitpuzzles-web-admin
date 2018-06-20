@@ -13,12 +13,11 @@
    info: set time: done.
 [x] report total time taken: 70 minutes - time left
 [x] on disconnect, all solved still shows last time
-
-[ ] update new audio in live db
+[x] when tnt is disconnected after switch errors, ui is wrong until it comes online
 
 [ ] when refreshing on iphone, shows offline for a split second.  kyle mentioned on desktop too
 
-[ ] when tnt is disconnected after switch errors, ui is wrong until it comes online
+[ ] update new audio in live db
 
 [ ] empty password should show something in UI
   "data" : "info: bluetooth: tnt: < Invalid password tried: ",
@@ -31,17 +30,15 @@
   [ ] some weird combonation button press he's doing as a work around right now.  either need new combined audio, or automation
   [ ] feature: if I hook up to bomb, don't play sounds when lid is closed
 [ ] audio/music playing from web site
+[ ] write disconnect log or something so I can track how often it drops connection from wifi
+[ ] bug: timer can be incorrect
+  [ ] need to take into account penalties
+  [ ] need to take into account speed up when permanent penalty is on
 
 bomb bugs:
   only do toggle error when trunk lid is open
   write out state when red wire is replaced correctly
   light state doesn't show correctly when trunk lid is opened after a reset
-
-[ ] write disconnect log or something so I can track how often it drops connection from wifi
-
-[ ] bug: timer can be incorrect
-  [ ] need to take into account penalties
-  [ ] need to take into account speed up when permanent penalty is on
    
 Audio:
   [ ] allow for multiple files to be played at once

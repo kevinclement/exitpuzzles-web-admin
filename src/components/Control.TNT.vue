@@ -284,7 +284,10 @@ export default {
       timeLeftSolved: '',
       timerTimeStamp: null,
       timeLeftInSeconds: 0,
-      isConnected: true
+      isConnected: true,
+
+      // last state snapshot
+      lastStateSnapshot: null
     }
   },
 
@@ -411,6 +414,16 @@ export default {
       if (isConnected == null) return
 
       this.isConnected = isConnected
+
+      // if coming online, map all the states back
+      // TODO: cleanup all other weird isOnline hacks
+      if (this.isConnected) {
+        if (this.lastStateSnapshot) {
+          this.switchErrors = this.lastStateSnapshot.switchErrors
+        }
+      } else {
+          this.switchErrors = false
+      }
     });
 
     this.tntRef.child('time').on('value', (snapshot) => {
@@ -442,6 +455,8 @@ export default {
       this.timeLeftSolved  = state.timeLeftSolved
       this.switchErrors    = state.switchErrors
       this.wireErrors      = state.wireErrors
+
+      this.lastStateSnapshot = state;
     });
 
     setInterval(() => {
