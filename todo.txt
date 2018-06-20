@@ -12,18 +12,25 @@
    info: bluetooth: tnt: > set undefined:22:13 
    info: set time: done.
 [x] report total time taken: 70 minutes - time left
+[x] on disconnect, all solved still shows last time
+
 [ ] update new audio in live db
 
-[ ] on disconnect, all solved still shows last time
-[ ] empty password should show something in UI
 [ ] when refreshing on iphone, shows offline for a split second.  kyle mentioned on desktop too
 
 [ ] when tnt is disconnected after switch errors, ui is wrong until it comes online
 
+[ ] empty password should show something in UI
+  "data" : "info: bluetooth: tnt: < Invalid password tried: ",
+  I think to fix this, I'll need to distinquish between when the pi is resetting versus when user entered empty
+  right now they look the same to me in the db
+  I think I can change pi code to write xxxxxxxxx and use that.  then when I see an empty string in db, I know its from someone
+  to fullly light this up I'll need to coordinate update to pi code and web code with kyle present to fully test it
+  
 [ ] automatically trigger 5 min, 3 minutes, etc from pi
   [ ] some weird combonation button press he's doing as a work around right now.  either need new combined audio, or automation
   [ ] feature: if I hook up to bomb, don't play sounds when lid is closed
-[ ] audio playing from web site
+[ ] audio/music playing from web site
 
 bomb bugs:
   only do toggle error when trunk lid is open
