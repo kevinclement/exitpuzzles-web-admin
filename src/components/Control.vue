@@ -9,8 +9,8 @@
         Raspberry Pi is offline.  Last ping at {{piPingFormatted}}. See <router-link style="color:white" to="/logs">logs</router-link> for more info.
       </v-alert>
       <control-tnt :snack="showSnack"></control-tnt>
-      <control-morse :snack="showSnack"></control-morse>
       <control-audio :snack="showSnack"></control-audio>
+      <control-morse :snack="showSnack"></control-morse>
       <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
         {{ snackText }}
       <v-btn dark flat @click.native="snackbar = false">Close</v-btn>

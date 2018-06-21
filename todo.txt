@@ -1,29 +1,27 @@
 To Test with Kyle:
-  automatically playing sounds for events
-    what are some problems you could get into with timer?
-  automatic sounds don't play if closed
-  how does it sound with other device playing ahah, and I'm playing ahah through big speaker?
-    sounds like I'll need to delay it a bit 
+  note: had issue with it being opened when I started pi
+  note: off by 1 second on reset
+
+  [x] automatically playing sounds for events
+  [x] check timer differences
+    [x] when you reset the device
+    [x] when you set the timer
+  [x] verify automatic sounds don't play if closed
+  [x] fine tune the delay needed to account for sounds coming from device
+    [x] success
+    [x] failure
+    [x] toggle
+    [x] wire  
+  [x] test changing time and making sure timers got reset proper
+  long test for 1 hour?  might just run it on friday and make sure its fine  
+  does he want ahah in main speaker for anything?  maybe bad password?
+
+[ ] merge master
   
-[ ] automatically trigger audio from pi
-  [ ] timer for time based alerts
-    [ ] 10
-    [ ] 5
-    [ ] 3
-    [ ] 1
-  [ ] event based
-    [ ] ahah
-    [ ] bad toggles
-    [ ] bad wires
-    [ ] bad c2 wire?
-    [ ] success - he does x4 clicks (needs to be delayed)
-    [ ] failure - he does x4 clicks (needs to be delayed)
-
-  [ ] don't play sounds when lid is closed
+[ ] do we need another row of icons for sound and penalty?
   [ ] some weird combination button press he's doing as a work around right now.  either need new combined audio, or automation
-    [ ] check log to see what audio combos hes doing
-    [ ]   he does: siren, incorrect wires, then trigger wire penalty
-
+  [ ] he does: siren, incorrect wires, then trigger wire penalty
+[ ] don't hardcode wav files in server, use db for filenames
 
 [ ] audio/music playing from web site
 [ ] bug: client side timer can be incorrect
@@ -40,10 +38,6 @@ bomb bugs:
 Audio:
   [ ] allow for multiple files to be played at once
   [ ] do I need a toggle for start/stop?  
-  [x] update audio from kyle
-  [x] settings for audio in web
-    [x] upload to db
-    [x] set name,icon,toggle
 
 Later:
 
@@ -561,3 +555,22 @@ reset button on client just does the db reset, and state change will update all 
 [x] when tnt is disconnected after switch errors, ui is wrong until it comes online
 [x] empty password should show something in UI
 [x] update new audio in live db
+[x] automatically trigger audio from pi
+  [x] timer for time based alerts
+    [x] 10
+    [x] 5
+    [x] 3
+    [x] 1
+  [X] event based
+    [\] ahah
+    [x] bad toggles
+    [x] bad wires
+    [\] bad c2 wire?
+    [x] success - he does x4 clicks (needs to be delayed)
+    [X] failure - he does x4 clicks (needs to be delayed)
+  [x] don't play sounds when lid is closed
+[x] update audio from kyle
+[x] settings for audio in web
+  [x] upload to db
+  [x] set name,icon,toggle
+
