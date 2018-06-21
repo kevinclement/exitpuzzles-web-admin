@@ -1,37 +1,9 @@
 To Test with Kyle:
-  new audio file
-  device going offline does the right thing on website
-  sending empty password from device operates as expected in UI treatment
   automatically playing sounds for events
     what are some problems you could get into with timer?
   automatic sounds don't play if closed
   how does it sound with other device playing ahah, and I'm playing ahah through big speaker?
-
-[x] need a way to mock pi responses when using test website
-
-[x] allow categories to be collapsed
-[x] fix icon color in morse, its black 
-[x] audio: 'replace red wire in c 2'
-  [x] add button for it
-[x] add tooltip text for audio icons when  you hover over them
-[x] allow for DEV mode, so I don't modify real db
-[x] 4-xxxx highlights red, even though bomb code allows for a bunch of different options
-[x] bug: send undefined when not set in first digit
-   info: set time: setting time to undefined:22:13 ...
-   info: bluetooth: tnt: > set undefined:22:13 
-   info: set time: done.
-[x] report total time taken: 70 minutes - time left
-[x] on disconnect, all solved still shows last time
-[x] when tnt is disconnected after switch errors, ui is wrong until it comes online
-
-[ ] update new audio in live db
-
-[ ] empty password should show something in UI
-  "data" : "info: bluetooth: tnt: < Invalid password tried: ",
-  I think to fix this, I'll need to distinquish between when the pi is resetting versus when user entered empty
-  right now they look the same to me in the db
-  I think I can change pi code to write xxxxxxxxx and use that.  then when I see an empty string in db, I know its from someone
-  to fullly light this up I'll need to coordinate update to pi code and web code with kyle present to fully test it
+    sounds like I'll need to delay it a bit 
   
 [ ] automatically trigger audio from pi
   [ ] timer for time based alerts
@@ -44,12 +16,13 @@ To Test with Kyle:
     [ ] bad toggles
     [ ] bad wires
     [ ] bad c2 wire?
-    [ ] success
-    [ ] failure
+    [ ] success - he does x4 clicks (needs to be delayed)
+    [ ] failure - he does x4 clicks (needs to be delayed)
 
   [ ] don't play sounds when lid is closed
   [ ] some weird combination button press he's doing as a work around right now.  either need new combined audio, or automation
     [ ] check log to see what audio combos hes doing
+    [ ]   he does: siren, incorrect wires, then trigger wire penalty
 
 
 [ ] audio/music playing from web site
@@ -61,6 +34,7 @@ To Test with Kyle:
 bomb bugs:
   only do toggle error when trunk lid is open
   write out state when red wire is replaced correctly
+  write out password used when successfull
   light state doesn't show correctly when trunk lid is opened after a reset
    
 Audio:
@@ -570,3 +544,20 @@ reset button on client just does the db reset, and state change will update all 
 [\] can't click on 'error clue' when ad-hoc morse
 [\] offline icon for morse is a different color, its black
 [x] when refreshing on iphone, shows offline for a split second.  kyle mentioned on desktop too
+[x] need a way to mock pi responses when using test website
+[x] allow categories to be collapsed
+[x] fix icon color in morse, its black 
+[x] audio: 'replace red wire in c 2'
+  [x] add button for it
+[x] add tooltip text for audio icons when  you hover over them
+[x] allow for DEV mode, so I don't modify real db
+[x] 4-xxxx highlights red, even though bomb code allows for a bunch of different options
+[x] bug: send undefined when not set in first digit
+   info: set time: setting time to undefined:22:13 ...
+   info: bluetooth: tnt: > set undefined:22:13 
+   info: set time: done.
+[x] report total time taken: 70 minutes - time left
+[x] on disconnect, all solved still shows last time
+[x] when tnt is disconnected after switch errors, ui is wrong until it comes online
+[x] empty password should show something in UI
+[x] update new audio in live db
