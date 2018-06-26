@@ -1,5 +1,5 @@
 <template>
-  <v-app  style="background:linear-gradient(#FCFCFC, #EBEBEB)">
+  <v-app>
     <v-navigation-drawer
       v-model="drawer"
       fixed
