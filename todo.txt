@@ -1,26 +1,15 @@
- [ ] do we need another row of icons for sound and penalty?
-  [ ] some weird combination button press he's doing as a work around right now.  either need new combined audio, or automation
-  [ ] he does: siren, incorrect wires, then trigger wire penalty
-[ ] don't hardcode wav files in server, use db for filenames
-
 [ ] audio/music playing from web site
-[ ] bug: client side timer can be incorrect
-  [ ] need to take into account penalties
-  [ ] need to take into account speed up when permanent penalty is on
-[ ] write disconnect log or something so I can track how often it drops connection from wifi
+  [x] should pause/stop on reset
+  [x] if previous paused, and still on page, should start from beginning when solved
+  [ ] if solved, sitting there and you refresh page, it will play audio
 
-bomb bugs:
-  only do toggle error when trunk lid is open
-  write out state when red wire is replaced correctly
-  write out password used when successfull
-  light state doesn't show correctly when trunk lid is opened after a reset
-   
-Audio:
-  [ ] allow for multiple files to be played at once
-  [ ] do I need a toggle for start/stop?  
+[ ] make sure pushed git everywhere
+
+morse code: 
+  [ ] ability to reset the screen remotely after sending a message
 
 Later:
-
+[ ] website: allow easier toggle with production for testing changes locally
 [ ] add readme for exitpuzzles-pi
 
 [ ] cleanup: move inline css in control to styles section
@@ -567,3 +556,34 @@ reset button on client just does the db reset, and state change will update all 
 [x] long test for 1 hour?  might just run it on friday and make sure its fine  
 [\] does he want ahah in main speaker for anything?  maybe bad password?
 [x] merge master
+[x] don't hardcode wav files in server, use db for filenames
+[\] bug: client side timer can be incorrect
+  // fixed by sending more accurate time updates
+  [ ] need to take into account penalties
+  [ ] need to take into account speed up when permanent penalty is on
+[\] write disconnect log or something so I can track how often it drops connection from wifi
+[x] test time update works with bluetooth and pi, its not too fast
+[x] add parsing for wire/toggle fixed
+[x] test status updates works with new timeout
+
+bomb:
+  [x] at 10,5,3,x send special output
+  [x] code is 1940 - 
+      "    YOU WIN!    "
+      "CONGRATULATIONS!"
+
+      "    YOU WIN!    "
+      "EXIT CODE: 1940 "
+  [x] play with backlight text
+  [x] add switch to turn on/off the behavior
+  [x] print out time on some fixed interval, every 1 min
+  [x] fix hiccup when requesting time - possible because of how I'm doing readline
+  [x] write out state when red wire is replaced correctly
+  [x] write out state when when toggles fixed
+  [x] write out password used when successful
+  [x] only do toggle error when trunk lid is open
+  [\] light state doesn't show correctly when trunk lid is opened after a reset
+[x] parse special 10,5,3,1 output
+  [x] remove timer logic from server
+[x] change and test password parsing
+[x] click button does arduino error, then the siren, then the audio lady

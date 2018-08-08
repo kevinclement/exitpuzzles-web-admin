@@ -7,6 +7,7 @@
       <v-toolbar card>
         <v-toolbar-title>
           TNT
+          <v-icon v-if="timeTaken" style="margin-bottom:4px;margin-left:5px;cursor:pointer;" @click="startStopAudio(audioPaused)">{{audioIcon}}</v-icon>
           <v-icon v-if="!isConnected" style="margin-bottom:4px;margin-left:7px;color:red" title="Device disconnected">report_problem</v-icon>
         </v-toolbar-title>
         <span class="spacer" />
@@ -287,7 +288,10 @@ export default {
       isConnected: true,
 
       // last state snapshot
-      lastStateSnapshot: null
+      lastStateSnapshot: null,
+
+      // audio state
+      audioPaused:true
     }
   },
 
@@ -393,12 +397,24 @@ export default {
       else {
         return ''
       }
+    },
+    audioIcon: function() {
+      return this.audioPaused ? "play_arrow" : "pause"
     }
   },
 
   watch: {
     timeLeftInSeconds: function(newTime) {
       this.timeFromSeconds(newTime)
+    },
+
+    timeTaken: function(tt) {
+      if (tt !== '') {
+        this.startAudio();
+      }
+      else {
+        this.stopAudio();
+      }
     }
   },
 
@@ -696,6 +712,27 @@ export default {
           }
         });
       }
+    },
+    startAudio() {
+      this.startStopAudio(true, true)
+    },
+    stopAudio() {
+      this.startStopAudio(false)
+    },
+    startStopAudio(play, fromBeginning) {
+      let aRef = document.getElementById('successAudio');
+
+      if (fromBeginning) {
+        aRef.currentTime = 0 ;
+      }
+
+      if(play) {
+        aRef.play();
+      } else {
+        aRef.pause();
+      }
+
+      this.audioPaused = !play
     },
 
     formatTime(num) {
