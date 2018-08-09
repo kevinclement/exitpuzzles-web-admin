@@ -45,11 +45,13 @@ export default {
   data () {
     return {
       audioRef: null,
+      firstLoad: true,
+      timeLeftSolved: 'UNKNOWN',
       files: [],
       music: [
-        { title: 'Jump in Line', name:'jump_in_line_karaoke_30s_fade_out.mp3', icon:'star', playing: false },
-        { title: 'Blue Moon',    name:'blue_moon.mp3',                         icon:'language', playing: false },
-        { title: 'Science',      name:'success.m4a',                           icon:'surround_sound', playing: false },
+        { title: 'Jump in Line', name:'jump_in_line_karaoke_30s_fade_out.mp3', icon:'star',           playing: false, onWin: true },
+        { title: 'Blue Moon',    name:'blue_moon.mp3',                         icon:'language',       playing: false              },
+        { title: 'Science',      name:'success.m4a',                           icon:'surround_sound', playing: false              },
       ]
     }
   },
@@ -95,6 +97,9 @@ export default {
 
       // play it
       aRef.src = '/static/' + song.name
+      aRef.onended = function() {
+        song.playing = false
+      }
       aRef.play();
     },
 
@@ -130,8 +135,24 @@ export default {
       this.files.push(audio)
     });
 
-  }
+    // listen for solved state change so we can play song
+    this.tntRef = this.$root.$data.fbdb.ref('tnt')
+    this.tntRef.child('state').on('value', (snapshot) => {
+      let state = snapshot.val()
+      if (state == null) return
 
+      // there was a state change for time left, so we witnessed a solve, so lets play song
+      if (state.timeLeftSolved != '' && this.timeLeftSolved !== 'UNKNOWN' && this.timeLeftSolved != state.timeLeftSolved) {
+        for(var i=0; i < this.music.length; i++) {
+          if (this.music[i].onWin && !this.music[i].playing) {
+            this.playSong(this.music[i]);
+          }
+        }
+      }
+
+      this.timeLeftSolved = state.timeLeftSolved;
+    });
+  }
 }
 </script>
 
