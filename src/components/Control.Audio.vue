@@ -12,19 +12,27 @@
 
       <v-card-text class="grey lighten-3">
         <v-layout row wrap>
-
           <v-flex>
-
             <v-tooltip bottom light open-delay="1000" v-for="file in files" :key="file.file">
                 <v-btn fab dark slot="activator" :color="iconBackground(file)" @click.native="play(file)">
                   <v-icon :color="iconForeground(file)">{{file.icon}}</v-icon>
                 </v-btn>
                 <span>{{file.name}}</span>
             </v-tooltip>
-
           </v-flex>
-
         </v-layout>
+
+        <v-layout row wrap style="padding-top:15px;">
+          <v-flex>
+            <v-tooltip bottom light open-delay="1000" v-for="song in music" :key="song.name">
+                <v-btn fab dark slot="activator" color="deep-purple accent-1" @click.native="playSong(song)">
+                  <v-icon>{{ iconForSong(song) }}</v-icon>
+                </v-btn>
+                <span>{{song.title}}</span>
+            </v-tooltip>
+          </v-flex>
+        </v-layout>
+
       </v-card-text>
     </v-card>
 
@@ -37,7 +45,12 @@ export default {
   data () {
     return {
       audioRef: null,
-      files: []
+      files: [],
+      music: [
+        { title: 'Jump in Line', name:'jump_in_line_karaoke_30s_fade_out.mp3', icon:'star', playing: false },
+        { title: 'Blue Moon',    name:'blue_moon.mp3',                         icon:'language', playing: false },
+        { title: 'Science',      name:'success.m4a',                           icon:'surround_sound', playing: false },
+      ]
     }
   },
 
@@ -61,6 +74,30 @@ export default {
       });
     },
 
+    playSong(song) {
+
+      let aRef = document.getElementById('musicAudio');
+
+      // already playing, so lets pause it
+      if (song.playing) {
+        aRef.pause();
+        song.playing = false;
+        return;
+      }
+
+      // update turn off any other song playing
+      for(var i=0; i < this.music.length; i++) {
+        this.music[i].playing = false;
+      }
+
+      // set this one to playing
+      song.playing = true;
+
+      // play it
+      aRef.src = '/static/' + song.name
+      aRef.play();
+    },
+
     iconForeground(file) {
       return file.foreground ? file.foreground : ''
     },
@@ -68,6 +105,14 @@ export default {
     iconBackground(file) {
       var bg = file.background ? file.background : 'blue'
       return bg + ' accent-1'
+    },
+
+    iconForSong(song) {
+      if (song.playing) {
+        return 'stop'
+      } else {
+        return song.icon
+      }
     }
   },
 
