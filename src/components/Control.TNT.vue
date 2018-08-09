@@ -240,6 +240,8 @@ export default {
     return {
       tntRef: null,
 
+      firstUpdate: true,
+
       // dialogs
       confirmKeyDiag: false,
       confirmWireDiag: false,
@@ -410,7 +412,10 @@ export default {
 
     timeTaken: function(tt) {
       if (tt !== '') {
-        this.startAudio();
+        // only autoplay audio if this wasn't the first load of the page
+        if (!this.firstUpdate) {
+          this.startAudio();
+        }
       }
       else {
         this.stopAudio();
@@ -426,10 +431,16 @@ export default {
       let state = snapshot.val()
       if (state == null) return
 
-        this.lastStateSnapshot = state;
-        if (this.isConnected) {
-          this.updateState(this.lastStateSnapshot)
-        }
+      this.lastStateSnapshot = state;
+      if (this.isConnected) {
+        this.updateState(this.lastStateSnapshot)
+      }
+
+      // in next tick, mark update done
+      setTimeout(()=> {
+        this.firstUpdate = false;
+      }, 0)
+      
     });
 
     this.tntRef.child('isConnected').on('value', (snapshot) => {
