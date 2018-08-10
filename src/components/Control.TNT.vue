@@ -104,7 +104,7 @@
                   <v-btn 
                     class="ma-0"
                     small dark color="accent"
-                    @click.native="triggerBlink(true)">With Code
+                    @click.native="triggerBlink(true)">With Audio
                   </v-btn>
                   </div>
                   <div>
