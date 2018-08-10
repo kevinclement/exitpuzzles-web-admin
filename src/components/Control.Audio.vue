@@ -49,7 +49,7 @@ export default {
       timeLeftSolved: 'UNKNOWN',
       files: [],
       music: [
-        { title: 'Jump in Line', name:'jump_in_line_karaoke_30s_fade_out.mp3', icon:'star',           playing: false, onWin: true },
+        { title: 'Jump in Line', name:'jump_in_line_karaoke_45s_fade_out.mp3', icon:'star',           playing: false, onWin: true },
         { title: 'Blue Moon',    name:'blue_moon.mp3',                         icon:'language',       playing: false              },
         { title: 'Science',      name:'success.m4a',                           icon:'surround_sound', playing: false              },
       ]
