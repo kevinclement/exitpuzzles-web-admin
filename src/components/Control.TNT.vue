@@ -91,6 +91,28 @@
               </v-flex>
             </div>
 
+            <div style="display:flex;margin-top:0px;padding-top:0px;margin-bottom:15px">
+              <v-flex xs6>
+                <div style="display:block">
+                  <span>Blink</span>
+                  <div>
+                  <v-btn 
+                    class="ma-0"
+                    small dark color="accent"
+                    @click.native="triggerBlink()">No Code
+                  </v-btn>
+                  <v-btn 
+                    class="ma-0"
+                    small dark color="accent"
+                    @click.native="triggerBlink(true)">With Code
+                  </v-btn>
+                  </div>
+                  <div>
+                  </div>
+                </div>
+              </v-flex>
+            </div>
+
             <div style="display:flex;margin-bottom:15px">
               <v-flex xs12>
                 <div style="display:block">
@@ -684,6 +706,11 @@ export default {
       });
 
       this.resetTntDiag = false;
+    },
+    triggerBlink(withCode) {
+      var cmd = withCode ? 'triggerBlinkWithCode' : 'triggerBlink'
+      this.operations.add({ command: cmd }).on("value", (snapshot) => {
+      });
     },
     switchErrorsClicked() {
       if (this.switchErrors) {
