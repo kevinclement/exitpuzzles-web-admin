@@ -74,6 +74,7 @@
                     v-model="switchErrors"
                     :disabled="!isConnected"
                     @click.native="switchErrorsClicked"
+                    hide-details="true"
                   ></v-switch>
                 </div>
               </v-flex>
@@ -85,14 +86,15 @@
                     :label="wireErrorLabel"
                     v-model="wireErrors"
                     :disabled="!isConnected"
+                    hide-details="true"
                     @click.native="wireErrorsClicked"
                   ></v-switch>
                 </div>
               </v-flex>
             </div>
 
-            <div style="display:flex;margin-top:0px;padding-top:0px;margin-bottom:15px">
-              <v-flex xs6>
+            <div style="display:flex;margin-top:0px;padding-top:10px;margin-bottom:15px">
+              <v-flex>
                 <div style="display:block">
                   <span>Blink</span>
                   <div>
