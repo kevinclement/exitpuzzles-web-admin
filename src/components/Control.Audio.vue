@@ -47,9 +47,11 @@ export default {
       audioRef: null,
       firstLoad: true,
       timeLeftSolved: 'UNKNOWN',
+      lastTime: 'UNKNOWN',
       files: [],
       music: [
         { title: 'Jump in Line', name:'jump_in_line_karaoke_45s_fade_out.mp3', icon:'star',           playing: false, onWin: true },
+        { title: 'Losing Horn',  name:'losing_horn.mp3',                       icon:'volume_mute',    playing: false, onFail: true },
         { title: 'Blue Moon',    name:'blue_moon.mp3',                         icon:'language',       playing: false              },
         { title: 'Science',      name:'success.m4a',                           icon:'surround_sound', playing: false              },
       ]
@@ -151,6 +153,23 @@ export default {
       }
 
       this.timeLeftSolved = state.timeLeftSolved;
+    });
+
+    this.tntRef.child('time').on('value', (snapshot) => {
+      let state = snapshot.val()
+      if (state == null) return
+
+      if (state.timestamp != '' && this.lastTime !== 'UNKNOWN' && this.lastTime != state.timestamp) {
+        if (state.hours === 0 && state.minutes === 0 && state.seconds === 0) {
+          for(var i=0; i < this.music.length; i++) {
+            if (this.music[i].onFail && !this.music[i].playing) {
+              this.playSong(this.music[i]);
+            }
+          }
+        }
+      }
+
+      this.lastTime = state.timestamp;
     });
   }
 }

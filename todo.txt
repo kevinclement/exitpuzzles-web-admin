@@ -1,9 +1,13 @@
-[ ] audio/music playing from web site
-  [x] should pause/stop on reset
-  [x] if previous paused, and still on page, should start from beginning when solved
-  [ ] if solved, sitting there and you refresh page, it will play audio
+[x] if solved, sitting there and you refresh page, it will play audio
+[x] fix light sensor
+[x] after song finishes, reset song state
+[x] button for blue moon
+[x] update success mp3 after kyle gets it to me
+[x] Button for blink + audio queue
+[x] button for blink
+[x] make sure pushed git everywhere
 
-[ ] make sure pushed git everywhere
+[ ] fix styling in website for blink buttons (too much padding and tnarrow)
 
 morse code: 
   [ ] ability to reset the screen remotely after sending a message
@@ -84,6 +88,7 @@ sudo alsactl store
 # can speed up or down with -r.  I think 200 is default, latest one I did was 155
 say -v Samantha "hello" -o hello.wav --data-format=LEF32@22050
 say -v Samantha "Warning, 1 minute to detonation" -o countdown_1min.wav --data-format=LEF32@22050
+say -v Samantha "Bomb is now disarmed. [[slnc 300]] Your exit code is nineteen fourty" -r 170 -o bomb_disabled.wav --data-format=LEF32@22050
 
 // ObiHai Voip
 192.168.1.7
@@ -587,3 +592,6 @@ bomb:
   [x] remove timer logic from server
 [x] change and test password parsing
 [x] click button does arduino error, then the siren, then the audio lady
+[x] audio/music playing from web site
+  [x] should pause/stop on reset
+  [x] if previous paused, and still on page, should start from beginning when solved
