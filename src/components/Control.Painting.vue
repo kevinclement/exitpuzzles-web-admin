@@ -4,7 +4,9 @@
   <v-card class="paintingCard">
     <v-toolbar card>
       <v-toolbar-title>Painting
-        <v-icon v-if="!isConnected" class="notConnected" title="Device disconnected">report_problem</v-icon></v-toolbar-title>
+        <v-icon v-if="!isConnected" class="notConnected" title="Device disconnected">report_problem</v-icon>
+        <v-icon v-if="isEnabled" class="isEnabled" title="Light detected">wb_incandescent</v-icon>
+      </v-toolbar-title>
       <span class="spacer" />
     </v-toolbar>
 
@@ -43,6 +45,7 @@
         this.isConnected = painting.isConnected;
         this.threshold = painting.threshold;
         this.wait = painting.wait;
+        this.isEnabled = painting.enabled;
       })
     },
     methods: {
@@ -62,6 +65,11 @@
   margin-bottom:4px;
   margin-left:7px;
   color:red !important;
+}
+.isEnabled {
+  margin-bottom:4px;
+  margin-left:7px;
+  color:#FFC107 !important;
 }
 .dropBtn {
   display:inline-block;
