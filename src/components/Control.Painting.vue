@@ -9,22 +9,16 @@
     </v-toolbar>
 
     <v-card-text class="grey lighten-3">
- 
-          
-          <div style="display:inline-block;vertical-align:top;padding-top:13px;padding-right:20px;">
+          <div class="dropBtn">
             <v-btn 
                 class="ma-0"
                 small dark color="accent"
                 @click.native="triggerDrop()">Drop
             </v-btn>
           </div>
-          <v-text-field hide-details="true" maxlength="16" label="Threshold" value="1500" style="width:100px;display:inline-block; padding-right: 20px;"></v-text-field>
-          <v-text-field hide-details="true" maxlength="16" label="Wait" value="0" style="width:50px;display:inline-block"></v-text-field>
-          
- 
-      
+          <v-text-field hide-details="true" maxlength="16" label="Threshold" v-model="threshold" class="threshold"></v-text-field>
+          <v-text-field hide-details="true" maxlength="16" label="Wait" v-model="wait" class="wait"></v-text-field>
     </v-card-text>
-    
 
   </v-card>
 </v-flex>
@@ -34,14 +28,11 @@
   export default {
     props: ['snack'],
     data: () => ({
-      dialog: false,
       confirmDiag: false,
-      isConnected: true
+      isConnected: true,
+      threshold: 0,
+      wait: 0,
     }),
-    computed: {
-    },
-    watch: {
-    },
     created () {
       this.operations = this.$root.$data.operations
 
@@ -71,5 +62,20 @@
   margin-bottom:4px;
   margin-left:7px;
   color:red !important;
+}
+.dropBtn {
+  display:inline-block;
+  vertical-align:top;
+  padding-top:13px;
+  padding-right:20px;
+}
+.threshold {
+  display:inline-block;
+  width:100px;
+  padding-right: 20px;
+}
+.wait {
+  width:50px;
+  display:inline-block;
 }
 </style>
