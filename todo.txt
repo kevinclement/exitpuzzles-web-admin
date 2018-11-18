@@ -1,11 +1,23 @@
-[x] if solved, sitting there and you refresh page, it will play audio
-[x] fix light sensor
-[x] after song finishes, reset song state
-[x] button for blue moon
-[x] update success mp3 after kyle gets it to me
-[x] Button for blink + audio queue
-[x] button for blink
-[x] make sure pushed git everywhere
+Painting:
+  [x] UI section for painting
+  [x] UI for force drop
+  [ ] confirm for force drop
+  [ ] UI for set threshhold
+  [ ] UI for set wait
+  [x] UI for connected/disconnected state
+
+  [ ] hook up UI to threshhold
+  [ ] hook up UI to wait
+  [x] hook up UI to drop
+
+  [ ] hook up light detection, have it enable device
+
+  [ ] test when pi comes online after painting is online and vice versa.  might need changes in arduino to handle disconnect proper
+
+  [ ] modify live database
+
+
+[ ] fix vue warning in console about hideDetails - old bug
 
 [ ] fix styling in website for blink buttons (too much padding and tnarrow)
 
@@ -71,6 +83,7 @@ sudo wpa_supplicant -i wlan1 -c /etc/wpa_supplicant/wpa_supplicant.conf -dd
 // Bluetooth IDs
 tnt:   20:16:03:10:17:88
 morse: A4:D5:78:69:BE:69
+painting: 30:AE:A4:06:48:CA
 
 // Bluetooth stuff
 hcitool scan
@@ -595,3 +608,11 @@ bomb:
 [x] audio/music playing from web site
   [x] should pause/stop on reset
   [x] if previous paused, and still on page, should start from beginning when solved
+[x] if solved, sitting there and you refresh page, it will play audio
+[x] fix light sensor
+[x] after song finishes, reset song state
+[x] button for blue moon
+[x] update success mp3 after kyle gets it to me
+[x] Button for blink + audio queue
+[x] button for blink
+[x] make sure pushed git everywhere

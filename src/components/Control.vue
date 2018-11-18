@@ -9,8 +9,11 @@
         Raspberry Pi is offline.  Last ping at {{piPingFormatted}}. See <router-link style="color:white" to="/logs">logs</router-link> for more info.
       </v-alert>
       <control-tnt :snack="showSnack"></control-tnt>
+      <control-painting :snack="showSnack"></control-painting>
+      <!-- TODO: move back down when done -->
       <control-audio :snack="showSnack"></control-audio>
       <control-morse :snack="showSnack"></control-morse>
+      
       <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
         {{ snackText }}
       <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
@@ -23,6 +26,7 @@
 import TNT from '@/components/Control.TNT'
 import Morse from '@/components/Control.Morse'
 import Audio from '@/components/Control.Audio'
+import Painting from '@/components/Control.Painting'
 
 // how much time before we know pi isn't connected (in seconds)
 const PI_TIMEOUT_SECONDS = 95
@@ -83,7 +87,8 @@ export default {
   components: {
     'control-tnt': TNT,
     'control-morse': Morse,
-    'control-audio': Audio
+    'control-audio': Audio,
+    'control-painting': Painting
   }
 }
 </script>
