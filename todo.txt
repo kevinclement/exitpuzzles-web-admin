@@ -1,25 +1,29 @@
 Painting:
+  [ ] confirm for force drop
+  [ ] disable UI when not connected
+
   [x] UI section for painting
   [x] UI for force drop
-  [ ] confirm for force drop
-  [ ] UI for set threshhold
-  [ ] UI for set wait
+  [x] UI for set threshhold
+  [x] UI for set wait
+  [x] UI to indicate light was detected and signaled
   [x] UI for connected/disconnected state
-
-  [ ] hook up UI to threshhold
-  [ ] hook up UI to wait
+  [x] hook up UI to threshhold
+  [x] hook up UI to wait
   [x] hook up UI to drop
 
   [ ] hook up light detection, have it enable device
+    [ ] also have it modify state enabled = true
+    [ ] when connected for the first time, clear state to enabled = false
+    [ ] should I parse output: 'turning off drop override'
 
   [ ] test when pi comes online after painting is online and vice versa.  might need changes in arduino to handle disconnect proper
 
   [ ] modify live database
 
 
-[ ] fix vue warning in console about hideDetails - old bug
-
-[ ] fix styling in website for blink buttons (too much padding and tnarrow)
+[x] fix vue warning in console about hideDetails - old bug
+[x] fix styling in website for blink buttons (too much padding and tnarrow)
 
 morse code: 
   [ ] ability to reset the screen remotely after sending a message
