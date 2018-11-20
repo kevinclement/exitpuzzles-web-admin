@@ -1,4 +1,9 @@
 Painting:
+  [x] full manual mode
+  [ ] bug: when in manual mode, I can't drop
+  [ ] fallback to old mode on button press
+  [ ] ability to get value read from website
+
   [ ] confirm for force drop
   [ ] disable UI when not connected
 
