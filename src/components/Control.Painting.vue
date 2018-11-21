@@ -17,7 +17,7 @@
                     <v-btn 
                       class="ma-0"
                       small dark color="accent"
-                      @click.native="triggerDrop()">Drop
+                      @click.native="confirmDrop = true">Drop
                     </v-btn>
 
                     <v-btn 
@@ -68,6 +68,18 @@
     </v-card-text>
 
   </v-card>
+
+  <v-dialog v-model="confirmDrop" max-width="410">
+    <v-card>
+      <v-card-title class="headline">Really drop the key?</v-card-title>
+      <v-card-text>Are you sure you want to trigger dropping of the key from the device?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="confirmDrop = false;">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="triggerDrop">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </v-flex>
 </template>
 
@@ -81,6 +93,7 @@
       threshold: 0,
       manualMode: -1,
       wait: 0,
+      confirmDrop: false,
     }),
     created () {
       this.operations = this.$root.$data.operations
@@ -98,6 +111,8 @@
     },
     methods: {
       triggerDrop() {
+        this.confirmDrop = false;
+
         this.operations.add({ command: 'paint.drop' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Dropped successfully.')
