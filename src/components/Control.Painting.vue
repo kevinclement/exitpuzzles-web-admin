@@ -29,19 +29,19 @@
                     <v-btn 
                       class="ma-0"
                       small dark color="accent"
-                      @click.native="setManualModeToEnabled()">Off
+                      @click.native="setManualModeToOff()">Off
                     </v-btn>
 
                     <v-btn 
                       class="ma-0"
                       small dark color="accent"
-                      @click.native="setManualModeToDisabled()">On
+                      @click.native="setManualModeToOn()">On
                     </v-btn>
 
                     <v-btn 
                       class="ma-0"
                       small dark color="accent"
-                      @click.native="turnManualModeOff()">Auto
+                      @click.native="setManualModeToAuto()">Auto
                     </v-btn>
                     
               </v-flex>            
@@ -98,32 +98,60 @@
     },
     methods: {
       triggerDrop() {
-        this.operations.add({ command: 'paint.drop' }).on("value", (snapshot) => {});
+        this.operations.add({ command: 'paint.drop' }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Dropped successfully.')
+          }
+        });
       },
 
       triggerGetStatus() {
-        this.operations.add({ command: 'paint.get.status' }).on("value", (snapshot) => {});
+        this.operations.add({ command: 'paint.get.status' }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Get status successfull.')
+          }
+        });
       },
 
-      setManualModeToEnabled() {
-        this.operations.add({ command: 'paint.set.manual' , data: { manual: 0 } }).on("value", (snapshot) => {});
+      setManualModeToOff() {
+        this.operations.add({ command: 'paint.set.manual' , data: { manual: 0 } }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Set manual mode to \'off\'.')
+          }
+        });
       },
 
-      setManualModeToDisabled() {
-        this.operations.add({ command: 'paint.set.manual' , data: { manual: 1 } }).on("value", (snapshot) => {});
+      setManualModeToOn() {
+        this.operations.add({ command: 'paint.set.manual' , data: { manual: 1 } }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Set manual mode to \'on\'.')
+          }
+        });
       },
 
-      turnManualModeOff() {
-        this.operations.add({ command: 'paint.set.manual' , data: { manual: 2 } }).on("value", (snapshot) => {});
+      setManualModeToAuto() {
+        this.operations.add({ command: 'paint.set.manual' , data: { manual: 2 } }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Set manual mode to \'auto\'.')
+          }
+        });
       },
 
       thresholdSend() {
-        this.operations.add({ command: 'paint.set.threshold', data: { threshold: this.threshold } }).on("value", (snapshot) => {});
+        this.operations.add({ command: 'paint.set.threshold', data: { threshold: this.threshold } }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Set device threshold successfully.')
+          }
+        });
       },
 
       waitSend() {
-        this.operations.add({ command: 'paint.set.wait', data: { wait: this.wait } }).on("value", (snapshot) => {});
-      }
+        this.operations.add({ command: 'paint.set.wait', data: { wait: this.wait } }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Set wait time successfully.')
+          }
+        });
+      },
     }
   }
 </script>
