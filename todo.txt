@@ -1,8 +1,15 @@
 Painting:
-  [x] full manual mode
-  [ ] bug: when in manual mode, I can't drop
-  [ ] fallback to old mode on button press
+  [ ] bug: set wait time from website doesn't work, setting to 1000 set it to 0
+  [ ] TMP: hookup drop to magnet 0
+  [ ] settings for magnet parameters - 0:off, 1:on, 2:nomanual
+  [ ] enable/disable light detection (override)
   [ ] ability to get value read from website
+  [ ] put feedback toast in for commands run
+  [x] full manual mode
+  [x] bug: when in manual mode, I can't drop
+  [x] when lights are off, magnet should be off 
+    [x] after drop, don't default to enabled=false, instead enabled=false should only be set when tnt is reset 
+  [x] fallback to old mode on button press
 
   [ ] confirm for force drop
   [ ] disable UI when not connected

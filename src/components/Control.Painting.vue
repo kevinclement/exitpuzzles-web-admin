@@ -15,7 +15,17 @@
             <v-btn 
                 class="ma-0"
                 small dark color="accent"
-                @click.native="triggerDrop()">Drop
+                @click.native="triggerDisable()">Disable
+            </v-btn>
+            <v-btn 
+                class="ma-0"
+                small dark color="accent"
+                @click.native="triggerEnable()">Enable
+            </v-btn>
+            <v-btn 
+                class="ma-0"
+                small dark color="accent"
+                @click.native="triggerManualOff()">Manual off
             </v-btn>
           </div>
           <v-text-field 
@@ -62,8 +72,16 @@
       })
     },
     methods: {
-      triggerDrop() {
-        this.operations.add({ command: 'paint.drop' }).on("value", (snapshot) => {});
+      triggerDisable() {
+        this.operations.add({ command: 'paint.set.magnet' , data: { magnet: 0 } }).on("value", (snapshot) => {});
+      },
+
+      triggerEnable() {
+        this.operations.add({ command: 'paint.set.magnet' , data: { magnet: 1 } }).on("value", (snapshot) => {});
+      },
+
+      triggerManualOff() {
+        this.operations.add({ command: 'paint.set.magnet' , data: { magnet: 2 } }).on("value", (snapshot) => {});
       },
 
       thresholdSend() {
