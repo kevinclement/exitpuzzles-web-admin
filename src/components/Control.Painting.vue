@@ -11,37 +11,60 @@
     </v-toolbar>
 
     <v-card-text class="grey lighten-3">
-          <div class="dropBtn">
-            <v-btn 
-                class="ma-0"
-                small dark color="accent"
-                @click.native="triggerDisable()">Disable
-            </v-btn>
-            <v-btn 
-                class="ma-0"
-                small dark color="accent"
-                @click.native="triggerEnable()">Enable
-            </v-btn>
-            <v-btn 
-                class="ma-0"
-                small dark color="accent"
-                @click.native="triggerManualOff()">Manual off
-            </v-btn>
-          </div>
-          <v-text-field 
-            class="threshold"
-            :hide-details="true"
-            maxlength="16"
-            label="Threshold"
-            v-model="threshold"
-            v-on:keyup.enter="thresholdSend"></v-text-field>
-          <v-text-field
-            class="wait"
-            :hide-details="true"
-            maxlength="16"
-            label="Wait"
-            v-model="wait"
-            v-on:keyup.enter="waitSend"></v-text-field>
+      <v-layout row wrap>
+
+              <v-flex style="padding-right:0px;flex-grow:0" xs12>
+                    <v-btn 
+                      class="ma-0"
+                      small dark color="accent"
+                      @click.native="triggerDrop()">Drop
+                    </v-btn>
+
+                    <v-btn 
+                      class="ma-0"
+                      small dark color="accent"
+                      @click.native="triggerGetStatus()">Status
+                    </v-btn>
+
+                    <v-btn 
+                      class="ma-0"
+                      small dark color="accent"
+                      @click.native="setManualModeToEnabled()">Off
+                    </v-btn>
+
+                    <v-btn 
+                      class="ma-0"
+                      small dark color="accent"
+                      @click.native="setManualModeToDisabled()">On
+                    </v-btn>
+
+                    <v-btn 
+                      class="ma-0"
+                      small dark color="accent"
+                      @click.native="turnManualModeOff()">Auto
+                    </v-btn>
+                    
+              </v-flex>            
+
+              <v-flex style="padding-right:0px;flex-grow:0" xs12>
+                <v-text-field 
+                  class="threshold"
+                  :hide-details="true"
+                  maxlength="16"
+                  label="Threshold"
+                  v-model="threshold"
+                  v-on:keyup.enter="thresholdSend"></v-text-field>
+
+                  <v-text-field
+                class="wait"
+                :hide-details="true"
+                maxlength="16"
+                label="Wait"
+                v-model="wait"
+                v-on:keyup.enter="waitSend"></v-text-field>
+              </v-flex>            
+        
+      </v-layout>
     </v-card-text>
 
   </v-card>
@@ -56,6 +79,7 @@
       isConnected: true,
       isEnabled: false,
       threshold: 0,
+      manualMode: -1,
       wait: 0,
     }),
     created () {
@@ -69,19 +93,28 @@
         this.threshold = painting.threshold;
         this.wait = painting.wait;
         this.isEnabled = painting.enabled;
+        this.manualMode = painting.manualMode;
       })
     },
     methods: {
-      triggerDisable() {
-        this.operations.add({ command: 'paint.set.magnet' , data: { magnet: 0 } }).on("value", (snapshot) => {});
+      triggerDrop() {
+        this.operations.add({ command: 'paint.drop' }).on("value", (snapshot) => {});
       },
 
-      triggerEnable() {
-        this.operations.add({ command: 'paint.set.magnet' , data: { magnet: 1 } }).on("value", (snapshot) => {});
+      triggerGetStatus() {
+        this.operations.add({ command: 'paint.get.status' }).on("value", (snapshot) => {});
       },
 
-      triggerManualOff() {
-        this.operations.add({ command: 'paint.set.magnet' , data: { magnet: 2 } }).on("value", (snapshot) => {});
+      setManualModeToEnabled() {
+        this.operations.add({ command: 'paint.set.manual' , data: { manual: 0 } }).on("value", (snapshot) => {});
+      },
+
+      setManualModeToDisabled() {
+        this.operations.add({ command: 'paint.set.manual' , data: { manual: 1 } }).on("value", (snapshot) => {});
+      },
+
+      turnManualModeOff() {
+        this.operations.add({ command: 'paint.set.manual' , data: { manual: 2 } }).on("value", (snapshot) => {});
       },
 
       thresholdSend() {
@@ -89,7 +122,7 @@
       },
 
       waitSend() {
-        this.operations.add({ command: 'paint.set.wait', data: { threshold: this.wait } }).on("value", (snapshot) => {});
+        this.operations.add({ command: 'paint.set.wait', data: { wait: this.wait } }).on("value", (snapshot) => {});
       }
     }
   }
