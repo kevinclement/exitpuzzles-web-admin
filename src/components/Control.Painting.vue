@@ -46,7 +46,7 @@
                     
               </v-flex>            
 
-              <v-flex style="padding-right:0px;flex-grow:0" xs12>
+              <v-flex style="padding-right:0px;flex-grow:0;padding-top:20px;" xs12>
                 <v-text-field 
                   class="threshold"
                   :hide-details="true"
@@ -64,6 +64,8 @@
                     type="number"
                     v-model="wait"
                     v-on:keyup.enter="waitSend"></v-text-field>
+                  
+                  <div><a v-on:click.stop="resetDefault">reset default</a></div>
               </v-flex>            
         
       </v-layout>
@@ -112,6 +114,10 @@
       })
     },
     methods: {
+      resetDefault() {
+        this.threshold = 100;
+        this.wait = 1000;
+      },
       triggerDrop() {
         this.confirmDrop = false;
 
