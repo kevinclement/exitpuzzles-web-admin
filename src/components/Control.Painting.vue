@@ -11,66 +11,66 @@
     </v-toolbar>
 
     <v-card-text class="grey lighten-3">
-      <v-layout row wrap>
+      <div style="display: flex;flex-flow: row wrap;">
+        <div style="padding-top: 10px;">
+          <v-btn 
+            class="ma-0"
+            small dark color="accent"
+            @click.native="confirmDrop = true">Drop
+          </v-btn>
+          <v-btn 
+            class="ma-0"
+            small dark color="accent"
+            @click.native="triggerGetStatus()">Status
+          </v-btn>
+        </div>
+        <div style="flex-grow:1;text-align:right;padding-top: 10px;">
 
-              <v-flex style="padding-right:0px;flex-grow:0" xs12>
-                    <v-btn 
-                      class="ma-0"
-                      small dark color="accent"
-                      @click.native="confirmDrop = true">Drop
-                    </v-btn>
+          <v-btn 
+            class="ma-0"
+            small dark color="accent"
+            @click.native="toggleEnable()">{{enableDisableText}}
+          </v-btn>
 
-                    <v-btn 
-                      class="ma-0"
-                      small dark color="accent"
-                      @click.native="triggerGetStatus()">Status
-                    </v-btn>
+        </div>
+      </div>
 
-                    <v-btn 
-                      class="ma-0"
-                      small dark color="accent"
-                      @click.native="setManualModeToOff()">Off
-                    </v-btn>
+      <v-radio-group 
+        v-model="manualMode"
+        label="Magnet"
+        change="mmChange"
+        :hide-details="true"
+        >
+        <v-radio
+          v-for="opt in manualModeOptions"
+          :key="opt.value"
+          :label="`${opt.label}`"
+          :value="opt.value"
+          change="mmChange"
+        ></v-radio>
+      </v-radio-group>
 
-                    <v-btn 
-                      class="ma-0"
-                      small dark color="accent"
-                      @click.native="setManualModeToOn()">On
-                    </v-btn>
+      <v-text-field 
+        class="threshold"
+        :hide-details="true"
+        maxlength="16"
+        label="Threshold"
+        type="number"
+        v-model="threshold"
+        v-on:keyup.enter="thresholdSend"></v-text-field>
 
-                    <v-btn 
-                      class="ma-0"
-                      small dark color="accent"
-                      @click.native="setManualModeToAuto()">Auto
-                    </v-btn>
-                    
-              </v-flex>            
-
-              <v-flex style="padding-right:0px;flex-grow:0;padding-top:20px;" xs12>
-                <v-text-field 
-                  class="threshold"
-                  :hide-details="true"
-                  maxlength="16"
-                  label="Threshold"
-                  type="number"
-                  v-model="threshold"
-                  v-on:keyup.enter="thresholdSend"></v-text-field>
-
-                  <v-text-field
-                    class="wait"
-                    :hide-details="true"
-                    maxlength="16"
-                    label="Wait"
-                    type="number"
-                    v-model="wait"
-                    v-on:keyup.enter="waitSend"></v-text-field>
+      <v-text-field
+        class="wait"
+        :hide-details="true"
+        maxlength="16"
+        label="Wait"
+        type="number"
+        v-model="wait"
+        v-on:keyup.enter="waitSend"></v-text-field>
                   
-                  <div><a v-on:click.stop="resetDefault">reset default</a></div>
-              </v-flex>            
-        
-      </v-layout>
-    </v-card-text>
+     <div><a v-on:click.stop="resetDefault">reset default</a></div>
 
+    </v-card-text>
   </v-card>
 
   <v-dialog v-model="confirmDrop" max-width="410">
@@ -98,7 +98,21 @@
       manualMode: -1,
       wait: 0,
       confirmDrop: false,
+      manualModeOptions: [
+        { label:"Auto", value:2 },
+        { label:"Always On", value:1 },
+        { label:"Always Off", value:0, },
+      ],
     }),
+    watch: {
+      manualMode: function(val, old) { 
+      }
+    },
+    computed: {
+      enableDisableText: function() {
+        return this.isEnabled ? "Disable" : "Enable";
+      }
+    },
     created () {
       this.operations = this.$root.$data.operations
 
@@ -205,7 +219,7 @@
   padding-right: 20px;
 }
 .wait {
-  width:50px;
+  width:100px;
   display:inline-block;
 }
 </style>
