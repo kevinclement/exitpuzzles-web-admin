@@ -52,16 +52,18 @@
                   :hide-details="true"
                   maxlength="16"
                   label="Threshold"
+                  type="number"
                   v-model="threshold"
                   v-on:keyup.enter="thresholdSend"></v-text-field>
 
                   <v-text-field
-                class="wait"
-                :hide-details="true"
-                maxlength="16"
-                label="Wait"
-                v-model="wait"
-                v-on:keyup.enter="waitSend"></v-text-field>
+                    class="wait"
+                    :hide-details="true"
+                    maxlength="16"
+                    label="Wait"
+                    type="number"
+                    v-model="wait"
+                    v-on:keyup.enter="waitSend"></v-text-field>
               </v-flex>            
         
       </v-layout>
