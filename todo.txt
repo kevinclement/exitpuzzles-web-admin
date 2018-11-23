@@ -1,42 +1,6 @@
 Painting:
-  [ ] bug: set wait time from website doesn't work, setting to 1000 set it to 0
-  [ ] TMP: hookup drop to magnet 0
-  [ ] settings for magnet parameters - 0:off, 1:on, 2:nomanual
-  [ ] enable/disable light detection (override)
-  [ ] ability to get value read from website
-  [ ] put feedback toast in for commands run
-  [x] full manual mode
-  [x] bug: when in manual mode, I can't drop
-  [x] when lights are off, magnet should be off 
-    [x] after drop, don't default to enabled=false, instead enabled=false should only be set when tnt is reset 
-  [x] fallback to old mode on button press
-
-  [ ] confirm for force drop
   [ ] disable UI when not connected
-
-  [x] UI section for painting
-  [x] UI for force drop
-  [x] UI for set threshhold
-  [x] UI for set wait
-  [x] UI to indicate light was detected and signaled
-  [x] UI for connected/disconnected state
-  [x] hook up UI to threshhold
-  [x] hook up UI to wait
-  [x] hook up UI to drop
-
-  [ ] hook up light detection, have it enable device
-    [ ] also have it modify state enabled = true
-    [ ] when connected for the first time, clear state to enabled = false
-    [ ] should I parse output: 'turning off drop override'
-
-  [ ] test when pi comes online after painting is online and vice versa.  might need changes in arduino to handle disconnect proper
-
-  [ ] modify live database
-
-
-[x] fix vue warning in console about hideDetails - old bug
-[x] fix styling in website for blink buttons (too much padding and tnarrow)
-
+  
 morse code: 
   [ ] ability to reset the screen remotely after sending a message
 
@@ -632,3 +596,44 @@ bomb:
 [x] Button for blink + audio queue
 [x] button for blink
 [x] make sure pushed git everywhere
+
+Painting:
+  [x] full manual mode
+  [x] bug: when in manual mode, I can't drop
+  [x] when lights are off, magnet should be off 
+    [x] after drop, don't default to enabled=false, instead enabled=false should only be set when tnt is reset 
+  [x] fallback to old mode on button press
+  [x] UI section for painting
+  [x] UI for force drop
+  [x] UI for set threshhold
+  [x] UI for set wait
+  [x] UI to indicate light was detected and signaled
+  [x] UI for connected/disconnected state
+  [x] hook up UI to threshhold
+  [x] hook up UI to wait
+  [x] hook up UI to drop
+  [x] modify live database
+  [x] hook up light detection, have it enable device
+    [x] also have it modify state enabled = true
+    [x] when connected for the first time, clear state to enabled = false
+    [x] should I parse output: 'turning off drop override'
+  [x] test when pi comes online after painting is online and vice versa.  might need changes in arduino to handle disconnect proper
+[x] fix vue warning in console about hideDetails - old bug
+[x] fix styling in website for blink buttons (too much padding and tnarrow)
+[x] test drop override code in device
+  [x] test drop works from website
+  [x] test manualMode parsing from device into db
+  [x] test wait mode bug was fixed
+  [x] test two enables aren't sent when bomb see light
+  [x] feature: after clicking drop, wait 2 mins or some time and then reenable it
+    [x] think I fixed it, need to verify with test up top
+  [x] bug: set wait time from website doesn't work, setting to 1000 set it to 0
+  [x] bug: saw two enables when light changed
+  [x] settings for manual parameters - 0:off, 1:on, 2:nomanual
+  [x] put feedback toast in for commands run
+  [x] confirm for force drop
+  [x] protect against characters in threshold and wait
+  [x] restore default
+  [x] better design for layout
+  [x] bug: seeing lots of extra calls to enable in the logs when looked at a real run
+  
