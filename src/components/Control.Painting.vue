@@ -28,7 +28,7 @@
 
           <v-btn 
             class="ma-0"
-            small dark color="accent"
+            small dark :color="enableDisableColor"
             @click.native="toggleEnable()">{{enableDisableText}}
           </v-btn>
 
@@ -36,9 +36,8 @@
       </div>
 
       <v-radio-group 
-        v-model="manualMode"
+        v-model="manualModeUI"
         label="Magnet"
-        change="mmChange"
         :hide-details="true"
         >
         <v-radio
@@ -46,7 +45,7 @@
           :key="opt.value"
           :label="`${opt.label}`"
           :value="opt.value"
-          change="mmChange"
+          @click.native="confirmManModeChange"
         ></v-radio>
       </v-radio-group>
 
@@ -84,6 +83,19 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+
+  <v-dialog v-model="confirmManual" max-width="410">
+    <v-card>
+      <v-card-title class="headline">Really change the manual mode?</v-card-title>
+      <v-card-text>Are you sure you want to change the manual mode?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="triggerManualRevert">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="triggerManual">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+  
 </v-flex>
 </template>
 
@@ -91,26 +103,26 @@
   export default {
     props: ['snack'],
     data: () => ({
-      confirmDiag: false,
       isConnected: true,
       isEnabled: false,
       threshold: 0,
-      manualMode: -1,
+      manualModeDB: -1,
+      manualModeUI: -1,
       wait: 0,
       confirmDrop: false,
+      confirmManual: false,
       manualModeOptions: [
         { label:"Auto", value:2 },
         { label:"Always On", value:1 },
         { label:"Always Off", value:0, },
       ],
     }),
-    watch: {
-      manualMode: function(val, old) { 
-      }
-    },
     computed: {
       enableDisableText: function() {
         return this.isEnabled ? "Disable" : "Enable";
+      },
+      enableDisableColor: function() {
+        return this.isEnabled ? "red lighten-1" : "green lighten-1";
       }
     },
     created () {
@@ -124,16 +136,45 @@
         this.threshold = painting.threshold;
         this.wait = painting.wait;
         this.isEnabled = painting.enabled;
-        this.manualMode = painting.manualMode;
+        this.manualModeDB = painting.manualMode;
+        this.manualModeUI = painting.manualMode;
       })
     },
     methods: {
+      confirmManModeChange() {
+        this.confirmManual = true
+      },
       resetDefault() {
-        this.threshold = 100;
-        this.wait = 1000;
+        this.threshold = 100
+        this.wait = 1000
+      },
+      toggleEnable() {        
+        this.operations.add({ command: 'paint.set.enabled' , data: { enabled: !this.isEnabled } }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            let snackStr = this.isEnabled ? 'Succesfully enabled.' : 'Succesfully disabled.'
+            this.snack(snackStr)
+          }
+        });
+      },
+      triggerManual() {
+        this.confirmManual = false
+        this.manualModeDB = this.manualModeUI
+        
+        this.operations.add({ command: 'paint.set.manual' , data: { manual: this.manualModeUI } }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            let modeStr = this.manualModeUI == 0 ? 'Turned magnet off permanently' : 
+                          this.manualModeUI == 1 ? 'Turned magnet on permanently' : 
+                                                   'Turned on Automatic mode'
+            this.snack(modeStr)
+          }
+        });
+      },
+      triggerManualRevert() {
+        this.confirmManual = false
+        this.manualModeUI = this.manualModeDB
       },
       triggerDrop() {
-        this.confirmDrop = false;
+        this.confirmDrop = false
 
         this.operations.add({ command: 'paint.drop' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
@@ -141,7 +182,6 @@
           }
         });
       },
-
       triggerGetStatus() {
         this.operations.add({ command: 'paint.get.status' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
@@ -149,31 +189,6 @@
           }
         });
       },
-
-      setManualModeToOff() {
-        this.operations.add({ command: 'paint.set.manual' , data: { manual: 0 } }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Set manual mode to \'off\'.')
-          }
-        });
-      },
-
-      setManualModeToOn() {
-        this.operations.add({ command: 'paint.set.manual' , data: { manual: 1 } }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Set manual mode to \'on\'.')
-          }
-        });
-      },
-
-      setManualModeToAuto() {
-        this.operations.add({ command: 'paint.set.manual' , data: { manual: 2 } }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Set manual mode to \'auto\'.')
-          }
-        });
-      },
-
       thresholdSend() {
         this.operations.add({ command: 'paint.set.threshold', data: { threshold: this.threshold } }).on("value", (snapshot) => {
           if (snapshot.val().received) {
@@ -181,7 +196,6 @@
           }
         });
       },
-
       waitSend() {
         this.operations.add({ command: 'paint.set.wait', data: { wait: this.wait } }).on("value", (snapshot) => {
           if (snapshot.val().received) {
