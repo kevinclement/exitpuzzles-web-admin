@@ -151,7 +151,7 @@
       toggleEnable() {        
         this.operations.add({ command: 'paint.set.enabled' , data: { enabled: !this.isEnabled } }).on("value", (snapshot) => {
           if (snapshot.val().received) {
-            let snackStr = this.isEnabled ? 'Succesfully enabled.' : 'Succesfully disabled.'
+            let snackStr = !this.isEnabled ? 'Succesfully enabled.' : 'Succesfully disabled.'
             this.snack(snackStr)
           }
         });
