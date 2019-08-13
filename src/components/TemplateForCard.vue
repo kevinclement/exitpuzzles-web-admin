@@ -1,0 +1,105 @@
+<template>
+<v-flex>
+  <v-card class="aCard">
+    <v-toolbar card>
+      <v-toolbar-title>Mummy
+        <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
+
+      </v-toolbar-title>
+      <span class="spacer" />
+      <v-btn flat small color="blue-grey lighten-3" @click.native="reboot = true">Advanced</v-btn>
+      <v-btn flat small color="red lighten-3" @click.native="reboot = true">Reboot</v-btn>
+    </v-toolbar>
+
+    <v-card-text class="grey lighten-3">
+      <div style="display: flex;flex-flow: row wrap;">
+        <div style="padding-top: 10px;">
+          <v-btn 
+            class="ma-0"
+            small dark color="accent"
+            @click.native="dialog = true">{{dialogTitle}}
+          </v-btn>
+        </div>
+      </div>
+
+    </v-card-text>
+  </v-card>
+
+  <v-dialog v-model="dialog" max-width="410">
+    <v-card>
+      <v-card-title class="headline">Really {{dialogTitle}} the mummy?</v-card-title>
+      <v-card-text>Are you sure you want to trigger {{dialogText}} the device?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="dialog = false;">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="trigger">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+  
+</v-flex>
+</template>
+
+<script>
+  export default {
+    props: ['snack'],
+    data: () => ({
+      isConnected: true,
+      isOpened: false,
+      dialog: false,
+    }),
+    computed: {
+      dialogTitle: function() {
+        return this.isOpened ? "close" : "open";
+      },
+      dialogText: function() {
+        return this.isOpened ? "closing" : "opening";
+      },
+    },
+    created () {
+      // this.operations = this.$root.$data.operations
+
+      // this.$root.$data.fbdb.ref('painting').on('value', (snapshot) => {
+      //   let painting = snapshot.val()
+      //   if (painting == null) return
+
+      //   this.isConnected = painting.isConnected;
+      //   this.threshold = painting.threshold;
+      //   this.wait = painting.wait;
+      //   this.isEnabled = painting.enabled;
+      //   this.manualModeDB = painting.manualMode;
+      //   this.manualModeUI = painting.manualMode;
+      // })
+    },
+    methods: {
+      confirmManModeChange() {
+        this.confirmManual = true
+      },
+      resetDefault() {
+        this.threshold = 100
+        this.wait = 1000
+      },
+      trigger() {
+        this.dialog = false
+        // this.operations.add({ command: 'paint.drop' }).on("value", (snapshot) => {
+        //   if (snapshot.val().received) {
+        //     this.snack('Dropped successfully.')
+        //   }
+        // });
+      },
+    }
+  }
+</script>
+
+<style scoped>
+.aCard {
+  margin-top: 30px;
+}
+.cardIcon {
+  margin-bottom:4px;
+  margin-left:7px;
+}
+.notConnected {
+  color:red !important;
+}
+</style>
