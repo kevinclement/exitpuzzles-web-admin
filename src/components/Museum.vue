@@ -7,11 +7,12 @@
       :stateless="true"
     >
       <museum-mummy-advanced 
-        v-on:close-details="showDetails = false"
+        v-on:close-details="advanced.mummy = false"
+        v-if="advanced.mummy == true"
         :operations="operations"/>
     </v-navigation-drawer>
 
-    <museum-mummy v-on:show-details="showDetails = true" :snack="showSnack" :operations="operations"></museum-mummy>
+    <museum-mummy v-on:show-details="advanced.mummy = true" :snack="showSnack" :operations="operations"/>
 
     <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
       {{ snackText }}
@@ -31,8 +32,21 @@ export default {
       snackColor: 'success',
       snackTimeout: 4000,
       snackText: '',
+      advanced: {
+        mummy: false,
+      },
       showDetails: false,
-      operations: "a string",
+      operations: {},
+    }
+  },
+
+  watch: {
+    advanced: {
+      handler(val){
+        // this took me too long to figure out, flashback to mvvm reactive crap :'(
+        this.showDetails = this.advanced[Object.keys(val)[0]];
+      },
+      deep: true
     }
   },
 
