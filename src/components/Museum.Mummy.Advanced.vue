@@ -27,7 +27,7 @@
 
 <script>
   export default {
-    props: [],
+    props: ['operations'],
 
     // original number before I stored them in DB, DB is source of truth
     data: () => ({
@@ -82,7 +82,11 @@
     },
     methods: {
       save() {
-        alert('saved');
+        this.operations.add({ command: 'mummy.set', data: this.form }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Set advanced settings successfully.')
+          }
+        });
       },
       reset() {
         this.form.db = this.debounce;
@@ -100,11 +104,6 @@
   .advForm {
     padding-left:15px;
     padding-right: 15px;
-  }
-
-input[type=number]::-webkit-inner-spin-button {
-    width: 30px;
-    height: 30px;
   }
 </style>
 <style>

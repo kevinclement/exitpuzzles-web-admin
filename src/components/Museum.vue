@@ -6,7 +6,9 @@
       :hide-overlay="true"
       :stateless="true"
     >
-      <museum-mummy-advanced v-on:close-details="showDetails = false"></museum-mummy-advanced>
+      <museum-mummy-advanced 
+        v-on:close-details="showDetails = false"
+        :operations="operations"/>
     </v-navigation-drawer>
 
     <museum-mummy v-on:show-details="showDetails = true" :snack="showSnack" :operations="operations"></museum-mummy>
