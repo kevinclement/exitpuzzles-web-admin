@@ -9,12 +9,12 @@
 
   <div class="advForm">
 
-    <v-text-field v-model="form.db" label="Debounce" :disabled="loading"/>
-    <v-text-field v-model="form.lnfm" label="Lightning: max flashes" :disabled="loading"/>
-    <v-text-field v-model="form.ltbe" label="Lightning: time between events" :disabled="loading"/>
-    <v-text-field v-model="form.ltbf" label="Lightning: time between flashes" :disabled="loading"/>
-    <v-text-field v-model="form.mos" label="Primary Sensitivity" :disabled="loading"/>
-    <v-text-field v-model="form.mts" label="Secondary Sensitivity" :disabled="loading"/>
+    <v-text-field type="number" v-model="form.db" label="Debounce" :disabled="loading"/>
+    <v-text-field type="number" v-model="form.lnfm" label="Lightning: max flashes" :disabled="loading" />
+    <v-text-field type="number" v-model="form.ltbe" label="Lightning: time between events" :disabled="loading"/>
+    <v-text-field type="number" v-model="form.ltbf" label="Lightning: time between flashes" :disabled="loading"/>
+    <v-text-field type="number" v-model="form.mos" label="Primary Sensitivity" :disabled="loading"/>
+    <v-text-field type="number" v-model="form.mts" label="Secondary Sensitivity" :disabled="loading"/>
 
   </div>
   <div style="margin:5px 10px 0px 10px">
@@ -100,5 +100,15 @@
   .advForm {
     padding-left:15px;
     padding-right: 15px;
+  }
+
+input[type=number]::-webkit-inner-spin-button {
+    width: 30px;
+    height: 30px;
+  }
+</style>
+<style>
+input[type=number]::-webkit-inner-spin-button {
+    display:none;
   }
 </style>
