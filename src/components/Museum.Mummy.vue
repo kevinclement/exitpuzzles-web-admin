@@ -42,7 +42,7 @@
 
 <script>
   export default {
-    props: ['snack'],
+    props: ['snack', 'operations'],
     data: () => ({
       isConnected: true,
       isOpened: false,
@@ -50,26 +50,20 @@
     }),
     computed: {
       dialogTitle: function() {
-        return this.isOpened ? "close" : "open";
+        return this.isOpened ? "close" : "open"
       },
       dialogText: function() {
-        return this.isOpened ? "closing" : "opening";
+        return this.isOpened ? "closing" : "opening"
       },
     },
     created () {
-      // this.operations = this.$root.$data.operations
+      this.$root.$data.museumRoot.child('mummy').on('value', (snapshot) => {
+        let mummy = snapshot.val()
+        if (mummy == null) return
 
-      // this.$root.$data.fbdb.ref('painting').on('value', (snapshot) => {
-      //   let painting = snapshot.val()
-      //   if (painting == null) return
-
-      //   this.isConnected = painting.isConnected;
-      //   this.threshold = painting.threshold;
-      //   this.wait = painting.wait;
-      //   this.isEnabled = painting.enabled;
-      //   this.manualModeDB = painting.manualMode;
-      //   this.manualModeUI = painting.manualMode;
-      // })
+        console.log('opened: ' + mummy.opened);
+        this.isOpened = mummy.opened;
+      })
     },
     methods: {
       trigger() {

@@ -1,6 +1,6 @@
 export default class Operations {
-    constructor(db) {
-        this.operationsRef = db.ref('operations')
+    constructor(db, table) {
+        this.operationsRef = db.ref(table)
     }
 
     add(op) {

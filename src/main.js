@@ -19,7 +19,9 @@ const auth = new GoTrue({
 let dbUrl = process.env.NODE_ENV === 'development' ? "https://exitpuzzles-admin-dev.firebaseio.com" : "https://exitpuzzles-admin.firebaseio.com"
 let config = { databaseURL: dbUrl }
 let db = Firebase.initializeApp(config).database()
-let operations = new Operations(db)
+let operations = new Operations(db, 'operations')
+let museumOps = new Operations(db, 'museum/operations')
+let museumRoot = db.ref('museum')
 
 Vue.use(Vuetify)
 Vue.use(VueFire)
@@ -38,6 +40,8 @@ new Vue({
   data: {
     fbdb: db,
     operations: operations,
+    museumOps: museumOps,
+    museumRoot: museumRoot,
     auth: auth,
     loggedInCallback: null
   }
