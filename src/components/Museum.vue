@@ -14,11 +14,16 @@
     </v-navigation-drawer>
 
     <!-- controls -->
+    <museum-cabinet 
+      v-on:reboot-device="showRebootDialog" 
+      :snack="showSnack" 
+      :operations="operations"/>
+
     <museum-mummy 
       v-on:show-details="advanced.mummy = true" 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
-      :operations="operations"/>
+      :operations="operations"/> 
 
     <!-- snackbar notifications -->
     <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
@@ -43,6 +48,7 @@
 </template>
 
 <script>
+import Cabinet from '@/components/Museum.Cabinet'
 import Mummy from '@/components/Museum.Mummy'
 import MummyAdvanced from '@/components/Museum.Mummy.Advanced'
 
@@ -97,6 +103,7 @@ export default {
   },
 
   components: {
+    'museum-cabinet': Cabinet,
     'museum-mummy': Mummy,
     'museum-mummy-advanced': MummyAdvanced,
   }

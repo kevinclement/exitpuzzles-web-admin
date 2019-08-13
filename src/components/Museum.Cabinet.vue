@@ -3,12 +3,11 @@
   <v-card class="aCard">
     <v-toolbar card>
       <v-toolbar-title>
-        <v-icon class="cardIcon" style="padding-right:3px;">accessibility_new</v-icon>Mummy
+        <v-icon class="cardIcon" style="padding-right:3px;">meeting_room</v-icon>Cabinet
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
       <span class="spacer" />
-      <v-btn flat small color="blue-grey lighten-3" @click.native="$emit('show-details')">Advanced</v-btn>
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'mummy')">Reboot</v-btn>
+      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'cabinet')">Reboot</v-btn>
     </v-toolbar>
 
     <v-card-text class="grey lighten-3">
@@ -27,7 +26,7 @@
 
   <v-dialog v-model="dialog" max-width="410">
     <v-card>
-      <v-card-title class="headline">Really {{dialogTitle}} the mummy?</v-card-title>
+      <v-card-title class="headline">Really {{dialogTitle}} the cabinet?</v-card-title>
       <v-card-text>Are you sure you want to trigger {{dialogText}} the device?</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -57,11 +56,11 @@
       },
     },
     created () {
-      this.$root.$data.museumRoot.child('mummy').on('value', (snapshot) => {
-        let mummy = snapshot.val()
-        if (mummy == null) return
+      this.$root.$data.museumRoot.child('cabinet').on('value', (snapshot) => {
+        let cabinet = snapshot.val()
+        if (cabinet == null) return
 
-        this.isOpened = mummy.opened;
+        this.isOpened = cabinet.opened;
       })
     },
     methods: {
@@ -69,7 +68,7 @@
         this.dialog = false
 
         var cmd = this.isOpened ? 'close' : 'solved'
-        this.operations.add({ command: 'mummy.' + cmd }).on("value", (snapshot) => {
+        this.operations.add({ command: 'cabinet.' + cmd }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Dropped successfully.')
           }
