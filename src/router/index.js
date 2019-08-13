@@ -43,4 +43,10 @@ router.beforeEach((to, from, next) => {
   } 
 })
 
+router.afterEach((to, from) => {
+  if (to.meta && !to.meta.anonymous) {
+    document.title = `Admin - ${to.meta.title}`
+  }
+})
+
 export default router
