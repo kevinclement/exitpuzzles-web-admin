@@ -93,7 +93,7 @@ export default {
     },
     showRebootDialog(device) {
       this.dialogRebootDevice = device
-      this.dialogRebootShow = true 
+      this.dialogRebootShow = true
     }
   },
 

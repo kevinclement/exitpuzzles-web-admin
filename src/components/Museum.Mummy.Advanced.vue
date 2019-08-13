@@ -13,15 +13,34 @@
     <v-text-field type="number" v-model="form.lnfm" label="Lightning: max flashes" :disabled="loading" />
     <v-text-field type="number" v-model="form.ltbe" label="Lightning: time between events" :disabled="loading"/>
     <v-text-field type="number" v-model="form.ltbf" label="Lightning: time between flashes" :disabled="loading"/>
-    <v-text-field type="number" v-model="form.mos" label="Primary Sensitivity" :disabled="loading"/>
-    <v-text-field type="number" v-model="form.mts" label="Secondary Sensitivity" :disabled="loading"/>
+    <v-text-field type="number" v-model="form.mos" label="Primary Sensitivity" :disabled="loading" />
+    <v-text-field type="number" v-model="form.mts" label="Secondary Sensitivity" :disabled="loading" :hide-details="true"/>
 
+  </div>
+  <div class="actionRow">
+    <v-btn icon class="mx-0" title="Preload motor" @click.native="run('preload')">
+      <v-icon color="grey lighten-1">network_check</v-icon>
+    </v-btn>
+    <v-btn icon class="mx-0" title="Stop motor" @click.native="run('acstop')">
+      <v-icon color="grey lighten-1">stop</v-icon>
+    </v-btn>
+    <v-btn icon class="mx-0" title="Trigger lightning" @click.native="run('lightson')">
+      <v-icon  color="grey lighten-1">flash_on</v-icon>
+    </v-btn>
+    <v-btn icon class="mx-0" title="Lights off" @click.native="run('lightsoff')">
+      <v-icon  color="grey lighten-1">flash_off</v-icon>
+    </v-btn>
+    <v-btn icon class="mx-0" title="Play sound" @click.native="run('play')">
+      <v-icon  color="grey lighten-1">music_note</v-icon>
+    </v-btn>
+    <v-btn icon class="mx-0" title="Sound off" @click.native="run('playstop')">
+      <v-icon  color="grey lighten-1">music_off</v-icon>
+    </v-btn>
   </div>
   <div style="margin:5px 10px 0px 10px">
     <v-btn small @click.native="save" :disabled="saveDisabled">save</v-btn>
     <v-btn small @click.native="reset"> reset</v-btn>
   </div>
-
 </div>
 </template>
 
@@ -88,6 +107,13 @@
           }
         });
       },
+      run(cmd) {
+        this.operations.add({ command: 'mummy.' + cmd, data: this.form }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack(`Sent '${cmd}' command successfully.`)
+          }
+        });
+      },
       reset() {
         this.form.db = this.debounce;
         this.form.lnfm = this.lightning_number_flashes_max
@@ -104,6 +130,16 @@
   .advForm {
     padding-left:15px;
     padding-right: 15px;
+  }
+  .actionRow {
+    padding-left:10px;
+    padding-right: 10px;
+    padding-top:15px;
+    padding-bottom:10px;
+  }
+  .actionRow button {
+    margin-top:0px;
+    margin-bottom:0px;
   }
 </style>
 <style>
