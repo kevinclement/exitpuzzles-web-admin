@@ -72,13 +72,6 @@
       // })
     },
     methods: {
-      confirmManModeChange() {
-        this.confirmManual = true
-      },
-      resetDefault() {
-        this.threshold = 100
-        this.wait = 1000
-      },
       trigger() {
         this.dialog = false
         // this.operations.add({ command: 'paint.drop' }).on("value", (snapshot) => {
