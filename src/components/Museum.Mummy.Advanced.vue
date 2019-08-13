@@ -107,7 +107,7 @@
   }
 </style>
 <style>
-input[type=number]::-webkit-inner-spin-button {
-    display:none;
+  input[type=number]::-webkit-inner-spin-button {
+      display:none;
   }
 </style>
