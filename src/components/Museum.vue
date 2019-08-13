@@ -3,7 +3,7 @@
     <v-navigation-drawer fixed app clipped right dense
       v-model="showDetails"
       class="rightDrawer"
-      hide-overlay = "true"
+      :hide-overlay="true"
     >
       <museum-mummy-advanced></museum-mummy-advanced>
     </v-navigation-drawer>
