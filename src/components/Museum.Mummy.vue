@@ -7,7 +7,7 @@
 
       </v-toolbar-title>
       <span class="spacer" />
-      <v-btn flat small color="blue-grey lighten-3" @click.native="reboot = true">Advanced</v-btn>
+      <v-btn flat small color="blue-grey lighten-3" @click.native="$emit('show-details')">Advanced</v-btn>
       <v-btn flat small color="red lighten-3" @click.native="reboot = true">Reboot</v-btn>
     </v-toolbar>
 
@@ -21,8 +21,8 @@
           </v-btn>
         </div>
       </div>
-
     </v-card-text>
+
   </v-card>
 
   <v-dialog v-model="dialog" max-width="410">

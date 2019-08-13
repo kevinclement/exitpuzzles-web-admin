@@ -5,17 +5,10 @@
       class="rightDrawer"
       :hide-overlay="true"
     >
-      <museum-mummy-advanced></museum-mummy-advanced>
+      <museum-mummy-advanced v-on:close-details="showDetails = false"></museum-mummy-advanced>
     </v-navigation-drawer>
 
-    <museum-mummy :snack="showSnack" :operations="operations"></museum-mummy>
-    <p style="padding-top:30px">
-    <v-btn 
-            class="ma-0"
-            small dark color="accent"
-            @click.native="showDetails = true">Details
-    </v-btn>
-    </p>
+    <museum-mummy v-on:show-details="showDetails = true" :snack="showSnack" :operations="operations"></museum-mummy>
 
     <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
       {{ snackText }}

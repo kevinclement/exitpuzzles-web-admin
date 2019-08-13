@@ -1,8 +1,8 @@
 <template>
 <v-toolbar card color="white">
-  <v-toolbar-title>TITLE</v-toolbar-title>
+  <v-toolbar-title>Mummy Advanced</v-toolbar-title>
   <span class="spacer" />
-  <a v-on:click.stop="showDetails = false"><v-icon>close</v-icon></a>
+  <a v-on:click.stop="$emit('close-details')"><v-icon>close</v-icon></a>
 </v-toolbar>
 </template>
 
