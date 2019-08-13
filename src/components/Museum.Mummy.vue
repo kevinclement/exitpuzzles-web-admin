@@ -4,7 +4,6 @@
     <v-toolbar card>
       <v-toolbar-title>Mummy
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
-
       </v-toolbar-title>
       <span class="spacer" />
       <v-btn flat small color="blue-grey lighten-3" @click.native="$emit('show-details')">Advanced</v-btn>
@@ -67,11 +66,14 @@
     methods: {
       trigger() {
         this.dialog = false
-        // this.operations.add({ command: 'paint.drop' }).on("value", (snapshot) => {
-        //   if (snapshot.val().received) {
-        //     this.snack('Dropped successfully.')
-        //   }
-        // });
+
+        var cmd = this.isOpened ? 'close' : 'solved'
+        this.operations.add({ command: 'mummy.' + cmd }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Dropped successfully.')
+          }
+        });
+
       },
     }
   }

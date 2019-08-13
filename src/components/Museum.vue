@@ -83,13 +83,12 @@ export default {
       this.snackbar = true
     },
     triggerReboot() {
-      this.operations.add({ command: 'triggerDeviceReboot', data: { device: this.dialogRebootDevice } }).on("value", (snapshot) => {
+      this.operations.add({ command: `${this.dialogRebootDevice}.reboot` }).on("value", (snapshot) => {
         if (snapshot.val().received) {
           this.snack('Device rebooted successfully.')
         }
       });
       this.dialogRebootShow = false
-      this.dialogRebootDevice = ""
     },
     showRebootDialog(device) {
       this.dialogRebootDevice = device
