@@ -61,7 +61,6 @@
         let mummy = snapshot.val()
         if (mummy == null) return
 
-        console.log('opened: ' + mummy.opened);
         this.isOpened = mummy.opened;
       })
     },

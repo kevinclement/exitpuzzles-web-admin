@@ -5,15 +5,18 @@
       class="rightDrawer"
       hide-overlay = "true"
     >
-      <v-toolbar card color="white">
-        <v-toolbar-title>TITLE</v-toolbar-title>
-        <span class="spacer" />
-        <a v-on:click.stop="showDetails = false"><v-icon>close</v-icon></a>
-      </v-toolbar>
+      <museum-mummy-advanced></museum-mummy-advanced>
     </v-navigation-drawer>
 
     <museum-mummy :snack="showSnack" :operations="operations"></museum-mummy>
-    
+    <p style="padding-top:30px">
+    <v-btn 
+            class="ma-0"
+            small dark color="accent"
+            @click.native="showDetails = true">Details
+    </v-btn>
+    </p>
+
     <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
       {{ snackText }}
       <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
@@ -23,6 +26,8 @@
 
 <script>
 import Mummy from '@/components/Museum.Mummy'
+import MummyAdvanced from '@/components/Museum.Mummy.Advanced'
+
 export default {
   data () {
     return {
@@ -48,6 +53,7 @@ export default {
 
   components: {
     'museum-mummy': Mummy,
+    'museum-mummy-advanced': MummyAdvanced,
   }
 }
 </script>
