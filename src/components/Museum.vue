@@ -4,6 +4,7 @@
       v-model="showDetails"
       class="rightDrawer"
       :hide-overlay="true"
+      :stateless="true"
     >
       <museum-mummy-advanced v-on:close-details="showDetails = false"></museum-mummy-advanced>
     </v-navigation-drawer>
