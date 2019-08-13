@@ -32,7 +32,6 @@
     // original number before I stored them in DB, DB is source of truth
     data: () => ({
       loading: true,
-      dirty: false,
 
       debounce: 500,
       lightning_number_flashes_max: 7,
@@ -54,7 +53,15 @@
       saveDisabled: function() {
         // this made me question my profession
         return !(!this.loading && this.dirty) 
-      }
+      },
+      dirty: function() {
+        return this.form.db != this.debounce ||
+          this.form.lnfm != this.lightning_number_flashes_max ||
+          this.form.ltbe != this.lightning_time_between_events ||
+          this.form.ltbf != this.lightning_time_between_flashes ||
+          this.form.mos != this.measure_one_sensitivity ||
+          this.form.mts != this.measure_two_sensitivity
+      },
     },
     created () {
       this.$root.$data.museumRoot.child('mummy').on('value', (snapshot) => {
