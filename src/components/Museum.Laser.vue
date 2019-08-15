@@ -3,7 +3,7 @@
   <v-card flat class="aCard">
     <v-toolbar card>
       <v-toolbar-title style="width:150px;">
-        <v-icon class="cardIcon" style="padding-right:3px;">trending_down</v-icon>Laser
+        <v-icon class="cardIcon">trending_down</v-icon>Laser
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
       <v-switch 
@@ -77,6 +77,7 @@
 .cardIcon {
   margin-bottom:4px;
   margin-left:7px;
+  padding-right: 5px;
 }
 .notConnected {
   color:red !important;

@@ -24,6 +24,11 @@
       :snack="showSnack" 
       :operations="operations"/>  
 
+    <museum-clock 
+      v-on:reboot-device="showRebootDialog" 
+      :snack="showSnack" 
+      :operations="operations"/>        
+
     <museum-mummy 
       v-on:show-details="advanced.mummy = true" 
       v-on:reboot-device="showRebootDialog" 
@@ -55,6 +60,7 @@
 <script>
 import Cabinet from '@/components/Museum.Cabinet'
 import Laser from '@/components/Museum.Laser'
+import Clock from '@/components/Museum.Clock'
 import Mummy from '@/components/Museum.Mummy'
 import MummyAdvanced from '@/components/Museum.Mummy.Advanced'
 
@@ -111,6 +117,7 @@ export default {
   components: {
     'museum-cabinet': Cabinet,
     'museum-laser': Laser,
+    'museum-clock': Clock,
     'museum-mummy': Mummy,
     'museum-mummy-advanced': MummyAdvanced,
   }
@@ -120,6 +127,8 @@ export default {
 <style scoped>
   .rightDrawer {
     z-index:1;
-  }
+  }  
+</style>
+<style>
   
 </style>

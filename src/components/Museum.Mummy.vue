@@ -3,7 +3,7 @@
   <v-card flat class="aCard">
     <v-toolbar card>
       <v-toolbar-title style="width:150px;">
-        <v-icon class="cardIcon" style="padding-right:3px;">accessibility_new</v-icon>Mummy
+        <v-icon class="cardIcon">accessibility_new</v-icon>Mummy
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
       <v-btn flat icon style="margin-left:0px;" color="grey" @click.native="dialog=true"><v-icon>{{ocIcon}}</v-icon></v-btn>
@@ -78,6 +78,7 @@
 .cardIcon {
   margin-bottom:4px;
   margin-left:7px;
+  padding-right: 5px;
 }
 .notConnected {
   color:red !important;
