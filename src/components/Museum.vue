@@ -19,11 +19,16 @@
       :snack="showSnack" 
       :operations="operations"/>
 
+    <museum-laser 
+      v-on:reboot-device="showRebootDialog" 
+      :snack="showSnack" 
+      :operations="operations"/>  
+
     <museum-mummy 
       v-on:show-details="advanced.mummy = true" 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
-      :operations="operations"/> 
+      :operations="operations"/>
 
     <!-- snackbar notifications -->
     <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
@@ -49,6 +54,7 @@
 
 <script>
 import Cabinet from '@/components/Museum.Cabinet'
+import Laser from '@/components/Museum.Laser'
 import Mummy from '@/components/Museum.Mummy'
 import MummyAdvanced from '@/components/Museum.Mummy.Advanced'
 
@@ -104,6 +110,7 @@ export default {
 
   components: {
     'museum-cabinet': Cabinet,
+    'museum-laser': Laser,
     'museum-mummy': Mummy,
     'museum-mummy-advanced': MummyAdvanced,
   }

@@ -2,20 +2,24 @@
 <v-flex>
   <v-card flat class="aCard">
     <v-toolbar card>
-      <v-toolbar-title style="width:150px">
-        <v-icon class="cardIcon" style="padding-right:3px;">meeting_room</v-icon>Cabinet
+      <v-toolbar-title style="width:150px;">
+        <v-icon class="cardIcon" style="padding-right:3px;">trending_down</v-icon>Laser
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
-      <v-btn flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
+      <v-switch 
+        primary
+        v-model="enabled"
+        :hide-details="true"
+      />
       <span class="spacer" />
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'cabinet')">Reboot</v-btn>
+      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'laser')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
   <v-dialog v-model="dialog" max-width="410">
     <v-card>
-      <v-card-title class="headline">Really {{dialogTitle}} the cabinet?</v-card-title>
-      <v-card-text>Are you sure you want to trigger {{dialogText}} the device?</v-card-text>
+      <v-card-title class="headline">Really {{dialogTitle}} the laser?</v-card-title>
+      <v-card-text>Are you sure you want to trigger {{dialogText}} the laser?</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" flat="flat" @click.native="dialog = false;">No</v-btn>
@@ -32,34 +36,31 @@
     props: ['snack', 'operations'],
     data: () => ({
       isConnected: true,
-      isOpened: false,
+      enabled: false,
       dialog: false,
     }),
     computed: {
-      ocIcon() {
-        return this.isOpened ? "lock_open" : "lock"
-      },
       dialogTitle: function() {
-        return this.isOpened ? "close" : "open"
+        return this.enabled ? "enable" : "disable"
       },
       dialogText: function() {
-        return this.isOpened ? "closing" : "opening"
+        return this.enabled ? "enabling" : "disabling"
       },
     },
     created () {
-      this.$root.$data.museumRoot.child('cabinet').on('value', (snapshot) => {
-        let cabinet = snapshot.val()
-        if (cabinet == null) return
+      this.$root.$data.museumRoot.child('laser').on('value', (snapshot) => {
+        let laser = snapshot.val()
+        if (laser == null) return
 
-        this.isOpened = cabinet.opened;
+        this.enabled = laser.enabled;
       })
     },
     methods: {
       trigger() {
         this.dialog = false
 
-        var cmd = this.isOpened ? 'close' : 'solved'
-        this.operations.add({ command: 'cabinet.' + cmd }).on("value", (snapshot) => {
+        var cmd = this.enabled ? 'enable' : 'disable'
+        this.operations.add({ command: 'laser.' + cmd }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Dropped successfully.')
           }
@@ -71,8 +72,7 @@
 </script>
 
 <style scoped>
-.aCard {
-
+.aCard { 
 }
 .cardIcon {
   margin-bottom:4px;

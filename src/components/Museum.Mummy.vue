@@ -1,28 +1,16 @@
 <template>
 <v-flex>
-  <v-card class="aCard">
+  <v-card flat class="aCard">
     <v-toolbar card>
-      <v-toolbar-title>
+      <v-toolbar-title style="width:150px;">
         <v-icon class="cardIcon" style="padding-right:3px;">accessibility_new</v-icon>Mummy
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
+      <v-btn flat icon style="margin-left:0px;" color="grey" @click.native="dialog=true"><v-icon>{{ocIcon}}</v-icon></v-btn>
       <span class="spacer" />
       <v-btn flat small color="blue-grey lighten-3" @click.native="$emit('show-details')">Advanced</v-btn>
       <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'mummy')">Reboot</v-btn>
     </v-toolbar>
-
-    <v-card-text class="grey lighten-3">
-      <div style="display: flex;flex-flow: row wrap;">
-        <div style="padding-top: 10px;">
-          <v-btn 
-            class="ma-0"
-            small dark color="accent"
-            @click.native="dialog = true">{{dialogTitle}}
-          </v-btn>
-        </div>
-      </div>
-    </v-card-text>
-
   </v-card>
 
   <v-dialog v-model="dialog" max-width="410">
@@ -49,6 +37,10 @@
       dialog: false,
     }),
     computed: {
+      ocIcon: function() 
+      {
+        return this.isOpened ? "lock_open" : "lock"
+      },
       dialogTitle: function() {
         return this.isOpened ? "close" : "open"
       },
@@ -82,7 +74,6 @@
 
 <style scoped>
 .aCard {
-  margin-top: 30px;
 }
 .cardIcon {
   margin-bottom:4px;
