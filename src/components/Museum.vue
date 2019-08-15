@@ -30,17 +30,22 @@
       :snack="showSnack" 
       :operations="operations"/>
 
-    <museum-laser 
-      v-on:reboot-device="showRebootDialog" 
-      :snack="showSnack" 
-      :operations="operations"/>
-
     <museum-clock 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
 
     <museum-birdcage 
+      v-on:reboot-device="showRebootDialog" 
+      :snack="showSnack" 
+      :operations="operations"/>
+
+    <museum-map 
+      v-on:reboot-device="showRebootDialog" 
+      :snack="showSnack" 
+      :operations="operations"/>
+
+    <museum-laser 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
@@ -91,6 +96,7 @@ import Cabinet from '@/components/Museum.Cabinet'
 import Laser from '@/components/Museum.Laser'
 import Clock from '@/components/Museum.Clock'
 import Birdcage from '@/components/Museum.Birdcage'
+import Map from '@/components/Museum.Map'
 import Mausoleum from '@/components/Museum.Mausoleum'
 import Mummy from '@/components/Museum.Mummy'
 import MummyAdvanced from '@/components/Museum.Mummy.Advanced'
@@ -153,6 +159,7 @@ export default {
     'museum-laser': Laser,
     'museum-clock': Clock,
     'museum-birdcage': Birdcage,
+    'museum-map': Map,
     'museum-mausoleum': Mausoleum,
     'museum-mummy': Mummy,
     'museum-mummy-advanced': MummyAdvanced,
