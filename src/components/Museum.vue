@@ -14,6 +14,11 @@
     </v-navigation-drawer>
 
     <!-- controls -->
+    <museum-zoltar 
+      v-on:reboot-device="showRebootDialog" 
+      :snack="showSnack" 
+      :operations="operations"/>
+
     <museum-cabinet 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
@@ -68,6 +73,7 @@
 </template>
 
 <script>
+import Zoltar from '@/components/Museum.Zoltar'
 import Cabinet from '@/components/Museum.Cabinet'
 import Laser from '@/components/Museum.Laser'
 import Clock from '@/components/Museum.Clock'
@@ -127,6 +133,7 @@ export default {
   },
 
   components: {
+    'museum-zoltar': Zoltar,
     'museum-cabinet': Cabinet,
     'museum-laser': Laser,
     'museum-clock': Clock,

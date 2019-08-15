@@ -74,7 +74,7 @@
 .cardIcon {
   margin-bottom:3px;
   margin-left:7px;
-  padding-right: 5px;
+  padding-right: 10px;
 }
 .notConnected {
   color:red !important;
