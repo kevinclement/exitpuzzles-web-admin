@@ -57,6 +57,11 @@
       :snack="showSnack" 
       :operations="operations"/>
 
+    <museum-stairs
+      v-on:reboot-device="showRebootDialog" 
+      :snack="showSnack" 
+      :operations="operations"/>
+
     <!-- snackbar notifications -->
     <v-snackbar :timeout="snackTimeout" :color="snackColor" v-model="snackbar">
       {{ snackText }}
@@ -89,6 +94,7 @@ import Birdcage from '@/components/Museum.Birdcage'
 import Mausoleum from '@/components/Museum.Mausoleum'
 import Mummy from '@/components/Museum.Mummy'
 import MummyAdvanced from '@/components/Museum.Mummy.Advanced'
+import Stairs from '@/components/Museum.Stairs'
 
 export default {
   data () {
@@ -150,6 +156,7 @@ export default {
     'museum-mausoleum': Mausoleum,
     'museum-mummy': Mummy,
     'museum-mummy-advanced': MummyAdvanced,
+    'museum-stairs': Stairs,
   }
 }
 </script>
