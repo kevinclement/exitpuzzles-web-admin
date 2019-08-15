@@ -11,11 +11,11 @@ M<template>
 
       <span class="spacer" />
 
-      <v-icon color="light-green darken-1">check_circle</v-icon>
-      <v-icon color="light-green darken-1">check_circle</v-icon>
-      <v-icon color="grey lighten-1">check_circle_outline</v-icon>
-      <v-icon color="grey lighten-1">check_circle_outline</v-icon>
-      <v-icon color="grey lighten-1">check_circle_outline</v-icon>
+      <v-icon title="urn 1" color="light-green darken-1">check_circle</v-icon>
+      <v-icon color="deep-purple darken-1">check_circle</v-icon>
+      <v-icon color="grey lighten-1">donut_large</v-icon>
+      <v-icon color="grey lighten-1">donut_large</v-icon>
+      <v-icon color="grey lighten-1">donut_large</v-icon>
 
 
       <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'mausoleum')">Reboot</v-btn>
