@@ -1,6 +1,6 @@
 <template>
 <v-flex>
-  <v-card flat class="aCard">
+  <v-card flat>
     <v-toolbar card>
       <v-toolbar-title style="width:175px;">
         <v-icon class="cardIcon">trending_down</v-icon>Laser
@@ -72,8 +72,6 @@
 </script>
 
 <style scoped>
-.aCard { 
-}
 .cardIcon {
   margin-bottom:3px;
   margin-left:7px;
