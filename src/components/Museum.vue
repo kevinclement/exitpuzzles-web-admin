@@ -14,6 +14,7 @@
     </v-navigation-drawer>
 
     <!-- controls -->
+    <v-subheader class="roomHeader">Front Room:</v-subheader>
     <museum-hands 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
@@ -43,7 +44,8 @@
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
-
+    
+    <v-subheader class="roomHeader" style="margin-top:20px;">Back Room</v-subheader>
     <museum-mausoleum
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
@@ -155,7 +157,15 @@ export default {
 <style scoped>
   .rightDrawer {
     z-index:1;
-  }  
+  }
+  .roomHeader {
+    font-size:18px;
+    padding-left:0px;
+    margin-left:0px;
+    margin-bottom:0px;
+    padding-bottom:0px;
+    height:30px;
+  }
 </style>
 <style>
   
