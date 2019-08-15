@@ -6,13 +6,7 @@
         <v-icon class="cardIcon">language</v-icon>Map
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
-      <v-switch 
-        primary
-        v-model="enabled"
-        :hide-details="true"
-      />
       <span class="spacer" />
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'laser')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
