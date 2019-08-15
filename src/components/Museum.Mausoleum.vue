@@ -2,7 +2,7 @@ M<template>
 <v-flex>
   <v-card flat>
     <v-toolbar card>
-      <v-toolbar-title style="width:175px">
+      <v-toolbar-title style="width:175px;color:#757575">
         <v-icon class="cardIcon">account_balance</v-icon>Mausoleum
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
