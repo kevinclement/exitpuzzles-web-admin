@@ -2,7 +2,7 @@
 <v-flex>
   <v-card flat>
     <v-toolbar card>
-      <v-toolbar-title style="width:150px">
+      <v-toolbar-title style="width:175px">
         <v-icon class="cardIcon">meeting_room</v-icon>Cabinet
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
@@ -72,7 +72,7 @@
 
 <style scoped>
 .cardIcon {
-  margin-bottom:4px;
+  margin-bottom:3px;
   margin-left:7px;
   padding-right: 5px;
 }
