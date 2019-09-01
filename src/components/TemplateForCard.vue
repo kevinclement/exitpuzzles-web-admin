@@ -1,6 +1,6 @@
 <template>
 <v-flex>
-  <v-card class="aCard">
+  <v-card>
     <v-toolbar card>
       <v-toolbar-title>Mummy
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
@@ -81,9 +81,6 @@
 </script>
 
 <style scoped>
-.aCard {
-  margin-top: 30px;
-}
 .cardIcon {
   margin-bottom:4px;
   margin-left:7px;
