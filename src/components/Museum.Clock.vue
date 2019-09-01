@@ -6,9 +6,9 @@
         <v-icon class="cardIcon">access_time</v-icon>Clock
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
-      <v-btn flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
+      <v-btn flat icon color="grey" style="margin-left:0px;" :disabled="isOpened" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
       <span class="spacer" />
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'cabinet')">Reboot</v-btn>
+      <span class="time">{{formatTime(hours)}}:{{formatTime(minutes)}}</span>
     </v-toolbar>
   </v-card>
 
@@ -33,6 +33,8 @@
     data: () => ({
       isConnected: true,
       isOpened: false,
+      hours: 1,
+      minutes: 59,
       dialog: false,
     }),
     computed: {
@@ -45,19 +47,24 @@
         let clock = snapshot.val()
         if (clock == null) return
 
-        this.isOpened = clock.opened;
+        this.isOpened = clock.isOpened;
+        this.hours = clock.hours;
+        this.minutes  = clock.minutes;
       })
     },
     methods: {
       trigger() {
         this.dialog = false
 
-        this.operations.add({ command: 'clock.open' + cmd }).on("value", (snapshot) => {
+        this.operations.add({ command: 'clock.open' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
-            this.snack('Open successfully.')
+            this.snack('Opened successfully.')
           }
         });
 
+      },
+      formatTime(t) {
+        return ("0" + t).substr(-2,2);
       },
     }
   }
@@ -71,5 +78,9 @@
 }
 .notConnected {
   color:red !important;
+}
+.time {
+  font-family: Monaco, monospace;
+  font-size:16px;
 }
 </style>
