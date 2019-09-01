@@ -20,16 +20,6 @@
       :snack="showSnack" 
       :operations="operations"/>
 
-    <museum-zoltar 
-      v-on:reboot-device="showRebootDialog" 
-      :snack="showSnack" 
-      :operations="operations"/>
-
-    <museum-cabinet 
-      v-on:reboot-device="showRebootDialog" 
-      :snack="showSnack" 
-      :operations="operations"/>
-
     <museum-clock 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
@@ -45,12 +35,23 @@
       :snack="showSnack" 
       :operations="operations"/>
 
+    <museum-zoltar 
+      v-on:reboot-device="showRebootDialog" 
+      :snack="showSnack" 
+      :operations="operations"/>
+
+    <museum-cabinet 
+      v-on:reboot-device="showRebootDialog" 
+      :snack="showSnack" 
+      :operations="operations"/>
+
+    
+    <v-subheader class="roomHeader" style="margin-top:20px;">Back Room</v-subheader>
     <museum-laser 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
-    
-    <v-subheader class="roomHeader" style="margin-top:20px;">Back Room</v-subheader>
+
     <museum-mausoleum
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 

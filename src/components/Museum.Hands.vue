@@ -8,10 +8,14 @@
       </v-toolbar-title>
       <v-switch 
         primary
-        v-model="enabled"
+        v-model="forcePressed"
         :hide-details="true"
+        @click.native="trigger"
       />
       <span class="spacer" />
+      <span v-bind:class="{ notHolding: !isPressed }" class="lightDot" style="background:#EF5350"/>
+      <span v-bind:class="{ notHolding: !isPressed }" class="lightDot" style="background:#43A047"/>
+      <span v-bind:class="{ notHolding: !isPressed }" class="lightDot" style="background:#1E88E5"/>
     </v-toolbar>
   </v-card>
 
@@ -23,7 +27,8 @@
     props: ['snack', 'operations'],
     data: () => ({
       isConnected: true,
-      enabled: false,
+      isPressed: false,
+      forcePressed: false,
       dialog: false,
     }),
     created () {
@@ -31,12 +36,16 @@
         let hands = snapshot.val()
         if (hands == null) return
 
-        this.enabled = hands.enabled;
+        this.isPressed = hands.isPressed
+        this.forcePressed = hands.forcePressed
       })
     },
     methods: {
       trigger() {
-        this.operations.add({ command: 'hands.enable' }).on("value", (snapshot) => {
+        this.operations.add({ command: 'hands.force', data: { forced:this.forcePressed } }).on("value", (snapshot) => {
+            let cmd = this.forcePressed ? 'Enabled' : 'Disabled'
+            this.snack(`${cmd} sent successfully.`)
+            snapshot.ref.off()
         });
       },
     }
@@ -51,5 +60,14 @@
 }
 .notConnected {
   color:red !important;
+}
+.lightDot {
+  border-radius: 50%;
+  height: 16px;
+  width: 16px;
+  margin: 2px;
+}
+.notHolding {
+  background: #e0e0e0 !important;
 }
 </style>
