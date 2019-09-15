@@ -59,9 +59,9 @@
       trigger() {
         this.dialog = false
 
-        this.operations.add({ command: 'stairs.open' + cmd }).on("value", (snapshot) => {
+        this.operations.add({ command: 'stairs.drop' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
-            this.snack('Open successfully.')
+            this.snack('Drop successfully.')
           }
         });
 
