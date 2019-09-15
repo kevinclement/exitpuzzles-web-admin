@@ -6,9 +6,18 @@
         <v-icon class="cardIcon">line_weight</v-icon>Stairs
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
-      <v-btn flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
+      <v-btn v-if="!isOpened" flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>arrow_downward</v-icon></v-btn>
       <span class="spacer" />
-      {{level}}
+
+      <span v-bind:class="{ notCompleted: level < 2 }" class="stairLevel">1</span>
+      <span v-bind:class="{ notCompleted: level < 3 }" class="stairLevel">2</span>
+      <span v-bind:class="{ notCompleted: level < 4 }" class="stairLevel">3</span>
+      <span v-bind:class="{ notCompleted: level < 5 }" class="stairLevel">4</span>
+      <span v-bind:class="{ notCompleted: level < 6 }" class="stairLevel">5</span>
+      <span v-bind:class="{ notCompleted: level < 7 }" class="stairLevel">6</span>
+      <span v-bind:class="{ notCompleted: level < 8 }" class="stairLevel">7</span>
+
+
       <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'stairs')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
@@ -37,17 +46,12 @@
       dialog: false,
       level: 0,
     }),
-    computed: {
-      ocIcon() {
-        return this.isOpened ? "lock_open" : "lock"
-      },
-    },
     created () {
       this.$root.$data.museumRoot.child('stairs').on('value', (snapshot) => {
         let stairs = snapshot.val()
         if (stairs == null) return
 
-        this.isOpened = stairs.magnet;
+        this.isOpened = !stairs.magnet;
         this.level = stairs.level;
       })
     },
@@ -74,5 +78,19 @@
 }
 .notConnected {
   color:red !important;
+}
+.stairLevel {
+  border-radius: 20%;
+  background: #8D6E63;
+  height: 16px;
+  width: 20px;
+  margin: 2px;
+  font-size:12px;
+  line-height:16px;
+  color: white;
+  padding-left:6px;
+}
+.notCompleted {
+  background: #e0e0e0 !important;
 }
 </style>
