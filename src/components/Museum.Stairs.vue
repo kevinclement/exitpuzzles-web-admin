@@ -8,6 +8,7 @@
       </v-toolbar-title>
       <v-btn flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
       <span class="spacer" />
+      {{level}}
       <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'stairs')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
@@ -34,6 +35,7 @@
       isConnected: true,
       isOpened: false,
       dialog: false,
+      level: 0,
     }),
     computed: {
       ocIcon() {
@@ -45,7 +47,8 @@
         let stairs = snapshot.val()
         if (stairs == null) return
 
-        this.isOpened = stairs.opened;
+        this.isOpened = stairs.magnet;
+        this.level = stairs.level;
       })
     },
     methods: {
