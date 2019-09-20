@@ -6,7 +6,9 @@
         <v-icon class="cardIcon">line_weight</v-icon>Stairs
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
-      <v-btn v-if="!isOpened" flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>arrow_downward</v-icon></v-btn>
+      <v-btn v-if="!isOpened" flat icon color="grey" style="margin-left:0px;" @click.native="levelDown"><v-icon>arrow_downward</v-icon></v-btn>
+      <v-btn v-if="!isOpened" flat icon color="grey" style="margin-left:0px;" @click.native="levelUp"><v-icon>arrow_upward</v-icon></v-btn>
+      <v-btn v-if="!isOpened" flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>emoji_events</v-icon></v-btn>
       <span class="spacer" />
 
       <span v-bind:class="{ notCompleted: level < 2 }" class="stairLevel">1</span>
@@ -29,7 +31,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" flat="flat" @click.native="dialog = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="trigger">Yes</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="solved">Yes</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -56,7 +58,13 @@
       })
     },
     methods: {
-      trigger() {
+      levelUp() {
+        this.operations.add({ command: 'stairs.up' })
+      },
+      levelDown() {
+        this.operations.add({ command: 'stairs.down' })
+      },
+      solved() {
         this.dialog = false
 
         this.operations.add({ command: 'stairs.drop' }).on("value", (snapshot) => {
