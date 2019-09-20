@@ -29,7 +29,7 @@ let router = new Router({
     { path: '/settings',                  component: Settings,   meta: { title: 'Settings',    icon: 'settings' }        },
     { path: '/stats',                     component: Stats,      meta: { title: 'Stats',       icon: 'poll' }            },
     { path: '/mock',                      component: Mock,                                                               },
-    { path: '/',                          component: Control,                                                            }
+    { path: '/',                          component: Control,    meta: { title: 'Landlord',    icon: 'business' }        }
   ]
 })
 
