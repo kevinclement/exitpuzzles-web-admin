@@ -7,9 +7,10 @@
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
   
-      <v-btn :disabled="level < 2" v-if="!isOpened" class="actionButton" flat icon @click.native="levelDown"><v-icon>arrow_downward</v-icon></v-btn>
-      <v-btn :disabled="level > 7" v-if="!isOpened" class="actionButton" flat icon @click.native="levelUp"><v-icon>arrow_upward</v-icon></v-btn>
-      <v-btn v-if="!isOpened" class="actionButton" flat icon @click.native="dialog = true"><v-icon>emoji_events</v-icon></v-btn>
+      <v-btn v-if="!isOpened" class="actionButton" flat icon @click.native="toggleUnsolvable" :title="usTitle"><v-icon>{{usIcon}}</v-icon></v-btn>
+      <v-btn :disabled="level < 2" v-if="!isOpened" class="actionButton" flat icon @click.native="levelDown" title="level down"><v-icon>arrow_downward</v-icon></v-btn>
+      <v-btn :disabled="level > 7" v-if="!isOpened" class="actionButton" flat icon @click.native="levelUp" title="level up"><v-icon>arrow_upward</v-icon></v-btn>
+      <v-btn v-if="!isOpened" class="actionButton" flat icon @click.native="dialog = true" title="solve and open"><v-icon>emoji_events</v-icon></v-btn>
       <span class="spacer" />
 
       <span v-bind:class="{ notCompleted: level < 2 }" class="stairLevel">1</span>
@@ -47,8 +48,17 @@
       isConnected: true,
       isOpened: false,
       dialog: false,
+      unsolvable: false,
       level: 0,
     }),
+    computed: {
+      usTitle: function() {
+        return this.unsolvable ? "make solvable" : "make unsolvable"
+      },
+      usIcon: function() {
+        return this.unsolvable ? "report" : "report_off"
+      }
+    },
     created () {
       this.$root.$data.museumRoot.child('stairs').on('value', (snapshot) => {
         let stairs = snapshot.val()
@@ -56,9 +66,13 @@
 
         this.isOpened = !stairs.magnet;
         this.level = stairs.level;
+        this.unsolvable = stairs.unsolvable;
       })
     },
     methods: {
+      toggleUnsolvable() {
+        this.operations.add({ command: 'stairs.unsolvable' })
+      },
       levelUp() {
         this.operations.add({ command: 'stairs.up' })
       },
