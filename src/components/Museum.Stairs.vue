@@ -6,9 +6,10 @@
         <v-icon class="cardIcon">line_weight</v-icon>Stairs
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
-      <v-btn v-if="!isOpened" flat icon color="grey" style="margin-left:0px;" @click.native="levelDown"><v-icon>arrow_downward</v-icon></v-btn>
-      <v-btn v-if="!isOpened" flat icon color="grey" style="margin-left:0px;" @click.native="levelUp"><v-icon>arrow_upward</v-icon></v-btn>
-      <v-btn v-if="!isOpened" flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>emoji_events</v-icon></v-btn>
+  
+      <v-btn :disabled="level < 2" v-if="!isOpened" class="actionButton" flat icon @click.native="levelDown"><v-icon>arrow_downward</v-icon></v-btn>
+      <v-btn :disabled="level > 7" v-if="!isOpened" class="actionButton" flat icon @click.native="levelUp"><v-icon>arrow_upward</v-icon></v-btn>
+      <v-btn v-if="!isOpened" class="actionButton" flat icon @click.native="dialog = true"><v-icon>emoji_events</v-icon></v-btn>
       <span class="spacer" />
 
       <span v-bind:class="{ notCompleted: level < 2 }" class="stairLevel">1</span>
@@ -83,6 +84,10 @@
   margin-bottom:3px;
   margin-left:7px;
   padding-right:10px;
+}
+.actionButton{
+  margin-left:0px;
+  color: rgb(158,158,158);
 }
 .notConnected {
   color:red !important;
