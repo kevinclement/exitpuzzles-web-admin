@@ -11,12 +11,11 @@ M<template>
 
       <span class="spacer" />
 
-      <v-icon title="urn 1" color="light-green darken-1">check_circle</v-icon>
-      <v-icon color="deep-purple darken-1">check_circle</v-icon>
-      <v-icon color="grey lighten-1">donut_large</v-icon>
-      <v-icon color="grey lighten-1">donut_large</v-icon>
-      <v-icon color="grey lighten-1">donut_large</v-icon>
-
+      <v-icon :color="idolColor(idol_1, 1)" title="idol 1">{{idolIcon(idol_1)}}</v-icon>
+      <v-icon :color="idolColor(idol_2, 2)" title="idol 2">{{idolIcon(idol_2)}}</v-icon>
+      <v-icon :color="idolColor(idol_3, 3)" title="idol 3">{{idolIcon(idol_3)}}</v-icon>
+      <v-icon :color="idolColor(idol_4, 4)" title="idol 4">{{idolIcon(idol_4)}}</v-icon>
+      <v-icon :color="idolColor(idol_5, 5)" title="idol 5">{{idolIcon(idol_5)}}</v-icon>
 
       <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'mausoleum')">Reboot</v-btn>
     </v-toolbar>
@@ -42,12 +41,17 @@ M<template>
     props: ['snack', 'operations'],
     data: () => ({
       isConnected: true,
-      isOpened: false,
+      isSolved: false,
       dialog: false,
+      idol_1: false,
+      idol_2: false,
+      idol_3: false,
+      idol_4: false,
+      idol_5: false
     }),
     computed: {
       ocIcon() {
-        return this.isOpened ? "arrow_back" : "arrow_forward"
+        return this.isSolved ? "arrow_back" : "arrow_forward"
       },
     },
     created () {
@@ -55,10 +59,32 @@ M<template>
         let mausoleum = snapshot.val()
         if (mausoleum == null) return
 
-        this.isOpened = mausoleum.opened;
+        this.isSolved = mausoleum.solved;
+        this.idol_1 = mausoleum.idol_1;
+        this.idol_2 = mausoleum.idol_2;
+        this.idol_3 = mausoleum.idol_3;
+        this.idol_4 = mausoleum.idol_4;
+        this.idol_5 = mausoleum.idol_5;
       })
     },
     methods: {
+      idolColor(state, idol) {
+        if (state) {
+          let color = 
+            idol == 1 ? "grey" :
+            idol == 2 ? "blue" :
+            idol == 3 ? "red" :
+            idol == 4 ? "purple" :
+                        "green"
+
+          return color + " lighten-1"
+        } else {
+          return "grey lighten-1"
+        }
+      },
+      idolIcon(state) {
+        return state ? "check_circle" : "donut_large"
+      },
       trigger() {
         this.dialog = false
 
