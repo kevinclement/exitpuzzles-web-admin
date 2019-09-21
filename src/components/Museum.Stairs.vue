@@ -99,7 +99,7 @@
   margin-left:7px;
   padding-right:10px;
 }
-.actionButton{
+.actionButton {
   margin-left:0px;
   color: rgb(158,158,158);
 }
