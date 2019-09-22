@@ -88,7 +88,7 @@ M<template>
       trigger() {
         this.dialog = false
 
-        this.operations.add({ command: 'mausoleum.open' + cmd }).on("value", (snapshot) => {
+        this.operations.add({ command: 'mausoleum.solve' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Opened successfully.')
           }
