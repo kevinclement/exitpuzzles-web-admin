@@ -13,9 +13,9 @@
         @click.native="force"
       />
       <span class="spacer" />
-      <span v-bind:class="{ notHolding: !isPressed }" class="lightDot" style="background:#EF5350"/>
-      <span v-bind:class="{ notHolding: !isPressed }" class="lightDot" style="background:#43A047"/>
-      <span v-bind:class="{ notHolding: !isPressed }" class="lightDot" style="background:#1E88E5"/>
+      <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#EF5350"/>
+      <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#43A047"/>
+      <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#1E88E5"/>
 
       <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'hands')">Reboot</v-btn>
     </v-toolbar>
