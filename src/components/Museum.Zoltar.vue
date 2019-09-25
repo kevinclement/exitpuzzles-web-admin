@@ -10,6 +10,8 @@ M<template>
       <!-- TODO: add feature to send user defined message 
       <v-btn flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>message</v-icon></v-btn>
       -->
+      <v-btn :disabled="coins <= 0" flat icon class="actionButton" @click.native="decrement"><v-icon>remove</v-icon></v-btn>
+      <v-btn :disabled="coins >= 3" flat icon class="actionButton" @click.native="increment"><v-icon>add</v-icon></v-btn>
 
       <span class="spacer" />
 
@@ -49,10 +51,10 @@ M<template>
     },
     methods: {
       increment() {
-        this.operations.add({ command: 'zoltar.increment' + cmd }).on("value", (s) => {});
+        this.operations.add({ command: 'zoltar.increment' }).on("value", (s) => {});
       },
       decrement() { 
-        this.operations.add({ command: 'zoltar.decrement' + cmd }).on("value", (s) => {});
+        this.operations.add({ command: 'zoltar.decrement' }).on("value", (s) => {});
       },
       coinColor(i) {
         if (this.coins >= i) {
@@ -73,5 +75,9 @@ M<template>
 }
 .notConnected {
   color:red !important;
+}
+.actionButton {
+  margin-left:0px;
+  color: rgb(158,158,158);
 }
 </style>
