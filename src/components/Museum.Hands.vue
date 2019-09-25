@@ -32,7 +32,7 @@
       dialog: false,
     }),
     created () {
-      this.$root.$data.museumRoot.child('hands').on('value', (snapshot) => {
+      this.$root.$data.museumRoot.child('devices/hands').on('value', (snapshot) => {
         let hands = snapshot.val()
         if (hands == null) return
 

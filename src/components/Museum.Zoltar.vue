@@ -7,31 +7,19 @@ M<template>
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
 
+      <!-- TODO: add feature to send user defined message 
       <v-btn flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>message</v-icon></v-btn>
+      -->
 
       <span class="spacer" />
 
-      <v-icon color="grey darken-3">monetization_on</v-icon>
-      <v-icon color="grey lighten-2">monetization_on</v-icon>
-      <v-icon color="grey lighten-2">monetization_on</v-icon>
+      <v-icon :color="coinColor(1)">monetization_on</v-icon>
+      <v-icon :color="coinColor(2)">monetization_on</v-icon>
+      <v-icon :color="coinColor(3)">monetization_on</v-icon>
 
-
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'mausoleum')">Reboot</v-btn>
+      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'zoltar')">Reboot</v-btn>
     </v-toolbar>
-  </v-card>
-
-  <v-dialog v-model="dialog" max-width="410">
-    <v-card>
-      <v-card-title class="headline">Really open the final door?</v-card-title>
-      <v-card-text>Are you sure you want to trigger opening the exit door?</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="dialog = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="trigger">Yes</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-  
+  </v-card>  
 </v-flex>
 </template>
 
@@ -40,8 +28,9 @@ M<template>
     props: ['snack', 'operations'],
     data: () => ({
       isConnected: true,
-      isOpened: false,
-      dialog: false,
+      solved: false,
+      coins: 0,
+      donations: 0,
     }),
     computed: {
       ocIcon() {
@@ -49,24 +38,29 @@ M<template>
       },
     },
     created () {
-      this.$root.$data.museumRoot.child('mausoleum').on('value', (snapshot) => {
-        let mausoleum = snapshot.val()
-        if (mausoleum == null) return
+      this.$root.$data.museumRoot.child('devices/zoltar').on('value', (snapshot) => {
+        let zoltar = snapshot.val()
+        if (zoltar == null) return
 
-        this.isOpened = mausoleum.opened;
+        this.solved = zoltar.solved;
+        this.coins = zoltar.coins;
+        this.donations = zoltar.donations;
       })
     },
     methods: {
-      trigger() {
-        this.dialog = false
-
-        this.operations.add({ command: 'mausoleum.open' + cmd }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Opened successfully.')
-          }
-        });
-
+      increment() {
+        this.operations.add({ command: 'zoltar.increment' + cmd }).on("value", (s) => {});
       },
+      decrement() { 
+        this.operations.add({ command: 'zoltar.decrement' + cmd }).on("value", (s) => {});
+      },
+      coinColor(i) {
+        if (this.coins >= i) {
+          return "grey darken-3"
+        } else {
+          return "grey lighten-2"
+        }
+      }
     }
   }
 </script>
