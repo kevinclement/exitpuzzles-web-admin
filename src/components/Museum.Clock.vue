@@ -9,6 +9,8 @@
       <v-btn flat icon color="grey" style="margin-left:0px;" :disabled="isOpened" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
       <span class="spacer" />
       <span class="time">{{formatTime(hours)}}:{{formatTime(minutes)}}</span>
+
+      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'clock')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
