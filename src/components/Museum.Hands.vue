@@ -8,14 +8,16 @@
       </v-toolbar-title>
       <v-switch 
         primary
-        v-model="forcePressed"
+        v-model="mock"
         :hide-details="true"
-        @click.native="trigger"
+        @click.native="force"
       />
       <span class="spacer" />
       <span v-bind:class="{ notHolding: !isPressed }" class="lightDot" style="background:#EF5350"/>
       <span v-bind:class="{ notHolding: !isPressed }" class="lightDot" style="background:#43A047"/>
       <span v-bind:class="{ notHolding: !isPressed }" class="lightDot" style="background:#1E88E5"/>
+
+      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'hands')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
@@ -27,26 +29,21 @@
     props: ['snack', 'operations'],
     data: () => ({
       isConnected: true,
-      isPressed: false,
-      forcePressed: false,
-      dialog: false,
+      touching: false,
+      mock: false,
     }),
     created () {
       this.$root.$data.museumRoot.child('devices/hands').on('value', (snapshot) => {
         let hands = snapshot.val()
         if (hands == null) return
 
-        this.isPressed = hands.isPressed
-        this.forcePressed = hands.forcePressed
+        this.touching = hands.touching
+        this.mock = hands.mock
       })
     },
     methods: {
-      trigger() {
-        this.operations.add({ command: 'hands.force', data: { forced:this.forcePressed } }).on("value", (snapshot) => {
-            let cmd = this.forcePressed ? 'Enabled' : 'Disabled'
-            this.snack(`${cmd} sent successfully.`)
-            snapshot.ref.off()
-        });
+      force() {
+        this.operations.add({ command: 'hands.toggle' }).on("value", (snapshot) => {});
       },
     }
   }
