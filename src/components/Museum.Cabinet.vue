@@ -6,16 +6,19 @@
         <v-icon class="cardIcon">meeting_room</v-icon>Cabinet
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
-      <v-btn flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
+      
+      <v-btn v-if="!solved" flat icon class="actionButton" @click.native="dialog = true" title="open cabinet"><v-icon>lock</v-icon></v-btn>
+      
       <span class="spacer" />
+
       <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'cabinet')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
   <v-dialog v-model="dialog" max-width="410">
     <v-card>
-      <v-card-title class="headline">Really {{dialogTitle}} the cabinet?</v-card-title>
-      <v-card-text>Are you sure you want to trigger {{dialogText}} the device?</v-card-text>
+      <v-card-title class="headline">Really open the cabinet?</v-card-title>
+      <v-card-text>Are you sure you want to trigger opening the cabinet?</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" flat="flat" @click.native="dialog = false;">No</v-btn>
@@ -32,34 +35,22 @@
     props: ['snack', 'operations'],
     data: () => ({
       isConnected: true,
-      isOpened: false,
+      solved: false,
       dialog: false,
     }),
-    computed: {
-      ocIcon() {
-        return this.isOpened ? "lock_open" : "lock"
-      },
-      dialogTitle: function() {
-        return this.isOpened ? "close" : "open"
-      },
-      dialogText: function() {
-        return this.isOpened ? "closing" : "opening"
-      },
-    },
     created () {
-      this.$root.$data.museumRoot.child('cabinet').on('value', (snapshot) => {
+      this.$root.$data.museumRoot.child('devices/cabinet').on('value', (snapshot) => {
         let cabinet = snapshot.val()
         if (cabinet == null) return
 
-        this.isOpened = cabinet.opened;
+        this.solved = cabinet.solved
       })
     },
     methods: {
       trigger() {
         this.dialog = false
 
-        var cmd = this.isOpened ? 'close' : 'solved'
-        this.operations.add({ command: 'cabinet.' + cmd }).on("value", (snapshot) => {
+        this.operations.add({ command: 'cabinet.open' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Opened successfully.')
           }
@@ -78,5 +69,9 @@
 }
 .notConnected {
   color:red !important;
+}
+.actionButton {
+  margin-left:0px;
+  color: rgb(158,158,158);
 }
 </style>
