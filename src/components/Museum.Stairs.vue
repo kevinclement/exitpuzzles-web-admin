@@ -60,7 +60,7 @@
       }
     },
     created () {
-      this.$root.$data.museumRoot.child('stairs').on('value', (snapshot) => {
+      this.$root.$data.museumRoot.child('devices/stairs').on('value', (snapshot) => {
         let stairs = snapshot.val()
         if (stairs == null) return
 

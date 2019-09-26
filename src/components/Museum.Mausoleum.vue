@@ -55,7 +55,7 @@ M<template>
       },
     },
     created () {
-      this.$root.$data.museumRoot.child('mausoleum').on('value', (snapshot) => {
+      this.$root.$data.museumRoot.child('devices/mausoleum').on('value', (snapshot) => {
         let mausoleum = snapshot.val()
         if (mausoleum == null) return
 
