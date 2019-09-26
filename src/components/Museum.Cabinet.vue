@@ -6,11 +6,12 @@
         <v-icon class="cardIcon">meeting_room</v-icon>Cabinet
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
-      
+
       <v-btn v-if="!solved" flat icon class="actionButton" @click.native="dialog = true" title="open cabinet"><v-icon>lock</v-icon></v-btn>
-      
+
       <span class="spacer" />
 
+      <span v-bind:style="{ background: idolColors[idol] }" class="lightDot"/>
       <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'cabinet')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
@@ -36,7 +37,16 @@
     data: () => ({
       isConnected: true,
       solved: false,
+      idol: 0,
       dialog: false,
+      idolColors: [
+        "#e0e0e0",
+        "#bdbdbd",
+        "#42a5f5",
+        "#ef5350",
+        "#ab47bc",
+        "#66bb6a"
+      ]
     }),
     created () {
       this.$root.$data.museumRoot.child('devices/cabinet').on('value', (snapshot) => {
@@ -44,7 +54,9 @@
         if (cabinet == null) return
 
         this.solved = cabinet.solved
+        this.idol = cabinet.idol
       })
+
     },
     methods: {
       trigger() {
@@ -73,5 +85,11 @@
 .actionButton {
   margin-left:0px;
   color: rgb(158,158,158);
+}
+.lightDot {
+  border-radius: 50%;
+  height: 16px;
+  width: 16px;
+  margin: 2px;
 }
 </style>
