@@ -83,7 +83,7 @@
       },
     },
     created () {
-      this.$root.$data.museumRoot.child('mummy').on('value', (snapshot) => {
+      this.$root.$data.museumRoot.child('devices/mummy').on('value', (snapshot) => {
         let mummy = snapshot.val()
         if (mummy == null) return
 

@@ -42,7 +42,7 @@
       },
     },
     created () {
-      this.$root.$data.museumRoot.child('laser').on('value', (snapshot) => {
+      this.$root.$data.museumRoot.child('devices/laser').on('value', (snapshot) => {
         let laser = snapshot.val()
         if (laser == null) return
 
