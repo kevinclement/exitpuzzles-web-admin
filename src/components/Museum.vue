@@ -30,10 +30,12 @@
       :snack="showSnack" 
       :operations="operations"/>
 
+    <!-- TURN BACK ON LATER 
     <museum-map 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
+    -->
 
     <museum-zoltar 
       v-on:reboot-device="showRebootDialog" 
