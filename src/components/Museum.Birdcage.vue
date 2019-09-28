@@ -7,12 +7,12 @@
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
       
-      <v-btn flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
+      <v-btn v-if="!solved || trayOpened" flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
 
       <span class="spacer" />
 
       <span class="password">{{password}}</span>
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'birdcage')">Reboot</v-btn>
+      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'bird')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
