@@ -8,8 +8,8 @@
       </v-toolbar-title>
       
       <v-btn v-if="!solved || trayOpened" flat icon class="actionButton" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
-      <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayBack"><v-icon>remove</v-icon></v-btn>
-      <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayForward"><v-icon>add</v-icon></v-btn>
+      <!-- <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayBack"><v-icon>remove</v-icon></v-btn>
+      <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayForward"><v-icon>add</v-icon></v-btn> -->
 
       <span class="spacer" />
 
