@@ -7,7 +7,9 @@
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
       
-      <v-btn v-if="!solved || trayOpened" flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
+      <v-btn v-if="!solved || trayOpened" flat icon class="actionButton" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
+      <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayBack"><v-icon>remove</v-icon></v-btn>
+      <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayForward"><v-icon>add</v-icon></v-btn>
 
       <span class="spacer" />
 
@@ -66,6 +68,12 @@
       })
     },
     methods: {
+      trayBack() {
+        this.operations.add({ command: 'bird.back' }).on("value", (snapshot) => {});
+      },
+      trayForward() {
+        this.operations.add({ command: 'bird.forward' }).on("value", (snapshot) => {});
+      },
       trigger() {
         this.dialog = false
         let cmd = this.solved ? 'bird.close' : 'bird.open'
@@ -91,8 +99,13 @@
 .notConnected {
   color:red !important;
 }
+.actionButton {
+  margin-left:0px;
+  color: rgb(158,158,158);
+}
 .password {
   font-family: Monaco, monospace;
   font-size:16px;
 }
+
 </style>
