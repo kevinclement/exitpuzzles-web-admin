@@ -48,7 +48,7 @@
       :operations="operations"/>
 
     
-    <v-subheader class="roomHeader" style="margin-top:20px;">Back Room</v-subheader>
+    <v-subheader class="roomHeader" style="margin-top:20px;">Back Room:</v-subheader>
     <museum-laser 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
