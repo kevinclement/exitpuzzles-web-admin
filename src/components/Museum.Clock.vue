@@ -6,9 +6,9 @@
         <v-icon class="cardIcon">access_time</v-icon>Clock
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
-      <v-btn flat icon color="grey" style="margin-left:0px;" :disabled="isOpened" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
+      <v-btn v-if="!solved" flat icon class="actionButton" @click.native="dialog = true"><v-icon>lock</v-icon></v-btn>
+      
       <span class="spacer" />
-      <span class="time">{{formatTime(hours)}}:{{formatTime(minutes)}}</span>
 
       <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'clock')">Reboot</v-btn>
     </v-toolbar>
@@ -34,24 +34,15 @@
     props: ['snack', 'operations'],
     data: () => ({
       isConnected: true,
-      isOpened: false,
-      hours: 1,
-      minutes: 59,
+      solved: false,
       dialog: false,
     }),
-    computed: {
-      ocIcon() {
-        return this.isOpened ? "lock_open" : "lock"
-      },
-    },
     created () {
-      this.$root.$data.museumRoot.child('clock').on('value', (snapshot) => {
+      this.$root.$data.museumRoot.child('devices/clock').on('value', (snapshot) => {
         let clock = snapshot.val()
         if (clock == null) return
 
-        this.isOpened = clock.isOpened;
-        this.hours = clock.hours;
-        this.minutes  = clock.minutes;
+        this.solved = clock.solved
       })
     },
     methods: {
@@ -64,10 +55,7 @@
           }
         });
 
-      },
-      formatTime(t) {
-        return ("0" + t).substr(-2,2);
-      },
+      }
     }
   }
 </script>
@@ -84,5 +72,9 @@
 .time {
   font-family: Monaco, monospace;
   font-size:16px;
+}
+.actionButton {
+  margin-left:0px;
+  color: rgb(158,158,158);
 }
 </style>
