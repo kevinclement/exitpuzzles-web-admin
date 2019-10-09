@@ -101,7 +101,7 @@
 }
 .actionButton {
   margin-left:0px;
-  color: rgb(158,158,158);
+  color: rgb(158,158,158) !important;
 }
 .password {
   font-family: Monaco, monospace;

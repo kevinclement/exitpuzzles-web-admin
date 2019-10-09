@@ -7,7 +7,7 @@ M<template>
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
 
-      <v-btn flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>directions_run</v-icon></v-btn>
+      <v-btn flat icon class="actionButton" @click.native="dialog = true"><v-icon>directions_run</v-icon></v-btn>
 
       <span class="spacer" />
 
@@ -107,5 +107,9 @@ M<template>
 }
 .notConnected {
   color:red !important;
+}
+.actionButton {
+  margin-left:0px;
+  color: rgb(158,158,158) !important;
 }
 </style>

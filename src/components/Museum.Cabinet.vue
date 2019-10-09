@@ -84,7 +84,7 @@
 }
 .actionButton {
   margin-left:0px;
-  color: rgb(158,158,158);
+  color: rgb(158,158,158) !important;
 }
 .lightDot {
   border-radius: 50%;
