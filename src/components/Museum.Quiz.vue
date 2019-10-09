@@ -81,11 +81,8 @@
 .notConnected {
   color:red !important;
 }
-.actionButton, .actionButtonBold {
+.actionButton {
   margin-left:0px;
   color: rgb(158,158,158);
-}
-.actionButtonBold {
-  color: inherit;
 }
 </style>
