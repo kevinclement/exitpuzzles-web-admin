@@ -13,7 +13,10 @@
       <v-btn icon class="actionButton" @click.native="diag('JOURNAL', 3)" title="journal"><v-icon>menu_book</v-icon></v-btn>
 
       <span class="spacer" />
-
+      <span class="results">
+      {{currentQuestion}}/{{total}}
+      missed: {{missed.length}}
+      </span>
     </v-toolbar>
   </v-card>
 
@@ -42,6 +45,9 @@
       dialogTitle: '',
       dialogForce: -1,
       force: -1,
+      missed: [],
+      correct: [],
+      total: 0,
     }),
     created () {
       // INSERT_DISK, LAUNCH, QUIZ, PASSWORD, JOURNAL
@@ -51,6 +57,10 @@
 
         this.state = qz.state
         this.force = qz.force
+        this.missed = qz.missedQuestions || []
+        this.correct = qz.correctQuestions || []
+        this.total = qz.total
+        this.currentQuestion = qz.questionIndex + 1;
       })
     },
     methods: {
@@ -84,5 +94,10 @@
 .actionButton {
   margin-left:0px;
   color: rgb(158,158,158) !important;
+}
+.results {
+  font-family: Monaco, monospace;
+  font-size:16px;
+  padding-right: 0px; /* 88px */
 }
 </style>
