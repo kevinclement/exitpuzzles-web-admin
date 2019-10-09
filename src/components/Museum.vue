@@ -25,6 +25,10 @@
       :snack="showSnack" 
       :operations="operations"/>
 
+    <museum-quiz 
+      :snack="showSnack" 
+      :operations="operations"/>
+
     <museum-birdcage 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
@@ -98,6 +102,7 @@ import Hands from '@/components/Museum.Hands'
 import Cabinet from '@/components/Museum.Cabinet'
 import Laser from '@/components/Museum.Laser'
 import Clock from '@/components/Museum.Clock'
+import Quiz from '@/components/Museum.Quiz'
 import Birdcage from '@/components/Museum.Birdcage'
 import Map from '@/components/Museum.Map'
 import Mausoleum from '@/components/Museum.Mausoleum'
@@ -161,6 +166,7 @@ export default {
     'museum-cabinet': Cabinet,
     'museum-laser': Laser,
     'museum-clock': Clock,
+    'museum-quiz': Quiz,
     'museum-birdcage': Birdcage,
     'museum-map': Map,
     'museum-mausoleum': Mausoleum,
