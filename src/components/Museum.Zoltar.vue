@@ -58,7 +58,11 @@ M<template>
         this.operations.add({ command: 'zoltar.decrement' }).on("value", (s) => {});
       },
       printFeed() { 
-        this.operations.add({ command: 'zoltar.printFeed' }).on("value", (s) => {});
+        this.operations.add({ command: 'zoltar.printFeed' }).on("value", (s) => {
+          if (s.val().received) {
+            this.snack('Feed successful')
+          }
+        });
       },
       coinColor(i) {
         if (this.coins >= i) {
