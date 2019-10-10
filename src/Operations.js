@@ -6,4 +6,12 @@ export default class Operations {
     add(op) {
         return this.operationsRef.push({ ...op, created: (new Date()).getTime()});
     }
+
+    addWithToast(op, cb) {
+        this.add({ command: op }).on("value", (snapshot) => {
+            if (snapshot.val().received) {
+              cb()
+            }
+        });
+    }
 }

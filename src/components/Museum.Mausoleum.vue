@@ -7,7 +7,9 @@ M<template>
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
 
-      <v-btn flat icon class="actionButton" @click.native="dialog = true"><v-icon>directions_run</v-icon></v-btn>
+      <v-btn flat icon class="actionButton" @click.native="toggleUnsolvable" :title="usTitle"><v-icon>{{usIcon}}</v-icon></v-btn>
+      <v-btn flat icon class="actionButton" @click.native="failSound" title="send fail sound"><v-icon>thumb_down</v-icon></v-btn>
+      <v-btn flat icon class="actionButton" @click.native="dialog = true" title="force solve"><v-icon>directions_run</v-icon></v-btn>
 
       <span class="spacer" />
 
@@ -43,6 +45,7 @@ M<template>
       isConnected: true,
       isSolved: false,
       dialog: false,
+      unsolvable: false,
       idol_1: false,
       idol_2: false,
       idol_3: false,
@@ -50,9 +53,12 @@ M<template>
       idol_5: false
     }),
     computed: {
-      ocIcon() {
-        return this.isSolved ? "arrow_back" : "arrow_forward"
+      usTitle: function() {
+        return this.unsolvable ? "make solvable" : "make unsolvable"
       },
+      usIcon: function() {
+        return this.unsolvable ? "report" : "report_off"
+      }
     },
     created () {
       this.$root.$data.museumRoot.child('devices/mausoleum').on('value', (snapshot) => {
@@ -65,6 +71,7 @@ M<template>
         this.idol_3 = mausoleum.idol_3;
         this.idol_4 = mausoleum.idol_4;
         this.idol_5 = mausoleum.idol_5;
+        this.unsolvable = mausoleum.unsolvable;
       })
     },
     methods: {
@@ -87,13 +94,15 @@ M<template>
       },
       trigger() {
         this.dialog = false
+        this.operations.addWithToast('mausoleum.solve', this.snack('Opened successfully'))
+      },
 
-        this.operations.add({ command: 'mausoleum.solve' }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Opened successfully.')
-          }
-        });
+      failSound() {
+        this.operations.addWithToast('mausoleum.failSound', this.snack('Sent failed sound'))
+      },
 
+      toggleUnsolvable() {
+        this.operations.addWithToast('mausoleum.unsolvable', this.snack('Toggled unsolvable'))
       },
     }
   }
