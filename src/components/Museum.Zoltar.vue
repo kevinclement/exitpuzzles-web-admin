@@ -12,6 +12,7 @@ M<template>
       -->
       <v-btn :disabled="coins <= 0" flat icon class="actionButton" @click.native="decrement"><v-icon>remove</v-icon></v-btn>
       <v-btn :disabled="coins >= 3" flat icon class="actionButton" @click.native="increment"><v-icon>add</v-icon></v-btn>
+      <v-btn flat icon class="actionButton" @click.native="printFeed" title="feed printer"><v-icon>print</v-icon></v-btn>
 
       <span class="spacer" />
 
@@ -55,6 +56,9 @@ M<template>
       },
       decrement() { 
         this.operations.add({ command: 'zoltar.decrement' }).on("value", (s) => {});
+      },
+      printFeed() { 
+        this.operations.add({ command: 'zoltar.printFeed' }).on("value", (s) => {});
       },
       coinColor(i) {
         if (this.coins >= i) {
