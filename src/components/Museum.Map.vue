@@ -6,14 +6,19 @@
         <v-icon class="cardIcon">language</v-icon>Map
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
       </v-toolbar-title>
+
       <span class="spacer" />
+      <span class="results">
+        {{enabled}}/{{total}}
+      </span>
+      <v-btn flat small color="blue-grey lighten-3" @click.native="$emit('show-details')">Advanced</v-btn>
     </v-toolbar>
   </v-card>
 
   <v-dialog v-model="dialog" max-width="410">
     <v-card>
-      <v-card-title class="headline">Really {{dialogTitle}} the laser?</v-card-title>
-      <v-card-text>Are you sure you want to trigger {{dialogText}} the laser?</v-card-text>
+      <v-card-title class="headline">Really trigger the map?</v-card-title>
+      <v-card-text>Are you sure you want to reveal the code on the map?</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" flat="flat" @click.native="dialog = false;">No</v-btn>
@@ -30,35 +35,34 @@
     props: ['snack', 'operations'],
     data: () => ({
       isConnected: true,
-      enabled: false,
       dialog: false,
+      total:0,
+      enabled:0
     }),
-    computed: {
-      dialogTitle: function() {
-        return this.enabled ? "enable" : "disable"
-      },
-      dialogText: function() {
-        return this.enabled ? "enabling" : "disabling"
-      },
-    },
     created () {
-      this.$root.$data.museumRoot.child('devices/laser').on('value', (snapshot) => {
-        let laser = snapshot.val()
-        if (laser == null) return
+      this.$root.$data.museumRoot.child('devices/map').on('value', (snapshot) => {
+        let map = snapshot.val()
+        if (map == null) return
 
-        this.enabled = laser.enabled;
+        this.total = 0
+        for (const [name, state] of Object.entries(map.magnets)) {
+          this.total++;
+          if (state) {
+            enabled++;
+          }
+        }
+        
       })
     },
     methods: {
       trigger() {
         this.dialog = false
 
-        var cmd = this.enabled ? 'enable' : 'disable'
-        this.operations.add({ command: 'laser.' + cmd }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Dropped successfully.')
-          }
-        });
+        // this.operations.add({ command: 'map.solve' }).on("value", (snapshot) => {
+        //   if (snapshot.val().received) {
+        //     this.snack('Triggered successfully')
+        //   }
+        // });
 
       },
     }
@@ -73,5 +77,9 @@
 }
 .notConnected {
   color:red !important;
+}
+.results {
+  font-family: Monaco, monospace;
+  font-size: 16px;
 }
 </style>

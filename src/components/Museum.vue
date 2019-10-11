@@ -18,8 +18,13 @@
       :stateless="true"
     >
       <museum-mummy-advanced 
-        v-on:close-details="advanced.mummy = false"
+        v-on:close-details="toggleAdvanced('mummy')"
         v-if="advanced.mummy == true"
+        :operations="operations"/>
+      
+      <museum-map-advanced 
+        v-on:close-details="toggleAdvanced('map')"
+        v-if="advanced.map == true"
         :operations="operations"/>
     </v-navigation-drawer>
 
@@ -44,12 +49,11 @@
       :snack="showSnack" 
       :operations="operations"/>
 
-    <!-- TURN BACK ON LATER 
     <museum-map 
+      v-on:show-details="toggleAdvanced('map')" 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
-    -->
 
     <museum-zoltar 
       v-on:reboot-device="showRebootDialog" 
@@ -74,7 +78,7 @@
       :operations="operations"/>
 
     <museum-mummy 
-      v-on:show-details="advanced.mummy = true" 
+      v-on:show-details="toggleAdvanced('mummy')" 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
@@ -115,6 +119,7 @@ import Clock from '@/components/Museum.Clock'
 import Quiz from '@/components/Museum.Quiz'
 import Birdcage from '@/components/Museum.Birdcage'
 import Map from '@/components/Museum.Map'
+import MapAdvanced from '@/components/Museum.Map.Advanced'
 import Mausoleum from '@/components/Museum.Mausoleum'
 import Mummy from '@/components/Museum.Mummy'
 import MummyAdvanced from '@/components/Museum.Mummy.Advanced'
@@ -131,13 +136,13 @@ export default {
       snackText: '',
       advanced: {
         mummy: false,
+        map: false
       },
       status: [],
       showDetails: false,
       dialogRebootShow: false,
       dialogRebootDevice: "",
-      operations: {},
-      alert:true
+      operations: {}
     }
   },
   computed: {
@@ -153,15 +158,6 @@ export default {
       }
 
       return status
-    }
-  },
-  watch: {
-    advanced: {
-      handler(val){
-        // this took me too long to figure out, flashback to mvvm reactive crap :'(
-        this.showDetails = this.advanced[Object.keys(val)[0]];
-      },
-      deep: true
     }
   },
 
@@ -185,6 +181,12 @@ export default {
   },
 
   methods: {
+    toggleAdvanced(panel)  {
+      let state = !this.showDetails;
+
+      this.advanced[panel] = state;
+      this.showDetails = state;
+    },
     showSnack(msg) {
       this.snackText = msg 
       this.snackbar = true
@@ -212,6 +214,7 @@ export default {
     'museum-quiz': Quiz,
     'museum-birdcage': Birdcage,
     'museum-map': Map,
+    'museum-map-advanced': MapAdvanced,
     'museum-mausoleum': Mausoleum,
     'museum-mummy': Mummy,
     'museum-mummy-advanced': MummyAdvanced,
