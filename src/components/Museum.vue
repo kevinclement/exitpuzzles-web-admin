@@ -2,8 +2,8 @@
   <v-container fluid>
     <!-- connection alert -->
     <v-alert
+        :value="offlineStatus != ''"
         color="error"
-        v-if="offlineStatus != ''"
         icon="new_releases"
         transition="scale-transition"
       >
