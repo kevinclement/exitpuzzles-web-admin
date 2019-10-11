@@ -1,12 +1,22 @@
 <template>
   <v-container fluid>
+    <!-- connection alert -->
+    <v-alert
+        color="error"
+        v-if="offlineStatus != ''"
+        icon="new_releases"
+        transition="scale-transition"
+      >
+        <span v-html="offlineStatus"/>
+    </v-alert>
+
+    <!-- advanced panels -->
     <v-navigation-drawer fixed app clipped right dense
       v-model="showDetails"
       class="rightDrawer"
       :hide-overlay="true"
       :stateless="true"
     >
-      <!-- advanced panels -->
       <museum-mummy-advanced 
         v-on:close-details="advanced.mummy = false"
         v-if="advanced.mummy == true"
@@ -110,6 +120,8 @@ import Mummy from '@/components/Museum.Mummy'
 import MummyAdvanced from '@/components/Museum.Mummy.Advanced'
 import Stairs from '@/components/Museum.Stairs'
 
+const DEVICE_TIMEOUT_SECONDS = 95
+
 export default {
   data () {
     return {
@@ -120,13 +132,29 @@ export default {
       advanced: {
         mummy: false,
       },
+      status: [],
       showDetails: false,
       dialogRebootShow: false,
       dialogRebootDevice: "",
       operations: {},
+      alert:true
     }
   },
+  computed: {
+    offlineStatus: function() {
+      let status = ""
 
+      for(var i in this.status) {
+        let dev = this.status[i]
+        let delta = (new Date()).getTime() - (new Date(dev.ping)).getTime()
+        if (delta > (DEVICE_TIMEOUT_SECONDS * 1000)) {
+          status += `Device '${dev.name}' is offline.  Last ping at ${dev.ping}<br/>`
+        }
+      }
+
+      return status
+    }
+  },
   watch: {
     advanced: {
       handler(val){
@@ -139,6 +167,21 @@ export default {
 
   created () {
     this.operations =  this.$root.$data.museumOps
+
+    this.$root.$data.museumRoot.child('status').on('value', (snapshot) => {
+        let status = snapshot.val()
+        if (status == null) return
+
+        let ds = []
+        for (const [name, device] of Object.entries(status)) {
+          ds.push({
+            "name": name,
+            "ping": device.ping
+          })
+        }
+
+        this.status = ds
+      })
   },
 
   methods: {
