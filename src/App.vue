@@ -29,7 +29,7 @@
     </v-navigation-drawer>
     <v-toolbar fixed app>
       <v-toolbar-side-icon v-if="authenticated" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Exit Puzzles Admin <span class="devMode">{{ devmode }}</span></v-toolbar-title>
+      <v-toolbar-title>Exit Puzzles - {{this.$route.meta.title}}<span class="devMode">{{ devmode }}</span></v-toolbar-title>
     </v-toolbar>
     <v-content>
       <router-view/>

@@ -19,14 +19,13 @@ Vue.use(Router)
 let router = new Router({
   routes: [
 
-    { path: '/invite_token=:token',       component: Verify,     meta: { anonymous: true }, props:true                   },
+    { path: '/invite_token=:token',       component: Verify,     meta: { anonymous: true },    props:true                },
     { path: '/login',                     component: Login,      meta: { anonymous: true }                               },
     { path: '/landlord',                  component: Control,    meta: { title: 'Landlord',    icon: 'business' }        },
     { path: '/museum',                    component: Museum,     meta: { title: 'Museum',      icon: 'account_balance' } },
     { path: '/logs',                      component: Logs,       meta: { title: 'Logs',        icon: 'dvr' }             },
     { path: '/settings',                  component: Settings,   meta: { title: 'Settings',    icon: 'settings' }        },
     { path: '/stats',                     component: Stats,      meta: { title: 'Stats',       icon: 'poll' }            },
-    { path: '/mock',                      component: Mock,                                                               },
     { path: '/',                          component: Control,                                                            }
   ]
 })
@@ -44,11 +43,11 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach((to, from) => {
-  if (to.meta.title) {
-    document.title = `${to.meta.title}`
-  } else if (to.path == '/'){
-    document.title = `Landlord`
+  if (!to.meta.title && to.path == '/') {
+    to.meta.title = 'Landlord'
   }
+
+  document.title = to.meta.title
 })
 
 export default router
