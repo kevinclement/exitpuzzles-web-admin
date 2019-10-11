@@ -53,7 +53,7 @@ export default {
     },
 
     devmode () {
-      if (process.env.NODE_ENV === 'development') {
+      if (window["DEV_MODE"]) {
         return '<DEV MODE>'
       }
 

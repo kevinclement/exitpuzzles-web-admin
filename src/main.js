@@ -15,8 +15,11 @@ const auth = new GoTrue({
   APIUrl: 'https://admin.exitpuzzles.com/.netlify/identity'
 });
 
+// set global to test for dev/prod mode, can be overridden by setting DEV_MODE=production in environment before building
+window['DEV_MODE'] = process.env.NODE_ENV === 'development' && process.env.DEV_MODE !== 'production'
+
 // init firebase
-let dbUrl = process.env.NODE_ENV === 'development' ? "https://exitpuzzles-admin-dev.firebaseio.com" : "https://exitpuzzles-admin.firebaseio.com"
+let dbUrl = window['DEV_MODE'] ? "https://exitpuzzles-admin.firebaseio.com" : "https://exitpuzzles-admin.firebaseio.com"
 let config = { databaseURL: dbUrl }
 let db = Firebase.initializeApp(config).database()
 let operations = new Operations(db, 'operations')
@@ -28,8 +31,7 @@ Vue.use(VueFire)
 
 Vue.config.productionTip = false
 
-// set global to test for dev/prod mode
-window['DEV_MODE'] = process.env.NODE_ENV
+
 
 /* eslint-disable no-new */
 new Vue({
