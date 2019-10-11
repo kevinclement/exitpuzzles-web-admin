@@ -62,6 +62,7 @@
       correct: [],
       total: 0,
       dialogReset: false,
+      currentQuestion: 0,
     }),
     created () {
       // INSERT_DISK, LAUNCH, QUIZ, PASSWORD, JOURNAL
