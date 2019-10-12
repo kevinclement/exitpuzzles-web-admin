@@ -69,6 +69,7 @@
 }
 .notConnected {
   color:red !important;
+  padding-right:0px;
 }
 .time {
   font-family: Monaco, monospace;

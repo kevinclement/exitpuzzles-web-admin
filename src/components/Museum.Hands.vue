@@ -61,6 +61,7 @@
 }
 .notConnected {
   color:red !important;
+  padding-right:0px;
 }
 .lightDot {
   border-radius: 50%;

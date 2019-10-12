@@ -115,6 +115,7 @@
 }
 .notConnected {
   color:red !important;
+  padding-right:0px;
 }
 .actionButton {
   margin-left:0px;
