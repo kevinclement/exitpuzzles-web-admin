@@ -31,6 +31,12 @@
         <td>Argentina:</td><td class="ans"><span :class="argentina ? 'yes' : 'no'">{{boolToString(argentina)}}</span></td>
       </tr>
 
+      <tr>
+        <td style="padding-top:25px;">Display:</td><td class="resCel" style="padding-top:25px;" >{{curImg}}</td>
+      </tr>
+      <tr>
+        <td style="">Solved:</td><td class="resCel">{{solved}}</td>
+      </tr>
     </table>
   </div>
 </div>
@@ -47,7 +53,9 @@
       india: false,
       seattle: false,
       spain: false,
-      argentina: false
+      argentina: false,
+      curImg: "Map",
+      solved: false
     }),
     computed: {
     },
@@ -63,6 +71,9 @@
         this.seattle = map.magnets.seattle
         this.spain = map.magnets.spain
         this.argentina = map.magnets.argentina
+
+        this.curImg = map.image === "images/FINAL.bmp" ? "map" : "code"
+        this.solved = map.solved
       })
     },
     methods: {
@@ -96,6 +107,10 @@
   }
   .ans {
     padding-left:35px;
+  }
+  .resCel {
+    padding-left: 23px;
+    text-align: end;
   }
 </style>
 
