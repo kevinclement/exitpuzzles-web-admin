@@ -3,18 +3,18 @@
   <v-card flat>
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
-        <v-icon class="cardIcon">room_service</v-icon>Birdcage
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
+        <v-icon class="cardIcon">room_service</v-icon>Birdcage
       </v-toolbar-title>
       
-      <v-btn v-if="!solved || trayOpened" flat icon class="actionButton" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
+      <v-btn v-if="isConnected && (!solved || trayOpened)" flat icon class="actionButton" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
       <!-- <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayBack"><v-icon>remove</v-icon></v-btn>
       <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayForward"><v-icon>add</v-icon></v-btn> -->
 
       <span class="spacer" />
 
       <span class="password">{{password}}</span>
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'bird')">Reboot</v-btn>
+      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'bird')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
@@ -65,6 +65,7 @@
         this.lightValue = bird.lightValue
         this.trayOpened = bird.trayOpened
         this.password = bird.password
+        this.isConnected = bird.info.isConnected
       })
     },
     methods: {
