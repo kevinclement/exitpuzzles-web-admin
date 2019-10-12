@@ -80,10 +80,8 @@ export default {
     // show a disconnected bar if there are network problems
     this.$root.$data.fbdb.ref('.info/connected').on('value', (s) => {
       if (s.val() === true) {
-        console.log(`firebase connected`);
         this.connected = true
       } else {
-        console.log(`firebase disconnected!!`);
         // this always fires once first time so ignore that while its loading
         if (this.connecting) {
           this.connecting = false
