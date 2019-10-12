@@ -54,7 +54,8 @@
       v-on:show-details="toggleAdvanced('map')" 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
-      :operations="operations"/>
+      :operations="operations"
+      :isConnected="status.map && status.map.connected"/>
 
     <museum-zoltar 
       v-on:reboot-device="showRebootDialog" 

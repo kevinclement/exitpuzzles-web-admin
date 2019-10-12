@@ -3,8 +3,8 @@
   <v-card flat>
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
-        <v-icon class="cardIcon">language</v-icon>Map
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
+        <v-icon class="cardIcon">language</v-icon>Map
       </v-toolbar-title>
 
       <span class="spacer" />
@@ -32,9 +32,8 @@
 
 <script>
   export default {
-    props: ['snack', 'operations'],
+    props: ['snack', 'operations', 'isConnected'],
     data: () => ({
-      isConnected: true,
       dialog: false,
       total:0,
       enabled:0
@@ -77,6 +76,7 @@
 }
 .notConnected {
   color:red !important;
+  padding-right:0px;
 }
 .results {
   font-family: Monaco, monospace;
