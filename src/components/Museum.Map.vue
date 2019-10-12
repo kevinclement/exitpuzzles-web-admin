@@ -44,10 +44,11 @@
         if (map == null) return
 
         this.total = 0
+        this.enabled = 0
         for (const [name, state] of Object.entries(map.magnets)) {
           this.total++;
           if (state) {
-            enabled++;
+            this.enabled++;
           }
         }
         
