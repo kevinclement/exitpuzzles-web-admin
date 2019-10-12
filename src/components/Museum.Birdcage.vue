@@ -7,9 +7,9 @@
         <v-icon class="cardIcon">room_service</v-icon>Birdcage
       </v-toolbar-title>
       
-      <v-btn v-if="isConnected && (!solved || trayOpened)" flat icon class="actionButton" @click.native="dialog = true"><v-icon>{{ocIcon}}</v-icon></v-btn>
       <v-btn v-if="isConnected" flat icon class="actionButton" @click.native="play" title="play song"><v-icon>play_arrow</v-icon></v-btn>
       <v-btn v-if="isConnected" flat icon class="actionButton" @click.native="stop" title="stop song"><v-icon>stop</v-icon></v-btn>
+      <v-btn v-if="isConnected && (!solved || trayOpened)" flat icon class="actionButton" @click.native="dialog = true" title="open tray"><v-icon>{{ocIcon}}</v-icon></v-btn>
       <!-- <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayBack"><v-icon>remove</v-icon></v-btn>
       <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayForward"><v-icon>add</v-icon></v-btn> -->
 
