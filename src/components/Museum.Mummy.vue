@@ -3,13 +3,16 @@
   <v-card flat>
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
-        <v-icon class="cardIcon">accessibility_new</v-icon>Mummy
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
+        <v-icon class="cardIcon">accessibility_new</v-icon>Mummy
       </v-toolbar-title>
-      <v-btn v-if="!isOpened" flat icon class="actionButton" @click.native="dialog=true"><v-icon>{{ocIcon}}</v-icon></v-btn>
+
+      <v-btn v-if="isConnected && !isOpened" flat icon class="actionButton" @click.native="dialog=true"><v-icon>{{ocIcon}}</v-icon></v-btn>
+
       <span class="spacer" />
+
       <!-- <v-btn flat small color="blue-grey lighten-3" @click.native="$emit('show-details')">Advanced</v-btn> -->
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'mummy')">Reboot</v-btn>
+      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'mummy')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
@@ -53,7 +56,8 @@
         let mummy = snapshot.val()
         if (mummy == null) return
 
-        this.isOpened = mummy.opened;
+        this.isOpened = mummy.opened
+        this.isConnected = mummy.info.isConnected
       })
     },
     methods: {
@@ -84,5 +88,6 @@
 }
 .notConnected {
   color:red !important;
+  padding-right: 0px;
 }
 </style>
