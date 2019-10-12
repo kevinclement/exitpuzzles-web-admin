@@ -3,24 +3,28 @@ M<template>
   <v-card flat>
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
-        <v-icon class="cardIcon">person</v-icon>Zoltar
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
+        <v-icon class="cardIcon">person</v-icon>Zoltar
       </v-toolbar-title>
 
       <!-- TODO: add feature to send user defined message 
       <v-btn flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>message</v-icon></v-btn>
       -->
-      <v-btn :disabled="coins <= 0" flat icon class="actionButton" @click.native="decrement"><v-icon>remove</v-icon></v-btn>
-      <v-btn :disabled="coins >= 3" flat icon class="actionButton" @click.native="increment"><v-icon>add</v-icon></v-btn>
-      <v-btn flat icon class="actionButton" @click.native="printFeed" title="feed printer"><v-icon>print</v-icon></v-btn>
+      <div v-if="isConnected">
+        <v-btn :disabled="coins <= 0" flat icon class="actionButton" @click.native="decrement"><v-icon>remove</v-icon></v-btn>
+        <v-btn :disabled="coins >= 3" flat icon class="actionButton" @click.native="increment"><v-icon>add</v-icon></v-btn>
+        <v-btn flat icon class="actionButton" @click.native="printFeed" title="feed printer"><v-icon>print</v-icon></v-btn>
+      </div>
 
       <span class="spacer" />
 
+      
       <v-icon :color="coinColor(1)">monetization_on</v-icon>
       <v-icon :color="coinColor(2)">monetization_on</v-icon>
       <v-icon :color="coinColor(3)">monetization_on</v-icon>
+      
 
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'zoltar')">Reboot</v-btn>
+      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'zoltar')">Reboot</v-btn>
     </v-toolbar>
   </v-card>  
 </v-flex>
@@ -48,6 +52,7 @@ M<template>
         this.solved = zoltar.solved;
         this.coins = zoltar.coins;
         this.donations = zoltar.donations;
+        this.isConnected = zoltar.info.isConnected;
       })
     },
     methods: {
@@ -83,9 +88,11 @@ M<template>
 }
 .notConnected {
   color:red !important;
+  padding-right: 0px;
 }
 .actionButton {
   margin-left:0px;
+  margin-right: 4px;
   color: rgb(158,158,158) !important;
 }
 </style>
