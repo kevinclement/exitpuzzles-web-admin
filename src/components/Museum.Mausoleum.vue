@@ -3,13 +3,15 @@ M<template>
   <v-card flat>
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
-        <v-icon class="cardIcon">account_balance</v-icon>Mausoleum
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
+        <v-icon class="cardIcon">account_balance</v-icon>Mausoleum
       </v-toolbar-title>
 
-      <v-btn flat icon class="actionButton" @click.native="toggleUnsolvable" :title="usTitle"><v-icon>{{usIcon}}</v-icon></v-btn>
-      <v-btn flat icon class="actionButton" @click.native="failSound" title="send fail sound"><v-icon>thumb_down</v-icon></v-btn>
-      <v-btn flat icon class="actionButton" @click.native="dialog = true" title="force solve"><v-icon>directions_run</v-icon></v-btn>
+      <div v-if="isConnected">
+        <v-btn flat icon class="actionButton" @click.native="toggleUnsolvable" :title="usTitle"><v-icon>{{usIcon}}</v-icon></v-btn>
+        <v-btn flat icon class="actionButton" @click.native="failSound" title="send fail sound"><v-icon>thumb_down</v-icon></v-btn>
+        <v-btn flat icon class="actionButton" @click.native="dialog = true" title="force solve"><v-icon>directions_run</v-icon></v-btn>
+      </div>
 
       <span class="spacer" />
 
@@ -19,7 +21,7 @@ M<template>
       <v-icon :color="idolColor(idol_4, 4)" title="idol 4">{{idolIcon(idol_4)}}</v-icon>
       <v-icon :color="idolColor(idol_5, 5)" title="idol 5">{{idolIcon(idol_5)}}</v-icon>
 
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'mausoleum')">Reboot</v-btn>
+      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'mausoleum')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
@@ -72,6 +74,7 @@ M<template>
         this.idol_4 = mausoleum.idol_4;
         this.idol_5 = mausoleum.idol_5;
         this.unsolvable = mausoleum.unsolvable;
+        this.isConnected = mausoleum.info.isConnected;
       })
     },
     methods: {
@@ -116,9 +119,11 @@ M<template>
 }
 .notConnected {
   color:red !important;
+  padding-right:0px;
 }
 .actionButton {
   margin-left:0px;
+  margin-right:4px;
   color: rgb(158,158,158) !important;
 }
 </style>
