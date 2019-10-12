@@ -19,6 +19,7 @@
       <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#43A047"/>
       <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#1E88E5"/>
 
+      <v-btn flat small color="blue-grey lighten-3" @click.native="$emit('show-details')">Advanced</v-btn>
       <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'hands')">Reboot</v-btn>
 
     </v-toolbar>

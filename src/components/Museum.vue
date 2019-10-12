@@ -26,11 +26,17 @@
         v-on:close-details="toggleAdvanced('map')"
         v-if="advanced.map == true"
         :operations="operations"/>
+
+      <museum-hands-advanced 
+        v-on:close-details="toggleAdvanced('hands')"
+        v-if="advanced.hands == true"
+        :operations="operations"/>  
     </v-navigation-drawer>
 
     <!-- controls -->
     <v-subheader class="roomHeader">Front Room:</v-subheader>
     <museum-hands 
+      v-on:show-details="toggleAdvanced('hands')" 
       v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
@@ -115,6 +121,7 @@
 <script>
 import Zoltar from '@/components/Museum.Zoltar'
 import Hands from '@/components/Museum.Hands'
+import HandsAdvanced from '@/components/Museum.Hands.Advanced'
 import Cabinet from '@/components/Museum.Cabinet'
 import Laser from '@/components/Museum.Laser'
 import Clock from '@/components/Museum.Clock'
@@ -138,7 +145,8 @@ export default {
       snackText: '',
       advanced: {
         mummy: false,
-        map: false
+        map: false,
+        hands: false
       },
       status: [],
       showDetails: false,
@@ -220,6 +228,7 @@ export default {
   components: {
     'museum-zoltar': Zoltar,
     'museum-hands': Hands,
+    'museum-hands-advanced': HandsAdvanced,
     'museum-cabinet': Cabinet,
     'museum-laser': Laser,
     'museum-clock': Clock,
