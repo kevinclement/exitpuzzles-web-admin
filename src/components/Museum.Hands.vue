@@ -3,21 +3,24 @@
   <v-card flat>
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
-        <v-icon class="cardIcon">pan_tool</v-icon>Hands
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
+        <v-icon class="cardIcon">pan_tool</v-icon>Hands
       </v-toolbar-title>
-      <v-switch 
-        primary
-        v-model="mock"
-        :hide-details="true"
-        @click.native="force"
+
+      <v-switch
+          v-if="isConnected"
+          primary
+          v-model="mock"
+          :hide-details="true"
+          @click.native="force"
       />
       <span class="spacer" />
       <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#EF5350"/>
       <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#43A047"/>
       <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#1E88E5"/>
 
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'hands')">Reboot</v-btn>
+      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'hands')">Reboot</v-btn>
+
     </v-toolbar>
   </v-card>
 
@@ -39,6 +42,7 @@
 
         this.touching = hands.touching
         this.mock = hands.mock
+        this.isConnected = hands.info.isConnected
       })
     },
     methods: {
