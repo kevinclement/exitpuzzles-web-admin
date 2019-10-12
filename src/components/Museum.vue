@@ -2,12 +2,12 @@
   <v-container fluid>
     <!-- connection alert -->
     <v-alert
-        :value="offlineStatus != ''"
+        :value="deviceStatusString != ''"
         color="error"
         icon="new_releases"
         transition="scale-transition"
       >
-        <span v-html="offlineStatus"/>
+        <span v-html="deviceStatusString"/>
     </v-alert>
 
     <!-- advanced panels -->
@@ -42,7 +42,8 @@
 
     <museum-quiz 
       :snack="showSnack" 
-      :operations="operations"/>
+      :operations="operations"
+      :isConnected="status.quiz.connected"/>
 
     <museum-birdcage 
       v-on:reboot-device="showRebootDialog" 
@@ -146,13 +147,12 @@ export default {
     }
   },
   computed: {
-    offlineStatus: function() {
+    deviceStatusString: function() {
       let status = ""
 
-      for(var i in this.status) {
-        let dev = this.status[i]
-        let delta = (new Date()).getTime() - (new Date(dev.ping)).getTime()
-        if (delta > (DEVICE_TIMEOUT_SECONDS * 1000)) {
+      for (const [name, device] of Object.entries(this.status)) {
+        let dev = this.status[name]
+        if (!dev.connected) {
           status += `Device '${dev.name}' is offline.  Last ping at ${dev.ping}<br/>`
         }
       }
@@ -168,12 +168,20 @@ export default {
         let status = snapshot.val()
         if (status == null) return
 
-        let ds = []
+        let ds = {}
         for (const [name, device] of Object.entries(status)) {
-          ds.push({
+          let connected = true
+          let dev = status[name]
+          let delta = (new Date()).getTime() - (new Date(dev.ping)).getTime()
+          if (delta > (DEVICE_TIMEOUT_SECONDS * 1000)) {
+            connected = false
+          }
+
+          ds[name] = {
             "name": name,
-            "ping": device.ping
-          })
+            "ping": dev.ping,
+            "connected": connected
+          }
         }
 
         this.status = ds
@@ -202,6 +210,9 @@ export default {
     showRebootDialog(device) {
       this.dialogRebootDevice = device
       this.dialogRebootShow = true
+    },
+    getStatus(dev) {
+      return this.status[dev].connected
     }
   },
 

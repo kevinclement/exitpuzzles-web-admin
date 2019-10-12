@@ -3,8 +3,8 @@
   <v-card flat>
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
-        <v-icon class="cardIcon">dvr</v-icon>Quiz
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
+        <v-icon class="cardIcon">dvr</v-icon>Quiz
       </v-toolbar-title>
 
       <v-btn icon class="actionButton" @click.native="diag('INSERT DISK', 0)" title="insert disk"><v-icon>save</v-icon></v-btn>
@@ -50,9 +50,8 @@
 
 <script>
   export default {
-    props: ['snack', 'operations'],
+    props: ['snack', 'operations', 'isConnected'],
     data: () => ({
-      isConnected: true,
       state: "",
       dialog: false,
       dialogTitle: '',
@@ -75,7 +74,7 @@
         this.missed = qz.missedQuestions || []
         this.correct = qz.correctQuestions || []
         this.total = qz.total
-        this.currentQuestion = qz.questionIndex + 1;
+        this.currentQuestion = qz.questionIndex + 1
       })
     },
     methods: {
