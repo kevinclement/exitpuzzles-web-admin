@@ -3,17 +3,18 @@
   <v-card flat>
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
-        <v-icon class="cardIcon">trending_down</v-icon>Laser
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
+        <v-icon class="cardIcon">trending_down</v-icon>Laser
       </v-toolbar-title>
-      <v-switch 
+      <v-switch
+        v-if="isConnected" 
         primary
         v-model="enabled"
         :hide-details="true"
         @change="trigger"
       />
       <span class="spacer" />
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'laser')">Reboot</v-btn>
+      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'laser')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 </v-flex>
@@ -30,7 +31,8 @@
       this.$root.$data.museumRoot.child('devices/laser').on('value', (snapshot) => {
         let laser = snapshot.val()
         if (laser == null) return
-        this.enabled = laser.enabled;
+        this.enabled = laser.enabled
+        this.isConnected = laser.info.isConnected
       })
     },
     methods: {
@@ -55,5 +57,6 @@
 }
 .notConnected {
   color:red !important;
+  padding-right:0px;
 }
 </style>
