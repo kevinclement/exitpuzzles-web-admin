@@ -43,7 +43,7 @@
     <museum-quiz 
       :snack="showSnack" 
       :operations="operations"
-      :isConnected="status.quiz.connected"/>
+      :isConnected="status.quiz && status.quiz.connected"/>
 
     <museum-birdcage 
       v-on:reboot-device="showRebootDialog" 

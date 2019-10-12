@@ -7,10 +7,12 @@
         <v-icon class="cardIcon">dvr</v-icon>Quiz
       </v-toolbar-title>
 
-      <v-btn icon class="actionButton" @click.native="diag('INSERT DISK', 0)" title="insert disk"><v-icon>save</v-icon></v-btn>
-      <v-btn icon class="actionButton" @click.native="diag('QUIZ', 1)" title="quiz"><v-icon>list</v-icon></v-btn>
-      <v-btn icon class="actionButton" @click.native="diag('PASSWORD', 2)" title="password"><v-icon>security</v-icon></v-btn>
-      <v-btn icon class="actionButton" @click.native="diag('JOURNAL', 3)" title="journal"><v-icon>menu_book</v-icon></v-btn>
+      <div v-if="isConnected">
+        <v-btn icon class="actionButton" @click.native="diag('INSERT DISK', 0)" title="insert disk"><v-icon>save</v-icon></v-btn>
+        <v-btn icon class="actionButton" @click.native="diag('QUIZ', 1)" title="quiz"><v-icon>list</v-icon></v-btn>
+        <v-btn icon class="actionButton" @click.native="diag('PASSWORD', 2)" title="password"><v-icon>security</v-icon></v-btn>
+        <v-btn icon class="actionButton" @click.native="diag('JOURNAL', 3)" title="journal"><v-icon>menu_book</v-icon></v-btn>
+      </div>
 
       <span class="spacer" />
       <span class="results">
@@ -18,7 +20,7 @@
       missed: {{missed.length}}
       </span>
 
-      <v-btn flat small color="red lighten-3" @click.native="dialogReset = true">Reboot</v-btn>
+      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="dialogReset = true">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
@@ -116,6 +118,7 @@
 }
 .actionButton {
   margin-left:0px;
+  margin-right:4px;
   color: rgb(158,158,158) !important;
 }
 .results {
