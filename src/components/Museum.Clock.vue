@@ -3,14 +3,14 @@
   <v-card flat>
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
-        <v-icon class="cardIcon">access_time</v-icon>Clock
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
+        <v-icon class="cardIcon">access_time</v-icon>Clock
       </v-toolbar-title>
-      <v-btn v-if="!solved" flat icon class="actionButton" @click.native="dialog = true"><v-icon>lock</v-icon></v-btn>
+      <v-btn v-if="!solved && isConnected" flat icon class="actionButton" @click.native="dialog = true"><v-icon>lock</v-icon></v-btn>
       
       <span class="spacer" />
 
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'clock')">Reboot</v-btn>
+      <v-btn  v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'clock')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
@@ -43,6 +43,7 @@
         if (clock == null) return
 
         this.solved = clock.solved
+        this.isConnected = clock.info.isConnected
       })
     },
     methods: {
