@@ -3,14 +3,17 @@
   <v-card flat>
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
-        <v-icon class="cardIcon">line_weight</v-icon>Stairs
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
+        <v-icon class="cardIcon">line_weight</v-icon>Stairs
       </v-toolbar-title>
   
-      <v-btn v-if="!isOpened" class="actionButton" flat icon @click.native="toggleUnsolvable" :title="usTitle"><v-icon>{{usIcon}}</v-icon></v-btn>
-      <v-btn :disabled="level < 2" v-if="!isOpened" class="actionButton" flat icon @click.native="levelDown" title="level down"><v-icon>arrow_downward</v-icon></v-btn>
-      <v-btn :disabled="level > 7" v-if="!isOpened" class="actionButton" flat icon @click.native="levelUp" title="level up"><v-icon>arrow_upward</v-icon></v-btn>
-      <v-btn v-if="!isOpened" class="actionButton" flat icon @click.native="dialog = true" title="solve and open"><v-icon>emoji_events</v-icon></v-btn>
+      <div v-if="isConnected">
+        <v-btn v-if="!isOpened" class="actionButton" flat icon @click.native="toggleUnsolvable" :title="usTitle"><v-icon>{{usIcon}}</v-icon></v-btn>
+        <v-btn :disabled="level < 2" v-if="!isOpened" class="actionButton" flat icon @click.native="levelDown" title="level down"><v-icon>arrow_downward</v-icon></v-btn>
+        <v-btn :disabled="level > 7" v-if="!isOpened" class="actionButton" flat icon @click.native="levelUp" title="level up"><v-icon>arrow_upward</v-icon></v-btn>
+        <v-btn v-if="!isOpened" class="actionButton" flat icon @click.native="dialog = true" title="solve and open"><v-icon>emoji_events</v-icon></v-btn>
+      </div>
+
       <span class="spacer" />
 
       <span v-bind:class="{ notCompleted: level < 2 }" class="stairLevel">1</span>
@@ -22,7 +25,7 @@
       <span v-bind:class="{ notCompleted: level < 8 }" class="stairLevel">7</span>
 
 
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'stairs')">Reboot</v-btn>
+      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'stairs')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
@@ -67,6 +70,7 @@
         this.isOpened = !stairs.magnet;
         this.level = stairs.level;
         this.unsolvable = stairs.unsolvable;
+        this.isConnected = stairs.info.isConnected;
       })
     },
     methods: {
@@ -101,10 +105,12 @@
 }
 .actionButton {
   margin-left:0px;
+  margin-right: 4px;
   color: rgb(158,158,158) !important;
 }
 .notConnected {
   color:red !important;
+  padding-right:0px;
 }
 .stairLevel {
   border-radius: 20%;
