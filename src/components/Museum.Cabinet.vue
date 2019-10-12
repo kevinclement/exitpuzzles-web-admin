@@ -3,16 +3,16 @@
   <v-card flat>
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
-        <v-icon class="cardIcon">meeting_room</v-icon>Cabinet
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
+        <v-icon class="cardIcon">meeting_room</v-icon>Cabinet
       </v-toolbar-title>
 
-      <v-btn v-if="!solved" flat icon class="actionButton" @click.native="dialog = true" title="open cabinet"><v-icon>lock</v-icon></v-btn>
+      <v-btn v-if="isConnected && !solved" flat icon class="actionButton" @click.native="dialog = true" title="open cabinet"><v-icon>lock</v-icon></v-btn>
 
       <span class="spacer" />
 
       <span v-bind:style="{ background: idolColors[idol] }" class="lightDot"/>
-      <v-btn flat small color="red lighten-3" @click.native="$emit('reboot-device', 'cabinet')">Reboot</v-btn>
+      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'cabinet')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
@@ -55,6 +55,7 @@
 
         this.solved = cabinet.solved
         this.idol = cabinet.idol
+        this.isConnected = cabinet.info.isConnected
       })
 
     },
@@ -81,6 +82,7 @@
 }
 .notConnected {
   color:red !important;
+  padding-right: 0px;
 }
 .actionButton {
   margin-left:0px;
