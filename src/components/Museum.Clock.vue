@@ -6,8 +6,10 @@
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
         <v-icon class="cardIcon">access_time</v-icon>Clock
       </v-toolbar-title>
+
+      <v-btn v-if="isConnected" flat icon class="actionButton" @click.native="toggleMotor" :title="motorTitle"><v-icon>{{motorIcon}}</v-icon></v-btn>
       <v-btn v-if="!solved && isConnected" flat icon class="actionButton" @click.native="dialog = true"><v-icon>lock</v-icon></v-btn>
-      
+
       <span class="spacer" />
 
       <span :class="{ timeReached:hour }" class="time">H</span>
@@ -40,8 +42,17 @@
       motor: false,
       hour: false,
       minute: false,
+      motor: false,
       dialog: false,
     }),
+    computed: {
+      motorTitle: function() {
+        return this.motor ? "disable motor" : "enable motor"
+      },
+      motorIcon: function() {
+        return this.motor ? "timer" : "timer_off"
+      }
+    },
     created () {
       this.$root.$data.museumRoot.child('devices/clock').on('value', (snapshot) => {
         let clock = snapshot.val()
@@ -51,12 +62,16 @@
         this.isConnected = clock.info.isConnected
         this.hour = clock.hs
         this.minute = clock.ms
+        this.motor = clock.motor
       })
     },
     methods: {
       trigger() {
         this.dialog = false
         this.operations.addWithToast('clock.open', this.snack('Opened successfully'))
+      },
+      toggleMotor() {
+        this.operations.addWithToast('clock.motor', this.snack('Motor toggled'))
       }
     }
   }
