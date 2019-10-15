@@ -17,25 +17,50 @@
       :hide-overlay="true"
       :stateless="true"
     >
-      <museum-mummy-advanced 
-        v-if="advanced.mummy == true"
+      <museum-hands-advanced 
+        v-if="advanced.hands == true"
         :operations="operations"/>
-      
+
+      <museum-clock-advanced 
+        v-if="advanced.clock == true"
+        :operations="operations"/>
+
+      <museum-quiz-advanced 
+        v-if="advanced.quiz == true"
+        :operations="operations"/>
+
+      <museum-birdcage-advanced
+        v-if="advanced.bird == true"
+        :operations="operations"/>
+
       <museum-map-advanced 
         v-if="advanced.map == true"
+        :operations="operations"/>
+
+      <museum-zoltar-advanced 
+        v-if="advanced.zoltar == true"
         :operations="operations"/>
 
       <museum-cabinet-advanced 
         v-if="advanced.cabinet == true"
         :operations="operations"/>
 
-      <museum-hands-advanced 
-        v-if="advanced.hands == true"
+      <museum-laser-advanced 
+        v-if="advanced.laser == true"
         :operations="operations"/>
 
-      <museum-quiz-advanced 
-        v-if="advanced.quiz == true"
+      <museum-mausoleum-advanced 
+        v-if="advanced.mausoleum == true"
         :operations="operations"/>
+
+      <museum-mummy-advanced 
+        v-if="advanced.mummy == true"
+        :operations="operations"/>
+
+      <museum-stairs-advanced 
+        v-if="advanced.stairs == true"
+        :operations="operations"/>
+
     </v-navigation-drawer>
 
     <!-- controls -->
@@ -110,22 +135,31 @@
 </template>
 
 <script>
-import Zoltar from '@/components/Museum.Zoltar'
+
 import Hands from '@/components/Museum.Hands'
 import HandsAdvanced from '@/components/Museum.Hands.Advanced'
-import Cabinet from '@/components/Museum.Cabinet'
-import CabinetAdvanced from '@/components/Museum.Cabinet.Advanced'
-import Laser from '@/components/Museum.Laser'
 import Clock from '@/components/Museum.Clock'
+import ClockAdvanced from '@/components/Museum.Clock.Advanced'
 import Quiz from '@/components/Museum.Quiz'
 import QuizAdvanced from '@/components/Museum.Quiz.Advanced'
 import Birdcage from '@/components/Museum.Birdcage'
+import BirdcageAdvanced from '@/components/Museum.Birdcage.Advanced'
 import Map from '@/components/Museum.Map'
 import MapAdvanced from '@/components/Museum.Map.Advanced'
+import Zoltar from '@/components/Museum.Zoltar'
+import ZoltarAdvanced from '@/components/Museum.Zoltar.Advanced'
+import Cabinet from '@/components/Museum.Cabinet'
+import CabinetAdvanced from '@/components/Museum.Cabinet.Advanced'
+
+import Laser from '@/components/Museum.Laser'
+import LaserAdvanced from '@/components/Museum.Laser.Advanced'
 import Mausoleum from '@/components/Museum.Mausoleum'
+import MausoleumAdvanced from '@/components/Museum.Mausoleum.Advanced'
 import Mummy from '@/components/Museum.Mummy'
 import MummyAdvanced from '@/components/Museum.Mummy.Advanced'
 import Stairs from '@/components/Museum.Stairs'
+import StairsAdvanced from '@/components/Museum.Stairs.Advanced'
+
 
 const DEVICE_TIMEOUT_SECONDS = 95
 
@@ -137,10 +171,17 @@ export default {
       snackTimeout: 4000,
       snackText: '',
       advanced: {
-        mummy: false,
-        map: false,
         hands: false,
-        quiz: false
+        clock: false,
+        quiz: false,
+        bird: false,
+        map: false,
+        zoltar: false,
+        cabinet: false,
+        laser: false,
+        mausoleum: false,
+        mummy: false,
+        stairs: false
       },
       status: [],
       showDetails: false,
@@ -234,22 +275,29 @@ export default {
   },
 
   components: {
-    'museum-zoltar': Zoltar,
     'museum-hands': Hands,
     'museum-hands-advanced': HandsAdvanced,
-    'museum-cabinet': Cabinet,
-    'museum-cabinet-advanced': CabinetAdvanced,
-    'museum-laser': Laser,
     'museum-clock': Clock,
+    'museum-clock-advanced': ClockAdvanced,
     'museum-quiz': Quiz,
     'museum-quiz-advanced': QuizAdvanced,
     'museum-birdcage': Birdcage,
+    'museum-birdcage-advanced': BirdcageAdvanced,
     'museum-map': Map,
     'museum-map-advanced': MapAdvanced,
+    'museum-zoltar': Zoltar,
+    'museum-zoltar-advanced': ZoltarAdvanced,
+    'museum-cabinet': Cabinet,
+    'museum-cabinet-advanced': CabinetAdvanced,
+
+    'museum-laser': Laser,
+    'museum-laser-advanced': LaserAdvanced,
     'museum-mausoleum': Mausoleum,
+    'museum-mausoleum-advanced': MausoleumAdvanced,
     'museum-mummy': Mummy,
     'museum-mummy-advanced': MummyAdvanced,
     'museum-stairs': Stairs,
+    'museum-stairs-advanced': StairsAdvanced,
   }
 }
 </script>
