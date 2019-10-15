@@ -239,13 +239,15 @@ export default {
 
   methods: {
     showAdvanced(panel) {
-      // make sure others are closed first
+      let show = !this.advanced[panel]
+
+      // make sure others are closed first, this also acts as a toggle
       this.hideAdvanced();
 
-      let state = !this.showDetails;
-
-      this.advanced[panel] = state;
-      this.showDetails = state;
+      if (show) {
+        this.advanced[panel] = true;
+        this.showDetails = true;
+      }
     },
     hideAdvanced() {
       for (const panel of Object.keys(this.advanced)) {

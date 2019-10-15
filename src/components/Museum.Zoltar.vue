@@ -4,7 +4,7 @@ M<template>
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
-        <v-icon class="cardIcon">person</v-icon>Zoltar
+        <span style="cursor:pointer" @click="$root.$emit('show-details', 'zoltar')"><v-icon class="cardIcon">person</v-icon>Zoltar</span>
       </v-toolbar-title>
 
       <!-- TODO: add feature to send user defined message 

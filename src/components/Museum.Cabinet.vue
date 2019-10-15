@@ -4,7 +4,7 @@
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
-        <v-icon class="cardIcon">meeting_room</v-icon>Cabinet
+        <span style="cursor:pointer" @click="$root.$emit('show-details', 'cabinet')"><v-icon class="cardIcon">meeting_room</v-icon>Cabinet</span>
       </v-toolbar-title>
 
       <v-btn v-if="isConnected && !solved" flat icon class="actionButton" @click.native="dialog = true" title="open cabinet"><v-icon>lock</v-icon></v-btn>

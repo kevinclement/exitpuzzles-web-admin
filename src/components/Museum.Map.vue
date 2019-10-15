@@ -4,7 +4,7 @@
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
-        <v-icon class="cardIcon">language</v-icon>Map
+        <span style="cursor:pointer" @click="$root.$emit('show-details', 'map')"><v-icon class="cardIcon">language</v-icon>Map</span>
       </v-toolbar-title>
 
       <span class="spacer" />

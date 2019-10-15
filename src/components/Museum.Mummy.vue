@@ -4,7 +4,7 @@
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
-        <v-icon class="cardIcon">accessibility_new</v-icon>Mummy
+        <span style="cursor:pointer" @click="$root.$emit('show-details', 'mummy')"><v-icon class="cardIcon">accessibility_new</v-icon>Mummy</span>
       </v-toolbar-title>
 
       <v-btn v-if="isConnected && !isOpened" flat icon class="actionButton" @click.native="dialog=true"><v-icon>{{ocIcon}}</v-icon></v-btn>
