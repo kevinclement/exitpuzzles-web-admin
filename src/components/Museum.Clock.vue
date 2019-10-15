@@ -10,6 +10,8 @@
       
       <span class="spacer" />
 
+      <span :class="{ timeReached:hour }" class="time">H</span>
+      <span :class="{ timeReached:minute }" class="time">M</span>
       <v-btn  v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'clock')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
@@ -35,6 +37,9 @@
     data: () => ({
       isConnected: true,
       solved: false,
+      motor: false,
+      hour: false,
+      minute: false,
       dialog: false,
     }),
     created () {
@@ -44,18 +49,14 @@
 
         this.solved = clock.solved
         this.isConnected = clock.info.isConnected
+        this.hour = clock.hs
+        this.minute = clock.ms
       })
     },
     methods: {
       trigger() {
         this.dialog = false
-
-        this.operations.add({ command: 'clock.open' }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Opened successfully.')
-          }
-        });
-
+        this.operations.addWithToast('clock.open', this.snack('Opened successfully'))
       }
     }
   }
@@ -71,12 +72,22 @@
   color:red !important;
   padding-right:0px;
 }
-.time {
-  font-family: Monaco, monospace;
-  font-size:16px;
-}
 .actionButton {
   margin-left:0px;
   color: rgb(158,158,158) !important;
+}
+.time {
+  border-radius: 50%;
+  background: #e0e0e0;
+  height: 20px;
+  width: 20px;
+  text-align: center;
+  line-height: 20px;
+  color: white;
+  font-size: 12px;
+  margin:2px;
+}
+.timeReached {
+  background: #424242;
 }
 </style>
