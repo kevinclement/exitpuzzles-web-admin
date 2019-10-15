@@ -19,71 +19,21 @@
     props: ['operations'],
 
     data: () => ({
-      fiji: false,
-      madagascar: false,
-      alaska: false,
-      india: false,
-      seattle: false,
-      spain: false,
-      argentina: false,
-      curImg: "Map",
-      solved: false
     }),
     computed: {
     },
     created () {
-      this.$root.$data.museumRoot.child('devices/map').on('value', (snapshot) => {
-        let map = snapshot.val()
-        if (map == null) return
-
-        this.fiji = map.magnets.fiji
-        this.madagascar = map.magnets.madagascar
-        this.alaska = map.magnets.alaska
-        this.india = map.magnets.india
-        this.seattle = map.magnets.seattle
-        this.spain = map.magnets.spain
-        this.argentina = map.magnets.argentina
-
-        this.curImg = map.image === "images/FINAL.bmp" ? "map" : "code"
-        this.solved = map.solved
+      this.$root.$data.museumRoot.child('devices/cabinet').on('value', (snapshot) => {
+        let cabinet = snapshot.val()
+        if (cabinet == null) return
       })
     },
     methods: {
-      boolToString(b) {
-        return b ? "Yes" : "No"
-      }
     }
   }
 </script>
 
 <style scoped>
-  .row {
-    padding-left:15px;
-    padding-right: 15px;
-    font-family: Monaco, monospace;
-    font-size:16px;
-  }
-  .no, .yes {
-    display: inline-block;
-    width: 36px;
-    height: 22px;
-    line-height: 22px;
-    padding-left:5px;
-    color: white;
-  }
-  .yes {
-    background: green;
-  }
-  .no {
-    background: red;
-  }
-  .ans {
-    padding-left:35px;
-  }
-  .resCel {
-    padding-left: 23px;
-    text-align: end;
-  }
   .actionRow {
     padding-left:10px;
     padding-right: 10px;

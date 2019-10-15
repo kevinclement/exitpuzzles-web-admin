@@ -169,12 +169,7 @@ export default {
 
     // event handlers for children
     this.$root.$on('show-details', this.showAdvanced)
-    this.$root.$on('close-details', () => {
-      for (const panel of Object.keys(this.advanced)) {
-        this.advanced[panel] = false
-      }
-      this.showDetails = false;
-    });
+    this.$root.$on('close-details', this.hideAdvanced)
     this.$root.$on('reboot-device', this.showRebootDialog)
 
     this.$root.$data.museumRoot.child('status').on('value', (snapshot) => {
@@ -203,10 +198,19 @@ export default {
 
   methods: {
     showAdvanced(panel) {
+      // make sure others are closed first
+      this.hideAdvanced();
+
       let state = !this.showDetails;
 
       this.advanced[panel] = state;
       this.showDetails = state;
+    },
+    hideAdvanced() {
+      for (const panel of Object.keys(this.advanced)) {
+        this.advanced[panel] = false
+      }
+      this.showDetails = false;
     },
     showSnack(msg) {
       this.snackText = msg 
