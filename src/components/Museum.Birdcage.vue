@@ -7,8 +7,7 @@
         <v-icon class="cardIcon">room_service</v-icon>Birdcage
       </v-toolbar-title>
       
-      <v-btn v-if="isConnected" flat icon class="actionButton" @click.native="play" title="play song"><v-icon>play_arrow</v-icon></v-btn>
-      <v-btn v-if="isConnected" flat icon class="actionButton" @click.native="stop" title="stop song"><v-icon>stop</v-icon></v-btn>
+      <v-btn v-if="isConnected" flat icon class="actionButton" @click.native="light" :title="lightTitle"><v-icon>{{lightIcon}}</v-icon></v-btn>
       <v-btn v-if="isConnected && (!solved || trayOpened)" flat icon class="actionButton" @click.native="dialog = true" title="open tray"><v-icon>{{ocIcon}}</v-icon></v-btn>
       <!-- <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayBack"><v-icon>remove</v-icon></v-btn>
       <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayForward"><v-icon>add</v-icon></v-btn> -->
@@ -44,12 +43,19 @@
 
       solved: false,
       lightValue: 0,
+      isLight: false,
       trayOpened: false,
       password: ""
     }),
     computed: {
       ocIcon() {
         return this.solved ? "arrow_back" : "arrow_forward"
+      },
+      lightTitle: function() {
+        return this.isLight ? "cover bird" : "uncover bird";
+      },
+      lightIcon: function() {
+        return this.isLight ? "brightness_low" : "brightness_high";
       },
       dialogTitle: function() {
         return this.solved ? "close" : "open";
@@ -67,6 +73,7 @@
         this.lightValue = bird.lightValue
         this.trayOpened = bird.trayOpened
         this.password = bird.password
+        this.isLight = bird.isLight
         this.isConnected = bird.info.isConnected
       })
     },
@@ -74,15 +81,13 @@
       trayBack() {
         this.operations.add({ command: 'bird.back' }).on("value", (snapshot) => {});
       },
-      play() {
-        this.operations.addWithToast('bird.play', this.snack('Played successfully'))
-      },
-      stop() {
-        this.operations.addWithToast('bird.stop', this.snack('Stopped successfully'))
-      },
       trayForward() {
         this.operations.add({ command: 'bird.forward' }).on("value", (snapshot) => {});
       },
+      light() {
+        this.operations.addWithToast('bird.light', this.snack('Toggled light'))
+      },
+
       trigger() {
         this.dialog = false
         let cmd = this.solved ? 'bird.close' : 'bird.open'
