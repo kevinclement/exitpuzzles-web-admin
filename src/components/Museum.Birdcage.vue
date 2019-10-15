@@ -4,7 +4,7 @@
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
-        <span style="cursor:pointer" @click="$root.$emit('show-details', 'bird')"><v-icon class="cardIcon">room_service</v-icon>Birdcage</span>
+        <span class="secTitle" @click="$root.$emit('show-details', 'bird')"><v-icon class="cardIcon">room_service</v-icon>Birdcage</span>
       </v-toolbar-title>
       
       <v-btn v-if="isConnected" flat icon class="actionButton" @click.native="light" :title="lightTitle"><v-icon>{{lightIcon}}</v-icon></v-btn>

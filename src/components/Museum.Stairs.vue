@@ -4,7 +4,7 @@
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
-        <span style="cursor:pointer" @click="$root.$emit('show-details', 'stairs')"><v-icon class="cardIcon">line_weight</v-icon>Stairs</span>
+        <span class="secTitle" @click="$root.$emit('show-details', 'stairs')"><v-icon class="cardIcon">line_weight</v-icon>Stairs</span>
       </v-toolbar-title>
   
       <div v-if="isConnected">

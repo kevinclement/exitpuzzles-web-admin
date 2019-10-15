@@ -317,6 +317,11 @@ export default {
     height:30px;
   }
 </style>
+
+<!-- GLOBAL CSS -->
 <style>
-  
+  .secTitle {
+    cursor:pointer;
+    user-select: none;
+  }  
 </style>

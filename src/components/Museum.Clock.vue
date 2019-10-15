@@ -4,7 +4,7 @@
     <v-toolbar card>
       <v-toolbar-title style="width:175px;color:#757575">
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
-        <span style="cursor:pointer" @click="$root.$emit('show-details', 'clock')"><v-icon class="cardIcon">access_time</v-icon>Clock</span>
+        <span class="secTitle" @click="$root.$emit('show-details', 'clock')"><v-icon class="cardIcon">access_time</v-icon>Clock</span>
       </v-toolbar-title>
 
       <v-btn v-if="isConnected" flat icon class="actionButton" @click.native="toggleMotor" :title="motorTitle"><v-icon>{{motorIcon}}</v-icon></v-btn>
