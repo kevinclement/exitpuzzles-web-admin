@@ -30,7 +30,12 @@
       <museum-hands-advanced 
         v-on:close-details="toggleAdvanced('hands')"
         v-if="advanced.hands == true"
-        :operations="operations"/>  
+        :operations="operations"/>
+
+      <museum-quiz-advanced 
+        v-on:close-details="toggleAdvanced('quiz')"
+        v-if="advanced.quiz == true"
+        :operations="operations"/>
     </v-navigation-drawer>
 
     <!-- controls -->
@@ -47,6 +52,7 @@
       :operations="operations"/>
 
     <museum-quiz 
+      v-on:show-details="toggleAdvanced('quiz')" 
       :snack="showSnack" 
       :operations="operations"
       :isConnected="status.quiz && status.quiz.connected"/>
@@ -73,7 +79,6 @@
       :snack="showSnack" 
       :operations="operations"/>
 
-    
     <v-subheader class="roomHeader" style="margin-top:20px;">Back Room:</v-subheader>
     <museum-laser 
       v-on:reboot-device="showRebootDialog" 
@@ -126,6 +131,7 @@ import Cabinet from '@/components/Museum.Cabinet'
 import Laser from '@/components/Museum.Laser'
 import Clock from '@/components/Museum.Clock'
 import Quiz from '@/components/Museum.Quiz'
+import QuizAdvanced from '@/components/Museum.Quiz.Advanced'
 import Birdcage from '@/components/Museum.Birdcage'
 import Map from '@/components/Museum.Map'
 import MapAdvanced from '@/components/Museum.Map.Advanced'
@@ -146,7 +152,8 @@ export default {
       advanced: {
         mummy: false,
         map: false,
-        hands: false
+        hands: false,
+        quiz: false
       },
       status: [],
       showDetails: false,
@@ -233,6 +240,7 @@ export default {
     'museum-laser': Laser,
     'museum-clock': Clock,
     'museum-quiz': Quiz,
+    'museum-quiz-advanced': QuizAdvanced,
     'museum-birdcage': Birdcage,
     'museum-map': Map,
     'museum-map-advanced': MapAdvanced,
