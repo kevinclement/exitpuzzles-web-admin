@@ -4,7 +4,7 @@
   <v-toolbar card color="white">
     <v-toolbar-title>Advanced</v-toolbar-title>
     <span class="spacer" />
-    <a v-on:click.stop="$emit('close-details')"><v-icon>close</v-icon></a>
+    <a v-on:click.stop="$root.$emit('close-details')"><v-icon>close</v-icon></a>
   </v-toolbar>
 
   <div class="row" style="padding-top:15px;">

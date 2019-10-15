@@ -14,7 +14,7 @@
 
       <span :class="{ timeReached:hour }" class="time">H</span>
       <span :class="{ timeReached:minute }" class="time">M</span>
-      <v-btn  v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'clock')">Reboot</v-btn>
+      <v-btn  v-if="isConnected" flat small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'clock')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 

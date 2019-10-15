@@ -25,7 +25,7 @@
       <span v-bind:class="{ notCompleted: level < 8 }" class="stairLevel">7</span>
 
 
-      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'stairs')">Reboot</v-btn>
+      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'stairs')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 

@@ -7,37 +7,8 @@
     <a v-on:click.stop="$root.$emit('close-details')"><v-icon>close</v-icon></a>
   </v-toolbar>
 
-  <div class="row" style="padding-top:15px;">
-    <table border=0>
-      <tr>
-        <td>Fiji:</td><td class="ans"><span :class="fiji ? 'yes' : 'no'">{{boolToString(fiji)}}</span></td>
-      </tr>
-      <tr>
-        <td>Madagascar:</td><td class="ans"><span :class="madagascar ? 'yes' : 'no'">{{boolToString(madagascar)}}</span></td>
-      </tr>
-      <tr>
-        <td>Alaska:</td><td class="ans"><span :class="alaska ? 'yes' : 'no'">{{boolToString(alaska)}}</span></td>
-      </tr>
-      <tr>
-        <td>India:</td><td class="ans"><span :class="india ? 'yes' : 'no'">{{boolToString(india)}}</span></td>
-      </tr>
-      <tr>
-        <td>Seattle:</td><td class="ans"><span :class="seattle ? 'yes' : 'no'">{{boolToString(seattle)}}</span></td>
-      </tr>
-      <tr>
-        <td>Spain:</td><td class="ans"><span :class="spain ? 'yes' : 'no'">{{boolToString(spain)}}</span></td>
-      </tr>
-      <tr>
-        <td>Argentina:</td><td class="ans"><span :class="argentina ? 'yes' : 'no'">{{boolToString(argentina)}}</span></td>
-      </tr>
-
-      <tr>
-        <td style="padding-top:25px;">Display:</td><td class="resCel" style="padding-top:25px;" >{{curImg}}</td>
-      </tr>
-      <tr>
-        <td style="">Solved:</td><td class="resCel">{{solved}}</td>
-      </tr>
-    </table>
+  <div class="actionRow">
+    <v-btn small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'cabinet')">Reboot</v-btn>
   </div>
 
 </div>

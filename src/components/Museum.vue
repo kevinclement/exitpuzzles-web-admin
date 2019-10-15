@@ -18,22 +18,22 @@
       :stateless="true"
     >
       <museum-mummy-advanced 
-        v-on:close-details="toggleAdvanced('mummy')"
         v-if="advanced.mummy == true"
         :operations="operations"/>
       
       <museum-map-advanced 
-        v-on:close-details="toggleAdvanced('map')"
         v-if="advanced.map == true"
         :operations="operations"/>
 
+      <museum-cabinet-advanced 
+        v-if="advanced.cabinet == true"
+        :operations="operations"/>
+
       <museum-hands-advanced 
-        v-on:close-details="toggleAdvanced('hands')"
         v-if="advanced.hands == true"
         :operations="operations"/>
 
       <museum-quiz-advanced 
-        v-on:close-details="toggleAdvanced('quiz')"
         v-if="advanced.quiz == true"
         :operations="operations"/>
     </v-navigation-drawer>
@@ -41,63 +41,49 @@
     <!-- controls -->
     <v-subheader class="roomHeader">Front Room:</v-subheader>
     <museum-hands 
-      v-on:show-details="toggleAdvanced('hands')" 
-      v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
 
     <museum-clock 
-      v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
 
     <museum-quiz 
-      v-on:show-details="toggleAdvanced('quiz')" 
       :snack="showSnack" 
       :operations="operations"
       :isConnected="status.quiz && status.quiz.connected"/>
 
     <museum-birdcage 
-      v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
 
     <museum-map 
-      v-on:show-details="toggleAdvanced('map')" 
-      v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"
       :isConnected="status.map && status.map.connected"/>
 
     <museum-zoltar 
-      v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
 
     <museum-cabinet 
-      v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
 
     <v-subheader class="roomHeader" style="margin-top:20px;">Back Room:</v-subheader>
     <museum-laser 
-      v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
 
     <museum-mausoleum
-      v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
 
     <museum-mummy 
-      v-on:show-details="toggleAdvanced('mummy')" 
-      v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
 
     <museum-stairs
-      v-on:reboot-device="showRebootDialog" 
       :snack="showSnack" 
       :operations="operations"/>
 
@@ -128,6 +114,7 @@ import Zoltar from '@/components/Museum.Zoltar'
 import Hands from '@/components/Museum.Hands'
 import HandsAdvanced from '@/components/Museum.Hands.Advanced'
 import Cabinet from '@/components/Museum.Cabinet'
+import CabinetAdvanced from '@/components/Museum.Cabinet.Advanced'
 import Laser from '@/components/Museum.Laser'
 import Clock from '@/components/Museum.Clock'
 import Quiz from '@/components/Museum.Quiz'
@@ -180,6 +167,16 @@ export default {
   created () {
     this.operations =  this.$root.$data.museumOps
 
+    // event handlers for children
+    this.$root.$on('show-details', this.showAdvanced)
+    this.$root.$on('close-details', () => {
+      for (const panel of Object.keys(this.advanced)) {
+        this.advanced[panel] = false
+      }
+      this.showDetails = false;
+    });
+    this.$root.$on('reboot-device', this.showRebootDialog)
+
     this.$root.$data.museumRoot.child('status').on('value', (snapshot) => {
         let status = snapshot.val()
         if (status == null) return
@@ -205,7 +202,7 @@ export default {
   },
 
   methods: {
-    toggleAdvanced(panel)  {
+    showAdvanced(panel) {
       let state = !this.showDetails;
 
       this.advanced[panel] = state;
@@ -237,6 +234,7 @@ export default {
     'museum-hands': Hands,
     'museum-hands-advanced': HandsAdvanced,
     'museum-cabinet': Cabinet,
+    'museum-cabinet-advanced': CabinetAdvanced,
     'museum-laser': Laser,
     'museum-clock': Clock,
     'museum-quiz': Quiz,

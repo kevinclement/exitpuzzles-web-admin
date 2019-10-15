@@ -22,7 +22,7 @@ M<template>
       <v-icon :color="coinColor(2)">monetization_on</v-icon>
       <v-icon :color="coinColor(3)">monetization_on</v-icon>
 
-      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'zoltar')">Reboot</v-btn>
+      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'zoltar')">Reboot</v-btn>
     </v-toolbar>
   </v-card>  
 </v-flex>

@@ -20,7 +20,7 @@
       missed: {{missed.length}}
       </span>
 
-      <v-btn v-if="isConnected" flat small color="blue-grey lighten-3" @click.native="$emit('show-details')">Advanced</v-btn>
+      <v-btn v-if="isConnected" flat small color="blue-grey lighten-3" @click.native="$root.$emit('show-details', 'quiz')">Advanced</v-btn>
       <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="dialogReset = true">Reboot</v-btn>
     </v-toolbar>
   </v-card>

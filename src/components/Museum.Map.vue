@@ -11,7 +11,7 @@
       <span class="results">
         {{enabled}}/{{total}}
       </span>
-      <v-btn flat small color="blue-grey lighten-3" @click.native="$emit('show-details')">Advanced</v-btn>
+      <v-btn flat small color="blue-grey lighten-3" @click.native="$root.$emit('show-details', 'map')">Advanced</v-btn>
     </v-toolbar>
   </v-card>
 

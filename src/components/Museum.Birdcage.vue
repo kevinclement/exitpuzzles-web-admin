@@ -15,7 +15,7 @@
       <span class="spacer" />
 
       <span class="password">{{password}}</span>
-      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$emit('reboot-device', 'bird')">Reboot</v-btn>
+      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'bird')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 

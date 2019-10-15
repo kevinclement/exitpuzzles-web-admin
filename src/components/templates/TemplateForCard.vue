@@ -7,7 +7,7 @@
 
       </v-toolbar-title>
       <span class="spacer" />
-      <v-btn flat small color="blue-grey lighten-3" @click.native="$emit('show-details')">Advanced</v-btn>
+      <v-btn flat small color="blue-grey lighten-3" @click.native="$root.$emit('show-details', 'aPanel')">Advanced</v-btn>
       <v-btn flat small color="red lighten-3" @click.native="reboot = true">Reboot</v-btn>
     </v-toolbar>
 
