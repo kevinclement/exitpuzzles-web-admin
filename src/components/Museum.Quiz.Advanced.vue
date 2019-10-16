@@ -45,7 +45,7 @@
       },
     },
     created () {
-      this.$root.$data.museumRoot.child('devices/quiz').on('value', (snapshot) => {
+      this.$root.$data.museumRoot.child('devices/quiz').once('value', (snapshot) => {
         let quiz = snapshot.val()
         if (quiz == null) return
 
