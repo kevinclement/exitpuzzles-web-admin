@@ -76,7 +76,7 @@
         this.force = qz.force
         this.missed = qz.missedQuestions || []
         this.correct = qz.correctQuestions || []
-        this.total = qz.total
+        this.total = qz.currentTotal || 0
         this.currentQuestion = qz.questionIndex + 1
       })
     },
