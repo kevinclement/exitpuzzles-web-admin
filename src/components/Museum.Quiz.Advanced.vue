@@ -9,8 +9,8 @@
 
   <div class="advForm">
 
-    <v-text-field type="number" v-model="form.tm" label="Timeout" :disabled="loading"/>
-    <v-text-field type="number" v-model="form.to" label="Total" :disabled="loading" />
+    <v-text-field type="number" v-model="form.timeout" label="Timeout" :disabled="loading"/>
+    <v-text-field type="number" v-model="form.total" label="Total" :disabled="loading" />
 
   </div>
   <div style="margin:5px 10px 0px 10px">
@@ -31,8 +31,8 @@
       total:0,
 
       form:  {
-        tm: 0,
-        to: 0
+        timeout: 0,
+        total: 0
       },
     }),
     computed: {
@@ -41,7 +41,7 @@
         return !(!this.loading && this.dirty) 
       },
       dirty: function() {
-        return this.form.tm != this.timeout || this.form.to != this.total
+        return this.form.timeout != this.timeout || this.form.total != this.total
       },
     },
     created () {
@@ -59,21 +59,27 @@
     },
     methods: {
       save() {
-        this.timeout = this.form.tm
-        this.total = this.form.to
+        let obj = {
+          timeout: this.form.timeout,
+          total: this.form.total
+        }
+
+        // only force a screen change if we changed the total
+        if (this.total != this.form.total) {
+          obj.force = 1
+        }
+
+        this.timeout = this.form.timeout
+        this.total = this.form.total
 
         // save the new config and force a quiz restart
-        this.$root.$data.museumRoot.child('devices/quiz').update({
-          timeout: this.timeout,
-          total: this.total,
-          force: 1
-        })
+        this.$root.$data.museumRoot.child('devices/quiz').update(obj)
 
         this.$root.$emit('close-details')
       },
       reset() {
-        this.form.tm = this.timeout
-        this.form.to = this.total
+        this.form.timeout = this.timeout
+        this.form.total = this.total
       },
     }
   }
