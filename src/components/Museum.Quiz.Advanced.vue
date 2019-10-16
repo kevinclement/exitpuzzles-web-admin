@@ -59,21 +59,14 @@
     },
     methods: {
       save() {
-        let obj = {
-          timeout: this.form.timeout,
-          total: this.form.total
-        }
-
-        // only force a screen change if we changed the total
-        if (this.total != this.form.total) {
-          obj.force = 1
-        }
-
         this.timeout = this.form.timeout
         this.total = this.form.total
 
         // save the new config and force a quiz restart
-        this.$root.$data.museumRoot.child('devices/quiz').update(obj)
+        this.$root.$data.museumRoot.child('devices/quiz').update({
+          timeout: this.form.timeout,
+          total: this.form.total
+        })
 
         this.$root.$emit('close-details')
       },
