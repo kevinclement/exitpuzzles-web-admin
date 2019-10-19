@@ -10,7 +10,13 @@
   <div class="advForm">
     <v-text-field style="width:100px;display:inline-block;margin-right:20px;" type="number" v-model="form.hours" label="Hours" :disabled="loading"/>
     <v-text-field style="width:100px;display:inline-block;margin-left: 20px;" type="number" v-model="form.minutes" label="Minutes" :disabled="loading" />
-    <v-text-field type="string" multi-line style="width:200px;" rows="2" v-model="form.adhoc" label="Adhoc" :disabled="loading" />
+    <div>
+      <v-text-field type="string" multi-line class="adhocMulti" rows="2" v-model="form.adhoc" label="Adhoc" :disabled="loading" />
+      <v-btn class="clueSnd" title="Play clue sound" @click.native="playNotice">
+        <v-icon color="grey lighten-1">volume_up</v-icon>
+      </v-btn>
+    </div>
+    
 
     <div class="clueWrap" v-for="clue in Object.entries(clues)" :key="clue[0]">
       <img :class="{ clueSel: clue[1].sel }" @click="imgSel(clue[0])" class="clueImg" :src="imgSrc(clue[1].img)" :title="clue[0]"/>
@@ -20,7 +26,6 @@
   <div style="margin:25px 10px 0px 10px">
     <v-btn small @click.native="save" :disabled="saveDisabled">save</v-btn>
     <v-btn small @click.native="reset"> reset</v-btn>
-    
   </div>
 
 </div>
@@ -126,6 +131,11 @@
         this.form.adhoc = this.adhoc
         this.resetSel(this.clue)
       },
+      playNotice() {
+        this.$root.$data.museumRoot.child('devices/dashboard').update({
+          notice: true
+        })
+      },
       imgSrc(img) {
         return '/static/museum/clues/' + img
       },
@@ -156,15 +166,11 @@
     padding-left:15px;
     padding-right: 15px;
   }
-  .actionRow {
-    padding-left:10px;
-    padding-right: 10px;
-    padding-top:15px;
-    padding-bottom:10px;
-  }
-  .actionRow button {
-    margin-top:0px;
-    margin-bottom:0px;
+  .clueSnd {
+    display: inline-block;
+    margin-top: 31px;
+    margin-bottom: 0px;
+    margin-left: 5px;
   }
 
   .clueWrap {
@@ -182,7 +188,10 @@
     border:3px solid rgba(0, 0, 0, 0.6);
     border-radius: 4px
   }
-  
+  .adhocMulti {
+    width:200px;
+    display: inline-block;
+  }
 </style>
 <style>
   input[type=number]::-webkit-inner-spin-button {
