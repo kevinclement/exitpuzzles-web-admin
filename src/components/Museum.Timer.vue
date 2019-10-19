@@ -5,7 +5,7 @@
       <v-toolbar-title style="width:175px;color:#757575">
         <v-icon v-if="!isConnected" class="cardIcon notConnected" title="Device disconnected">report_problem</v-icon>
         
-        <span class="secTitle" @click="$root.$emit('show-details', 'hands')"><v-icon class="cardIcon">hourglass_full</v-icon>Timer</span>
+        <span class="secTitle" @click="$root.$emit('show-details', 'timer')"><v-icon class="cardIcon">hourglass_full</v-icon>Timer</span>
       </v-toolbar-title>
 
       <span class="spacer" />
