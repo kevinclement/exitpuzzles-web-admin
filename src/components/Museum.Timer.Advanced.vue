@@ -39,7 +39,9 @@
         dodo: { sel: false, img: "dodo.png", index:1 },
         hands: { sel: false, img: "hands.png", index:3 },
         map: { sel: false, img: "map.png", index:5 },
-        chair: { sel: false, img: "laser-chair.png", index:11 }
+        chair: { sel: false, img: "laser-chair.png", index:11 },
+        laser: { sel: false, img: "laser.align.png", index:4 }
+
       },
       clue: -2,
       route: "",
@@ -76,20 +78,29 @@
     },
     methods: {
       save() {
-        this.hours = this.form.hours
-        this.minutes = this.form.minutes
         this.clue = this.form.clue
         this.route = this.form.clue == -1 ? "home" : "clue"
         this.adhoc = "" // TODO
 
-        // save the new config and force a quiz restart
-        this.$root.$data.museumRoot.child('devices/dashboard').update({
-          hours: this.hours,
-          minutes: this.minutes,
+        let obj = {
           clue: this.clue,
           route: this.route,
           adhoc: this.adhoc
-        })
+        }
+
+        // since time is a snapshot, only update it if we've changed it
+        if (this.hours != this.form.hours) {
+          this.hours = this.form.hours
+          obj.hours = this.hours
+        } 
+        
+        if (this.minutes != this.form.minutes) {
+          this.minutes = this.form.minutes
+          obj.minutes = this.minutes
+        }
+
+        // save the new config and force a quiz restart
+        this.$root.$data.museumRoot.child('devices/dashboard').update(obj)
       },
       reset() {
         this.form.hours = this.hours
