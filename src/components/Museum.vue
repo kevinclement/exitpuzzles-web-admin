@@ -14,6 +14,7 @@
     <v-navigation-drawer fixed app clipped right dense
       v-model="showDetails"
       class="rightDrawer"
+      :class="{ largerDrawer: largerDrawer }"
       :hide-overlay="true"
       :stateless="true"
     >
@@ -213,6 +214,9 @@ export default {
       }
 
       return status
+    },
+    largerDrawer: function() {
+      return this.advanced.timer == true
     }
   },
 
@@ -320,6 +324,9 @@ export default {
 <style scoped>
   .rightDrawer {
     z-index:1;
+  }
+  .largerDrawer {
+    width: 346px !important;
   }
   .roomHeader {
     font-size:18px;

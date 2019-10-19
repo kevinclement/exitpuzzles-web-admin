@@ -8,12 +8,14 @@
   </v-toolbar>
 
   <div class="advForm">
-
     <v-text-field type="number" v-model="form.hours" label="Hours" :disabled="loading"/>
     <v-text-field type="number" v-model="form.minutes" label="Minutes" :disabled="loading" />
 
+    <div class="clueWrap" v-for="clue in Object.entries(clues)" :key="clue[0]">
+      <img :class="{ clueSel: clue[1].sel }" @click="imgSel(clue[0])" class="clueImg" :src="imgSrc(clue[1].img)" :title="clue[0]"/>
+    </div>
   </div>
-  <div style="margin:5px 10px 0px 10px">
+  <div style="margin:25px 10px 0px 10px">
     <v-btn small @click.native="save" :disabled="saveDisabled">save</v-btn>
     <v-btn small @click.native="reset"> reset</v-btn>
   </div>
@@ -30,6 +32,15 @@
 
       hours:0,
       minutes:0,
+
+      clues: {
+        home: { sel: false, img: "home.png" },
+        clock: { sel: false, img: "clock.png" },
+        map: { sel: false, img: "map.png" },
+        dodo: { sel: false, img: "dodo.png" },
+        hands: { sel: false, img: "hands.png" },
+        chair: { sel: false, img: "laser-chair.png" }
+      },  
 
       form:  {
         hours: 0,
@@ -71,7 +82,23 @@
       reset() {
         this.form.hours = this.hours
         this.form.minutes = this.minutes
+        this.resetSel()
       },
+      imgSrc(img) {
+        return '/static/museum/clues/' + img
+      },
+      imgSel(key) {
+        // turn all others off
+        this.resetSel()
+
+        // turn selected on on/off
+        this.clues[key].sel = !this.clues[key].sel
+      },
+      resetSel() {
+        for (const [k, clue] of Object.entries(this.clues)) {
+          this.clues[k].sel = false
+        }
+      }
     }
   }
 </script>
@@ -91,5 +118,22 @@
     margin-top:0px;
     margin-bottom:0px;
   }
+
+  .clueWrap {
+    display: inline-block;
+    width: 100px;
+    height: 80px;
+    padding-right:3px;
+  }
+  .clueImg {
+    width: 100px;
+    height: 80px;
+    border:3px solid rgba(0, 0, 0, 0.0);
+  }
+  .clueSel {
+    border:3px solid rgba(0, 0, 0, 0.6);
+    border-radius: 4px
+  }
+  
 </style>
 
