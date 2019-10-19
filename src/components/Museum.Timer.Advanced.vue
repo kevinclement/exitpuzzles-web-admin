@@ -10,7 +10,7 @@
   <div class="advForm">
     <v-text-field style="width:100px;display:inline-block;margin-right:20px;" type="number" v-model="form.hours" label="Hours" :disabled="loading"/>
     <v-text-field style="width:100px;display:inline-block;margin-left: 20px;" type="number" v-model="form.minutes" label="Minutes" :disabled="loading" />
-    <v-text-field type="string" v-model="form.adhoc" label="Adhoc" :disabled="loading" />
+    <v-text-field type="string" multi-line style="width:200px;" rows="2" v-model="form.adhoc" label="Adhoc" :disabled="loading" />
 
     <div class="clueWrap" v-for="clue in Object.entries(clues)" :key="clue[0]">
       <img :class="{ clueSel: clue[1].sel }" @click="imgSel(clue[0])" class="clueImg" :src="imgSrc(clue[1].img)" :title="clue[0]"/>
@@ -51,7 +51,6 @@
         laser:     { sel: false, index:  4, img: "laser.align.png" },
         readme:    { sel: false, index:  8, img: "readme.png" },
         translate: { sel: false, index:  9, img: "translate.png" }
-  
       },
       clue: -2,
       route: "",
@@ -183,5 +182,13 @@
     border-radius: 4px
   }
   
+</style>
+<style>
+  input[type=number]::-webkit-inner-spin-button {
+      display:none;
+  }
+  textarea {
+      resize: none;
+  }
 </style>
 
