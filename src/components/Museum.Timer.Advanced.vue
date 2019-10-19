@@ -34,17 +34,21 @@
       minutes:0,
 
       clues: {
-        home: { sel: false, img: "home.png" },
-        clock: { sel: false, img: "clock.png" },
-        map: { sel: false, img: "map.png" },
-        dodo: { sel: false, img: "dodo.png" },
-        hands: { sel: false, img: "hands.png" },
-        chair: { sel: false, img: "laser-chair.png" }
-      },  
+        home: { sel: false, img: "home.png", index:-1 },
+        clock: { sel: false, img: "clock.png", index:0 },
+        dodo: { sel: false, img: "dodo.png", index:1 },
+        hands: { sel: false, img: "hands.png", index:3 },
+        map: { sel: false, img: "map.png", index:5 },
+        chair: { sel: false, img: "laser-chair.png", index:11 }
+      },
+      clue: -2,
+      route: "",
+      adhoc: "",
 
       form:  {
         hours: 0,
-        minutes: 0
+        minutes: 0,
+        clue: -2
       },
     }),
     computed: {
@@ -53,7 +57,7 @@
         return !(!this.loading && this.dirty) 
       },
       dirty: function() {
-        return this.form.hours != this.hours || this.form.minutes != this.minutes
+        return this.form.hours != this.hours || this.form.minutes != this.minutes || this.form.clue != this.clue
       },
     },
     created () {
@@ -63,6 +67,8 @@
 
         this.hours = dash.hours
         this.minutes = dash.minutes
+        this.clue = dash.clue
+        this.route = dash.route
 
         this.reset();
         this.loading = false;
@@ -72,17 +78,24 @@
       save() {
         this.hours = this.form.hours
         this.minutes = this.form.minutes
+        this.clue = this.form.clue
+        this.route = this.form.clue == -1 ? "home" : "clue"
+        this.adhoc = "" // TODO
 
         // save the new config and force a quiz restart
         this.$root.$data.museumRoot.child('devices/dashboard').update({
           hours: this.hours,
-          minutes: this.minutes
+          minutes: this.minutes,
+          clue: this.clue,
+          route: this.route,
+          adhoc: this.adhoc
         })
       },
       reset() {
         this.form.hours = this.hours
         this.form.minutes = this.minutes
-        this.resetSel()
+        this.form.clue = this.clue
+        this.resetSel(this.clue)
       },
       imgSrc(img) {
         return '/static/museum/clues/' + img
@@ -93,10 +106,11 @@
 
         // turn selected on on/off
         this.clues[key].sel = !this.clues[key].sel
+        this.form.clue = this.clues[key].index
       },
-      resetSel() {
+      resetSel(c) {
         for (const [k, clue] of Object.entries(this.clues)) {
-          this.clues[k].sel = false
+          this.clues[k].sel = c && clue.index == c          
         }
       }
     }
