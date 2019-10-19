@@ -71,7 +71,8 @@
       dirty: function() {
         let res = this.form.hours != this.hours ||
           this.form.minutes != this.minutes ||
-          this.form.clue != this.clue 
+          this.form.clue != this.clue || 
+          this.form.adhoc != this.adhoc
 
         return res
           
