@@ -20,6 +20,7 @@
   <div style="margin:25px 10px 0px 10px">
     <v-btn small @click.native="save" :disabled="saveDisabled">save</v-btn>
     <v-btn small @click.native="reset"> reset</v-btn>
+    
   </div>
 
 </div>
@@ -50,8 +51,7 @@
         laser:     { sel: false, index:  4, img: "laser.align.png" },
         readme:    { sel: false, index:  8, img: "readme.png" },
         translate: { sel: false, index:  9, img: "translate.png" }
-        
-
+  
       },
       clue: -2,
       route: "",
@@ -70,7 +70,12 @@
         return !(!this.loading && this.dirty) 
       },
       dirty: function() {
-        return this.form.hours != this.hours || this.form.minutes != this.minutes || this.form.clue != this.clue
+        let res = this.form.hours != this.hours ||
+          this.form.minutes != this.minutes ||
+          this.form.clue != this.clue 
+
+        return res
+          
       },
     },
     created () {
@@ -127,6 +132,11 @@
       imgSel(key) {
         // turn all others off
         this.resetSel()
+
+        // if empty isn't selected, clear adhoc
+        if (key != 'empty') {
+          this.form.adhoc = ""
+        }
 
         // turn selected on on/off
         this.clues[key].sel = !this.clues[key].sel
