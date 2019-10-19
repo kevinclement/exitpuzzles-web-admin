@@ -17,6 +17,10 @@
       :hide-overlay="true"
       :stateless="true"
     >
+      <museum-timer-advanced 
+        v-if="advanced.timer == true"
+        :operations="operations"/>
+
       <museum-hands-advanced 
         v-if="advanced.hands == true"
         :operations="operations"/>
@@ -65,6 +69,10 @@
 
     <!-- controls -->
     <v-subheader class="roomHeader">Front Room:</v-subheader>
+    <museum-timer 
+      :snack="showSnack" 
+      :operations="operations"/>
+
     <museum-hands 
       :snack="showSnack" 
       :operations="operations"/>
@@ -136,6 +144,8 @@
 
 <script>
 
+import Timer from '@/components/Museum.Timer'
+import TimerAdvanced from '@/components/Museum.Timer.Advanced'
 import Hands from '@/components/Museum.Hands'
 import HandsAdvanced from '@/components/Museum.Hands.Advanced'
 import Clock from '@/components/Museum.Clock'
@@ -171,6 +181,7 @@ export default {
       snackTimeout: 4000,
       snackText: '',
       advanced: {
+        timer: false,
         hands: false,
         clock: false,
         quiz: false,
@@ -277,6 +288,8 @@ export default {
   },
 
   components: {
+    'museum-timer': Timer,
+    'museum-timer-advanced': TimerAdvanced,
     'museum-hands': Hands,
     'museum-hands-advanced': HandsAdvanced,
     'museum-clock': Clock,
