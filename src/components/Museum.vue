@@ -326,7 +326,7 @@ export default {
     z-index:1;
   }
   .largerDrawer {
-    width: 346px !important;
+    width: 350px !important;
   }
   .roomHeader {
     font-size:18px;

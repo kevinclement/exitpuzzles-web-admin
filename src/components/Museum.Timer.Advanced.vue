@@ -8,12 +8,14 @@
   </v-toolbar>
 
   <div class="advForm">
-    <v-text-field type="number" v-model="form.hours" label="Hours" :disabled="loading"/>
-    <v-text-field type="number" v-model="form.minutes" label="Minutes" :disabled="loading" />
+    <v-text-field style="width:100px;display:inline-block;margin-right:20px;" type="number" v-model="form.hours" label="Hours" :disabled="loading"/>
+    <v-text-field style="width:100px;display:inline-block;margin-left: 20px;" type="number" v-model="form.minutes" label="Minutes" :disabled="loading" />
+    <v-text-field type="string" v-model="form.adhoc" label="Adhoc" :disabled="loading" />
 
     <div class="clueWrap" v-for="clue in Object.entries(clues)" :key="clue[0]">
       <img :class="{ clueSel: clue[1].sel }" @click="imgSel(clue[0])" class="clueImg" :src="imgSrc(clue[1].img)" :title="clue[0]"/>
     </div>
+    
   </div>
   <div style="margin:25px 10px 0px 10px">
     <v-btn small @click.native="save" :disabled="saveDisabled">save</v-btn>
@@ -34,13 +36,21 @@
       minutes:0,
 
       clues: {
-        home: { sel: false, img: "home.png", index:-1 },
-        clock: { sel: false, img: "clock.png", index:0 },
-        dodo: { sel: false, img: "dodo.png", index:1 },
-        hands: { sel: false, img: "hands.png", index:3 },
-        map: { sel: false, img: "map.png", index:5 },
-        chair: { sel: false, img: "laser-chair.png", index:11 },
-        laser: { sel: false, img: "laser.align.png", index:4 }
+        home:      { sel: false, index: -1, img: "home.png" },
+        empty:     { sel: false, index: -2, img: "empty.png" },
+        totem:     { sel: false, index: 10, img: "totem.png" },
+        clock:     { sel: false, index:  0, img: "clock2.png" },
+        dodo:      { sel: false, index:  1, img: "dodo.png" },
+        color:     { sel: false, index:  3, img: "hands.png" },
+        hands:     { sel: false, index:  2, img: "colors.png" },
+        map:       { sel: false, index:  5, img: "map.png" },
+        riddle:    { sel: false, index:  6, img: "riddle.png" },
+        safe:      { sel: false, index:  7, img: "safe.png" },
+        chair:     { sel: false, index: 11, img: "laser-chair.png" },
+        laser:     { sel: false, index:  4, img: "laser.align.png" },
+        readme:    { sel: false, index:  8, img: "readme.png" },
+        translate: { sel: false, index:  9, img: "translate.png" }
+        
 
       },
       clue: -2,
@@ -50,7 +60,8 @@
       form:  {
         hours: 0,
         minutes: 0,
-        clue: -2
+        clue: -2,
+        adhoc: ""
       },
     }),
     computed: {
@@ -71,6 +82,7 @@
         this.minutes = dash.minutes
         this.clue = dash.clue
         this.route = dash.route
+        this.adhoc = dash.adhoc
 
         this.reset();
         this.loading = false;
@@ -80,7 +92,7 @@
       save() {
         this.clue = this.form.clue
         this.route = this.form.clue == -1 ? "home" : "clue"
-        this.adhoc = "" // TODO
+        this.adhoc = this.form.adhoc
 
         let obj = {
           clue: this.clue,
@@ -106,6 +118,7 @@
         this.form.hours = this.hours
         this.form.minutes = this.minutes
         this.form.clue = this.clue
+        this.form.adhoc = this.adhoc
         this.resetSel(this.clue)
       },
       imgSrc(img) {
