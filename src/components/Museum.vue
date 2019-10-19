@@ -109,15 +109,15 @@
       :snack="showSnack" 
       :operations="operations"/>
 
-    <museum-mausoleum
-      :snack="showSnack" 
-      :operations="operations"/>
-
     <museum-mummy 
       :snack="showSnack" 
       :operations="operations"/>
 
     <museum-stairs
+      :snack="showSnack" 
+      :operations="operations"/>
+
+    <museum-mausoleum
       :snack="showSnack" 
       :operations="operations"/>
 
