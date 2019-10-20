@@ -77,7 +77,7 @@
     computed: {
     },
     created () {
-      this.$root.$data.museumRoot.child('devices/bulb').on('value', (snapshot) => {
+      this.$root.$data.museumRoot.child('devices/bulbs').on('value', (snapshot) => {
         let bulb = snapshot.val()
         if (bulb == null) return
 
