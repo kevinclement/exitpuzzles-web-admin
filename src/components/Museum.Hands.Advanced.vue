@@ -37,8 +37,14 @@
       <tr><td>6-1:</td><td class="ans"><span :class="getClass('6-1')">{{state['6-1']}}</span></td></tr>
       <tr><td>6-2:</td><td class="ans"><span :class="getClass('6-2')">{{state['6-2']}}</span></td></tr>
       <tr><td>6-3:</td><td class="ans"><span :class="getClass('6-3')">{{state['6-3']}}</span></td></tr>
-
     </table>
+    <div style="padding-top: 20px;">
+      {{stats.start}}
+    </div>
+    <div >
+      connected: {{percentConnected}}%
+    </div>
+    
   </div>
 </div>
 </template>
@@ -72,14 +78,46 @@
         "6-1": "",
         "6-2": "",
         "6-3": ""
+      },
+      stats: {
+        connects: 0,
+        disconnects: 0,
+        start: "",
+        timeDisconnectedMS: 0
       }
     }),
     computed: {
+      percentConnected: function() {
+      
+        if (this.stats.start == "") {
+          return 0
+        }
+
+        var then = new Date(this.stats.start)
+        var now = new Date()
+        var totalMS = (now - then) * 18
+        var totalConnected = totalMS - this.stats.timeDisconnectedMS
+        var perc = (totalConnected / totalMS) * 100
+
+        // just grab 2 decimal places
+        var parts = perc.toString().split('.')
+        var p1 = parts[0]
+        var p2 = parts[1].substring(0,2)
+
+        return `${p1}.${p2}`;
+      }
     },
     created () {
       this.$root.$data.museumRoot.child('devices/bulbs').on('value', (snapshot) => {
         let bulb = snapshot.val()
         if (bulb == null) return
+
+        if (bulb.stats) {
+          this.stats.connects = bulb.stats.connects;
+          this.stats.disconnects = bulb.stats.disconnects;
+          this.stats.start = bulb.stats.start;
+          this.stats.timeDisconnectedMS = bulb.stats.timeDisconnectedMS;
+        }
 
         for (const [b, state] of Object.entries(bulb)) {
           this.state[b] = state
