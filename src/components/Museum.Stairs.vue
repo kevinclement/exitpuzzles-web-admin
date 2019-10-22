@@ -16,13 +16,15 @@
 
       <span class="spacer" />
 
-      <span v-bind:class="{ notCompleted: level < 2 }" class="stairLevel">1</span>
-      <span v-bind:class="{ notCompleted: level < 3 }" class="stairLevel">2</span>
-      <span v-bind:class="{ notCompleted: level < 4 }" class="stairLevel">3</span>
-      <span v-bind:class="{ notCompleted: level < 5 }" class="stairLevel">4</span>
-      <span v-bind:class="{ notCompleted: level < 6 }" class="stairLevel">5</span>
-      <span v-bind:class="{ notCompleted: level < 7 }" class="stairLevel">6</span>
-      <span v-bind:class="{ notCompleted: level < 8 }" class="stairLevel">7</span>
+      <div class="status">
+        <span v-bind:class="{ notCompleted: level < 2 }" class="stairLevel">1</span>
+        <span v-bind:class="{ notCompleted: level < 3 }" class="stairLevel">2</span>
+        <span v-bind:class="{ notCompleted: level < 4 }" class="stairLevel">3</span>
+        <span v-bind:class="{ notCompleted: level < 5 }" class="stairLevel">4</span>
+        <span v-bind:class="{ notCompleted: level < 6 }" class="stairLevel">5</span>
+        <span v-bind:class="{ notCompleted: level < 7 }" class="stairLevel">6</span>
+        <span v-bind:class="{ notCompleted: level < 8 }" class="stairLevel">7</span>
+      </div>
 
     </v-toolbar>
   </v-card>

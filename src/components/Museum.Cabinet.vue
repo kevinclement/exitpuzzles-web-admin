@@ -11,7 +11,9 @@
 
       <span class="spacer" />
 
-      <span v-bind:style="{ background: idolColors[idol] }" class="lightDot"/>
+      <div class="status">
+        <span v-bind:style="{ background: idolColors[idol] }" class="lightDot"/>
+      </div>
 
     </v-toolbar>
   </v-card>

@@ -18,9 +18,11 @@ M<template>
 
       <span class="spacer" />
 
-      <v-icon :color="coinColor(1)">monetization_on</v-icon>
-      <v-icon :color="coinColor(2)">monetization_on</v-icon>
-      <v-icon :color="coinColor(3)">monetization_on</v-icon>
+      <div class="status">
+        <v-icon :color="coinColor(1)">monetization_on</v-icon>
+        <v-icon :color="coinColor(2)">monetization_on</v-icon>
+        <v-icon :color="coinColor(3)">monetization_on</v-icon>
+      </div>
 
     </v-toolbar>
   </v-card>  

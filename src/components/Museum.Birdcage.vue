@@ -14,7 +14,9 @@
 
       <span class="spacer" />
 
-      <span class="password">{{password}}</span>
+      <div class="status">
+        <span class="password">{{password}}</span>
+      </div>
 
     </v-toolbar>
   </v-card>
@@ -109,5 +111,4 @@
   font-family: Monaco, monospace;
   font-size:16px;
 }
-
 </style>

@@ -371,7 +371,7 @@ export default {
   .status {
     display:none;
   }
-  @media (min-width: 600px) { 
+  @media (min-width: 600px) {
     .status {
       display:flex;
     }

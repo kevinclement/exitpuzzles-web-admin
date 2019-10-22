@@ -12,8 +12,10 @@
 
       <span class="spacer" />
 
-      <span :class="{ timeReached:hour }" class="time">H</span>
-      <span :class="{ timeReached:minute }" class="time">M</span>
+      <div class="status">
+        <span :class="{ timeReached:hour }" class="time">H</span>
+        <span :class="{ timeReached:minute }" class="time">M</span>
+      </div>
 
     </v-toolbar>
   </v-card>

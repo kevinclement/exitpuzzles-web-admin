@@ -15,11 +15,14 @@
           :hide-details="true"
           @click.native="force"
       />
+
       <span class="spacer" />
-      
-      <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#EF5350"/>
-      <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#43A047"/>
-      <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#1E88E5"/>
+
+      <div class="status">
+        <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#EF5350"/>
+        <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#43A047"/>
+        <span v-bind:class="{ notHolding: !touching }" class="lightDot" style="background:#1E88E5"/>
+      </div>
 
     </v-toolbar>
   </v-card>

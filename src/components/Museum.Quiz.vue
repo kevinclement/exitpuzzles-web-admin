@@ -15,9 +15,9 @@
       </div>
 
       <span class="spacer" />
-      <span class="results">
-      {{currentQuestion}}/{{total}}
-      missed: {{missed.length}}
+      <span class="results status">
+        {{currentQuestion}}/{{total}}
+        missed: {{missed.length}}
       </span>
 
     </v-toolbar>

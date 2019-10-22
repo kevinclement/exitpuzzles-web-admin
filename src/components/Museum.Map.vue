@@ -8,7 +8,7 @@
       </v-toolbar-title>
 
       <span class="spacer" />
-      <span class="results">
+      <span class="results status">
         {{enabled}}/{{total}}
       </span>
     </v-toolbar>
