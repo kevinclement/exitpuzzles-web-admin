@@ -7,40 +7,10 @@
     <a v-on:click.stop="$root.$emit('close-details')"><v-icon>close</v-icon></a>
   </v-toolbar>
 
-  <div class="advForm">
-
-    <v-text-field type="number" v-model="form.db" label="Debounce" :disabled="loading"/>
-    <v-text-field type="number" v-model="form.lnfm" label="Lightning: max flashes" :disabled="loading" />
-    <v-text-field type="number" v-model="form.ltbe" label="Lightning: time between events" :disabled="loading"/>
-    <v-text-field type="number" v-model="form.ltbf" label="Lightning: time between flashes" :disabled="loading"/>
-    <v-text-field type="number" v-model="form.mos" label="Primary Sensitivity" :disabled="loading" />
-    <v-text-field type="number" v-model="form.mts" label="Secondary Sensitivity" :disabled="loading" :hide-details="true"/>
-
-  </div>
   <div class="actionRow">
-    <v-btn icon class="mx-0" title="Preload motor" @click.native="run('preload')">
-      <v-icon color="grey lighten-1">network_check</v-icon>
-    </v-btn>
-    <v-btn icon class="mx-0" title="Stop motor" @click.native="run('acstop')">
-      <v-icon color="grey lighten-1">stop</v-icon>
-    </v-btn>
-    <v-btn icon class="mx-0" title="Trigger lightning" @click.native="run('lightson')">
-      <v-icon  color="grey lighten-1">flash_on</v-icon>
-    </v-btn>
-    <v-btn icon class="mx-0" title="Lights off" @click.native="run('lightsoff')">
-      <v-icon  color="grey lighten-1">flash_off</v-icon>
-    </v-btn>
-    <v-btn icon class="mx-0" title="Play sound" @click.native="run('play')">
-      <v-icon  color="grey lighten-1">music_note</v-icon>
-    </v-btn>
-    <v-btn icon class="mx-0" title="Sound off" @click.native="run('playstop')">
-      <v-icon  color="grey lighten-1">music_off</v-icon>
-    </v-btn>
+    <v-btn small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'laser')">Reboot</v-btn>
   </div>
-  <div style="margin:5px 10px 0px 10px">
-    <v-btn small @click.native="save" :disabled="saveDisabled">save</v-btn>
-    <v-btn small @click.native="reset"> reset</v-btn>
-  </div>
+
 </div>
 </template>
 
@@ -48,80 +18,13 @@
   export default {
     props: ['operations'],
 
-    // original number before I stored them in DB, DB is source of truth
     data: () => ({
-      loading: true,
-
-      debounce: 500,
-      lightning_number_flashes_max: 7,
-      lightning_time_between_events: 2579,
-      lightning_time_between_flashes: 22,
-      measure_one_sensitivity: 1200,
-      measure_two_sensitivity: 1000,
-
-      form:  {
-        db: 0,
-        lnfm: 0,
-        ltbe: 0,
-        ltbf: 0,
-        mos: 0,
-        mts: 0,
-      },
     }),
     computed: {
-      saveDisabled: function() {
-        // this made me question my profession
-        return !(!this.loading && this.dirty) 
-      },
-      dirty: function() {
-        return this.form.db != this.debounce ||
-          this.form.lnfm != this.lightning_number_flashes_max ||
-          this.form.ltbe != this.lightning_time_between_events ||
-          this.form.ltbf != this.lightning_time_between_flashes ||
-          this.form.mos != this.measure_one_sensitivity ||
-          this.form.mts != this.measure_two_sensitivity
-      },
     },
     created () {
-      this.$root.$data.museumRoot.child('devices/mummy').on('value', (snapshot) => {
-        let mummy = snapshot.val()
-        if (mummy == null) return
-
-        this.debounce = mummy.debounce
-        this.lightning_number_flashes_max = mummy.lightning_number_flashes_max
-        this.lightning_time_between_events = mummy.lightning_time_between_events
-        this.lightning_time_between_flashes = mummy.lightning_time_between_flashes
-        this.measure_one_sensitivity = mummy.measure_one_sensitivity
-        this.measure_two_sensitivity = mummy.measure_two_sensitivity
-
-        this.reset();
-
-        this.loading = false;
-      })
     },
     methods: {
-      save() {
-        this.operations.add({ command: 'mummy.set', data: this.form }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Set advanced settings successfully.')
-          }
-        });
-      },
-      run(cmd) {
-        this.operations.add({ command: 'mummy.' + cmd, data: this.form }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack(`Sent '${cmd}' command successfully.`)
-          }
-        });
-      },
-      reset() {
-        this.form.db = this.debounce;
-        this.form.lnfm = this.lightning_number_flashes_max
-        this.form.ltbe = this.lightning_time_between_events
-        this.form.ltbf = this.lightning_time_between_flashes
-        this.form.mos = this.measure_one_sensitivity
-        this.form.mts = this.measure_two_sensitivity
-      },
     }
   }
 </script>
@@ -134,7 +37,7 @@
   .actionRow {
     padding-left:10px;
     padding-right: 10px;
-    padding-top:15px;
+    padding-top:0px;
     padding-bottom:10px;
   }
   .actionRow button {

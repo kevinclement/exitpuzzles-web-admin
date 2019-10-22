@@ -20,8 +20,6 @@
       missed: {{missed.length}}
       </span>
 
-      <v-btn v-if="isConnected" flat small color="blue-grey lighten-3" @click.native="$root.$emit('show-details', 'quiz')">Advanced</v-btn>
-      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="dialogReset = true">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 
@@ -67,6 +65,7 @@
       currentQuestion: 0,
     }),
     created () {
+
       // INSERT_DISK, LAUNCH, QUIZ, PASSWORD, JOURNAL
       this.$root.$data.museumRoot.child('devices/quiz').on('value', (snapshot) => {
         let qz = snapshot.val()

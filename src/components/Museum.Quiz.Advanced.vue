@@ -7,6 +7,10 @@
     <a v-on:click.stop="$root.$emit('close-details')"><v-icon>close</v-icon></a>
   </v-toolbar>
 
+  <div class="actionRow">
+    <v-btn small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'quiz')">Reboot</v-btn>
+  </div>
+
   <div class="advForm">
 
     <v-text-field type="number" v-model="form.time_out" label="Timeout" :disabled="loading"/>
@@ -86,7 +90,7 @@
   .actionRow {
     padding-left:10px;
     padding-right: 10px;
-    padding-top:15px;
+    padding-top:0px;
     padding-bottom:10px;
   }
   .actionRow button {

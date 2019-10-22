@@ -23,10 +23,6 @@
     computed: {
     },
     created () {
-      this.$root.$data.museumRoot.child('devices/mausoleum').on('value', (snapshot) => {
-        let mausoleum = snapshot.val()
-        if (mausoleum == null) return
-      })
     },
     methods: {
     }
@@ -37,7 +33,7 @@
   .actionRow {
     padding-left:10px;
     padding-right: 10px;
-    padding-top:15px;
+    padding-top:0px;
     padding-bottom:10px;
   }
   .actionRow button {

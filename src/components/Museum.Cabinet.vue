@@ -12,8 +12,7 @@
       <span class="spacer" />
 
       <span v-bind:style="{ background: idolColors[idol] }" class="lightDot"/>
-      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'cabinet')">Reboot</v-btn>
-      <v-btn flat small color="blue-grey lighten-3" @click.native="$root.$emit('show-details', 'cabinet')">Advanced</v-btn>
+
     </v-toolbar>
   </v-card>
 

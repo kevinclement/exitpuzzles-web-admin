@@ -7,6 +7,9 @@
     <a v-on:click.stop="$root.$emit('close-details')"><v-icon>close</v-icon></a>
   </v-toolbar>
 
+  <div class="actionRow">
+    <v-btn small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'clock')">Reboot</v-btn>
+  </div>
   <div class="row" style="padding-top:15px;">
     <table border=0>
       <tr><td>1-1:</td><td class="ans"><span :class="getClass('1-1')">{{state['1-1']}}</span></td></tr>
@@ -44,6 +47,7 @@
     <div >
       connected: {{percentConnected}}%
     </div>
+    
     
   </div>
 </div>
@@ -168,6 +172,16 @@
   }
   .rowPadding {
     padding-top:15px;
+  }
+  .actionRow {
+    padding-left:10px;
+    padding-right: 10px;
+    padding-top:0px;
+    padding-bottom:10px;
+  }
+  .actionRow button {
+    margin-top:0px;
+    margin-bottom:0px;
   }
 </style>
 

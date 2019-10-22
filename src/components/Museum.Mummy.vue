@@ -11,8 +11,6 @@
 
       <span class="spacer" />
 
-      <!-- <v-btn flat small color="blue-grey lighten-3" @click.native="$root.show-details')">Advanced</v-btn> -->
-      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'mummy')">Reboot</v-btn>
     </v-toolbar>
   </v-card>
 

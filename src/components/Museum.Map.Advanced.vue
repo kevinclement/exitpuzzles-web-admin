@@ -113,15 +113,5 @@
     padding-left: 23px;
     text-align: end;
   }
-  .actionRow {
-    padding-left:10px;
-    padding-right: 10px;
-    padding-top:15px;
-    padding-bottom:10px;
-  }
-  .actionRow button {
-    margin-top:0px;
-    margin-bottom:0px;
-  }
 </style>
 

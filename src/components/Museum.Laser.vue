@@ -14,7 +14,7 @@
         @change="trigger"
       />
       <span class="spacer" />
-      <v-btn v-if="isConnected" flat small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'laser')">Reboot</v-btn>
+
     </v-toolbar>
   </v-card>
 </v-flex>
