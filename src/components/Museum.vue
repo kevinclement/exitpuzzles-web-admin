@@ -381,4 +381,10 @@ export default {
       display: none;
     }
   }
+  .toolbar .toolbar__content>:not(.btn):not(.menu):first-child:not(:only-child),
+  .toolbar .toolbar__extension>:not(.btn):not(.menu):first-child:not(:only-child) {
+    margin-left: 0px;
+  }
+
+
 </style>
