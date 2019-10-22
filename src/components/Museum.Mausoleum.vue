@@ -15,11 +15,13 @@ M<template>
 
       <span class="spacer" />
 
-      <v-icon :color="idolColor(idol_1, 1)" title="idol 1">{{idolIcon(idol_1)}}</v-icon>
-      <v-icon :color="idolColor(idol_2, 2)" title="idol 2">{{idolIcon(idol_2)}}</v-icon>
-      <v-icon :color="idolColor(idol_3, 3)" title="idol 3">{{idolIcon(idol_3)}}</v-icon>
-      <v-icon :color="idolColor(idol_4, 4)" title="idol 4">{{idolIcon(idol_4)}}</v-icon>
-      <v-icon :color="idolColor(idol_5, 5)" title="idol 5">{{idolIcon(idol_5)}}</v-icon>
+      <div class="status">
+        <v-icon :color="idolColor(idol_1, 1)" title="idol 1">{{idolIcon(idol_1)}}</v-icon>
+        <v-icon :color="idolColor(idol_2, 2)" title="idol 2">{{idolIcon(idol_2)}}</v-icon>
+        <v-icon :color="idolColor(idol_3, 3)" title="idol 3">{{idolIcon(idol_3)}}</v-icon>
+        <v-icon :color="idolColor(idol_4, 4)" title="idol 4">{{idolIcon(idol_4)}}</v-icon>
+        <v-icon :color="idolColor(idol_5, 5)" title="idol 5">{{idolIcon(idol_5)}}</v-icon>
+      </div>
 
     </v-toolbar>
   </v-card>
@@ -124,5 +126,13 @@ M<template>
   margin-left:0px;
   margin-right:4px;
   color: rgb(158,158,158) !important;
+}
+.status {
+  display:none;
+}
+@media (min-width: 600px) { 
+  .status {
+    display:flex;
+  }
 }
 </style>

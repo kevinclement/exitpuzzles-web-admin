@@ -30,15 +30,5 @@
 </script>
 
 <style scoped>
-  .actionRow {
-    padding-left:10px;
-    padding-right: 10px;
-    padding-top:0px;
-    padding-bottom:10px;
-  }
-  .actionRow button {
-    margin-top:0px;
-    margin-bottom:0px;
-  }
 </style>
 
