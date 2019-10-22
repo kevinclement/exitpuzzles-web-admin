@@ -10,7 +10,7 @@
       <div v-if="isConnected">
         <v-btn icon class="actionButton" @click.native="diag('INSERT DISK', 0)" title="insert disk"><v-icon>save</v-icon></v-btn>
         <v-btn icon class="actionButton" @click.native="diag('QUIZ', 1)" title="quiz"><v-icon>list</v-icon></v-btn>
-        <v-btn icon class="actionButton" @click.native="diag('PASSWORD', 2)" title="password"><v-icon>security</v-icon></v-btn>
+        <v-btn icon class="actionButton hideIfNarrow" @click.native="diag('PASSWORD', 2)" title="password"><v-icon>security</v-icon></v-btn>
         <v-btn icon class="actionButton" @click.native="diag('JOURNAL', 3)" title="journal"><v-icon>menu_book</v-icon></v-btn>
       </div>
 
