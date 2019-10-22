@@ -8,7 +8,7 @@
   </v-toolbar>
 
   <div class="actionRow">
-    <v-btn small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'laser')">Reboot</v-btn>
+    <v-btn small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'mummy')">Reboot</v-btn>
   </div>
 
 </div>
