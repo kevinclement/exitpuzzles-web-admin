@@ -7,9 +7,6 @@ M<template>
         <span class="secTitle" @click="$root.$emit('show-details', 'zoltar')"><v-icon class="cardIcon">person</v-icon>Zoltar</span>
       </v-toolbar-title>
 
-      <!-- TODO: add feature to send user defined message 
-      <v-btn flat icon color="grey" style="margin-left:0px;" @click.native="dialog = true"><v-icon>message</v-icon></v-btn>
-      -->
       <div v-if="isConnected">
         <v-btn :disabled="coins <= 0" flat icon class="actionButton" @click.native="decrement"><v-icon>remove</v-icon></v-btn>
         <v-btn :disabled="coins >= 3" flat icon class="actionButton" @click.native="increment"><v-icon>add</v-icon></v-btn>

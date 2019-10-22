@@ -369,11 +369,14 @@ export default {
     color: rgb(158,158,158) !important;
   }
   .status {
-    display:none;
+    display: flex;
   }
-  @media (min-width: 600px) {
+  @media (max-width: 600px) {
+    .hideIfNarrow {
+      display: none;
+    }
     .status {
-      display:flex;
+      display: none;
     }
   }
 </style>
