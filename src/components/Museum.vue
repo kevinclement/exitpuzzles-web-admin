@@ -127,6 +127,7 @@
       <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
     </v-snackbar>
 
+    {{w}}
     <!-- shared reboot dialog since all devices have similar logic -->
     <v-dialog v-model="dialogRebootShow" max-width="410">
     <v-card>
@@ -181,6 +182,7 @@ export default {
       snackColor: 'success',
       snackTimeout: 4000,
       snackText: '',
+      w:0,
       advanced: {
         timer: false,
         hands: false,
@@ -219,7 +221,9 @@ export default {
       return this.advanced.timer == true
     }
   },
-
+  mounted () {
+    this.w = window.innerWidth + " - " + window.outerWidth
+  },
   created () {
     this.operations =  this.$root.$data.museumOps
 
