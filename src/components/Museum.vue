@@ -375,7 +375,7 @@ export default {
   }
   @media (max-width: 600px) {
     .hideIfNarrow {
-      display: none;
+      display: none !important;
     }
     .status {
       display: none;
@@ -383,7 +383,7 @@ export default {
   }
   @media (max-width: 390px) {
     .hideIfReallyNarrow {
-      display: none;
+      display: none !important;
     }
   }
   
