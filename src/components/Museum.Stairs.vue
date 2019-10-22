@@ -96,20 +96,6 @@
 </script>
 
 <style scoped>
-.cardIcon {
-  margin-bottom:3px;
-  margin-left:7px;
-  padding-right:10px;
-}
-.actionButton {
-  margin-left:0px;
-  margin-right: 4px;
-  color: rgb(158,158,158) !important;
-}
-.notConnected {
-  color:red !important;
-  padding-right:0px;
-}
 .stairLevel {
   border-radius: 20%;
   background: #8D6E63;

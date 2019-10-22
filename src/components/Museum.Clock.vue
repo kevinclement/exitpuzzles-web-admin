@@ -78,19 +78,6 @@
 </script>
 
 <style scoped>
-.cardIcon {
-  margin-bottom:3px;
-  margin-left:7px;
-  padding-right:10px;
-}
-.notConnected {
-  color:red !important;
-  padding-right:0px;
-}
-.actionButton {
-  margin-left:0px;
-  color: rgb(158,158,158) !important;
-}
 .time {
   border-radius: 50%;
   background: #e0e0e0;

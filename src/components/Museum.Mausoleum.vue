@@ -127,12 +127,4 @@ M<template>
   margin-right:4px;
   color: rgb(158,158,158) !important;
 }
-.status {
-  display:none;
-}
-@media (min-width: 600px) { 
-  .status {
-    display:flex;
-  }
-}
 </style>

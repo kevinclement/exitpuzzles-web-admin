@@ -75,17 +75,4 @@
 </script>
 
 <style scoped>
-.cardIcon {
-  margin-bottom:3px;
-  margin-left:7px;
-  padding-right: 10px;
-}
-.actionButton {
-  margin-left:0px;
-  color: rgb(158,158,158) !important;
-}
-.notConnected {
-  color:red !important;
-  padding-right: 0px;
-}
 </style>

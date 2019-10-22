@@ -54,15 +54,6 @@
 </script>
 
 <style scoped>
-.cardIcon {
-  margin-bottom:3px;
-  margin-left:7px;
-  padding-right: 10px;
-}
-.notConnected {
-  color:red !important;
-  padding-right:0px;
-}
 .lightDot {
   border-radius: 50%;
   height: 16px;

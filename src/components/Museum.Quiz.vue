@@ -108,20 +108,6 @@
 </script>
 
 <style scoped>
-.cardIcon {
-  margin-bottom:3px;
-  margin-left:7px;
-  padding-right:10px;
-}
-.notConnected {
-  color:red !important;
-  padding-right:0px;
-}
-.actionButton {
-  margin-left:0px;
-  margin-right:4px;
-  color: rgb(158,158,158) !important;
-}
 .results {
   font-family: Monaco, monospace;
   font-size:16px;
