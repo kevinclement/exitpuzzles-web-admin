@@ -363,8 +363,8 @@ export default {
     padding-right: 0px;
   }
   .actionButton {
-    margin-left:0px;
-    margin-right: 4px;
+    margin-left:0px !important;
+    margin-right: 4px !important;
     color: rgb(158,158,158) !important;
   }
   .status {
