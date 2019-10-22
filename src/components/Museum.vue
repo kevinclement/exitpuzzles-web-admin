@@ -371,19 +371,19 @@ export default {
     display: flex;
   }
   .container {
-    padding: 16px;
+    padding: 16px !important;
   }
   @media (max-width: 600px) {
     .hideIfNarrow {
-      display: none;
+      display: none !important;
     }
     .status {
-      display: none;
+      display: none !important;
     }
   }
   .toolbar .toolbar__content>:not(.btn):not(.menu):first-child:not(:only-child),
   .toolbar .toolbar__extension>:not(.btn):not(.menu):first-child:not(:only-child) {
-    margin-left: 10px;
+    margin-left: 10px !important;
   }
 
 
