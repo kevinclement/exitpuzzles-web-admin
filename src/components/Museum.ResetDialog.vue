@@ -76,6 +76,16 @@
               }
             }
           }
+
+          // special case quiz
+          if (devices.quiz.force && devices.quiz.force == 4) {
+            console.log(`saw force, marking received`);
+            this.devices.quiz.received = true
+          } 
+          if (!devices.quiz.force && this.devices.quiz.received) {
+            console.log(`force gone, and saw received, marking reset`);
+            this.devices.quiz.reset = true
+          }
         }
 
       })
@@ -98,10 +108,19 @@
       tmp: function() {
         for (const [dev, d] of Object.entries(this.devices)) {
           if (dev == 'zoltar' || dev == 'stairs') {
-            this.operations.add({ command: `${dev}.reboot` }).on("value", (snapshot) => {
-              if (snapshot.val().received) {
-                d.received = true
-              }
+            if (dev != 'quiz') {
+              this.operations.add({ command: `${dev}.reboot` }).on("value", (snapshot) => {
+                if (snapshot.val().received) {
+                  d.received = true
+                }
+              });
+            }
+          }
+
+          // special case quiz
+          if (dev == 'quiz') {
+            this.$root.$data.museumRoot.child('devices/quiz').update({
+              force: 4
             });
           }
         }
