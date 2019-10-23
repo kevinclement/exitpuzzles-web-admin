@@ -5,11 +5,12 @@
     <v-card>
       <v-card-title>
         <h4>Resetting Room...</h4>
+        <v-btn small color="blue" @click.native="tmp">TMP</v-btn>
       </v-card-title>
       <v-divider></v-divider>
 
       <v-list class="resetRoom" dense>
-        <v-list-tile v-for="d in devices" :key="d.dev">
+        <v-list-tile v-for="[dev, d] of Object.entries(this.devices)" :key="dev">
           <v-list-tile-content>{{d.name}}</v-list-tile-content>
           <v-list-tile-content class="align-end">
             <v-icon :style="{ color: iconColor(d) }">check</v-icon>
@@ -36,15 +37,15 @@
     data: () => ({
       show: true,
       runningTime: 0,
-      devices: [
-        { name: 'Clock',    reset: false, dev:'clock' },
-        { name: 'Quiz',     reset: false, dev:'quiz' },
-        { name: 'Birdcage', reset: false, dev:'bird' },
-        { name: 'Zoltar',   reset: false, dev:'zoltar' },
-        { name: 'Mummy',    reset: false, dev:'mummy' },
-        { name: 'Stairs',   reset: false, dev:'stairs' },
-        { name: 'Cabinet',  reset: false, dev:'cabinet' }
-      ]
+      devices: {
+        'clock':   { name: 'Clock',    received: false, reset: false },
+        'quiz':    { name: 'Quiz',     received: false, reset: false },
+        'bird':    { name: 'Birdcage', received: false, reset: false },
+        'zoltar':  { name: 'Zoltar',   received: false, reset: false },
+        'mummy':   { name: 'Mummy',    received: false, reset: false },
+        'stairs':  { name: 'Stairs',   received: false, reset: false },
+        'cabinet': { name: 'Cabinet',  received: false, reset: false }
+      }
     }),
     computed: {
       runningTimePretty: function() {
@@ -57,6 +58,28 @@
         return `${m}:${s}`
       }
     },
+    created() {
+      let now = undefined
+
+      this.$root.$data.museumRoot.child('devices').on('value', (snapshot) => {
+        let devices = snapshot.val()
+
+        if (!now) {
+          now = new Date()
+        } else {
+          for (const [dev, d] of Object.entries(devices)) {
+             if (d.info && d.info.lastActivity) {
+              let lastActivity  = new Date(d.info.lastActivity)
+              let timeSince = lastActivity - now
+              if (timeSince > 0) {
+                this.devices[dev].reset = true
+              }
+            }
+          }
+        }
+
+      })
+    },
     mounted() {
       setInterval(() => {
         this.runningTime++;
@@ -66,9 +89,23 @@
       iconColor: function(d) {
         if (d.reset) {
           return '#4CAF50'
+        } else if(d.received) {
+          return '#000000'
         } else {
           return '#BDBDBD'
         }
+      },
+      tmp: function() {
+        for (const [dev, d] of Object.entries(this.devices)) {
+          if (dev == 'zoltar') {
+            this.operations.add({ command: `${dev}.reboot` }).on("value", (snapshot) => {
+              if (snapshot.val().received) {
+                d.received = true
+              }
+            });
+          }
+        }
+        
       }
     }
   }

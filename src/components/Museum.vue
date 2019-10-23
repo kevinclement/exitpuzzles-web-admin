@@ -12,7 +12,8 @@
 
 
     <!-- reset dialog -->
-    <museum-reset-dialog v-if="dialogReset" />
+    <museum-reset-dialog v-if="dialogReset" 
+      :operations="operations" />
 
     <!-- advanced panels -->
     <v-navigation-drawer fixed app clipped right dense
