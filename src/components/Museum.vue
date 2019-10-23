@@ -74,7 +74,12 @@
     </v-navigation-drawer>
 
     <!-- controls -->
-    <v-subheader class="roomHeader">Front Room:</v-subheader>
+    <v-subheader class="roomHeader" style="padding-right:0px;">
+      Front Room:
+      <span class="spacer" />
+      <v-btn flat small color="blue lighten-3" style="margin-right:0px;" @click.native="">Start</v-btn>
+      <v-btn flat small color="red lighten-3" style="margin-right:0px;" @click.native="dialogResetConfirm = true">Reset</v-btn>
+    </v-subheader>
     <museum-timer 
       :snack="showSnack" 
       :operations="operations"/>
@@ -145,6 +150,18 @@
     </v-card>
     </v-dialog>
 
+    <v-dialog v-model="dialogResetConfirm" max-width="410">
+      <v-card>
+        <v-card-title class="headline">Really reset all devices?</v-card-title>
+        <v-card-text>This will reboot and reset all the devices in the room. Are you <i>sure</i> you want to do that?</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" flat="flat" @click.native="dialogResetConfirm = false;">No</v-btn>
+          <v-btn color="primary" flat="flat" @click.native="dialogResetConfirm = false;dialogReset = true;">Yes</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-container>
 </template>
 
@@ -203,7 +220,8 @@ export default {
       },
       status: [],
       showDetails: false,
-      dialogReset: true,
+      dialogReset: false,
+      dialogResetConfirm: false,
       dialogRebootShow: false,
       dialogRebootDevice: "",
       operations: {}
