@@ -101,7 +101,7 @@
             this.devices.cabinet.reset = true
 
             // now trigger clock reboot
-            if (this.devices.clock.received) {
+            if (!this.devices.clock.received) {
               this.resetDevice('clock')
             }
           }
