@@ -198,7 +198,7 @@
       display:none;
   }
   textarea {
-      resize: none;
+      resize: none !important;
   }
 </style>
 
