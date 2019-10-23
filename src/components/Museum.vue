@@ -10,6 +10,10 @@
         <span v-html="deviceStatusString"/>
     </v-alert>
 
+
+    <!-- reset dialog -->
+    <museum-reset-dialog v-if="dialogReset" />
+
     <!-- advanced panels -->
     <v-navigation-drawer fixed app clipped right dense
       v-model="showDetails"
@@ -171,6 +175,7 @@ import MummyAdvanced from '@/components/Museum.Mummy.Advanced'
 import Stairs from '@/components/Museum.Stairs'
 import StairsAdvanced from '@/components/Museum.Stairs.Advanced'
 
+import ResetDialog from '@/components/Museum.ResetDialog'
 
 const DEVICE_TIMEOUT_SECONDS = 95
 
@@ -197,6 +202,7 @@ export default {
       },
       status: [],
       showDetails: false,
+      dialogReset: true,
       dialogRebootShow: false,
       dialogRebootDevice: "",
       operations: {}
@@ -316,6 +322,8 @@ export default {
     'museum-mummy-advanced': MummyAdvanced,
     'museum-stairs': Stairs,
     'museum-stairs-advanced': StairsAdvanced,
+
+    'museum-reset-dialog': ResetDialog
   }
 }
 </script>
