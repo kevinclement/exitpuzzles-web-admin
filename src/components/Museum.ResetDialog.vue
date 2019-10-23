@@ -97,7 +97,7 @@
       },
       tmp: function() {
         for (const [dev, d] of Object.entries(this.devices)) {
-          if (dev == 'zoltar') {
+          if (dev == 'zoltar' || dev == 'stairs') {
             this.operations.add({ command: `${dev}.reboot` }).on("value", (snapshot) => {
               if (snapshot.val().received) {
                 d.received = true
