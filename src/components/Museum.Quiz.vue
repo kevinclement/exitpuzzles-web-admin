@@ -34,18 +34,7 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-  
-  <v-dialog v-model="dialogReset" max-width="410">
-    <v-card>
-      <v-card-title class="headline">Really reset the quiz?</v-card-title>
-      <v-card-text>This will clear the state and reset it to title screen.  Are you <i>sure</i> you want to do that?</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="dialogReset = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="triggerReset">Yes</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+
 </v-flex>
 </template>
 
@@ -61,7 +50,6 @@
       missed: [],
       correct: [],
       total: 0,
-      dialogReset: false,
       currentQuestion: 0,
     }),
     created () {
@@ -91,15 +79,6 @@
 
         this.$root.$data.museumRoot.child('devices/quiz').update({
           force: this.dialogForce
-        });
-
-      },
-
-      triggerReset() {
-        this.dialogReset = false
-
-        this.$root.$data.museumRoot.child('devices/quiz').update({
-          force: 4
         });
 
       }

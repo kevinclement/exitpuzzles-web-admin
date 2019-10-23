@@ -8,7 +8,7 @@
   </v-toolbar>
 
   <div class="actionRow">
-    <v-btn small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'quiz')">Reboot</v-btn>
+    <v-btn small color="red lighten-3" @click.native="dialogReset = true">Reboot</v-btn>
   </div>
 
   <div class="advForm">
@@ -21,6 +21,18 @@
     <v-btn small @click.native="save" :disabled="saveDisabled">save</v-btn>
     <v-btn small @click.native="reset"> reset</v-btn>
   </div>
+
+  <v-dialog v-model="dialogReset" max-width="410">
+    <v-card>
+      <v-card-title class="headline">Really reset the quiz?</v-card-title>
+      <v-card-text>This will clear the state and reset it to title screen.  Are you <i>sure</i> you want to do that?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="dialogReset = false;">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="triggerReset">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </div>
 </template>
 
@@ -30,6 +42,7 @@
 
     data: () => ({
       loading: true,
+      dialogReset: false,
 
       timeout:0,
       total:0,
@@ -78,6 +91,14 @@
         this.form.time_out = this.timeout
         this.form.total_questions = this.total
       },
+      triggerReset() {
+        this.dialogReset = false
+
+        this.$root.$data.museumRoot.child('devices/quiz').update({
+          force: 4
+        });
+
+      }
     }
   }
 </script>

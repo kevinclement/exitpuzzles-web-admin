@@ -13,7 +13,8 @@
         <v-list-tile v-for="[dev, d] of Object.entries(this.devices)" :key="dev">
           <v-list-tile-content>{{d.name}}</v-list-tile-content>
           <v-list-tile-content class="align-end">
-            <v-icon :style="{ color: iconColor(d) }">check</v-icon>
+            <v-progress-circular v-if="d.received && !d.reset" size="18" indeterminate color="primary" style="margin-right: 5px;"></v-progress-circular>
+            <v-icon v-else :style="{ color: iconColor(d) }">check</v-icon>
           </v-list-tile-content>
         </v-list-tile>
 
@@ -24,8 +25,8 @@
             Time Taken: {{runningTimePretty}}
           </v-list-tile-content>
           <v-list-tile-content class="align-end">
-          <v-btn :disabled="true" flat small color="primary"  @click.native="">Running</v-btn>
-          </v-list-tile-content class="">
+            <v-btn :disabled="buttonDisabled" small color="primary"  @click.native="$root.$emit('close-reset-dialog')">{{buttonText}}</v-btn>
+          </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-card>
@@ -40,6 +41,8 @@
     data: () => ({
       show: true,
       runningTime: 0,
+      buttonText: "Resetting",
+      buttonDisabled: true,
       devices: {
         'clock':   { name: 'Clock',    received: false, reset: false },
         'quiz':    { name: 'Quiz',     received: false, reset: false },
@@ -59,6 +62,22 @@
         s = s < 10 ? "0" + s : s
 
         return `${m}:${s}`
+      },
+      completed: function() {
+        let completed = true
+        for (const [dev, d] of Object.entries(this.devices)) {
+          completed = completed && d.reset
+        }
+        return completed
+      }
+    },
+    watch: {
+      completed (val) {
+        if (val) {
+          clearInterval(this.timer)
+          this.buttonDisabled = false
+          this.buttonText = "Done"
+        }
       }
     },
     created() {
@@ -84,14 +103,6 @@
             }
           }
 
-          // special case quiz
-          if (devices.quiz.force && devices.quiz.force == 4) {
-            this.devices.quiz.received = true
-          }
-          if (!devices.quiz.force && this.devices.quiz.received) {
-            this.devices.quiz.reset = true
-          }
-
           // special case cabinet
           if (this.devices.cabinet.received && !devices.cabinet.info.isConnected) {
             this.devices.cabinet.wentOffline = true
@@ -110,7 +121,7 @@
       })
     },
     mounted() {
-      setInterval(() => {
+      this.timer = setInterval(() => {
         this.runningTime++;
       }, 1000)
     },
@@ -133,9 +144,17 @@
         }
       },
       tmp: function() {
-        // for (const [dev, d] of Object.entries(this.devices)) {
-        // }
-        this.resetDevice('cabinet')
+        this.resetAll();
+      },
+      resetAll() {
+        for (const [dev, d] of Object.entries(this.devices)) {
+          // special case clock since that will be handled when cabinet comes online
+          if (dev == 'clock') {
+            continue;
+          }
+
+          this.resetDevice(dev)
+        }
       },
       resetDevice: function(dev) {
         let d = this.devices[dev]

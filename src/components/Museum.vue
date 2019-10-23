@@ -233,6 +233,7 @@ export default {
     this.$root.$on('show-details', this.showAdvanced)
     this.$root.$on('close-details', this.hideAdvanced)
     this.$root.$on('reboot-device', this.showRebootDialog)
+    this.$root.$on('close-reset-dialog', () => { this.dialogReset = false; })
 
     this.$root.$data.museumRoot.child('status').on('value', (snapshot) => {
         let status = snapshot.val()

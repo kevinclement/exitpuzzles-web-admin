@@ -30,6 +30,7 @@ Vue.use(Vuetify)
 Vue.use(VueFire)
 
 Vue.config.productionTip = false
+Vue.config.devtools = false
 
 /* eslint-disable no-new */
 new Vue({
