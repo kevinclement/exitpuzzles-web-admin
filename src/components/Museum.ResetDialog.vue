@@ -44,7 +44,7 @@
         'zoltar':  { name: 'Zoltar',   received: false, reset: false },
         'mummy':   { name: 'Mummy',    received: false, reset: false },
         'stairs':  { name: 'Stairs',   received: false, reset: false },
-        'cabinet': { name: 'Cabinet',  received: false, reset: false }
+        'cabinet': { name: 'Cabinet',  received: false, reset: false, wentOffline:false }
       }
     }),
     computed: {
@@ -68,7 +68,11 @@
           now = new Date()
         } else {
           for (const [dev, d] of Object.entries(devices)) {
-             if (d.info && d.info.lastActivity) {
+            if (dev == 'cabinet') {
+              continue;
+            }
+
+            if (d.info && d.info.lastActivity) {
               let lastActivity  = new Date(d.info.lastActivity)
               let timeSince = lastActivity - now
               if (timeSince > 0) {
@@ -80,9 +84,23 @@
           // special case quiz
           if (devices.quiz.force && devices.quiz.force == 4) {
             this.devices.quiz.received = true
-          } 
+          }
           if (!devices.quiz.force && this.devices.quiz.received) {
             this.devices.quiz.reset = true
+          }
+
+          // special case cabinet
+          if (this.devices.cabinet.received && !devices.cabinet.info.isConnected) {
+            this.devices.cabinet.wentOffline = true
+          }
+          if (this.devices.cabinet.wentOffline && devices.cabinet.info.isConnected) {
+            // now its back online, so mark it rebooted
+            this.devices.cabinet.reset = true
+
+            // now trigger clock reboot
+            if (this.devices.clock.received) {
+              this.resetDevice('clock')
+            }
           }
         }
 
@@ -95,6 +113,14 @@
     },
     methods: {
       iconColor: function(d) {
+
+        // special case cabinet
+        if (d.name == 'Cabinet') {
+          return d.reset       ? '#4CAF50' :
+                 d.wentOffline ? '#000000' :
+                                 '#BDBDBD'
+        }
+
         if (d.reset) {
           return '#4CAF50'
         } else if(d.received) {
@@ -106,7 +132,7 @@
       tmp: function() {
         // for (const [dev, d] of Object.entries(this.devices)) {
         // }
-        this.resetDevice('zoltar')
+        this.resetDevice('cabinet')
       },
       resetDevice: function(dev) {
         let d = this.devices[dev]
