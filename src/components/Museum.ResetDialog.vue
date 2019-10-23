@@ -1,7 +1,7 @@
 
 <template>
 
-  <v-dialog v-model="show" max-width="350px">
+  <v-dialog v-model="show" max-width="350px" :persistent="true">
     <v-card>
       <v-card-title>
         <h4>Resetting Room...</h4>
