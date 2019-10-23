@@ -19,10 +19,13 @@
 
         <v-divider/>
 
-        <v-list-tile style="padding-top:5px;">
-          <v-list-tile-content class="align-end">
+        <v-list-tile style="padding-top:10px;padding-bottom:5px;">
+          <v-list-tile-content class="">
             Time Taken: {{runningTimePretty}}
           </v-list-tile-content>
+          <v-list-tile-content class="align-end">
+          <v-btn :disabled="true" color="primary"  @click.native="">Running</v-btn>
+          </v-list-tile-content class="">
         </v-list-tile>
       </v-list>
     </v-card>
