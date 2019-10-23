@@ -5,7 +5,6 @@
     <v-card>
       <v-card-title>
         <h4>Resetting Room...</h4>
-        <v-btn small color="blue" @click.native="tmp">TMP</v-btn>
       </v-card-title>
       <v-divider></v-divider>
 
@@ -124,6 +123,9 @@
       this.timer = setInterval(() => {
         this.runningTime++;
       }, 1000)
+
+      // trigger reset all on load
+      this.resetAll()
     },
     methods: {
       iconColor: function(d) {
@@ -142,9 +144,6 @@
         } else {
           return '#BDBDBD'
         }
-      },
-      tmp: function() {
-        this.resetAll();
       },
       resetAll() {
         for (const [dev, d] of Object.entries(this.devices)) {
