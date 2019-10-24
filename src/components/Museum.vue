@@ -302,7 +302,7 @@ export default {
     triggerReboot() {
       this.operations.add({ command: `${this.dialogRebootDevice}.reboot` }).on("value", (snapshot) => {
         if (snapshot.val().received) {
-          this.snack('Device rebooted successfully.')
+          this.showSnack('Device rebooted successfully.')
         }
       });
       this.dialogRebootShow = false
