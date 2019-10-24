@@ -81,35 +81,34 @@
     },
     created() {
       let now = new Date()
+      //console.log(`now: ${now}`)
 
       this.$root.$data.museumRoot.child('devices').on('value', (snapshot) => {
         let devices = snapshot.val()
 
         for (const [dev, d] of Object.entries(devices)) {
-            if (dev == 'cabinet') {
-              continue;
-            }
-
             if (d.info && d.info.lastActivity) {
               let lastActivity  = new Date(d.info.lastActivity)
-              let timeSince = lastActivity - now
+              let timeSince = (lastActivity.getTime() + 5000) - now.getTime()
               if (timeSince > 0) {
-                this.devices[dev].reset = true
+
+                // special case cabinet
+                if (dev == 'cabinet') {
+                  if (devices.cabinet.info.isConnected) {
+
+                    // once we see it come online for the first time, trigger clock reset
+                    if (!this.devices[dev].reset) {
+                      this.resetDevice('clock')
+                    }
+                    this.devices[dev].reset = true
+                  } 
+                } else {
+                  this.devices[dev].reset = true
+                }
+
+              } else {
+                //console.log(`${dev} ${timeSince}`)
               }
-            }
-          }
-
-          // special case cabinet
-          if (this.devices.cabinet.received && !devices.cabinet.info.isConnected) {
-            this.devices.cabinet.wentOffline = true
-          }
-          if (this.devices.cabinet.wentOffline && devices.cabinet.info.isConnected) {
-            // now its back online, so mark it rebooted
-            this.devices.cabinet.reset = true
-
-            // now trigger clock reboot
-            if (!this.devices.clock.received) {
-              this.resetDevice('clock')
             }
           }
       })
@@ -163,11 +162,7 @@
               force: 4
           });
         } else {
-          this.operations.add({ command: `${dev}.reboot` }).on("value", (snapshot) => {
-            if (snapshot.val().received) {
-              d.received = true
-            }
-          });
+          this.operations.add({ command: `${dev}.reboot` })
         }
       }
     }
