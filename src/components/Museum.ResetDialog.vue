@@ -142,7 +142,7 @@
       },
       resetAll() {
         // reset the timer so it doesn't show
-        this.$root.$data.museumRoot.child('devices/dashboard').update({ hours:"-1", minutes:0 })
+        this.$root.$data.museumRoot.child('devices/dashboard').update({ hours:"-1", minutes:10, clue: -1, route: "home" })
 
         for (const [dev, d] of Object.entries(this.devices)) {
           // special case clock since that will be handled when cabinet comes online

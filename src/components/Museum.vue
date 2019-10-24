@@ -77,7 +77,7 @@
     <v-subheader class="roomHeader" style="padding-right:0px;">
       Front Room:
       <span class="spacer" />
-      <v-btn flat small color="blue lighten-3" style="margin-right:0px;" @click.native="">Start</v-btn>
+      <v-btn flat small color="blue lighten-3" style="margin-right:0px;" @click.native="dialogStartConfirm = true">Start</v-btn>
       <v-btn flat small color="red lighten-3" style="margin-right:0px;" @click.native="dialogResetConfirm = true">Reset</v-btn>
     </v-subheader>
     <museum-timer 
@@ -162,6 +162,18 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog v-model="dialogStartConfirm" max-width="410">
+      <v-card>
+        <v-card-title class="headline">Really start the room?</v-card-title>
+        <v-card-text>This will start the timer for the room. Are you <i>sure</i> you want to do that?</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" flat="flat" @click.native="dialogStartConfirm = false;">No</v-btn>
+          <v-btn color="primary" flat="flat" @click.native="startRoom">Yes</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-container>
 </template>
 
@@ -220,6 +232,7 @@ export default {
       },
       status: [],
       showDetails: false,
+      dialogStartConfirm: false,
       dialogReset: false,
       dialogResetConfirm: false,
       dialogRebootShow: false,
@@ -298,6 +311,10 @@ export default {
     showSnack(msg) {
       this.snackText = msg 
       this.snackbar = true
+    },
+    startRoom() {
+      this.dialogStartConfirm = false
+      this.$root.$data.museumRoot.child('devices/dashboard').update({ hours:"1", minutes:10, clue: -1, route: "home" })
     },
     triggerReboot() {
       this.operations.add({ command: `${this.dialogRebootDevice}.reboot` }).on("value", (snapshot) => {
