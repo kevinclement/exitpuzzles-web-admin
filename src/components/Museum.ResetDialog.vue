@@ -165,7 +165,6 @@
         } else {
           this.operations.add({ command: `${dev}.reboot` }).on("value", (snapshot) => {
             if (snapshot.val().received) {
-              console.log(`got received for ${dev}`)
               d.received = true
             }
           });
