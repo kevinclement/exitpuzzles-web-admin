@@ -12,7 +12,7 @@
         <v-list-tile v-for="[dev, d] of Object.entries(this.devices)" :key="dev">
           <v-list-tile-content>{{d.name}}</v-list-tile-content>
           <v-list-tile-content class="align-end">
-            <v-progress-circular v-if="d.received && !d.reset" size="18" indeterminate color="primary" style="margin-right: 5px;"></v-progress-circular>
+            <v-progress-circular v-if="!d.reset" size="18" indeterminate color="primary" style="margin-right: 5px;"></v-progress-circular>
             <v-icon v-else :style="{ color: iconColor(d) }">check</v-icon>
           </v-list-tile-content>
         </v-list-tile>
@@ -80,15 +80,12 @@
       }
     },
     created() {
-      let now = undefined
+      let now = new Date()
 
       this.$root.$data.museumRoot.child('devices').on('value', (snapshot) => {
         let devices = snapshot.val()
 
-        if (!now) {
-          now = new Date()
-        } else {
-          for (const [dev, d] of Object.entries(devices)) {
+        for (const [dev, d] of Object.entries(devices)) {
             if (dev == 'cabinet') {
               continue;
             }
@@ -115,8 +112,6 @@
               this.resetDevice('clock')
             }
           }
-        }
-
       })
     },
     mounted() {
@@ -124,8 +119,9 @@
         this.runningTime++;
       }, 1000)
 
-      // trigger reset all on load
-      this.resetAll()
+      // trigger reset all on load, wait a second though so that we can sync state
+      setTimeout(this.resetAll(), 1000)
+      
     },
     methods: {
       iconColor: function(d) {
@@ -146,6 +142,9 @@
         }
       },
       resetAll() {
+        // reset the timer so it doesn't show
+        this.$root.$data.museumRoot.child('devices/dashboard').update({ hours:"-1", minutes:0 })
+
         for (const [dev, d] of Object.entries(this.devices)) {
           // special case clock since that will be handled when cabinet comes online
           if (dev == 'clock') {
@@ -166,6 +165,7 @@
         } else {
           this.operations.add({ command: `${dev}.reboot` }).on("value", (snapshot) => {
             if (snapshot.val().received) {
+              console.log(`got received for ${dev}`)
               d.received = true
             }
           });
