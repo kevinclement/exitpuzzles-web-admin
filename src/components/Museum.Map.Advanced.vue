@@ -105,7 +105,6 @@
       },
       reboot() {
         this.dialog = false
-        console.log('rebooting...')
         this.$root.$data.museumRoot.child('devices/map').update({
           force: false
         })
