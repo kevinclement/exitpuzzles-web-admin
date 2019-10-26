@@ -11,7 +11,7 @@
       <v-switch
           v-if="isConnected"
           primary
-          v-model="mock"
+          v-model="toggle"
           :hide-details="true"
           @click.native="force"
       />
@@ -36,7 +36,7 @@
     data: () => ({
       isConnected: true,
       touching: false,
-      mock: false,
+      toggle: false,
     }),
     created () {
       this.$root.$data.museumRoot.child('devices/hands').on('value', (snapshot) => {
@@ -44,7 +44,7 @@
         if (hands == null) return
 
         this.touching = hands.touching
-        this.mock = hands.mock
+        this.toggle = hands.toggle
         this.isConnected = hands.info.isConnected
       })
     },
