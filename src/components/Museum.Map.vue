@@ -7,7 +7,12 @@
         <span class="secTitle" @click="$root.$emit('show-details', 'map')"><v-icon class="cardIcon">language</v-icon>Map</span>
       </v-toolbar-title>
 
+      <div v-if="isConnected">
+        <v-btn flat icon class="actionButton" @click.native="dialog = true" title="show code"><v-icon>wb_iridescent</v-icon></v-btn>
+      </div>
+
       <span class="spacer" />
+
       <span class="results status">
         {{enabled}}/{{total}}
       </span>
@@ -16,7 +21,7 @@
 
   <v-dialog v-model="dialog" max-width="410">
     <v-card>
-      <v-card-title class="headline">Really trigger the map?</v-card-title>
+      <v-card-title class="headline">Really solve the map?</v-card-title>
       <v-card-text>Are you sure you want to reveal the code on the map?</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -56,13 +61,9 @@
     methods: {
       trigger() {
         this.dialog = false
-
-        // this.operations.add({ command: 'map.solve' }).on("value", (snapshot) => {
-        //   if (snapshot.val().received) {
-        //     this.snack('Triggered successfully')
-        //   }
-        // });
-
+        this.$root.$data.museumRoot.child('devices/map').update({
+          force: true
+        })
       },
     }
   }
