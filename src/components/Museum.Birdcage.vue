@@ -7,7 +7,6 @@
         <span class="secTitle" @click="$root.$emit('show-details', 'bird')"><v-icon class="cardIcon">room_service</v-icon>Birdcage</span>
       </v-toolbar-title>
       
-      <v-btn v-if="isConnected" flat icon class="actionButton" @click.native="light" :title="lightTitle"><v-icon>{{lightIcon}}</v-icon></v-btn>
       <v-btn v-if="isConnected && (!solved || trayOpened)" flat icon class="actionButton" @click.native="dialog = true" title="open tray"><v-icon>{{ocIcon}}</v-icon></v-btn>
       <!-- <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayBack"><v-icon>remove</v-icon></v-btn>
       <v-btn v-if="solved && !trayOpened" flat icon class="actionButton" @click.native="trayForward"><v-icon>add</v-icon></v-btn> -->
@@ -15,7 +14,8 @@
       <span class="spacer" />
 
       <div class="status">
-        <span class="password">{{password}}</span>
+        <v-icon :color="lightColor()">highlight</v-icon>
+        <!-- <span class="password">{{password}}</span> -->
       </div>
 
     </v-toolbar>
@@ -53,12 +53,6 @@
       ocIcon() {
         return this.solved ? "arrow_back" : "arrow_forward"
       },
-      lightTitle: function() {
-        return this.isLight ? "cover bird" : "uncover bird";
-      },
-      lightIcon: function() {
-        return this.isLight ? "brightness_low" : "brightness_high";
-      },
       dialogTitle: function() {
         return this.solved ? "close" : "open";
       },
@@ -86,9 +80,6 @@
       trayForward() {
         this.operations.add({ command: 'bird.forward' }).on("value", (snapshot) => {});
       },
-      light() {
-        this.operations.addWithToast('bird.light', this.snack('Toggled light'))
-      },
 
       trigger() {
         this.dialog = false
@@ -102,6 +93,10 @@
         });
 
       },
+
+      lightColor() {
+        return this.isLight ? "grey lighten-2" : "grey darken-3"
+      }
     }
   }
 </script>
