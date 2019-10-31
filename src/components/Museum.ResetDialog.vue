@@ -42,14 +42,18 @@
       runningTime: 0,
       buttonText: "Resetting",
       buttonDisabled: true,
+      work: [],
       devices: {
-        'clock':   { name: 'Clock',    received: false, reset: false },
-        'quiz':    { name: 'Quiz',     received: false, reset: false },
-        'bird':    { name: 'Birdcage', received: false, reset: false },
-        'zoltar':  { name: 'Zoltar',   received: false, reset: false },
-        'mummy':   { name: 'Mummy',    received: false, reset: false },
-        'stairs':  { name: 'Stairs',   received: false, reset: false },
-        'cabinet': { name: 'Cabinet',  received: false, reset: false, wentOffline:false }
+        'dashboard': { name: 'Dashboard', received: false, reset: false },
+        'clock':     { name: 'Clock',     received: false, reset: false },
+        'quiz':      { name: 'Quiz',      received: false, reset: false },
+        'bird':      { name: 'Birdcage',  received: false, reset: false },
+        'zoltar':    { name: 'Zoltar',    received: false, reset: false },
+        'mummy':     { name: 'Mummy',     received: false, reset: false },
+        'stairs':    { name: 'Stairs',    received: false, reset: false },
+        'cabinet':   { name: 'Cabinet',   received: false, reset: false },
+        'mausoleum': { name: 'Mausoleum', received: false, reset: false },
+        'map':       { name: 'Map',       received: false, reset: false }
       }
     }),
     computed: {
@@ -81,7 +85,6 @@
     },
     created() {
       let now = new Date()
-      //console.log(`now: ${now}`)
 
       this.$root.$data.museumRoot.child('devices').on('value', (snapshot) => {
         let devices = snapshot.val()
@@ -91,21 +94,7 @@
               let lastActivity  = new Date(d.info.lastActivity)
               let timeSince = (lastActivity.getTime() + 5000) - now.getTime()
               if (timeSince > 0) {
-
-                // special case cabinet
-                if (dev == 'cabinet') {
-                  if (devices.cabinet.info.isConnected) {
-
-                    // once we see it come online for the first time, trigger clock reset
-                    if (!this.devices[dev].reset) {
-                      this.resetDevice('clock')
-                    }
-                    this.devices[dev].reset = true
-                  } 
-                } else {
-                  this.devices[dev].reset = true
-                }
-
+                this.devices[dev].reset = true
               } else {
                 //console.log(`${dev} ${timeSince}`)
               }
@@ -118,20 +107,11 @@
         this.runningTime++;
       }, 1000)
 
-      // trigger reset all on load, wait a second though so that we can sync state
-      setTimeout(this.resetAll(), 1000)
-      
+      // trigger reset all on load
+      this.resetAll()
     },
     methods: {
       iconColor: function(d) {
-
-        // special case cabinet
-        if (d.name == 'Cabinet') {
-          return d.reset       ? '#4CAF50' :
-                 d.wentOffline ? '#000000' :
-                                 '#BDBDBD'
-        }
-
         if (d.reset) {
           return '#4CAF50'
         } else if(d.received) {
@@ -140,21 +120,48 @@
           return '#BDBDBD'
         }
       },
+      runWork() {
+        if (this.work.length == 0) return
+
+        // run the work
+        var workFunction = this.work.pop()
+        workFunction()
+
+        // schedule the next work
+        setTimeout(this.runWork, 3000);
+      },
       resetAll() {
         // reset the timer so it doesn't show
-        this.$root.$data.museumRoot.child('devices/dashboard').update({ hours:"-1", minutes:10, clue: -1, route: "home" })
+        this.work.push(() => {
+          this.$root.$data.museumRoot.child('devices/dashboard').update({ hours:"-1", minutes:0, clue: -1, route: "home" }, () => {
+            this.devices.dashboard.received = true
+            this.devices.dashboard.reset = true
+          })
+        })
 
+        // reset the map forced
+        this.work.push(() => {
+          this.$root.$data.museumRoot.child('devices/map').update({ force:false }, () => {
+            this.devices.map.received = true
+            this.devices.map.reset = true
+          })
+        })
+
+        // reset all the devices
         for (const [dev, d] of Object.entries(this.devices)) {
-          // special case clock since that will be handled when cabinet comes online
-          if (dev == 'clock') {
-            continue;
-          }
+          // ignore special case ones
+          if (dev == 'dashboard' || dev == 'map') continue;
 
-          this.resetDevice(dev)
+          this.work.push(this.resetDevice.bind(this, dev));
         }
+
+        // start the work queue
+        this.runWork()
       },
       resetDevice: function(dev) {
         let d = this.devices[dev]
+
+        console.log(`reset ${dev}`)
 
         // special case quiz
         if (dev == 'quiz') {
@@ -162,7 +169,11 @@
               force: 4
           });
         } else {
-          this.operations.add({ command: `${dev}.reboot` })
+          this.operations.add({ command: `${dev}.reboot` }).on("value", (snapshot) => {
+            if (snapshot.val().received) {
+              d.received = true
+            }
+          })
         }
       }
     }
