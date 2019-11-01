@@ -8,6 +8,7 @@ import 'vuetify/dist/vuetify.min.css'
 import Firebase from 'firebase'
 import VueFire from 'vuefire'
 import Operations from './Operations'
+import Runs from './Runs'
 import GoTrue from 'gotrue-js'
 
 // init auth
@@ -23,6 +24,7 @@ let dbUrl = window['DEV_MODE'] ? "https://exitpuzzles-admin-dev.firebaseio.com" 
 let config = { databaseURL: dbUrl }
 let db = Firebase.initializeApp(config).database()
 let operations = new Operations(db, 'operations')
+let museumRuns = new Runs(db, 'museum/runs')
 let museumOps = new Operations(db, 'museum/operations')
 let museumRoot = db.ref('museum')
 
@@ -43,6 +45,7 @@ new Vue({
     operations: operations,
     museumOps: museumOps,
     museumRoot: museumRoot,
+    museumRuns: museumRuns,
     auth: auth,
     loggedInCallback: null
   }
