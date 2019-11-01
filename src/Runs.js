@@ -28,52 +28,44 @@ export default class Runs {
         let n = new Date()
         let nt = n.getTime()
         let now = getDateStr(n)
+
         this.runsRef.child(now).set({
             started: now,
             events: {
                 'quiz': {
-                    timestamp: mockTimestamp(nt, 5),
-                    force: mockForce()
+                    force: false
                 },
                 'bird': {
-                    timestamp: mockTimestamp(nt, 8),
-                    force: mockForce()
+                    force: false
                 },
                 'zoltar': {
-                    timestamp: mockTimestamp(nt, 12),
-                    force: mockForce()
+                    force: false
                 },
                 'map': {
-                    timestamp: mockTimestamp(nt, 22),
-                    force: mockForce()
+                    force: false
                 },
                 'cabinet': {
-                    timestamp: mockTimestamp(nt, 37),
-                    force: mockForce()
+                    force: false
                 },
                 'mummy': {
-                    timestamp: mockTimestamp(nt, 41),
-                    force: mockForce()
+                    force: false
                 },
                 'stairs': {
-                    timestamp: mockTimestamp(nt, 51),
-                    force: mockForce()
+                    force: false
                 },
                 'clock': {
-                    timestamp: mockTimestamp(nt, 57),
-                    force: mockForce()
+                    force: false
                 },
                 'mausoleum': {
-                    timestamp: mockTimestamp(nt, 59),
-                    force: mockForce()
+                    force: false
                 },
             },
             dashboard: {
-                clues: getRandomInt(9),
-                adhoc: getRandomInt(4)
+                clues: 0,
+                adhoc: 0,
             },
-            timeLeft: `00:33`,
-            finished: getDateStr(new Date(n.getTime() + 3600000))
+            timeLeft: '',
+            finished: ''
         })
     }
 
