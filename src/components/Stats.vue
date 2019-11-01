@@ -5,7 +5,7 @@
           <v-card class="statsCard">
               <v-card-title class="titleRow" style="">
                   <h3 class="headline">Stats for </h3>
-                  <select style="height: 25px;border-style:solid;margin-left:12px;-webkit-appearance:menulist">
+                  <select style="height: 25px;border-style:solid;margin-left:12px;-webkit-appearance:menulist;width:85px;">
                     <option>week</option>
                     <option>month</option>
                     <option>year</option>
@@ -218,6 +218,15 @@ export default {
       seconds = seconds < 10 ? '0' + seconds : seconds
 
       return `${minutes}:${seconds}`
+    },
+    median(values) {
+      values.sort( function(a,b) {return a - b;} );
+      var half = Math.floor(values.length/2);
+
+      if(values.length % 2)
+        return values[half];
+      else
+        return (values[half-1] + values[half]) / 2.0;
     }
   },
 
