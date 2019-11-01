@@ -72,7 +72,66 @@ export default class Runs {
                 clues: getRandomInt(9),
                 adhoc: getRandomInt(4)
             },
-            timeLeft: "03:22",
+            timeLeft: `00:33`,
+            finished: getDateStr(new Date(n.getTime() + 3600000))
+        })
+    }
+
+    createMock() {
+        let n = new Date()
+        let nt = n.getTime()
+        let now = getDateStr(n)
+
+        let tlm = getRandomInt(7)
+        tlm = tlm < 10 ? '0' + tlm : tlm
+        let tls = getRandomInt(60)
+        tls = tls < 10 ? '0' + tls : tls
+
+        this.runsRef.child(now).set({
+            started: now,
+            events: {
+                'quiz': {
+                    timestamp: mockTimestamp(nt, 5),
+                    force: mockForce()
+                },
+                'bird': {
+                    timestamp: mockTimestamp(nt, 8),
+                    force: mockForce()
+                },
+                'zoltar': {
+                    timestamp: mockTimestamp(nt, 12),
+                    force: mockForce()
+                },
+                'map': {
+                    timestamp: mockTimestamp(nt, 22),
+                    force: mockForce()
+                },
+                'cabinet': {
+                    timestamp: mockTimestamp(nt, 37),
+                    force: mockForce()
+                },
+                'mummy': {
+                    timestamp: mockTimestamp(nt, 41),
+                    force: mockForce()
+                },
+                'stairs': {
+                    timestamp: mockTimestamp(nt, 51),
+                    force: mockForce()
+                },
+                'clock': {
+                    timestamp: mockTimestamp(nt, 57),
+                    force: mockForce()
+                },
+                'mausoleum': {
+                    timestamp: mockTimestamp(nt, 59),
+                    force: mockForce()
+                },
+            },
+            dashboard: {
+                clues: getRandomInt(9),
+                adhoc: getRandomInt(4)
+            },
+            timeLeft: `${tlm}:${tls}`,
             finished: getDateStr(new Date(n.getTime() + 3600000))
         })
     }

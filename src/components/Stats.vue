@@ -96,7 +96,7 @@ export default {
   methods: {
     
     createIt() {
-      this.$root.$data.museumRuns.create()
+      this.$root.$data.museumRuns.createMock()
     },
     event() {
       this.$root.$data.museumRuns.add('myevent')
