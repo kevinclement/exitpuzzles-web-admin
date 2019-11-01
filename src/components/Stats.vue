@@ -26,25 +26,25 @@
       </v-layout>
       <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="runs"
         hide-actions
         class="elevation-1"
         style="width: 725px;"
       >
         <template slot="items" slot-scope="props">
-          <td>{{ props.item.date }}</td>
+          <td>{{ props.item.started }}</td>
           <td>
             <span style="width: 37px;display:inline-block;">
-              {{ progress(props.item.progress) }}
+              {{progress(props.item)}}%
             </span>
             <div class="prog">
-              <div class="progInner" :style="{ width: progWidth(props.item.progress) }">&nbsp;</div>
+              <div class="progInner" :style="{ width: progWidth(progress(props.item)) }">&nbsp;</div>
             </div>
           </td>
-          <td class="text-xs-right">{{ props.item.clues }}</td>
-          <td class="text-xs-right">{{ props.item.force }}</td>
-          <td class="text-xs-right">{{ props.item.timeTomb }}</td>
-          <td class="text-xs-right">{{ props.item.timeLeft }}</td>
+          <td class="text-xs-right">{{clues(props.item)}}</td>
+          <td class="text-xs-right">{{force(props.item)}}</td>
+          <td class="text-xs-right">{{tomb(props.item)}}</td>
+          <td class="text-xs-right">{{props.item.timeLeft}}</td>
         </template>
       </v-data-table>
       <v-layout row wrap>
@@ -71,64 +71,6 @@ export default {
           { text: 'Force',     value: 'force',    sortable: false, align: 'right' },
           { text: 'Time Tomb', value: 'timeTomb', sortable: false, align: 'right' },
           { text: 'Time Left', value: 'timeLeft', sortable: false, align: 'right' }
-      ],
-      desserts: [
-        {
-          date: '10/28/2019 1:03 PM',
-          progress: "56",
-          clues: 6,
-          force: 2,
-          timeTomb: '45:01',
-          timeLeft: ''
-        },
-        {
-          date: '10/28/2019 11:05 AM',
-          progress: "66",
-          clues: 9,
-          force: 0,
-          timeTomb: '52:32',
-          timeLeft: ''
-        },
-        {
-          date: '10/28/2019 3:10 PM',
-          progress: "90",
-          clues: 7,
-          force: 3,
-          timeTomb: '44:12',
-          timeLeft: ''
-        },
-        {
-          date: '10/29/2019 7:08 PM',
-          progress: "100",
-          clues: 3,
-          force: 4,
-          timeTomb: '33:45',
-          timeLeft: '3:30'
-        },
-        {
-          date: '10/29/2019 5:02 PM',
-          progress: "77",
-          clues: 9,
-          force: 1,
-          timeTomb: '41:21',
-          timeLeft: ''
-        },
-        {
-          date: '10/31/2019 9:06 PM',
-          progress: "100",
-          clues: 0,
-          force: 4,
-          timeTomb: '29:22',
-          timeLeft: '0:22'
-        },
-        {
-          date: '10/30/2019 3:05 PM',
-          progress: "44",
-          clues: 2,
-          force: 5,
-          timeTomb: '61:11',
-          timeLeft: ''
-        }
       ]
     }
   },
@@ -159,25 +101,50 @@ export default {
     event() {
       this.$root.$data.museumRuns.add('myevent')
     },
-    progress(percent) {
-      let tb = ""
-      let bars = Math.round(percent * 10)
-
-      // fill with bars, the rest with spaces
-      for (let i = 0; i<bars;i++) {
-        tb += "-"
-      }
-      for (let i = bars; i<10;i++) {
-        tb += "\u00A0"
+    progress(run) {
+      let totalEvents = 0
+      let finishedEvents = 0
+      for (const [name, event] of Object.entries(run.events)) {
+        if (event.timestamp) {
+          finishedEvents++
+        }
+        totalEvents++
       }
 
-      return `${percent}%`
+      return Math.floor((finishedEvents/totalEvents) * 100)
     },
     progWidth(percent) {
       let p = percent / 100;
       let width = 75 * p;
 
       return `${width}px`
+    },
+    clues(run) {
+      return `${run.dashboard.clues} / ${run.dashboard.adhoc}`
+    },
+    force(run) {
+      let force = 0
+      for (const [name, event] of Object.entries(run.events)) {
+        if (event.force) {
+          force++
+        }
+      }
+      return force
+    },
+    tomb(run) {
+      if (run.events.cabinet && run.events.cabinet.timestamp) {
+        let t = new Date(run.events.cabinet.timestamp)
+        let s = new Date(run.started)
+        let delta = t.getTime() - s.getTime()
+        let minutes = Math.floor(delta / 1000 / 60)
+        minutes = minutes < 10 ? '0' + minutes : minutes
+        let seconds = Math.floor((delta - (1000 * 60 * minutes)) / 1000)
+        seconds = seconds < 10 ? '0' + seconds : seconds
+
+        return `${minutes}:${seconds}`
+      } else {
+        return ''
+      }
     }
   },
 

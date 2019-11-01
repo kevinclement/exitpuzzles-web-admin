@@ -19,27 +19,61 @@ export default class Runs {
 
         // return this.operationsRef.push({ ...op, created: (new Date()).getTime()});
         this.runsRef.child(this.current.date).child("events").child(op).set({
-            timestamp: getDateStr(),
+            timestamp: getDateStr(new Date()),
             forced: forced
         })
     }
 
     create() {
-        let now = getDateStr()
+        let n = new Date()
+        let nt = n.getTime()
+        let now = getDateStr(n)
         this.runsRef.child(now).set({
             started: now,
-            hands: {
-                total:0
-            },
-            quiz:  {
-                took: 0,
-                totalAsked: 0,
-                totalWrong: 0
+            events: {
+                'quiz': {
+                    timestamp: mockTimestamp(nt, 5),
+                    force: mockForce()
+                },
+                'bird': {
+                    timestamp: mockTimestamp(nt, 8),
+                    force: mockForce()
+                },
+                'zoltar': {
+                    timestamp: mockTimestamp(nt, 12),
+                    force: mockForce()
+                },
+                'map': {
+                    timestamp: mockTimestamp(nt, 22),
+                    force: mockForce()
+                },
+                'cabinet': {
+                    timestamp: mockTimestamp(nt, 37),
+                    force: mockForce()
+                },
+                'mummy': {
+                    timestamp: mockTimestamp(nt, 41),
+                    force: mockForce()
+                },
+                'stairs': {
+                    timestamp: mockTimestamp(nt, 51),
+                    force: mockForce()
+                },
+                'clock': {
+                    timestamp: mockTimestamp(nt, 57),
+                    force: mockForce()
+                },
+                'mausoleum': {
+                    timestamp: mockTimestamp(nt, 59),
+                    force: mockForce()
+                },
             },
             dashboard: {
-                clues: 0,
-                adhoc: 0
-            }
+                clues: getRandomInt(9),
+                adhoc: getRandomInt(4)
+            },
+            timeLeft: "03:22",
+            finished: getDateStr(new Date(n.getTime() + 3600000))
         })
     }
 
@@ -56,18 +90,30 @@ export default class Runs {
     }
 }
 
-function getDateStr() {
-    let now = new Date();
-    let M = now.getMonth() + 1
+function getDateStr(date) {
+    let M = date.getMonth() + 1
     M = M < 10 ? "0" + M : M
-    let d = now.getDate()
+    let d = date.getDate()
     d = d < 10 ? "0" + d : d
-    let y = now.getFullYear()
-    let h = now.getHours()
+    let y = date.getFullYear()
+    let h = date.getHours()
     h = h < 10 ? "0" + h : h
-    let m = now.getMinutes()
+    let m = date.getMinutes()
     m = m < 10 ? "0" + m : m
-    let s = now.getSeconds()
+    let s = date.getSeconds()
     s = s < 10 ? "0" + s : s
     return `${M}-${d}-${y} ${h}:${m}:${s}`
+}
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max))
+}
+
+function mockTimestamp(nt, t) {
+    let s = getRandomInt(60)
+    return getRandomInt(100) < 80 ? getDateStr(new Date(nt + (1000 * ((60 * t) + s)))) : null
+}
+
+function mockForce() {
+    return getRandomInt(100) < 50 ? false : true
 }
