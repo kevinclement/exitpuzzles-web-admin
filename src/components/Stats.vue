@@ -3,21 +3,27 @@
     <v-layout>
         <v-flex>
           <v-card class="statsCard">
-              <v-card-title class="titleRow">
+              <v-card-title class="titleRow" style="">
                   <h3 class="headline">Stats for </h3>
-                  <select style="padding:3px;">
+                  <select style="height: 25px;border-style:solid;margin-left:12px;-webkit-appearance:menulist">
                     <option>week</option>
                     <option>month</option>
                     <option>year</option>
                     <option>all time</option>
                   </select>
               </v-card-title>
-              <v-card-text class="logContent">
-                <div>
-                  aa
-                </div>
+              <v-card-text class="statsContent" style="padding:0px;">
+                <table border=0 class="statsTable" style="padding-left: 18px;">
+                  <tr><td>total</td><td>{{runs.length}}</td></tr>
+                  <tr><td>completed</td><td>{{completed}} ({{completedPercentage}}%)</td></tr>
+                  <tr><td>avg. clues</td><td>{{avgClues}}</td></tr>
+                  <tr><td>avg. force</td><td>{{avgForce}}</td></tr>
+                  <tr><td>avg. time added</td><td>{{avgTimeAdded}}</td></tr>
+                  <tr><td>avg. time left</td><td>{{avgTimeLeft}}</td></tr>
+                </table>
+
               </v-card-text>
-              <v-card-text class="controlsRow">
+              <v-card-text class="controlsRow" style="padding-top:12px;">
                 <v-data-table :headers="headers" :items="runs" hide-actions style="width:100%">
                   <template slot="items" slot-scope="props">
                     <td>{{ props.item.started }}</td>
@@ -73,13 +79,59 @@ export default {
       return this.$root.$data.museumRuns.getCurrent()
     },
 
-    analytics() {
-      let analytics = {
-         totalQuestions: this.latest.quiz ? this.latest.quiz.totalAsked : 0
+    completed() {
+      let completed = 0
+
+      this.runs.forEach( (run) => {
+        let perc = this.progress(run);
+        if (perc == 100) {
+          completed++
+        }
+      });
+
+      return completed
+    },
+
+    completedPercentage() {
+      if (this.runs.length == 0) {
+        return 0
       }
 
-      return analytics
+      return Math.floor((this.completed/this.runs.length) * 100)
+    },
+
+    avgClues() {
+      if (this.runs.length == 0) {
+        return 0
+      }
+
+      return '7'
+    },
+
+    avgForce() {
+      if (this.runs.length == 0) {
+        return 0
+      }
+
+      return 3
+    },
+
+    avgTimeAdded() {
+      if (this.runs.length == 0) {
+        return 0
+      }
+
+      return "3:31"
+    },
+
+    avgTimeLeft() {
+      if (this.runs.length == 0) {
+        return 0
+      }
+
+      return "1:07"
     }
+
   },
 
   created () {
@@ -165,7 +217,7 @@ export default {
   display: flex;
   flex-direction: column;
 }
-.logContent {
+.statsContent {
   display: flex;
   flex:1;
   font-family: monospace;
@@ -174,5 +226,8 @@ export default {
   letter-spacing: .010em;
   line-height: 20px;
   position: relative;
+}
+.statsTable td:first-child {
+  width: 155px;
 }
 </style>
