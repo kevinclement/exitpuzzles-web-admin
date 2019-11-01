@@ -38,6 +38,7 @@
                     <td class="text-xs-right">{{clues(props.item)}}</td>
                     <td class="text-xs-right">{{force(props.item)}}</td>
                     <td class="text-xs-right">{{tomb(props.item)}}</td>
+                    <td class="text-xs-right">{{prettySeconds(props.item.timeAdded)}}</td>
                     <td class="text-xs-right">{{props.item.timeLeft}}</td>
                   </template>
                 </v-data-table>
@@ -64,12 +65,13 @@ export default {
       runs:[],
       filter: undefined,
       headers: [
-          { text: 'Date',      value: 'date',     sortable: false, align: 'left'  },
-          { text: 'Progress',  value: 'progress', sortable: false                 },
-          { text: 'Clues',     value: 'clues',    sortable: false, align: 'right' },
-          { text: 'Force',     value: 'force',    sortable: false, align: 'right' },
-          { text: 'Time Tomb', value: 'timeTomb', sortable: false, align: 'right' },
-          { text: 'Time Left', value: 'timeLeft', sortable: false, align: 'right' }
+          { text: 'Date',       value: 'date',      sortable: false, align: 'left'  },
+          { text: 'Progress',   value: 'progress',  sortable: false                 },
+          { text: 'Clues',      value: 'clues',     sortable: false, align: 'right' },
+          { text: 'Force',      value: 'force',     sortable: false, align: 'right' },
+          { text: 'Time Tomb',  value: 'timeTomb',  sortable: false, align: 'right' },
+          { text: 'Time Added', value: 'timeAdded', sortable: false, align: 'right' },
+          { text: 'Time Left',  value: 'timeLeft',  sortable: false, align: 'right' }
       ]
     }
   },
@@ -105,7 +107,14 @@ export default {
         return 0
       }
 
-      return '7'
+      let clues = 0
+      let adhoc = 0
+      this.runs.forEach( (run) => {
+        clues += run.dashboard.clues
+        adhoc += run.dashboard.adhoc
+      });
+
+      return `${Math.round(clues/this.runs.length)} / ${Math.round(adhoc / this.runs.length)}`
     },
 
     avgForce() {
@@ -113,7 +122,16 @@ export default {
         return 0
       }
 
-      return 3
+      let force = 0
+      this.runs.forEach( (run) => {
+        for (const [name, event] of Object.entries(run.events)) {
+          if (event.force) {
+            force++
+          }
+        }
+      });
+
+      return `${Math.round(force/this.runs.length)}`
     },
 
     avgTimeAdded() {
@@ -121,7 +139,12 @@ export default {
         return 0
       }
 
-      return "3:31"
+      let timeAdded = 0
+      this.runs.forEach( (run) => {
+        timeAdded += run.timeAdded
+      });
+
+      return this.prettySeconds(Math.round(timeAdded / this.runs.length))
     },
 
     avgTimeLeft() {
@@ -180,16 +203,21 @@ export default {
       if (run.events.cabinet && run.events.cabinet.timestamp) {
         let t = new Date(run.events.cabinet.timestamp)
         let s = new Date(run.started)
-        let delta = t.getTime() - s.getTime()
-        let minutes = Math.floor(delta / 1000 / 60)
-        minutes = minutes < 10 ? '0' + minutes : minutes
-        let seconds = Math.floor((delta - (1000 * 60 * minutes)) / 1000)
-        seconds = seconds < 10 ? '0' + seconds : seconds
-
-        return `${minutes}:${seconds}`
+        let delta = (t.getTime() - s.getTime()) / 1000
+        
+        return this.prettySeconds(delta)
       } else {
         return ''
       }
+    },
+    prettySeconds(s) {
+      let minutes = Math.floor(s / 60)
+      minutes = minutes < 10 ? '0' + minutes : minutes
+
+      let seconds = Math.floor((s - (60 * minutes)))
+      seconds = seconds < 10 ? '0' + seconds : seconds
+
+      return `${minutes}:${seconds}`
     }
   },
 

@@ -65,6 +65,7 @@ export default class Runs {
                 adhoc: 0,
             },
             timeLeft: '',
+            timeAdded: 0,
             finished: ''
         })
     }
@@ -124,6 +125,7 @@ export default class Runs {
                 adhoc: getRandomInt(4)
             },
             timeLeft: `${tlm}:${tls}`,
+            timeAdded: getRandomInt(1000),
             finished: getDateStr(new Date(n.getTime() + 3600000))
         })
     }
