@@ -1,60 +1,53 @@
 <template>
   <v-container fluid>
-      <v-layout row wrap>
-        <v-flex xs2>
-          <v-subheader>Stats for:</v-subheader>
-        </v-flex>
-        <v-flex xs6>
-          <select style="padding:3px;">
-            <option>week</option>
-            <option>month</option>
-            <option>year</option>
-            <option>all time</option>
-          </select>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
+    <v-layout>
         <v-flex>
-          <div>{{latest.started}}</div>
-          <table border=1>
-            <tr>
-              <td>total questions:</td>
-              <td>{{analytics.totalQuestions}}</td>
-            </tr>
-          </table>
+          <v-card class="statsCard">
+              <v-card-title class="titleRow">
+                  <h3 class="headline">Stats for </h3>
+                  <select style="padding:3px;">
+                    <option>week</option>
+                    <option>month</option>
+                    <option>year</option>
+                    <option>all time</option>
+                  </select>
+              </v-card-title>
+              <v-card-text class="logContent">
+                <div>
+                  aa
+                </div>
+              </v-card-text>
+              <v-card-text class="controlsRow">
+                <v-data-table :headers="headers" :items="runs" hide-actions style="width:100%">
+                  <template slot="items" slot-scope="props">
+                    <td>{{ props.item.started }}</td>
+                    <td>
+                      <span style="width: 37px;display:inline-block;">
+                        {{progress(props.item)}}%
+                      </span>
+                      <div class="prog">
+                        <div class="progInner" :style="{ width: progWidth(progress(props.item)) }">&nbsp;</div>
+                      </div>
+                    </td>
+                    <td class="text-xs-right">{{clues(props.item)}}</td>
+                    <td class="text-xs-right">{{force(props.item)}}</td>
+                    <td class="text-xs-right">{{tomb(props.item)}}</td>
+                    <td class="text-xs-right">{{props.item.timeLeft}}</td>
+                  </template>
+                </v-data-table>
+              </v-card-text>
+          </v-card>
         </v-flex>
-      </v-layout>
-      <v-data-table
-        :headers="headers"
-        :items="runs"
-        hide-actions
-        class="elevation-1"
-        style="width: 725px;"
-      >
-        <template slot="items" slot-scope="props">
-          <td>{{ props.item.started }}</td>
-          <td>
-            <span style="width: 37px;display:inline-block;">
-              {{progress(props.item)}}%
-            </span>
-            <div class="prog">
-              <div class="progInner" :style="{ width: progWidth(progress(props.item)) }">&nbsp;</div>
-            </div>
-          </td>
-          <td class="text-xs-right">{{clues(props.item)}}</td>
-          <td class="text-xs-right">{{force(props.item)}}</td>
-          <td class="text-xs-right">{{tomb(props.item)}}</td>
-          <td class="text-xs-right">{{props.item.timeLeft}}</td>
-        </template>
-      </v-data-table>
-      <v-layout row wrap>
-        <v-flex xs6>
-          <div>
+    </v-layout>
+
+    <v-layout row wrap style="padding-top:20px;">
+      <v-flex xs6>
+        <div>
           <v-btn small color="primary"  @click.native="createIt">create</v-btn>
           <v-btn small color="primary"  @click.native="event">event</v-btn>
-          </div>
-        </v-flex>
-      </v-layout>
+        </div>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -154,6 +147,10 @@ export default {
 </script>
 
 <style scoped>
+.titleRow, .controlsRow  {
+  display: flex;
+  flex-direction: row
+}
 .prog {
   width: 75px;
   display:inline-block;
@@ -162,5 +159,20 @@ export default {
   display:inline-block;
   background:#66BB6A;
   border-radius:3px;
+}
+.statsCard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.logContent {
+  display: flex;
+  flex:1;
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .010em;
+  line-height: 20px;
+  position: relative;
 }
 </style>
