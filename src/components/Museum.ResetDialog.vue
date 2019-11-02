@@ -45,15 +45,15 @@
       work: [],
       devices: {
         'dashboard': { name: 'Dashboard', received: false, reset: false },
-        'clock':     { name: 'Clock',     received: false, reset: false },
+        'map':       { name: 'Map',       received: false, reset: false },
+        'cabinet':   { name: 'Cabinet',   received: false, reset: false },
         'quiz':      { name: 'Quiz',      received: false, reset: false },
         'bird':      { name: 'Birdcage',  received: false, reset: false },
         'zoltar':    { name: 'Zoltar',    received: false, reset: false },
         'mummy':     { name: 'Mummy',     received: false, reset: false },
         'stairs':    { name: 'Stairs',    received: false, reset: false },
-        'cabinet':   { name: 'Cabinet',   received: false, reset: false },
-        'mausoleum': { name: 'Mausoleum', received: false, reset: false },
-        'map':       { name: 'Map',       received: false, reset: false }
+        'clock':     { name: 'Clock',     received: false, reset: false },
+        'mausoleum': { name: 'Mausoleum', received: false, reset: false }
       }
     }),
     computed: {
@@ -124,7 +124,7 @@
         if (this.work.length == 0) return
 
         // run the work
-        var workFunction = this.work.pop()
+        var workFunction = this.work.shift()
         workFunction()
 
         // schedule the next work
