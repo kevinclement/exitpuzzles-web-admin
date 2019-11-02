@@ -88,10 +88,6 @@
       :snack="showSnack" 
       :operations="operations"/>
 
-    <museum-clock 
-      :snack="showSnack" 
-      :operations="operations"/>
-
     <museum-quiz 
       :snack="showSnack" 
       :operations="operations"
@@ -124,6 +120,10 @@
       :operations="operations"/>
 
     <museum-stairs
+      :snack="showSnack" 
+      :operations="operations"/>
+
+    <museum-clock 
       :snack="showSnack" 
       :operations="operations"/>
 
