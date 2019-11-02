@@ -10,7 +10,6 @@
         <span v-html="deviceStatusString"/>
     </v-alert>
 
-
     <!-- reset dialog -->
     <museum-reset-dialog v-if="dialogReset" 
       :operations="operations" />
@@ -314,6 +313,7 @@ export default {
     },
     startRoom() {
       this.dialogStartConfirm = false
+      this.$root.$data.museumRuns.create();
       this.$root.$data.museumRoot.child('devices/dashboard').update({ hours:"1", minutes:10, clue: -1, route: "home" })
     },
     triggerReboot() {

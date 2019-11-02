@@ -26,7 +26,6 @@ export default class Runs {
 
     create() {
         let n = new Date()
-        let nt = n.getTime()
         let now = getDateStr(n)
 
         this.runsRef.child(now).set({
