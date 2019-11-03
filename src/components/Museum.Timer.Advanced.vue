@@ -32,6 +32,11 @@
 </template>
 
 <script>
+  const CLUE_TYPE = { 
+    HOME: -1,
+    AD_HOC: -2
+  }
+
   export default {
     props: ['operations'],
 
@@ -42,8 +47,9 @@
       minutes:0,
 
       clues: {
-        home:      { sel: false, index: -1, img: "home.png" },
-        empty:     { sel: false, index: -2, img: "empty.png" },
+        home:      { sel: false, index: CLUE_TYPE.HOME, img: "home.png" },
+        empty:     { sel: false, index: CLUE_TYPE.AD_HOC, img: "empty.png" },
+
         totem:     { sel: false, index: 10, img: "totem.png" },
         clock:     { sel: false, index:  0, img: "clock2.png" },
         dodo:      { sel: false, index:  1, img: "dodo.png" },
@@ -58,14 +64,14 @@
         readme:    { sel: false, index:  8, img: "readme.png" },
         translate: { sel: false, index:  9, img: "translate.png" }
       },
-      clue: -2,
+      clue: CLUE_TYPE.AD_HOC,
       route: "",
       adhoc: "",
 
       form:  {
         hours: 0,
         minutes: 0,
-        clue: -2,
+        clue: CLUE_TYPE.AD_HOC,
         adhoc: ""
       },
     }),
@@ -102,7 +108,7 @@
     methods: {
       save() {
         this.clue = this.form.clue
-        this.route = this.form.clue == -1 ? "home" : "clue"
+        this.route = this.form.clue == CLUE_TYPE.HOME ? "home" : "clue"
         this.adhoc = this.form.adhoc
 
         let obj = {
@@ -124,6 +130,14 @@
 
         // save the new config and force a quiz restart
         this.$root.$data.museumRoot.child('devices/dashboard').update(obj)
+
+        // increment analytics
+        if (this.form.clue == CLUE_TYPE.AD_HOC) {
+          this.$root.$data.museumRuns.addClue(true)
+        } else if (this.form.clue >= 0) {
+          this.$root.$data.museumRuns.addClue(false)
+        }
+
       },
       reset() {
         this.form.hours = this.hours

@@ -3,6 +3,7 @@ export default class Runs {
         this.runsRef = db.ref(table)
         this.runs = []
         this.current = {}
+        this.currentDate = undefined
 
         this.runsRef.orderByKey().limitToLast(2000).on('value', (snapshot) => {
             let runs = snapshot.val()
@@ -10,17 +11,27 @@ export default class Runs {
             for (const [date, run] of Object.entries(runs)) {
               this.runs.push(run)
               this.current = run
+              this.currentDate = date
             }
         })
     }
 
-    add(op, forced) {
-        if (!forced) forced = false;
 
-        // return this.operationsRef.push({ ...op, created: (new Date()).getTime()});
-        this.runsRef.child(this.current.date).child("events").child(op).set({
-            timestamp: getDateStr(new Date()),
-            forced: forced
+    addClue(adhoc) {
+        if (!adhoc) adhoc = false
+
+        let at = this.current.dashboard.adhoc
+        let ct = this.current.dashboard.clues
+
+        if (adhoc) {
+            at++
+        } else {
+            ct++
+        }
+
+        this.runsRef.child(this.currentDate).child("dashboard").update({
+            adhoc: at,
+            clues: ct
         })
     }
 
