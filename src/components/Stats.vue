@@ -171,7 +171,23 @@ export default {
         return 0
       }
 
-      return "1:07"
+      let secondsLeft = 0
+      let thoseWithTimeLeft = 0
+      this.runs.forEach( (run) => {
+        if (run.timeLeft != "") {
+          let parts = run.timeLeft.split(':');
+          let minutes = parseInt(parts[0])
+          let seconds = parseInt(parts[1])
+          secondsLeft += (minutes * 60) + seconds
+          thoseWithTimeLeft++
+        }
+      });
+
+      if (thoseWithTimeLeft > 0) {
+        return this.prettySeconds(Math.round(secondsLeft / thoseWithTimeLeft))
+      } else {
+        return 0
+      }
     }
 
   },
