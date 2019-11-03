@@ -29,7 +29,7 @@ export default class Runs {
         let now = getDateStr(n)
 
         this.runsRef.child(now).set({
-            started: now,
+            started: (new Date()).toLocaleString(),
             events: {
                 'quiz': {
                     force: false

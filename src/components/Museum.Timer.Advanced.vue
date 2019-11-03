@@ -155,7 +155,7 @@
       },
       resetSel(c) {
         for (const [k, clue] of Object.entries(this.clues)) {
-          this.clues[k].sel = c && clue.index == c          
+          this.clues[k].sel = c && clue.index == c
         }
       }
     }
