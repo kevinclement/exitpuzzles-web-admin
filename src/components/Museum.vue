@@ -274,11 +274,10 @@ export default {
           let connected = true
           let dev = status[name]
           let delta = (new Date()).getTime() - (new Date(dev.ping)).getTime()
-          
-          // TODO: fix daylight savings bug
-          // if (delta > (DEVICE_TIMEOUT_SECONDS * 1000)) {
-          //   connected = false
-          // }
+
+          if (delta > (DEVICE_TIMEOUT_SECONDS * 1000)) {
+            connected = false
+          }
 
           ds[name] = {
             "name": name,
