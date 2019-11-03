@@ -107,6 +107,10 @@
     },
     methods: {
       save() {
+        let origClue = this.clue
+        let origTLAS = (this.hours * 60 * 60) + (this.minutes * 60)
+        let newTLAS = (this.form.hours * 60 * 60) + (this.form.minutes * 60)
+
         this.clue = this.form.clue
         this.route = this.form.clue == CLUE_TYPE.HOME ? "home" : "clue"
         this.adhoc = this.form.adhoc
@@ -132,10 +136,13 @@
         this.$root.$data.museumRoot.child('devices/dashboard').update(obj)
 
         // increment analytics
-        if (this.form.clue == CLUE_TYPE.AD_HOC) {
+        if (this.form.clue != origClue && this.form.clue == CLUE_TYPE.AD_HOC) {
           this.$root.$data.museumRuns.addClue(true)
-        } else if (this.form.clue >= 0) {
+        } else if (this.form.clue != origClue && this.form.clue >= 0) {
           this.$root.$data.museumRuns.addClue(false)
+        }
+        if (newTLAS > origTLAS) {
+          this.$root.$data.museumRuns.addTime(newTLAS - origTLAS)
         }
 
       },

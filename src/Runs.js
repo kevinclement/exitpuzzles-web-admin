@@ -16,7 +16,6 @@ export default class Runs {
         })
     }
 
-
     addClue(adhoc) {
         if (!adhoc) adhoc = false
 
@@ -32,6 +31,12 @@ export default class Runs {
         this.runsRef.child(this.currentDate).child("dashboard").update({
             adhoc: at,
             clues: ct
+        })
+    }
+
+    addTime(seconds) {
+        this.runsRef.child(this.currentDate).update({
+            timeAdded: this.current.timeAdded + seconds
         })
     }
 
@@ -76,7 +81,8 @@ export default class Runs {
             },
             timeLeft: '',
             timeAdded: 0,
-            finished: ''
+            finished: '',
+            closed: ''
         })
     }
 
@@ -136,7 +142,8 @@ export default class Runs {
             },
             timeLeft: `${tlm}:${tls}`,
             timeAdded: getRandomInt(1000),
-            finished: getDateStr(new Date(n.getTime() + 3600000))
+            finished: getDateStr(new Date(n.getTime() + 3600000)),
+            closed: getDateStr(new Date(n.getTime() + 3600000))
         })
     }
 
