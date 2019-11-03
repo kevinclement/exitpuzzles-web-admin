@@ -38,6 +38,7 @@
                     <td class="text-xs-right">{{clues(props.item)}}</td>
                     <td class="text-xs-right">{{force(props.item)}}</td>
                     <td class="text-xs-right">{{tomb(props.item)}}</td>
+                    <td class="text-xs-right">{{closed(props.item)}}</td>
                     <td class="text-xs-right">{{prettySeconds(props.item.timeAdded)}}</td>
                     <td class="text-xs-right">{{props.item.timeLeft}}</td>
                   </template>
@@ -69,6 +70,7 @@ export default {
           { text: 'Clues',      value: 'clues',     sortable: false, align: 'right' },
           { text: 'Force',      value: 'force',     sortable: false, align: 'right' },
           { text: 'Time Tomb',  value: 'timeTomb',  sortable: false, align: 'right' },
+          { text: 'Closed',     value: 'closed',    sortable: false, align: 'right' },
           { text: 'Time Added', value: 'timeAdded', sortable: false, align: 'right' },
           { text: 'Time Left',  value: 'timeLeft',  sortable: false, align: 'right' }
       ]
@@ -243,6 +245,26 @@ export default {
       } else {
         return ''
       }
+    },
+    closed(run) {
+      if (run.closed && run.closed != '') {
+        let s = new Date(run.started)
+        let c = new Date(run.closed)
+        let delta = (c.getTime() - s.getTime()) / 1000
+
+        return this.prettyHours(delta)
+      } else {
+        return ''
+      }
+    },
+    prettyHours(s) {
+      let hours = Math.floor(s / 60 / 60)
+      hours = hours < 10 ? '0' + hours : hours
+
+      let minutes = Math.floor((s - (60 * hours * 60))) / 60
+      minutes = minutes < 10 ? '0' + minutes : minutes
+
+      return `${hours}:${minutes}`
     },
     prettySeconds(s) {
       let minutes = Math.floor(s / 60)
