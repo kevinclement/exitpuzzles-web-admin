@@ -5,13 +5,13 @@
           <v-card class="statsCard">
               <v-card-title class="titleRow" style="">
                   <h3 class="headline">Stats for </h3>
-                  <select style="height: 25px;border-style:solid;margin-left:12px;-webkit-appearance:menulist;width:85px;">
+                  <select v-model="filter">
                     <option>week</option>
                     <option>month</option>
                     <option>year</option>
                     <option>all time</option>
                   </select>
-              </v-card-title>
+               </v-card-title>
               <v-card-text class="statsContent" style="padding:0px;">
                 <table border=0 class="statsTable" style="padding-left: 18px;">
                   <tr><td>total</td><td>{{runs.length}}</td></tr>
@@ -23,7 +23,7 @@
                 </table>
 
               </v-card-text>
-              <v-card-text class="controlsRow" style="padding-top:12px;">
+              <v-card-text class="controlsRow">
                 <v-data-table :headers="headers" :items="runs" hide-actions style="width:100%">
                   <template slot="items" slot-scope="props">
                     <td>{{ props.item.started }}</td>
@@ -62,8 +62,7 @@
 export default {
   data () {
     return {
-      runs:[],
-      filter: undefined,
+      filter: 'week',
       headers: [
           { text: 'Date',       value: 'date',      sortable: false, align: 'left'  },
           { text: 'Progress',   value: 'progress',  sortable: false                 },
@@ -79,6 +78,26 @@ export default {
   computed: {
     latest () {
       return this.$root.$data.museumRuns.getCurrent()
+    },
+
+    runs () {
+      let now = new Date()
+      let weekBack = now.getDay() == 0 ? 6 : now.getDay() - 1
+      let daysBack = 
+        this.filter == 'week' ? weekBack : 
+        this.filter == 'month' ? 30 : 
+        this.filter == 'year' ? 365 : -1
+
+      let startDay = daysBack > 0 ? 
+          this.getDaysBack(daysBack) : 
+          new Date('1/1/1970')
+
+      let runs = this.$root.$data.museumRuns.getRuns().filter((r) => {
+        let d = new Date(r.started)
+        return d.getTime() > startDay.getTime()
+      })
+
+      return runs
     },
 
     completed() {
@@ -158,7 +177,6 @@ export default {
   },
 
   created () {
-    this.runs = this.$root.$data.museumRuns.getRuns()
   },
 
   methods: {
@@ -227,6 +245,17 @@ export default {
         return values[half];
       else
         return (values[half-1] + values[half]) / 2.0;
+    },
+    getDaysBack(n) {
+      let now = new Date()
+      let m = now.getMonth() + 1
+      let d = now.getDate()
+      let y = now.getYear() + 1900
+    
+      let zeroHourToday = new Date(`${m}/${d}/${y}`)
+      
+      let timeToSubtract = n * 24 * 60 * 60 * 1000
+      return new Date(zeroHourToday.getTime() - timeToSubtract)
     }
   },
 
@@ -239,6 +268,9 @@ export default {
 .titleRow, .controlsRow  {
   display: flex;
   flex-direction: row
+}
+.controlsRow {
+  padding-top:12px;
 }
 .prog {
   width: 75px;
@@ -253,6 +285,13 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+.statsCard select {
+  height: 25px;
+  border-style: solid;
+  margin-left: 12px;
+  -webkit-appearance: menulist;
+  width: 85px;
 }
 .statsContent {
   display: flex;
