@@ -14,14 +14,13 @@ export default {
     return {
     }
   },
+  mounted() {
+    this.loadImg('/static/museum/sampleImage.png')
+  },
   methods: {
-    imgChange(e) {
-      console.log(`changed`);
-      var URL = window.URL;
-      var url = URL.createObjectURL(e.target.files[0]);
-
+    loadImg(img_url) {
       let img = document.createElement('img')
-      img.src = url;
+      img.src = img_url
 
       img.onload = function() {
         var canvas = document.getElementById("myCanvas");
@@ -37,6 +36,12 @@ export default {
         ctx.rect(20, 20, 150, 100);
         ctx.stroke();
       }
+    },
+    imgChange(e) {
+      console.log(`changed`);
+      var URL = window.URL;
+      var url = URL.createObjectURL(e.target.files[0]);
+      this.loadImg(url);
     }
   }
 }
