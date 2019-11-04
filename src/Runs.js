@@ -10,8 +10,10 @@ export default class Runs {
             this.runs.length = 0 // clear the array
             for (const [date, run] of Object.entries(runs)) {
               this.runs.push(run)
-              this.current = run
-              this.currentDate = date
+              if (run.finished == "") {
+                this.current = run
+                this.currentDate = date
+              }
             }
         })
     }
@@ -97,7 +99,7 @@ export default class Runs {
         tls = tls < 10 ? '0' + tls : tls
 
         this.runsRef.child(now).set({
-            started: now,
+            started: (new Date()).toLocaleString(),
             events: {
                 'quiz': {
                     timestamp: mockTimestamp(nt, 5),
