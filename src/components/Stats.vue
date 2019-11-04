@@ -14,12 +14,21 @@
                </v-card-title>
               <v-card-text class="statsContent" style="padding:0px;">
                 <table border=0 class="statsTable" style="padding-left: 18px;">
-                  <tr><td>total</td><td>{{runs.length}}</td></tr>
-                  <tr><td>completed</td><td>{{completed}} ({{completedPercentage}}%)</td></tr>
-                  <tr><td>avg. clues</td><td>{{avgClues}}</td></tr>
-                  <tr><td>avg. force</td><td>{{avgForce}}</td></tr>
-                  <tr><td>avg. time added</td><td>{{avgTimeAdded}}</td></tr>
-                  <tr><td>avg. time left</td><td>{{avgTimeLeft}}</td></tr>
+                  <tr>
+                    <td>avg. clues:</td><td>{{avgClues}}</td>
+                    <td class="fstLbl">total:</td><td class="fstVal">{{runs.length}}</td>
+                  </tr>
+                  <tr>
+                    <td>avg. force:</td><td>{{avgForce}}</td>
+                    <td class="fstLbl">completed:</td><td class="fstVal">{{completed}} ({{completedPercentage}}%)</td>
+                  </tr>
+                  <tr>
+                    <td>avg. time added:</td><td>{{avgTimeAdded}}</td>
+                    <td class="fstLbl">fastest:</td><td class="fstVal">{{fastest}}</td>
+                  </tr>
+                  <tr>
+                    <td>avg. time left:</td><td>{{avgTimeLeft}}</td>
+                  </tr>
                 </table>
 
               </v-card-text>
@@ -190,8 +199,26 @@ export default {
       } else {
         return 0
       }
-    }
+    },
+    fastest(){
+      if (this.runs.length == 0) {
+        return 0
+      }
 
+      let fastest = 7200000
+      this.runs.forEach( (run) => {
+        if (run.finished && run.finished != "") {
+          let s = new Date(run.started)
+          let f = new Date(run.finished)
+          let delta = f.getTime() - s.getTime()
+          if (delta - fastest) {
+            fastest = delta
+          }
+        }
+      });
+
+      return this.prettyHours(Math.floor(fastest / 1000))
+    }
   },
 
   created () {
@@ -342,6 +369,13 @@ export default {
   position: relative;
 }
 .statsTable td:first-child {
-  width: 155px;
+  width: 135px;
+}
+.fstLbl {
+  width:135px;
+  padding-left: 50px;
+}
+.fstVal {
+
 }
 </style>
