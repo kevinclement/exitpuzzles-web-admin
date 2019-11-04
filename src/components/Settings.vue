@@ -14,8 +14,6 @@
 </template>
 <script>
 
-let img = document.createElement('img');
-
 export default {
   data () {
     return {
@@ -24,7 +22,8 @@ export default {
       imageLoaded: false,
       position: { x: 20, y: 20 },
       size: { width: 150, height: 100 },
-      lastPoint: { x: -1, y: -1 }
+      lastPoint: { x: -1, y: -1 },
+      img: document.createElement('img')
     }
   },
   mounted() {
@@ -38,10 +37,10 @@ export default {
     },
 
     loadImg(img_url) {
-      img.src = img_url
-      img.onload = () => {
+      this.img.src = img_url
+      this.img.onload = () => {
         var canvas = document.getElementById("myCanvas");
-        this.imgSize = this.calculateAspectRatioFit(img.width, img.height, canvas.clientWidth, canvas.clientHeight);
+        this.imgSize = this.calculateAspectRatioFit(this.img.width, this.img.height, canvas.clientWidth, canvas.clientHeight);
         this.imageLoaded = true;
         this.draw();
       }
@@ -54,7 +53,7 @@ export default {
       if (this.imageLoaded) {
         // draw image
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0, this.imgSize.width, this.imgSize.height);
+        ctx.drawImage(this.img, 0, 0, this.imgSize.width, this.imgSize.height);
 
         // draw rectangle
         ctx.beginPath();
