@@ -9,11 +9,14 @@
   </v-container>
 </template>
 <script>
-let rectX = 20;
-let rectY = 20;
-const rectWidth = 150;
-const rectHeight = 100;
+
 let dragging = false;
+let imgSize = 0;
+let img = document.createElement('img');
+let imageLoaded = false;
+let position = { x: 20, y: 20 }
+let size = { width: 150, height: 100 }
+let lastPoint = { x: -1, y: -1 }
 
 export default {
   data () {
@@ -37,10 +40,6 @@ export default {
   }
 }
 
-let imgSize = 0;
-let img = document.createElement('img');
-let imageLoaded = false;
-let lastPoint = { x: -1, y: -1 }
 
 function loadImg(img_url) {
   img.src = img_url
@@ -64,7 +63,7 @@ function draw() {
 
     // draw rectangle
     ctx.beginPath();
-    ctx.rect(rectX, rectY, rectWidth, rectHeight);
+    ctx.rect(position.x, position.y, size.width, size.height);
     ctx.stroke();
   }
 }
@@ -84,36 +83,22 @@ function mouseMoveListener(e) {
       return;
     }
 
-    let canvas = document.getElementById("myCanvas");
-    
     var x = e.pageX - e.target.offsetLeft;
     var y = e.pageY - e.target.offsetTop;
     var deltaX = x - lastPoint.x;
     var deltaY = y - lastPoint.y;
 
-    // var posX;
-    // var posY;
+    position.x += deltaX
+    position.y += deltaY
 
-    // var minX = rectX;
-    // var maxX = canvas.width - rectWidth;
-    // var minY = rectY;
-    // var maxY = canvas.height - rectHeight;
+    // check for boundary
+    let maxX = (imgSize.width - size.width - 1);
+    position.x = position.x < 1 ? 1 : position.x;
+    position.x = position.x > maxX ? maxX : position.x;
 
-    // getting mouse position correctly, being mindful of resizing that may have occured in the browser:
-    // let bRect = canvas.getBoundingClientRect();
-    // let mouseX = (e.clientX - bRect.left)*(canvas.width/bRect.width);
-    // let mouseY = (e.clientY - bRect.top)*(canvas.height/bRect.height);
-
-    // clamp x and y positions to prevent object from dragging outside of canvas
-    //posX = mouseX - rectX;
-    // posX = mouseX - lastx;
-    // //posX = (posX < minX) ? minX : ((posX > maxX) ? maxX : posX);
-    // posY = mouseY - lasty;
-    //posY = mouseY - rectY;
-    //posY = (posY < minY) ? minY : ((posY > maxY) ? maxY : posY);
-    
-    rectX += deltaX
-    rectY += deltaY
+    let maxY = (imgSize.height - size.height - 1);
+    position.y = position.y < 1 ? 1 : position.y;
+    position.y = position.y > maxY ? maxY : position.y;
 
     lastPoint.x = x;
     lastPoint.y = y;
@@ -122,25 +107,17 @@ function mouseMoveListener(e) {
 }
 
 function mouseDownListener(e) {
-    let canvas = document.getElementById("myCanvas");
-
-    // getting mouse position correctly, being mindful of resizing that may have occured in the browser:
-    let bRect = canvas.getBoundingClientRect();
-    let mouseX = (e.clientX - bRect.left)*(canvas.width/bRect.width);
-    let mouseY = (e.clientY - bRect.top)*(canvas.height/bRect.height);
-  
     var x = e.pageX - e.target.offsetLeft;
     var y = e.pageY - e.target.offsetTop;
 
     // find out if rect was clicked
-    if ( (mouseX > rectX && mouseX < rectX + rectWidth) && 
-         (mouseY > rectY && mouseY < rectY + rectHeight)) {
-
+    if ( (x > position.x && x < position.x + size.width) && 
+         (y > position.y && y < position.y + size.height)) {
       dragging = true;
       lastPoint.x = x;
       lastPoint.y = y;
     }
-    
+
     e.preventDefault();
 }
 function mouseUpListener(e) {
