@@ -28,13 +28,39 @@ export default {
     }
   },
   mounted() {
-    loadImg('/static/museum/sampleImage.png')
+    this.loadImg('/static/museum/sampleImage.png')
   },
   methods: {
     imgChange(e) {
       var URL = window.URL;
       var url = URL.createObjectURL(e.target.files[0]);
-      loadImg(url);
+      this.loadImg(url);
+    },
+
+    loadImg(img_url) {
+      img.src = img_url
+      img.onload = () => {
+        var canvas = document.getElementById("myCanvas");
+        imgSize = this.calculateAspectRatioFit(img.width, img.height, canvas.clientWidth, canvas.clientHeight);
+        imageLoaded = true;
+        this.draw();
+      }
+    },
+
+    draw() {
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+      
+      if (imageLoaded) {
+        // draw image
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, imgSize.width, imgSize.height);
+
+        // draw rectangle
+        ctx.beginPath();
+        ctx.rect(position.x, position.y, size.width, size.height);
+        ctx.stroke();
+      }
     },
 
     down(e) {
@@ -43,7 +69,7 @@ export default {
 
       // find out if rect was clicked
       if ( (x > position.x && x < position.x + size.width) && 
-          (y > position.y && y < position.y + size.height)) {
+           (y > position.y && y < position.y + size.height)) {
         dragging = true;
         lastPoint.x = x;
         lastPoint.y = y;
@@ -83,45 +109,18 @@ export default {
       lastPoint.x = x;
       lastPoint.y = y;
 
-      draw();
+      this.draw();
+    },
+    calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+      var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+      var rtnWidth = srcWidth * ratio;
+      var rtnHeight = srcHeight * ratio;
+      return {
+          width: rtnWidth,
+          height: rtnHeight
+      };
     }
   }
-}
-
-function loadImg(img_url) {
-  img.src = img_url
-  img.onload = function() {
-    var canvas = document.getElementById("myCanvas");
-    imgSize = calculateAspectRatioFit(img.width, img.height, canvas.clientWidth, canvas.clientHeight);
-    imageLoaded = true;
-    draw();
-  }
-}
-
-function draw() {
-  var canvas = document.getElementById("myCanvas");
-  var ctx = canvas.getContext("2d");
-  
-  if (imageLoaded) {
-    // draw image
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, 0, 0, imgSize.width, imgSize.height);
-
-    // draw rectangle
-    ctx.beginPath();
-    ctx.rect(position.x, position.y, size.width, size.height);
-    ctx.stroke();
-  }
-}
-
-function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
-    var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-    var rtnWidth = srcWidth * ratio;
-    var rtnHeight = srcHeight * ratio;
-    return {
-        width: rtnWidth,
-        height: rtnHeight
-    };
 }
 </script>
 <style scoped>
