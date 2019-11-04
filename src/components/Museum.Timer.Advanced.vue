@@ -48,7 +48,6 @@
 
       clues: {
         home:      { sel: false, index: CLUE_TYPE.HOME, img: "home.png" },
-        empty:     { sel: false, index: CLUE_TYPE.AD_HOC, img: "empty.png" },
 
         totem:     { sel: false, index: 10, img: "totem.png" },
         clock:     { sel: false, index:  0, img: "clock2.png" },
@@ -87,7 +86,6 @@
           this.form.adhoc != this.adhoc
 
         return res
-          
       },
     },
     created () {
@@ -113,6 +111,11 @@
 
         this.clue = this.form.clue
         this.route = this.form.clue == CLUE_TYPE.HOME ? "home" : "clue"
+
+        if (this.adhoc != this.form.adhoc && this.form.adhoc != "") {
+          this.form.clue = CLUE_TYPE.AD_HOC
+          this.resetSel()
+        }
         this.adhoc = this.form.adhoc
 
         let obj = {
@@ -165,10 +168,8 @@
         // turn all others off
         this.resetSel()
 
-        // if empty isn't selected, clear adhoc
-        if (key != 'empty') {
-          this.form.adhoc = ""
-        }
+        // clear adhoc
+        this.form.adhoc = ""
 
         // turn selected on on/off
         this.clues[key].sel = !this.clues[key].sel
