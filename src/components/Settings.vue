@@ -2,8 +2,8 @@
   <v-container fluid>
     <v-slide-y-transition mode="out-in">
       <v-layout column align-center>
-        <input type="file" id="selectedImage" v-on:change="imgChange"/>
-        <canvas id="myCanvas" width="500" height="500"
+        <input type="file" v-on:change="imgChange"/>
+        <canvas ref="canvas" width="500" height="500"
           v-on:mousedown="down" 
           v-on:mouseup="up" 
           v-on:mousemove="move" 
@@ -39,7 +39,7 @@ export default {
     loadImg(img_url) {
       this.img.src = img_url
       this.img.onload = () => {
-        var canvas = document.getElementById("myCanvas");
+        var canvas = this.$refs.canvas
         this.imgSize = this.calculateAspectRatioFit(this.img.width, this.img.height, canvas.clientWidth, canvas.clientHeight);
         this.imageLoaded = true;
         this.draw();
@@ -47,7 +47,7 @@ export default {
     },
 
     draw() {
-      var canvas = document.getElementById("myCanvas");
+      var canvas = this.$refs.canvas;
       var ctx = canvas.getContext("2d");
       
       if (this.imageLoaded) {
