@@ -11,7 +11,7 @@
     <v-text-field style="width:100px;display:inline-block;margin-right:20px;" type="number" v-model="form.hours" label="Hours" :disabled="loading"/>
     <v-text-field style="width:100px;display:inline-block;margin-left: 20px;" type="number" v-model="form.minutes" label="Minutes" :disabled="loading" />
     <div>
-      <v-text-field type="string" multi-line class="adhocMulti" rows="2" v-model="form.adhoc" label="Adhoc" :disabled="loading" />
+      <v-text-field type="string" @click.native="adhocFocus" multi-line class="adhocMulti" rows="2" v-model="form.adhoc" label="Adhoc" :disabled="loading" />
       <v-btn class="clueSnd" title="Play clue sound" @click.native="playNotice">
         <v-icon color="grey lighten-1">volume_up</v-icon>
       </v-btn>
@@ -109,14 +109,14 @@
         let origTLAS = (this.hours * 60 * 60) + (this.minutes * 60)
         let newTLAS = (this.form.hours * 60 * 60) + (this.form.minutes * 60)
 
-        this.clue = this.form.clue
-        this.route = this.form.clue == CLUE_TYPE.HOME ? "home" : "clue"
-
         if (this.adhoc != this.form.adhoc && this.form.adhoc != "") {
           this.form.clue = CLUE_TYPE.AD_HOC
           this.resetSel()
         }
         this.adhoc = this.form.adhoc
+
+        this.clue = this.form.clue
+        this.route = this.form.clue == CLUE_TYPE.HOME ? "home" : "clue"
 
         let obj = {
           clue: this.clue,
@@ -155,6 +155,9 @@
         this.form.clue = this.clue
         this.form.adhoc = this.adhoc
         this.resetSel(this.clue)
+      },
+      adhocFocus() {
+        this.form.adhoc = ""
       },
       playNotice() {
         this.$root.$data.museumRoot.child('devices/dashboard').update({
