@@ -199,6 +199,7 @@
   }
   .clueSnd {
     display: inline-block;
+    vertical-align: top;
     margin-top: 31px;
     margin-bottom: 0px;
     margin-left: 5px;
