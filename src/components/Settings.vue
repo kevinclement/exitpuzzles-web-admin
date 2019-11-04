@@ -3,11 +3,15 @@
     <v-slide-y-transition mode="out-in">
       <v-layout column align-center>
         <input type="file" v-on:change="imgChange"/>
-        <canvas ref="canvas" width="500" height="500"
+        <canvas ref="canvas" :width="canvasSize.width" :height="canvasSize.height" style="padding-top:15px;"
           v-on:mousedown="down" 
           v-on:mouseup="up" 
           v-on:mousemove="move" 
         />
+        <canvas ref="expCanvas" width="100" height="80" style="display:none;" />
+        <v-btn small color="primary"  @click.native="exportImg">export</v-btn>
+        <v-btn small color="primary"  @click.native="scale(true)">up</v-btn>
+        <v-btn small color="primary"  @click.native="scale(false)">down</v-btn>
       </v-layout>
     </v-slide-y-transition>
   </v-container>
@@ -20,35 +24,51 @@ export default {
       dragging: false,
       imgSize: 0,
       imageLoaded: false,
-      position: { x: 20, y: 20 },
-      size: { width: 150, height: 100 },
+      canvasSize: {
+        width: 300,
+        height: 192
+      },
+      position: { x: 10, y: 10 },
+      size: { width: 100, height: 80 },
       lastPoint: { x: -1, y: -1 },
       img: document.createElement('img')
     }
   },
   mounted() {
+    // note: I was resizing to 1356x768, for resize purposed 339x192
+    //   
     this.loadImg('/static/museum/sampleImage.png')
   },
   methods: {
     imgChange(e) {
-      var URL = window.URL;
-      var url = URL.createObjectURL(e.target.files[0]);
+      let URL = window.URL;
+      let url = URL.createObjectURL(e.target.files[0]);
       this.loadImg(url);
     },
 
     loadImg(img_url) {
       this.img.src = img_url
       this.img.onload = () => {
-        var canvas = this.$refs.canvas
-        this.imgSize = this.calculateAspectRatioFit(this.img.width, this.img.height, canvas.clientWidth, canvas.clientHeight);
         this.imageLoaded = true;
+        this.imgSize = this.calculateAspectRatioFit(this.img.width, this.img.height);
         this.draw();
       }
     },
 
+    exportImg() {
+      let imgData = this.$refs.canvas.getContext('2d').getImageData(this.position.x, this.position.y, this.size.width, this.size.height);    
+      let exp = this.$refs.expCanvas;
+      let ctx = exp.getContext('2d');
+      ctx.putImageData(imgData, 0, 0);
+
+      let img = new Image();
+      img.src = exp.toDataURL();
+      document.body.appendChild(img);
+    },
+
     draw() {
-      var canvas = this.$refs.canvas;
-      var ctx = canvas.getContext("2d");
+      let canvas = this.$refs.canvas;
+      let ctx = canvas.getContext("2d");
       
       if (this.imageLoaded) {
         // draw image
@@ -62,9 +82,30 @@ export default {
       }
     },
 
+    scale(up) {
+      const scale_perc = 1.2;
+
+      if (up) {
+        this.canvasSize.width = this.canvasSize.width * scale_perc;
+        this.canvasSize.height = this.canvasSize.height * scale_perc;
+      } else {
+        this.canvasSize.width = this.canvasSize.width / scale_perc;
+        this.canvasSize.height = this.canvasSize.height / scale_perc;
+      }
+
+      // reset rectangle position
+      this.position.x = 10;
+      this.position.y = 10;
+      
+      setTimeout(()=>{
+        this.imgSize = this.calculateAspectRatioFit(this.img.width, this.img.height);
+        this.draw();
+      },1)
+    },
+
     down(e) {
-      var x = e.pageX - e.target.offsetLeft;
-      var y = e.pageY - e.target.offsetTop;
+      let x = e.pageX - e.target.offsetLeft;
+      let y = e.pageY - e.target.offsetTop;
 
       // find out if rect was clicked
       if ( (x > this.position.x && x < this.position.x + this.size.width) && 
@@ -76,6 +117,7 @@ export default {
 
       e.preventDefault();
     },
+
     up(e) {
       if (this.dragging) {
         this.dragging = false;
@@ -83,15 +125,16 @@ export default {
         this.lastPoint.y = -1;
       }
     },
+
     move(e) {
       if (!this.dragging) {
         return;
       }
 
-      var x = e.pageX - e.target.offsetLeft;
-      var y = e.pageY - e.target.offsetTop;
-      var deltaX = x - this.lastPoint.x;
-      var deltaY = y - this.lastPoint.y;
+      let x = e.pageX - e.target.offsetLeft;
+      let y = e.pageY - e.target.offsetTop;
+      let deltaX = x - this.lastPoint.x;
+      let deltaY = y - this.lastPoint.y;
 
       this.position.x += deltaX
       this.position.y += deltaY
@@ -110,10 +153,14 @@ export default {
 
       this.draw();
     },
-    calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
-      var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-      var rtnWidth = srcWidth * ratio;
-      var rtnHeight = srcHeight * ratio;
+
+    calculateAspectRatioFit(srcWidth, srcHeight) {
+      let canvas = this.$refs.canvas;
+      let maxWidth = canvas.width;
+      let maxHeight = canvas.height;
+      let ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+      let rtnWidth = srcWidth * ratio;
+      let rtnHeight = srcHeight * ratio;
       return {
           width: rtnWidth,
           height: rtnHeight
