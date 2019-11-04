@@ -11,7 +11,7 @@
     <v-text-field style="width:100px;display:inline-block;margin-right:20px;" type="number" v-model="form.hours" label="Hours" :disabled="loading"/>
     <v-text-field style="width:100px;display:inline-block;margin-left: 20px;" type="number" v-model="form.minutes" label="Minutes" :disabled="loading" />
     <div>
-      <v-text-field type="string" @click.native="adhocFocus" multi-line class="adhocMulti" rows="2" v-model="form.adhoc" label="Adhoc" :disabled="loading" />
+      <v-text-field type="string" @click.native="adhocFocus" v-on:keyup="adhocPress" multi-line class="adhocMulti" rows="2" v-model="form.adhoc" label="Adhoc" :disabled="loading" />
       <v-btn class="clueSnd" title="Play clue sound" @click.native="playNotice">
         <v-icon color="grey lighten-1">volume_up</v-icon>
       </v-btn>
@@ -158,6 +158,11 @@
       },
       adhocFocus() {
         this.form.adhoc = ""
+      },
+      adhocPress(e) {
+        if (!this.saveDisabled && e.keyCode == 13 && (e.ctrlKey || e.metaKey)) {
+          this.save()
+        }
       },
       playNotice() {
         this.$root.$data.museumRoot.child('devices/dashboard').update({
