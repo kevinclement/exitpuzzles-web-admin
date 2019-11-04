@@ -60,7 +60,7 @@
         safe:      { sel: false, index:  7, img: "safe.png" },
         chair:     { sel: false, index: 11, img: "laser.chair.png" },
         laser:     { sel: false, index:  4, img: "laser.align.png" },
-        laser:     { sel: false, index: 12, img: "egyptian.column.jpg" },
+        column:    { sel: false, index: 12, img: "egyptian.column.jpg" },
         readme:    { sel: false, index:  8, img: "readme.png" },
         translate: { sel: false, index:  9, img: "translate.png" }
       },
