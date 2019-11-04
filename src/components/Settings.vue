@@ -3,7 +3,11 @@
     <v-slide-y-transition mode="out-in">
       <v-layout column align-center>
         <input type="file" id="selectedImage" v-on:change="imgChange"/>
-        <canvas id="myCanvas" width="500" height="500"> </canvas>
+        <canvas id="myCanvas" width="500" height="500"
+          v-on:mousedown="down" 
+          v-on:mouseup="up" 
+          v-on:mousemove="move" 
+        />
       </v-layout>
     </v-slide-y-transition>
   </v-container>
@@ -25,25 +29,67 @@ export default {
   },
   mounted() {
     loadImg('/static/museum/sampleImage.png')
-
-    document.getElementById("myCanvas").addEventListener("mousedown", mouseDownListener, false);
-    document.getElementById("myCanvas").addEventListener("mouseup", mouseUpListener, false);
-    document.getElementById("myCanvas").addEventListener("mousemove", mouseMoveListener, false);
   },
   methods: {
     imgChange(e) {
-      console.log(`changed`);
       var URL = window.URL;
       var url = URL.createObjectURL(e.target.files[0]);
       loadImg(url);
+    },
+
+    down(e) {
+      var x = e.pageX - e.target.offsetLeft;
+      var y = e.pageY - e.target.offsetTop;
+
+      // find out if rect was clicked
+      if ( (x > position.x && x < position.x + size.width) && 
+          (y > position.y && y < position.y + size.height)) {
+        dragging = true;
+        lastPoint.x = x;
+        lastPoint.y = y;
+      }
+
+      e.preventDefault();
+    },
+    up(e) {
+      if (dragging) {
+        dragging = false;
+        lastPoint.x = -1;
+        lastPoint.y = -1;
+      }
+    },
+    move(e) {
+      if (!dragging) {
+        return;
+      }
+
+      var x = e.pageX - e.target.offsetLeft;
+      var y = e.pageY - e.target.offsetTop;
+      var deltaX = x - lastPoint.x;
+      var deltaY = y - lastPoint.y;
+
+      position.x += deltaX
+      position.y += deltaY
+
+      // check for boundary
+      let maxX = (imgSize.width - size.width - 1);
+      position.x = position.x < 1 ? 1 : position.x;
+      position.x = position.x > maxX ? maxX : position.x;
+
+      let maxY = (imgSize.height - size.height - 1);
+      position.y = position.y < 1 ? 1 : position.y;
+      position.y = position.y > maxY ? maxY : position.y;
+
+      lastPoint.x = x;
+      lastPoint.y = y;
+
+      draw();
     }
   }
 }
 
-
 function loadImg(img_url) {
   img.src = img_url
-
   img.onload = function() {
     var canvas = document.getElementById("myCanvas");
     imgSize = calculateAspectRatioFit(img.width, img.height, canvas.clientWidth, canvas.clientHeight);
@@ -76,56 +122,6 @@ function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
         width: rtnWidth,
         height: rtnHeight
     };
-}
-
-function mouseMoveListener(e) {
-    if (!dragging) {
-      return;
-    }
-
-    var x = e.pageX - e.target.offsetLeft;
-    var y = e.pageY - e.target.offsetTop;
-    var deltaX = x - lastPoint.x;
-    var deltaY = y - lastPoint.y;
-
-    position.x += deltaX
-    position.y += deltaY
-
-    // check for boundary
-    let maxX = (imgSize.width - size.width - 1);
-    position.x = position.x < 1 ? 1 : position.x;
-    position.x = position.x > maxX ? maxX : position.x;
-
-    let maxY = (imgSize.height - size.height - 1);
-    position.y = position.y < 1 ? 1 : position.y;
-    position.y = position.y > maxY ? maxY : position.y;
-
-    lastPoint.x = x;
-    lastPoint.y = y;
-
-    draw();
-}
-
-function mouseDownListener(e) {
-    var x = e.pageX - e.target.offsetLeft;
-    var y = e.pageY - e.target.offsetTop;
-
-    // find out if rect was clicked
-    if ( (x > position.x && x < position.x + size.width) && 
-         (y > position.y && y < position.y + size.height)) {
-      dragging = true;
-      lastPoint.x = x;
-      lastPoint.y = y;
-    }
-
-    e.preventDefault();
-}
-function mouseUpListener(e) {
-  if (dragging) {
-    dragging = false;
-    lastPoint.x = -1;
-    lastPoint.y = -1;
-  }
 }
 </script>
 <style scoped>
