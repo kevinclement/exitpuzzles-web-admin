@@ -1,23 +1,23 @@
 <template>
   <v-container fluid style="padding-top:0px !important;padding-bottom:0px !important;">
     <v-layout row wrap>
-      <div class="zoomRow" style="">
+      <div class="zoomRow">
         <v-icon :disabled="!showCanvas" v-on:click="scale(false)">zoom_out</v-icon>
         <v-icon :disabled="!showCanvas" v-on:click="scale(true)">zoom_in</v-icon>
       </div>
       <label>
         <input type="file" accept="image/*" v-on:change="imgChange" style="display:none">
-        <div v-if="!showCanvas" style="height: 192px;width:339px;background:#f5f5f5;display: flex;align-items: center;justify-content: center;flex-flow:column wrap;">
-          <div><v-icon style="font-size:42px;color:rgba(0, 0, 0, 0.38);">cloud_upload</v-icon></div>
-          <div style="color:rgba(0, 0, 0, 0.38);">Upload Image</div>
+        <div v-if="!showCanvas" class="placeholder">
+          <v-icon>cloud_upload</v-icon>
+          <div>Upload Image</div>
         </div>
       </label>
-    <canvas v-if="showCanvas" ref="canvas" :width="canvasSize.width" :height="canvasSize.height" style=""
+    <canvas v-if="showCanvas" ref="canvas" :width="canvasSize.width" :height="canvasSize.height"
         v-on:mousedown="down" 
         v-on:mouseup="up" 
         v-on:mousemove="move" 
     />
-    <div style="width:400px;padding-top:10px;font-style:italic;">{{desc}}</div>
+    <div class="desc">{{desc}}</div>
     
     <!-- hidden canvas elements used to produce zoom and resized images -->
     <canvas ref="expCanvasZoom" width="100" height="80" style="display:none;" />
@@ -228,4 +228,26 @@ export default {
 .zoomRow i {
   cursor: pointer;
 }
+.placeholder {
+  height: 192px;
+  width:339px;
+  background:#f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow:column wrap;
+}
+.placeholder i {
+  font-size:42px;
+  color:rgba(0, 0, 0, 0.38);
+}
+.placeholder div {
+  color:rgba(0, 0, 0, 0.38);
+}
+.desc {
+  width:400px;
+  padding-top:10px;
+  font-style:italic;
+}
+
 </style>
