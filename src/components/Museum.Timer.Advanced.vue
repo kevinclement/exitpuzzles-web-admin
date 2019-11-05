@@ -25,13 +25,28 @@
   </div>
   <div style="margin:25px 10px 0px 10px">
     <v-btn small @click.native="save" :disabled="saveDisabled">save</v-btn>
-    <v-btn small @click.native="reset"> reset</v-btn>
+    <v-btn small @click.native="reset">reset</v-btn>
+    <a href="#" @click="showUpload" style="text-decoration: none;padding-left:5px;">upload</a>
   </div>
+
+  <v-dialog v-model="dialogUpload" persistent max-width="600">
+      <v-card>
+        <v-card-title class="headline">Upload a new clue</v-card-title>
+        <museum-timer-uploadClue />
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" flat="flat" @click.native="dialogUpload = false;">Cancel</v-btn>
+          <v-btn color="primary" flat="flat" @click.native="upload">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+  </v-dialog>
 
 </div>
 </template>
 
 <script>
+  import UploadClue from '@/components/Museum.Timer.UploadClue'
+
   const CLUE_TYPE = { 
     HOME: -1,
     AD_HOC: -2
@@ -42,6 +57,7 @@
 
     data: () => ({
       loading: true,
+      dialogUpload: false,
 
       hours:0,
       minutes:0,
@@ -156,6 +172,13 @@
         this.form.adhoc = this.adhoc
         this.resetSel(this.clue)
       },
+      showUpload(e) {
+        this.dialogUpload = true
+        e.preventDefault()
+      },
+      upload() {
+        console.log(`uploading!!!`)
+      },
       adhocFocus() {
         this.form.adhoc = ""
       },
@@ -188,6 +211,10 @@
           this.clues[k].sel = c && clue.index == c
         }
       }
+    },
+    
+    components: {
+      'museum-timer-uploadClue': UploadClue
     }
   }
 </script>
