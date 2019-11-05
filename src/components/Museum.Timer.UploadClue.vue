@@ -23,12 +23,11 @@
     <canvas ref="expCanvasZoom" width="100" height="80" style="display:none;" />
     <canvas ref="expCanvasSized" width="1356" height="768" style="display:none" />
 
-    <!-- <v-btn small color="primary" @click.native="exportImg">export</v-btn> -->
     </v-layout>
     <v-card-actions class="actions">
           <v-spacer></v-spacer>
           <v-btn color="primary" flat="flat" @click.native="$root.$emit('close-upload')">Cancel</v-btn>
-          <v-btn color="primary" flat="flat" @click.native="upload">Save</v-btn>
+          <v-btn color="primary" flat="flat" @click.native="exportImg" :loading="uploading">Save</v-btn>
     </v-card-actions>
   </v-container>
 </template>
@@ -46,6 +45,7 @@ export default {
   data () {
     return {
       dragging: false,
+      uploading: false,
       showCanvas: false,
       imgSize: 0,
       imageLoaded: false,
@@ -78,7 +78,6 @@ export default {
     this.storage = this.$root.$data.fbstorage.ref()
   },
   mounted() {
-    this.loadImg('/static/museum/sampleImage.png', 'sampleImage.png')
   },
   methods: {
     imgChange(e) {
@@ -99,6 +98,9 @@ export default {
     },
 
     exportImg() {
+      // mark save button as loading
+      this.uploading = true;
+
       // zoomed image
       let canvas = this.$refs.canvas.getContext('2d');
       let exp = this.$refs.expCanvasZoom;
@@ -118,7 +120,9 @@ export default {
       resizeImg.src = resizeURI;
 
       // upload full image to storage
-      this.uploadToStorage(resizeURI, 'full')
+      this.uploadToStorage(resizeURI, 'full', () => {
+        this.$root.$emit('close-upload')
+      })
     },
 
     draw(fresh) {
@@ -214,11 +218,12 @@ export default {
       this.draw();
     },
 
-    uploadToStorage(dataURI, ext) {
+    uploadToStorage(dataURI, ext, cb) {
       let filename = `${this.imgName}.${ext}.png`;
       let fileRef = this.storage.child('museum/clues').child(filename);
       fileRef.putString(dataURI, 'data_url', { contentType: 'image/png' }).then(function(snapshot) {
         console.log(`uploaded ${filename}`);
+        if (cb) cb();
       });
     }
   }
@@ -241,6 +246,9 @@ export default {
   align-items: center;
   justify-content: center;
   flex-flow:column wrap;
+}
+.placeholder {
+  user-select:none;
 }
 .placeholder i {
   font-size:42px;
