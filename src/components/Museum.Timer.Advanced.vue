@@ -17,8 +17,9 @@
       </v-btn>
     </div>
 
-    <div class="clueWrap" v-for="clue in Object.entries(clues)" :key="clue[0]">
-      <img :class="{ clueSel: clue[1].sel }" @click="imgSel(clue[0])" class="clueImg" :src="imgSrc(clue[1].img)" :title="clue[0]"/>
+    <div class="clueWrap" v-for="clue in clues2" :key="clue.name">
+      <img :src="clueSrc(clue)" />
+      <!-- <img :class="{ clueSel: clue[1].sel }" @click="imgSel(clue[0])" class="clueImg" :src="imgSrc(clue[1].img)" :title="clue[0]"/> -->
     </div>
     
   </div>
@@ -78,6 +79,7 @@
       clue: CLUE_TYPE.AD_HOC,
       route: "",
       adhoc: "",
+      clues2: [],
 
       form:  {
         hours: 0,
@@ -104,7 +106,7 @@
 
       this.$root.$on('close-upload', () => { this.dialogUpload = false })
 
-      this.$root.$data.museumRoot.child('devices/dashboard').once('value', (snapshot) => {
+      this.$root.$data.museumRoot.child('devices/dashboard').on('value', (snapshot) => {
         let dash = snapshot.val()
         if (dash == null) return
 
@@ -114,11 +116,18 @@
         this.route = dash.route
         this.adhoc = dash.adhoc
 
+        if (dash.clues2) {
+          this.clues2 = dash.clues2
+        }
+
         this.reset();
         this.loading = false;
       })
     },
     methods: {
+      clueSrc(clue) {
+        return `https://firebasestorage.googleapis.com/v0/b/exitpuzzles-admin.appspot.com/o/museum%2Fclues%2F${clue.small}?alt=media`
+      },
       save() {
         let origClue = this.clue
         let origTLAS = (this.hours * 60 * 60) + (this.minutes * 60)

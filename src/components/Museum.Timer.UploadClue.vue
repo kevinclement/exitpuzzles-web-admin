@@ -61,7 +61,8 @@ export default {
       size: { width: 100, height: 80 },
       lastPoint: { x: -1, y: -1 },
       img: document.createElement('img'),
-      imgName: ""
+      imgName: "",
+      clues:[]
     }
   },
   computed: {
@@ -76,6 +77,13 @@ export default {
 
   created() {
     this.storage = this.$root.$data.fbstorage.ref()
+    this.dashRef = this.$root.$data.museumRoot.child('devices/dashboard')
+    this.dashRef.on('value', (snapshot) => {
+      let s = snapshot.val()
+      if (s.clues2) {
+        this.clues = s.clues2
+      }
+    })
   },
   mounted() {
   },
@@ -111,8 +119,11 @@ export default {
       let dataURI = exp.toDataURL();
       zoomImg.src = dataURI;
 
+      let small = `${this.imgName}.small.png`
+      let full = `${this.imgName}.full.png`
+
       // upload small image to storage
-      this.uploadToStorage(dataURI, 'small')
+      this.uploadToStorage(dataURI, small, () => {})
 
       // resized image
       let resizeImg = new Image();
@@ -120,8 +131,19 @@ export default {
       resizeImg.src = resizeURI;
 
       // upload full image to storage
-      this.uploadToStorage(resizeURI, 'full', () => {
-        this.$root.$emit('close-upload')
+      this.uploadToStorage(resizeURI, full, () => {
+        // finished all uploads, now write to record in dashboard db
+        this.clues.push({
+          name: this.imgName,
+          small: small,
+          full: full
+        })
+
+        this.dashRef.update({
+          clues2: this.clues
+        }, () => {
+          this.$root.$emit('close-upload')
+        })
       })
     },
 
@@ -218,8 +240,7 @@ export default {
       this.draw();
     },
 
-    uploadToStorage(dataURI, ext, cb) {
-      let filename = `${this.imgName}.${ext}.png`;
+    uploadToStorage(dataURI, filename, cb) {
       let fileRef = this.storage.child('museum/clues').child(filename);
       fileRef.putString(dataURI, 'data_url', { contentType: 'image/png' }).then(function(snapshot) {
         console.log(`uploaded ${filename}`);
