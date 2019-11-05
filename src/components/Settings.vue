@@ -9,9 +9,9 @@
           v-on:mousemove="move" 
         />
         <canvas ref="expCanvas" width="100" height="80" style="display:none;" />
-        <v-btn small color="primary"  @click.native="exportImg">export</v-btn>
-        <v-btn small color="primary"  @click.native="scale(true)">up</v-btn>
-        <v-btn small color="primary"  @click.native="scale(false)">down</v-btn>
+        <v-btn small color="primary" @click.native="exportImg">export</v-btn>
+        <v-btn small color="primary" @click.native="scale(true)">up</v-btn>
+        <v-btn small color="primary" @click.native="scale(false)">down</v-btn>
       </v-layout>
     </v-slide-y-transition>
   </v-container>
@@ -25,8 +25,12 @@ export default {
       imgSize: 0,
       imageLoaded: false,
       canvasSize: {
-        width: 300,
-        height: 192
+        width: 678,
+        height: 384
+      },
+      imgSize: { 
+        width: 678, 
+        height:384 
       },
       position: { x: 10, y: 10 },
       size: { width: 100, height: 80 },
@@ -50,7 +54,6 @@ export default {
       this.img.src = img_url
       this.img.onload = () => {
         this.imageLoaded = true;
-        this.imgSize = this.calculateAspectRatioFit(this.img.width, this.img.height);
         this.draw();
       }
     },
@@ -83,24 +86,14 @@ export default {
     },
 
     scale(up) {
-      const scale_perc = 1.2;
-
+      const scale_perc = 1.1;
       if (up) {
-        this.canvasSize.width = this.canvasSize.width * scale_perc;
-        this.canvasSize.height = this.canvasSize.height * scale_perc;
+        this.imgSize = { width: this.imgSize.width * scale_perc, height: this.imgSize.height * scale_perc };
       } else {
-        this.canvasSize.width = this.canvasSize.width / scale_perc;
-        this.canvasSize.height = this.canvasSize.height / scale_perc;
+        this.imgSize = { width: this.imgSize.width / scale_perc, height: this.imgSize.height / scale_perc };
       }
-
-      // reset rectangle position
-      this.position.x = 10;
-      this.position.y = 10;
       
-      setTimeout(()=>{
-        this.imgSize = this.calculateAspectRatioFit(this.img.width, this.img.height);
-        this.draw();
-      },1)
+      this.draw();
     },
 
     down(e) {
@@ -152,19 +145,6 @@ export default {
       this.lastPoint.y = y;
 
       this.draw();
-    },
-
-    calculateAspectRatioFit(srcWidth, srcHeight) {
-      let canvas = this.$refs.canvas;
-      let maxWidth = canvas.width;
-      let maxHeight = canvas.height;
-      let ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-      let rtnWidth = srcWidth * ratio;
-      let rtnHeight = srcHeight * ratio;
-      return {
-          width: rtnWidth,
-          height: rtnHeight
-      };
     }
   }
 }
