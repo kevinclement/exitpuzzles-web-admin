@@ -249,7 +249,6 @@
     display: inline-block;
   }
   .upload {
-    color:rgba(0, 0, 0, 0.6);
     min-width: 50px;
     margin-left: 8px;
   }
