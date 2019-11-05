@@ -81,7 +81,6 @@ export default {
       let zoomImg = new Image();
       let dataURI = exp.toDataURL();
       zoomImg.src = dataURI;
-      document.body.appendChild(zoomImg);
 
       // upload small image to storage
       this.uploadToStorage(dataURI, 'small')
@@ -90,7 +89,6 @@ export default {
       let resizeImg = new Image();
       let resizeURI = this.$refs.expCanvasSized.toDataURL();
       resizeImg.src = resizeURI;
-      document.body.appendChild(resizeImg);
 
       // upload full image to storage
       this.uploadToStorage(resizeURI, 'full')
