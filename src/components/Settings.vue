@@ -8,7 +8,8 @@
           v-on:mouseup="up" 
           v-on:mousemove="move" 
         />
-        <canvas ref="expCanvas" width="100" height="80" style="display:none;" />
+        <canvas ref="expCanvasZoom" width="100" height="80" style="display:none;" />
+        <canvas ref="expCanvasSized" width="1356" height="768" style="display:none" />
         <v-btn small color="primary" @click.native="exportImg">export</v-btn>
         <v-btn small color="primary" @click.native="scale(true)">up</v-btn>
         <v-btn small color="primary" @click.native="scale(false)">down</v-btn>
@@ -18,6 +19,14 @@
 </template>
 <script>
 
+const DEFAULTS = {
+  display_w: 339,
+  display_h: 192,
+
+  export_w: 1356,
+  export_h: 768
+}
+
 export default {
   data () {
     return {
@@ -25,12 +34,12 @@ export default {
       imgSize: 0,
       imageLoaded: false,
       canvasSize: {
-        width: 678,
-        height: 384
+        width: DEFAULTS.display_w,
+        height: DEFAULTS.display_h
       },
       imgSize: { 
-        width: 678, 
-        height:384 
+        width: DEFAULTS.display_w,
+        height: DEFAULTS.display_h
       },
       position: { x: 10, y: 10 },
       size: { width: 100, height: 80 },
@@ -39,8 +48,6 @@ export default {
     }
   },
   mounted() {
-    // note: I was resizing to 1356x768, for resize purposed 339x192
-    //   
     this.loadImg('/static/museum/sampleImage.png')
   },
   methods: {
@@ -54,24 +61,32 @@ export default {
       this.img.src = img_url
       this.img.onload = () => {
         this.imageLoaded = true;
-        this.draw();
+        this.draw(true);
       }
     },
 
     exportImg() {
-      let imgData = this.$refs.canvas.getContext('2d').getImageData(this.position.x, this.position.y, this.size.width, this.size.height);    
-      let exp = this.$refs.expCanvas;
+      // zoomed image
+      let canvas = this.$refs.canvas.getContext('2d');
+      let exp = this.$refs.expCanvasZoom;
       let ctx = exp.getContext('2d');
-      ctx.putImageData(imgData, 0, 0);
+      let zoomData = canvas.getImageData(this.position.x, this.position.y, this.size.width, this.size.height);
+      ctx.putImageData(zoomData, 0, 0);
+      let zoomImg = new Image();
+      zoomImg.src = exp.toDataURL();
+      document.body.appendChild(zoomImg);
 
-      let img = new Image();
-      img.src = exp.toDataURL();
-      document.body.appendChild(img);
+      // resized image
+      let resizeImg = new Image();
+      resizeImg.src = this.$refs.expCanvasSized.toDataURL();
+      document.body.appendChild(resizeImg);
     },
 
-    draw() {
+    draw(fresh) {
       let canvas = this.$refs.canvas;
+      let canvasSized = this.$refs.expCanvasSized;
       let ctx = canvas.getContext("2d");
+      let ctxSized = canvasSized.getContext("2d");
       
       if (this.imageLoaded) {
         // draw image
@@ -82,6 +97,12 @@ export default {
         ctx.beginPath();
         ctx.rect(this.position.x, this.position.y, this.size.width, this.size.height);
         ctx.stroke();
+
+        // draw the resized image if this is a new load
+        if (fresh) {
+          ctxSized.clearRect(0, 0, DEFAULTS.export_w, DEFAULTS.export_h);
+          ctxSized.drawImage(this.img, 0, 0, DEFAULTS.export_w, DEFAULTS.export_h);
+        }
       }
     },
 
