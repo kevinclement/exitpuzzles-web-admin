@@ -44,20 +44,26 @@ export default {
       position: { x: 10, y: 10 },
       size: { width: 100, height: 80 },
       lastPoint: { x: -1, y: -1 },
-      img: document.createElement('img')
+      img: document.createElement('img'),
+      imgName: ""
     }
   },
+  created() {
+    this.storage = this.$root.$data.fbstorage.ref()
+  },
   mounted() {
-    this.loadImg('/static/museum/sampleImage.png')
+    this.loadImg('/static/museum/sampleImage.png', 'sampleImage.png')
   },
   methods: {
     imgChange(e) {
       let URL = window.URL;
       let url = URL.createObjectURL(e.target.files[0]);
-      this.loadImg(url);
+      this.loadImg(url, e.target.files[0].name);
     },
 
-    loadImg(img_url) {
+    loadImg(img_url, name) {
+      // store image name without extension, e.g. foo.png -> foo
+      this.imgName = name.split('.').slice(0,-1).join()
       this.img.src = img_url
       this.img.onload = () => {
         this.imageLoaded = true;
@@ -73,13 +79,21 @@ export default {
       let zoomData = canvas.getImageData(this.position.x, this.position.y, this.size.width, this.size.height);
       ctx.putImageData(zoomData, 0, 0);
       let zoomImg = new Image();
-      zoomImg.src = exp.toDataURL();
+      let dataURI = exp.toDataURL();
+      zoomImg.src = dataURI;
       document.body.appendChild(zoomImg);
+
+      // upload small image to storage
+      this.uploadToStorage(dataURI, 'small')
 
       // resized image
       let resizeImg = new Image();
-      resizeImg.src = this.$refs.expCanvasSized.toDataURL();
+      let resizeURI = this.$refs.expCanvasSized.toDataURL();
+      resizeImg.src = resizeURI;
       document.body.appendChild(resizeImg);
+
+      // upload full image to storage
+      this.uploadToStorage(resizeURI, 'full')
     },
 
     draw(fresh) {
@@ -166,6 +180,14 @@ export default {
       this.lastPoint.y = y;
 
       this.draw();
+    },
+
+    uploadToStorage(dataURI, ext) {
+      let filename = `${this.imgName}.${ext}.png`;
+      let fileRef = this.storage.child('museum/clues').child(filename);
+      fileRef.putString(dataURI, 'data_url', { contentType: 'image/png' }).then(function(snapshot) {
+        console.log(`uploaded ${filename}`);
+      });
     }
   }
 }

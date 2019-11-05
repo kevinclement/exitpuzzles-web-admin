@@ -22,7 +22,9 @@ window['DEV_MODE'] = process.env.NODE_ENV === 'development' && process.env.DEV_M
 // init firebase
 let dbUrl = window['DEV_MODE'] ? "https://exitpuzzles-admin-dev.firebaseio.com" : "https://exitpuzzles-admin.firebaseio.com"
 let config = { databaseURL: dbUrl }
-let db = Firebase.initializeApp(config).database()
+let fb = Firebase.initializeApp(config)
+let db = fb.database()
+let storage = fb.storage('exitpuzzles-admin.appspot.com')
 let operations = new Operations(db, 'operations')
 let museumRuns = new Runs(db, 'museum/runs')
 let museumOps = new Operations(db, 'museum/operations')
@@ -42,6 +44,7 @@ new Vue({
   template: '<App/>',
   data: {
     fbdb: db,
+    fbstorage: storage,
     operations: operations,
     museumOps: museumOps,
     museumRoot: museumRoot,
