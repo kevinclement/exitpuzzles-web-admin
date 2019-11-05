@@ -16,7 +16,6 @@
         <v-icon color="grey lighten-1">volume_up</v-icon>
       </v-btn>
     </div>
-    
 
     <div class="clueWrap" v-for="clue in Object.entries(clues)" :key="clue[0]">
       <img :class="{ clueSel: clue[1].sel }" @click="imgSel(clue[0])" class="clueImg" :src="imgSrc(clue[1].img)" :title="clue[0]"/>
@@ -31,10 +30,10 @@
     </v-btn>
   </div>
 
-  <v-dialog v-model="dialogUpload" max-width="373">
+  <v-dialog v-model="dialogUpload" v-if="dialogUpload" max-width="373">
       <v-card>
         <v-card-title class="headline">Upload a new clue</v-card-title>
-        <museum-timer-uploadClue />
+        <museum-timer-uploadClue v-if="dialogUpload" />
       </v-card>
   </v-dialog>
 
