@@ -26,7 +26,9 @@
   <div style="margin:25px 10px 0px 10px">
     <v-btn small @click.native="save" :disabled="saveDisabled">save</v-btn>
     <v-btn small @click.native="reset">reset</v-btn>
-    <a href="#" @click="showUpload" style="text-decoration: none;padding-left:5px;">upload</a>
+    <v-btn small @click.native="showUpload" class="upload">
+      <v-icon >cloud_upload</v-icon>
+    </v-btn>
   </div>
 
   <v-dialog v-model="dialogUpload" max-width="373">
@@ -245,6 +247,11 @@
   .adhocMulti {
     width:200px;
     display: inline-block;
+  }
+  .upload {
+    color:rgba(0, 0, 0, 0.6);
+    min-width: 50px;
+    margin-left: 8px;
   }
 </style>
 <style>
