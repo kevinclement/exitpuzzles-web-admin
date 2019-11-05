@@ -29,15 +29,10 @@
     <a href="#" @click="showUpload" style="text-decoration: none;padding-left:5px;">upload</a>
   </div>
 
-  <v-dialog v-model="dialogUpload" persistent max-width="373">
+  <v-dialog v-model="dialogUpload" max-width="373">
       <v-card>
         <v-card-title class="headline">Upload a new clue</v-card-title>
         <museum-timer-uploadClue />
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" flat="flat" @click.native="dialogUpload = false;">Cancel</v-btn>
-          <v-btn color="primary" flat="flat" @click.native="upload">Save</v-btn>
-        </v-card-actions>
       </v-card>
   </v-dialog>
 
@@ -105,6 +100,9 @@
       },
     },
     created () {
+
+      this.$root.$on('close-upload', () => { this.dialogUpload = false })
+
       this.$root.$data.museumRoot.child('devices/dashboard').once('value', (snapshot) => {
         let dash = snapshot.val()
         if (dash == null) return
@@ -175,9 +173,6 @@
       showUpload(e) {
         this.dialogUpload = true
         e.preventDefault()
-      },
-      upload() {
-        console.log(`uploading!!!`)
       },
       adhocFocus() {
         this.form.adhoc = ""

@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid style="padding-top:0px !important;padding-bottom:0px !important;">
-    <v-layout row wrap>
+  <v-container fluid style="padding:0px !important;padding-bottom:0px !important;">
+    <v-layout row wrap style="padding-left:16px;padding-right:16px;">
       <div class="zoomRow">
         <v-icon :disabled="!showCanvas" v-on:click="scale(false)">zoom_out</v-icon>
         <v-icon :disabled="!showCanvas" v-on:click="scale(true)">zoom_in</v-icon>
@@ -25,6 +25,11 @@
 
     <!-- <v-btn small color="primary" @click.native="exportImg">export</v-btn> -->
     </v-layout>
+    <v-card-actions class="actions">
+          <v-spacer></v-spacer>
+          <v-btn color="primary" flat="flat" @click.native="$root.$emit('close-upload')">Cancel</v-btn>
+          <v-btn color="primary" flat="flat" @click.native="upload">Save</v-btn>
+    </v-card-actions>
   </v-container>
 </template>
 <script>
@@ -248,6 +253,9 @@ export default {
   width:400px;
   padding-top:10px;
   font-style:italic;
+}
+.actions {
+  padding-top:20px;
 }
 
 </style>
