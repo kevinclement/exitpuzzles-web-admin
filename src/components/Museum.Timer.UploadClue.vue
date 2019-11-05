@@ -1,20 +1,26 @@
 <template>
-  <v-container fluid>
-    <v-layout column align-center>
-    <input type="file" v-on:change="imgChange"/>
-    <canvas ref="canvas" :width="canvasSize.width" :height="canvasSize.height" style="padding-top:15px;"
+  <v-container fluid style="padding-top:0px !important;padding-bottom:0px !important;">
+    <v-layout row wrap>
+      <div class="zoomRow" style="">
+        <v-icon :disabled="!showCanvas" v-on:click="scale(false)">zoom_out</v-icon>
+        <v-icon :disabled="!showCanvas" v-on:click="scale(true)">zoom_in</v-icon>
+      </div>
+      <label>
+        <input type="file" accept="image/*" v-on:change="imgChange" style="display:none">
+        <div v-if="!showCanvas" style="height: 192px;width:339px;background:#f5f5f5;">CLICKER HERE</div>
+      </label>
+    <canvas v-if="showCanvas" ref="canvas" :width="canvasSize.width" :height="canvasSize.height" style=""
         v-on:mousedown="down" 
         v-on:mouseup="up" 
         v-on:mousemove="move" 
     />
-
+    <div style="width:400px;padding-top:10px;">blah blah 1</div>
+    
     <!-- hidden canvas elements used to produce zoom and resized images -->
     <canvas ref="expCanvasZoom" width="100" height="80" style="display:none;" />
     <canvas ref="expCanvasSized" width="1356" height="768" style="display:none" />
 
     <v-btn small color="primary" @click.native="exportImg">export</v-btn>
-    <v-btn small color="primary" @click.native="scale(true)">up</v-btn>
-    <v-btn small color="primary" @click.native="scale(false)">down</v-btn>
     </v-layout>
   </v-container>
 </template>
@@ -32,6 +38,7 @@ export default {
   data () {
     return {
       dragging: false,
+      showCanvas: false,
       imgSize: 0,
       imageLoaded: false,
       canvasSize: {
@@ -57,6 +64,7 @@ export default {
   },
   methods: {
     imgChange(e) {
+      this.showCanvas = true;
       let URL = window.URL;
       let url = URL.createObjectURL(e.target.files[0]);
       this.loadImg(url, e.target.files[0].name);
@@ -96,6 +104,8 @@ export default {
     },
 
     draw(fresh) {
+      if (!this.showCanvas) return
+
       let canvas = this.$refs.canvas;
       let canvasSized = this.$refs.expCanvasSized;
       let ctx = canvas.getContext("2d");
@@ -197,4 +207,12 @@ export default {
 }
 </script>
 <style scoped>
+.zoomRow {
+  width:339px;
+  padding-bottom:2px;
+  user-select: none;
+}
+.zoomRow i {
+  cursor: pointer;
+}
 </style>

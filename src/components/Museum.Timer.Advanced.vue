@@ -29,7 +29,7 @@
     <a href="#" @click="showUpload" style="text-decoration: none;padding-left:5px;">upload</a>
   </div>
 
-  <v-dialog v-model="dialogUpload" persistent max-width="600">
+  <v-dialog v-model="dialogUpload" persistent max-width="373">
       <v-card>
         <v-card-title class="headline">Upload a new clue</v-card-title>
         <museum-timer-uploadClue />
