@@ -81,7 +81,7 @@ export default {
   data () {
     return {
       filter: 'week',
-      useMedian: false,
+      useMedian: true,
       headers: [
           { text: 'Date',       value: 'date',      sortable: false, align: 'left'  },
           { text: 'Progress',   value: 'progress',  sortable: false                 },
