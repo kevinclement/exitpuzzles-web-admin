@@ -17,7 +17,7 @@
       </v-btn>
     </div>
 
-    <div class="clueWrap" v-for="clue in clues2" :key="clue.name">
+    <div class="clueWrap" v-for="clue in clues" :key="clue.name">
       <img :class="{ clueSel: form.selectedClue == clue }" @click="imgSel(clue)" class="clueImg" :src="clueSrc(clue)" :title="clue.name" />
     </div>
     
@@ -57,26 +57,8 @@
       hours:0,
       minutes:0,
 
-      clues: {
-        home:      { sel: false, index: CLUE_TYPE.HOME, img: "home.png" },
-
-        totem:     { sel: false, index: 10, img: "totem.png" },
-        clock:     { sel: false, index:  0, img: "clock2.png" },
-        dodo:      { sel: false, index:  1, img: "dodo.png" },
-        hands:     { sel: false, index:  3, img: "hands.png" },
-        color:     { sel: false, index:  2, img: "colors.png" },
-        map:       { sel: false, index:  5, img: "map.png" },
-        riddle:    { sel: false, index:  6, img: "riddle.png" },
-        safe:      { sel: false, index:  7, img: "safe.png" },
-        chair:     { sel: false, index: 11, img: "laser.chair.png" },
-        laser:     { sel: false, index:  4, img: "laser.align.png" },
-        column:    { sel: false, index: 12, img: "egyptian.column.jpg" },
-        readme:    { sel: false, index:  8, img: "readme.png" },
-        translate: { sel: false, index:  9, img: "translate.png" }
-      },
-
       adhoc: "",
-      clues2: [],
+      clues: [],
       clue: "",
       selectedClue: undefined,
 
@@ -114,9 +96,9 @@
         this.clue = dash.clue
         this.adhoc = dash.adhoc
 
-        if (dash.clues2) {
-          this.clues2 = dash.clues2
-          this.clues2.forEach(clue => {
+        if (dash.clues) {
+          this.clues = dash.clues
+          this.clues.forEach(clue => {
             if (clue.name == this.clue) {
               this.selectedClue = clue
             }
@@ -234,7 +216,6 @@
     margin-bottom: 0px;
     margin-left: 5px;
   }
-
   .clueWrap {
     display: inline-block;
     width: 100px;

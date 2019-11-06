@@ -80,8 +80,8 @@ export default {
     this.dashRef = this.$root.$data.museumRoot.child('devices/dashboard')
     this.dashRef.on('value', (snapshot) => {
       let s = snapshot.val()
-      if (s.clues2) {
-        this.clues = s.clues2
+      if (s.clues) {
+        this.clues = s.clues
       }
     })
   },
@@ -138,7 +138,7 @@ export default {
         })
 
         this.dashRef.update({
-          clues2: this.clues
+          clues: this.clues
         }, () => {
           this.$root.$emit('close-upload')
         })
