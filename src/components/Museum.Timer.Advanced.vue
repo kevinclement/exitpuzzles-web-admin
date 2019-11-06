@@ -43,9 +43,8 @@
 <script>
   import UploadClue from '@/components/Museum.Timer.UploadClue'
 
-  const CLUE_TYPE = { 
-    HOME: -1,
-    AD_HOC: -2
+  const CLUE_TYPE = {
+    AD_HOC: "empty"
   }
 
   export default {
@@ -76,7 +75,6 @@
         translate: { sel: false, index:  9, img: "translate.png" }
       },
 
-      route: "",
       adhoc: "",
       clues2: [],
       clue: "",
@@ -114,7 +112,6 @@
         this.hours = dash.hours
         this.minutes = dash.minutes
         this.clue = dash.clue
-        this.route = dash.route
         this.adhoc = dash.adhoc
 
         if (dash.clues2) {
@@ -132,7 +129,7 @@
     },
     methods: {
       clueSrc(clue) {
-        return `https://firebasestorage.googleapis.com/v0/b/exitpuzzles-admin.appspot.com/o/museum%2Fclues%2F${clue.small}?alt=media`
+        return `https://firebasestorage.googleapis.com/v0/b/exitpuzzles-admin.appspot.com/o/museum%2Fclues%2F${clue.name}.small.png?alt=media`
       },
       save() {
         let origClue = this.clue
@@ -140,17 +137,15 @@
         let newTLAS = (this.form.hours * 60 * 60) + (this.form.minutes * 60)
 
         if (this.adhoc != this.form.adhoc && this.form.adhoc != "") {
-          this.form.clue = CLUE_TYPE.AD_HOC
+          this.form.clue = this.clue = CLUE_TYPE.AD_HOC
           this.resetSel()
+        } else {
+          this.clue = this.form.selectedClue.name
         }
         this.adhoc = this.form.adhoc
 
-        this.clue = this.form.clue
-        this.route = this.form.clue == CLUE_TYPE.HOME ? "home" : "clue"
-
         let obj = {
           clue: this.clue,
-          route: this.route,
           adhoc: this.adhoc
         }
 
