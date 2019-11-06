@@ -50,9 +50,7 @@
                             <td><v-icon style="color:#E0E0E0" v-if="event.timestamp && event.timestamp">done</v-icon></td>
                           </tr>
                         </table>
-
                       </v-tooltip>
-
                     </td>
                     <td class="text-xs-right">{{clues(props.item)}}</td>
                     <td class="text-xs-right">{{force(props.item)}}</td>
