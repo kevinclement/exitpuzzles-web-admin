@@ -236,10 +236,25 @@ export default {
   },
 
   created () {
+    window.addEventListener('keydown', this.onkeydown)
+    window.addEventListener('keyup', this.onkeyup)
+  },
+  destroyed() {
+    window.removeEventListener('keydown', this.onkeydown)
+    window.removeEventListener('keyup', this.onkeyup)
   },
 
   methods: {
-    
+    onkeydown(e) {
+      if (e.keyCode == 17) {
+        this.useMedian = false
+      }
+    },
+    onkeyup(e) {
+      if (e.keyCode == 17) {
+        this.useMedian = true
+      }
+    },
     createIt() {
       this.$root.$data.museumRuns.createMock()
     },
