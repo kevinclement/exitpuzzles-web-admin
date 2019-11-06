@@ -65,6 +65,7 @@
         </v-flex>
     </v-layout>
 
+    <!--
     <v-layout row wrap style="padding-top:20px;">
       <v-flex xs6>
         <div>
@@ -73,6 +74,7 @@
         </div>
       </v-flex>
     </v-layout>
+    -->
   </v-container>
 </template>
 
