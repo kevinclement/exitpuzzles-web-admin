@@ -40,9 +40,19 @@
                       <span style="width: 37px;display:inline-block;">
                         {{progress(props.item)}}%
                       </span>
-                      <div class="prog">
-                        <div class="progInner" :style="{ width: progWidth(progress(props.item)) }">&nbsp;</div>
-                      </div>
+                      <v-tooltip bottom>
+                        <div class="prog" slot="activator">
+                          <div class="progInner" :style="{ width: progWidth(progress(props.item)) }">&nbsp;</div>
+                        </div>
+                        <table>
+                          <tr v-for="[name, event] of Object.entries(props.item.events)" :key="name">
+                            <td style="padding-right:20px;">{{name}}</td>
+                            <td><v-icon style="color:#E0E0E0" v-if="event.timestamp && event.timestamp">done</v-icon></td>
+                          </tr>
+                        </table>
+
+                      </v-tooltip>
+
                     </td>
                     <td class="text-xs-right">{{clues(props.item)}}</td>
                     <td class="text-xs-right">{{force(props.item)}}</td>
