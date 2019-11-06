@@ -7,7 +7,7 @@ M<template>
         <span class="secTitle" @click="$root.$emit('show-details', 'mausoleum')"><v-icon class="cardIcon">account_balance</v-icon>Mausoleum</span>
       </v-toolbar-title>
 
-      <div v-if="isConnected">
+      <div v-if="isConnected && !isSolved">
         <v-btn flat icon class="actionButton" @click.native="toggleUnsolvable" :title="usTitle"><v-icon>{{usIcon}}</v-icon></v-btn>
         <v-btn flat icon class="actionButton" @click.native="failSound" title="send fail sound"><v-icon>thumb_down</v-icon></v-btn>
         <v-btn flat icon class="actionButton" @click.native="dialog = true" title="force solve"><v-icon>directions_run</v-icon></v-btn>
