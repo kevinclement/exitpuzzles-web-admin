@@ -233,7 +233,7 @@ export default {
         }
       });
 
-      return this.prettyHours(Math.floor(fastest / 1000))
+      return this.prettyHours(Math.floor(fastest / 1000), true)
     }
   },
 
