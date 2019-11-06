@@ -55,7 +55,7 @@
                     <td class="text-xs-right">{{clues(props.item)}}</td>
                     <td class="text-xs-right">{{force(props.item)}}</td>
                     <td class="text-xs-right">{{tomb(props.item)}}</td>
-                    <td class="text-xs-right">{{closed(props.item)}}</td>
+                    <td class="text-xs-right">{{finished(props.item)}}</td>
                     <td class="text-xs-right">{{prettySeconds(props.item.timeAdded)}}</td>
                     <td class="text-xs-right">{{prettyTimeLeft(props.item.timeLeft,)}}</td>
                   </template>
@@ -88,7 +88,7 @@ export default {
           { text: 'Clues',      value: 'clues',     sortable: false, align: 'right' },
           { text: 'Force',      value: 'force',     sortable: false, align: 'right' },
           { text: 'Time Tomb',  value: 'timeTomb',  sortable: false, align: 'right' },
-          { text: 'Closed',     value: 'closed',    sortable: false, align: 'right' },
+          { text: 'Finished',   value: 'finished',  sortable: false, align: 'right' },
           { text: 'Time Added', value: 'timeAdded', sortable: false, align: 'right' },
           { text: 'Time Left',  value: 'timeLeft',  sortable: false, align: 'right' }
       ]
@@ -306,6 +306,17 @@ export default {
       if (run.closed && run.closed != '') {
         let s = new Date(run.started)
         let c = new Date(run.closed)
+        let delta = (c.getTime() - s.getTime()) / 1000
+
+        return this.prettyHours(delta, true)
+      } else {
+        return ''
+      }
+    },
+    finished(run) {
+      if (run.finished && run.finished != '') {
+        let s = new Date(run.started)
+        let c = new Date(run.finished)
         let delta = (c.getTime() - s.getTime()) / 1000
 
         return this.prettyHours(delta, true)
