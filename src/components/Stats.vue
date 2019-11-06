@@ -57,7 +57,7 @@
                     <td class="text-xs-right">{{tomb(props.item)}}</td>
                     <td class="text-xs-right">{{closed(props.item)}}</td>
                     <td class="text-xs-right">{{prettySeconds(props.item.timeAdded)}}</td>
-                    <td class="text-xs-right">{{prettyTimeLeft(props.item.timeLeft)}}</td>
+                    <td class="text-xs-right">{{prettyTimeLeft(props.item.timeLeft,)}}</td>
                   </template>
                 </v-data-table>
               </v-card-text>
@@ -299,7 +299,7 @@ export default {
       let minutes = parseInt(parts[0])
       let seconds = parseInt(parts[1])
 
-      return this.prettySeconds((minutes * 60) + seconds)
+      return this.prettySeconds((minutes * 60) + seconds, true)
     },
 
     prettyHours(s, showMinutes) {
