@@ -18,8 +18,7 @@
     </div>
 
     <div class="clueWrap" v-for="clue in clues2" :key="clue.name">
-      <img :src="clueSrc(clue)" />
-      <!-- <img :class="{ clueSel: clue[1].sel }" @click="imgSel(clue[0])" class="clueImg" :src="imgSrc(clue[1].img)" :title="clue[0]"/> -->
+      <img :class="{ clueSel: form.selectedClue == clue }" @click="imgSel(clue)" class="clueImg" :src="clueSrc(clue)" :title="clue.name" />
     </div>
     
   </div>
@@ -76,15 +75,17 @@
         readme:    { sel: false, index:  8, img: "readme.png" },
         translate: { sel: false, index:  9, img: "translate.png" }
       },
-      clue: CLUE_TYPE.AD_HOC,
+
       route: "",
       adhoc: "",
       clues2: [],
+      clue: "",
+      selectedClue: undefined,
 
       form:  {
         hours: 0,
         minutes: 0,
-        clue: CLUE_TYPE.AD_HOC,
+        selectedClue: undefined,
         adhoc: ""
       },
     }),
@@ -96,7 +97,7 @@
       dirty: function() {
         let res = this.form.hours != this.hours ||
           this.form.minutes != this.minutes ||
-          this.form.clue != this.clue || 
+          this.form.selectedClue != this.selectedClue || 
           this.form.adhoc != this.adhoc
 
         return res
@@ -118,6 +119,11 @@
 
         if (dash.clues2) {
           this.clues2 = dash.clues2
+          this.clues2.forEach(clue => {
+            if (clue.name == this.clue) {
+              this.selectedClue = clue
+            }
+          })
         }
 
         this.reset();
@@ -178,7 +184,7 @@
         this.form.minutes = this.minutes
         this.form.clue = this.clue
         this.form.adhoc = this.adhoc
-        this.resetSel(this.clue)
+        this.resetSel(this.selectedClue)
       },
       showUpload(e) {
         this.dialogUpload = true
@@ -200,7 +206,7 @@
       imgSrc(img) {
         return '/static/museum/clues/' + img
       },
-      imgSel(key) {
+      imgSel(clue) {
         // turn all others off
         this.resetSel()
 
@@ -208,13 +214,10 @@
         this.form.adhoc = ""
 
         // turn selected on on/off
-        this.clues[key].sel = !this.clues[key].sel
-        this.form.clue = this.clues[key].index
+        this.form.selectedClue = clue
       },
       resetSel(c) {
-        for (const [k, clue] of Object.entries(this.clues)) {
-          this.clues[k].sel = c && clue.index == c
-        }
+        this.form.selectedClue = c
       }
     },
     
@@ -247,6 +250,7 @@
     width: 100px;
     height: 80px;
     border:3px solid rgba(0, 0, 0, 0.0);
+    -webkit-user-drag: none;
   }
   .clueSel {
     border:3px solid rgba(0, 0, 0, 0.6);
