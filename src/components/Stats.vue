@@ -57,7 +57,7 @@
                     <td class="text-xs-right">{{tomb(props.item)}}</td>
                     <td class="text-xs-right">{{closed(props.item)}}</td>
                     <td class="text-xs-right">{{prettySeconds(props.item.timeAdded)}}</td>
-                    <td class="text-xs-right">{{props.item.timeLeft}}</td>
+                    <td class="text-xs-right">{{prettyTimeLeft(props.item.timeLeft)}}</td>
                   </template>
                 </v-data-table>
               </v-card-text>
@@ -203,7 +203,7 @@ export default {
       });
 
       if (thoseWithTimeLeft > 0) {
-        return this.prettySeconds(Math.round(secondsLeft / thoseWithTimeLeft))
+        return this.prettySeconds(Math.round(secondsLeft / thoseWithTimeLeft), true)
       } else {
         return 0
       }
@@ -287,28 +287,42 @@ export default {
         let c = new Date(run.closed)
         let delta = (c.getTime() - s.getTime()) / 1000
 
-        return this.prettyHours(delta)
+        return this.prettyHours(delta, true)
       } else {
         return ''
       }
     },
-    prettyHours(s) {
-      let hours = Math.floor(s / 60 / 60)
-      hours = hours < 10 ? '0' + hours : hours
+    prettyTimeLeft(tl) {
+      if (tl == '') return ''
 
-      let minutes = Math.floor((s - (60 * hours * 60)) / 60)
-      minutes = minutes < 10 ? '0' + minutes : minutes
+      let parts = tl.split(':');
+      let minutes = parseInt(parts[0])
+      let seconds = parseInt(parts[1])
 
-      return `${hours}:${minutes}`
+      return this.prettySeconds((minutes * 60) + seconds)
     },
-    prettySeconds(s) {
+
+    prettyHours(s, showMinutes) {
+      let hours = Math.floor(s / 60 / 60)
+      let minutes = Math.floor((s - (60 * hours * 60)) / 60)
+
+      let pretty = `${hours}h`
+      if (showMinutes) {
+        pretty += ` ${minutes}m`
+      }
+
+      return pretty
+    },
+    prettySeconds(s, showSeconds) {
       let minutes = Math.floor(s / 60)
-      minutes = minutes < 10 ? '0' + minutes : minutes
-
       let seconds = Math.floor((s - (60 * minutes)))
-      seconds = seconds < 10 ? '0' + seconds : seconds
 
-      return `${minutes}:${seconds}`
+      let pretty = `${minutes}m`
+      if (showSeconds) {
+        pretty += ` ${seconds}s`
+      }
+
+      return pretty
     },
     median(values) {
       values.sort( function(a,b) {return a - b;} );
@@ -382,8 +396,5 @@ export default {
 .fstLbl {
   width:135px;
   padding-left: 50px;
-}
-.fstVal {
-
 }
 </style>
