@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Control from '@/components/Control'
 import Museum from '@/components/Museum'
-import Settings from '@/components/Settings'
 import Stats from '@/components/Stats'
 import Logs from '@/components/Logs'
 import Verify from '@/components/Verify'
@@ -23,7 +22,6 @@ let router = new Router({
     { path: '/landlord',                  component: Control,    meta: { title: 'Landlord',    icon: 'business' }        },
     { path: '/museum',                    component: Museum,     meta: { title: 'Museum',      icon: 'account_balance' } },
     { path: '/logs',                      component: Logs,       meta: { title: 'Logs',        icon: 'dvr' }             },
-    { path: '/settings',                  component: Settings,   meta: { title: 'Settings',    icon: 'settings' }        },
     { path: '/stats',                     component: Stats,      meta: { title: 'Stats',       icon: 'poll' }            },
     { path: '/',                          component: Control,                                                            }
   ]
