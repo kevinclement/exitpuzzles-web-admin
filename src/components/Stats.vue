@@ -35,7 +35,7 @@
               <v-card-text class="controlsRow">
                 <v-data-table :headers="headers" :items="runs" hide-actions style="width:100%">
                   <template slot="items" slot-scope="props">
-                    <td>{{ props.item.started }}</td>
+                    <td style="width:150px;">{{ prettyStarted(props.item.started) }}</td>
                     <td>
                       <span style="width: 37px;display:inline-block;">
                         {{progress(props.item)}}%
@@ -291,6 +291,15 @@ export default {
       } else {
         return ''
       }
+    },
+    prettyStarted(started) {
+      let year = (new Date()).getYear() + 1900
+      let lastYear = year - 1
+
+      return started.replace(`-${year}`, "")
+                    .replace(`/${year},`, "")
+                    .replace(`-${lastYear}`, "")
+                    .replace(`/${lastYear},`, "")
     },
     prettyTimeLeft(tl) {
       if (tl == '') return ''
