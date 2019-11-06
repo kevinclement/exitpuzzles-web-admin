@@ -15,19 +15,19 @@
               <v-card-text class="statsContent" style="padding:0px;">
                 <table border=0 class="statsTable" style="padding-left: 18px;">
                   <tr>
-                    <td>avg. clues:</td><td>{{avgClues}}</td>
+                    <td>{{medPrefix}} clues:</td><td>{{avgClues}}</td>
                     <td class="fstLbl">total:</td><td class="fstVal">{{runs.length}}</td>
                   </tr>
                   <tr>
-                    <td>avg. force:</td><td>{{avgForce}}</td>
+                    <td>{{medPrefix}} force:</td><td>{{avgForce}}</td>
                     <td class="fstLbl">completed:</td><td class="fstVal">{{completed}} ({{completedPercentage}}%)</td>
                   </tr>
                   <tr>
-                    <td>avg. time added:</td><td>{{avgTimeAdded}}</td>
+                    <td>{{medPrefix}} time added:</td><td>{{avgTimeAdded}}</td>
                     <td class="fstLbl">fastest:</td><td class="fstVal">{{fastest}}</td>
                   </tr>
                   <tr>
-                    <td>avg. time left:</td><td>{{avgTimeLeft}}</td>
+                    <td>{{medPrefix}} time left:</td><td>{{avgTimeLeft}}</td>
                   </tr>
                 </table>
 
@@ -81,6 +81,7 @@ export default {
   data () {
     return {
       filter: 'week',
+      useMedian: false,
       headers: [
           { text: 'Date',       value: 'date',      sortable: false, align: 'left'  },
           { text: 'Progress',   value: 'progress',  sortable: false                 },
@@ -97,6 +98,10 @@ export default {
   computed: {
     latest () {
       return this.$root.$data.museumRuns.getCurrent()
+    },
+
+    medPrefix () {
+      return this.useMedian ? 'median' : 'average'
     },
 
     runs () {
@@ -145,14 +150,14 @@ export default {
         return 0
       }
 
-      let clues = 0
-      let adhoc = 0
+      let clues = []
+      let adhoc = []
       this.runs.forEach( (run) => {
-        clues += run.dashboard.clues
-        adhoc += run.dashboard.adhoc
+        clues.push(run.dashboard.clues)
+        adhoc.push(run.dashboard.adhoc)
       });
 
-      return `${Math.round(clues/this.runs.length)} / ${Math.round(adhoc / this.runs.length)}`
+      return `${this.avg(clues)} / ${this.avg(adhoc)}`
     },
 
     avgForce() {
@@ -160,16 +165,16 @@ export default {
         return 0
       }
 
-      let force = 0
+      let force = []
       this.runs.forEach( (run) => {
+        let ffr = 0
         for (const [name, event] of Object.entries(run.events)) {
-          if (event.force) {
-            force++
-          }
+          if (event.force) ffr++
         }
+        force.push(ffr)
       });
 
-      return `${Math.round(force/this.runs.length)}`
+      return `${this.avg(force)}`
     },
 
     avgTimeAdded() {
@@ -177,12 +182,12 @@ export default {
         return 0
       }
 
-      let timeAdded = 0
+      let timeAdded = []
       this.runs.forEach( (run) => {
-        timeAdded += run.timeAdded
+        timeAdded.push(run.timeAdded)
       });
 
-      return this.prettySeconds(Math.round(timeAdded / this.runs.length))
+      return this.prettySeconds(this.avg(timeAdded))
     },
 
     avgTimeLeft() {
@@ -192,18 +197,19 @@ export default {
 
       let secondsLeft = 0
       let thoseWithTimeLeft = 0
+      let values = []
       this.runs.forEach( (run) => {
         if (run.timeLeft != "") {
-          let parts = run.timeLeft.split(':');
+          let parts = run.timeLeft.split(':')
           let minutes = parseInt(parts[0])
           let seconds = parseInt(parts[1])
-          secondsLeft += (minutes * 60) + seconds
-          thoseWithTimeLeft++
+
+          values.push((minutes * 60) + seconds)
         }
       });
 
-      if (thoseWithTimeLeft > 0) {
-        return this.prettySeconds(Math.round(secondsLeft / thoseWithTimeLeft), true)
+      if (values.length > 0) {
+        return this.prettySeconds(this.avg(values), true)
       } else {
         return 0
       }
@@ -333,14 +339,25 @@ export default {
 
       return pretty
     },
+    avg(values) {
+      return this.useMedian ? this.median(values) : this.average(values)
+    },
+    average(values) {
+      let total = 0;
+      values.forEach((v) => {
+        total += v;
+      })
+
+      return Math.round(total / values.length)
+    },
     median(values) {
       values.sort( function(a,b) {return a - b;} );
       var half = Math.floor(values.length/2);
 
       if(values.length % 2)
-        return values[half];
+        return Math.round(values[half]);
       else
-        return (values[half-1] + values[half]) / 2.0;
+        return Math.round((values[half-1] + values[half]) / 2.0);
     },
     getDaysBack(n) {
       let now = new Date()
@@ -400,7 +417,7 @@ export default {
   position: relative;
 }
 .statsTable td:first-child {
-  width: 135px;
+  width: 150px;
 }
 .fstLbl {
   width:135px;
