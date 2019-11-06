@@ -227,7 +227,7 @@ export default {
           let s = new Date(run.started)
           let f = new Date(run.finished)
           let delta = f.getTime() - s.getTime()
-          if (delta - fastest) {
+          if (delta < fastest) {
             fastest = delta
           }
         }
