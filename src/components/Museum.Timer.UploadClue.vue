@@ -58,7 +58,7 @@ export default {
         height: DEFAULTS.display_h
       },
       position: { x: 10, y: 10 },
-      size: { width: 100, height: 80 },
+      size: { width: 104, height: 84 },
       lastPoint: { x: -1, y: -1 },
       img: document.createElement('img'),
       imgName: "",
@@ -113,7 +113,7 @@ export default {
       let canvas = this.$refs.canvas.getContext('2d');
       let exp = this.$refs.expCanvasZoom;
       let ctx = exp.getContext('2d');
-      let zoomData = canvas.getImageData(this.position.x, this.position.y, this.size.width, this.size.height);
+      let zoomData = canvas.getImageData(this.position.x+2, this.position.y+2, this.size.width-4, this.size.height-4);
       ctx.putImageData(zoomData, 0, 0);
       let zoomImg = new Image();
       let dataURI = exp.toDataURL();
@@ -134,9 +134,7 @@ export default {
       this.uploadToStorage(resizeURI, full, () => {
         // finished all uploads, now write to record in dashboard db
         this.clues.push({
-          name: this.imgName,
-          small: small,
-          full: full
+          name: this.imgName
         })
 
         this.dashRef.update({
