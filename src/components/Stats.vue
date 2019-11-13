@@ -35,15 +35,13 @@
               <v-card-text class="controlsRow">
                 <v-data-table :headers="headers" :items="runs" hide-actions style="width:100%">
                   <template slot="items" slot-scope="props">
-                    <td style="width:150px;">{{ prettyStarted(props.item.started) }}</td>
-                    <td>
+                    <td style="width:160px;">{{ prettyStarted(props.item.started) }}</td>
+                    <td style="white-space:nowrap">
                       <span style="width: 37px;display:inline-block;">
                         {{progress(props.item)}}%
                       </span>
                       <v-tooltip bottom>
-                        <div class="prog" slot="activator">
-                          <div class="progInner" :style="{ width: progWidth(progress(props.item)) }">&nbsp;</div>
-                        </div>
+                        <progress slot="activator" max="100" :value="progress(props.item)" style="width:75px;vertical-align:middle;"/>
                         <table>
                           <tr v-for="[name, event] of Object.entries(props.item.events)" :key="name">
                             <td style="padding-right:20px;">{{name}}</td>
@@ -330,7 +328,9 @@ export default {
       let year = (new Date()).getYear() + 1900
       let lastYear = year - 1
 
-      return started.replace(`-${year}`, "")
+      return started.replace(/:\d+ AM/, " AM")
+                    .replace(/:\d+ PM/, " PM")
+                    .replace(`-${year}`, "")
                     .replace(`/${year},`, "")
                     .replace(`-${lastYear}`, "")
                     .replace(`/${lastYear},`, "")
