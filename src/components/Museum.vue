@@ -315,7 +315,7 @@ export default {
     startRoom() {
       this.dialogStartConfirm = false
       this.$root.$data.museumRuns.create();
-      this.$root.$data.museumRoot.child('devices/dashboard').update({ hours:"1", minutes:10, clue: -1, route: "home" })
+      this.$root.$data.museumRoot.child('devices/dashboard').update({ hours:"1", minutes:10, clue: "home" })
     },
     triggerReboot() {
       this.operations.add({ command: `${this.dialogRebootDevice}.reboot` }).on("value", (snapshot) => {

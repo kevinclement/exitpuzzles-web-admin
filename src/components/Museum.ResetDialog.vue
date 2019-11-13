@@ -133,7 +133,7 @@
       resetAll() {
         // reset the timer so it doesn't show
         this.work.push(() => {
-          this.$root.$data.museumRoot.child('devices/dashboard').update({ hours:"-1", minutes:0, clue: -1, route: "home" }, () => {
+          this.$root.$data.museumRoot.child('devices/dashboard').update({ hours:"-1", minutes:0, clue: "home", adhoc:"" }, () => {
             this.devices.dashboard.received = true
             this.devices.dashboard.reset = true
           })
