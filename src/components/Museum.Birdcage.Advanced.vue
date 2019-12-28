@@ -10,6 +10,10 @@
   <div class="actionRow">
     <v-btn small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'bird')">Reboot</v-btn>
   </div>
+  <div class="actionRow" style="padding-top:15px;">
+    <v-btn @click.native="trayBack"><v-icon>navigate_before</v-icon>In</v-btn>
+    <v-btn @click.native="trayForward">Out<v-icon>navigate_next</v-icon></v-btn>
+  </div>
 
 </div>
 </template>
@@ -29,6 +33,12 @@
       })
     },
     methods: {
+      trayBack() {
+        this.operations.add({ command: 'bird.back' }).on("value", (snapshot) => {});
+      },
+      trayForward() {
+        this.operations.add({ command: 'bird.forward' }).on("value", (snapshot) => {});
+      },
     }
   }
 </script>
