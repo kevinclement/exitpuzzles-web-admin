@@ -50,6 +50,7 @@
         'quiz':      { name: 'Quiz',      received: false, reset: false },
         'bird':      { name: 'Birdcage',  received: false, reset: false },
         'zoltar':    { name: 'Zoltar',    received: false, reset: false },
+        'hands':     { name: 'Hands',     received: false, reset: false },
         'mummy':     { name: 'Mummy',     received: false, reset: false },
         'stairs':    { name: 'Stairs',    received: false, reset: false },
         'clock':     { name: 'Clock',     received: false, reset: false },
