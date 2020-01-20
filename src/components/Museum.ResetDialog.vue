@@ -167,7 +167,7 @@
         // special case quiz
         if (dev == 'quiz') {
           this.$root.$data.museumRoot.child('devices/quiz').update({
-              total: 10,
+              total: 15,
               force: 4
           });
         } else {
