@@ -148,7 +148,7 @@
         // increment analytics
         if (this.form.clue != origClue && this.form.clue == CLUE_TYPE.AD_HOC) {
           this.$root.$data.museumRuns.addClue(true)
-        } else if (this.form.clue != origClue && this.form.clue >= 0) {
+        } else if (this.form.clue != origClue && this.form.clue != "") {
           this.$root.$data.museumRuns.addClue(false)
         }
         if (newTLAS > origTLAS) {
