@@ -5,16 +5,16 @@ export default class Runs {
         this.current = {}
         this.currentDate = undefined
 
-        this.runsRef.orderByKey().limitToLast(2000).on('value', (snapshot) => {
-            let runs = snapshot.val()
-            this.runs.length = 0 // clear the array
-            for (const [date, run] of Object.entries(runs)) {
-              this.runs.push(run)
-              if (run.finished == "") {
-                this.current = run
-                this.currentDate = date
-              }
-            }
+        this.runsRef.orderByChild('timestamp').limitToLast(2000).on('value', (snapshot) => {
+            snapshot.forEach((runSnap) => {
+                let run = runSnap.val()
+                let key = runSnap.key
+                this.runs.push(run)
+                if (run.finished == "") {
+                  this.current = run
+                  this.currentDate = key
+                }
+            })
         })
     }
 
@@ -47,7 +47,8 @@ export default class Runs {
         let now = getDateStr(n)
 
         this.runsRef.child(now).set({
-            started: (new Date()).toLocaleString(),
+            started: n.toLocaleString(),
+            timestamp: n.getTime(),
             events: {
                 'quiz': {
                     force: false
