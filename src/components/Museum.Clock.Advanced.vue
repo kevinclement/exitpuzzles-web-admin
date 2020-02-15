@@ -48,10 +48,10 @@
         this.operations.add({ command: 'clock.hour' }).on("value", (snapshot) => {});
       },
       hourDec() {
-        this.operations.add({ command: 'clock.minute' }).on("value", (snapshot) => {});
+        this.operations.add({ command: 'clock.hourDec' }).on("value", (snapshot) => {});
       },
       minuteInc() {
-        this.operations.add({ command: 'clock.hour' }).on("value", (snapshot) => {});
+        this.operations.add({ command: 'clock.minute' }).on("value", (snapshot) => {});
       },
       minuteDec() {
         this.operations.add({ command: 'clock.minDec' }).on("value", (snapshot) => {});
