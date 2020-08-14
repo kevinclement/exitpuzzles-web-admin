@@ -92,6 +92,33 @@
                 </div>
               </v-flex>
             </div>
+            <div style="display:flex;margin-top:0px;">
+              <v-flex xs6>
+                <div style="display:block">
+                  <span>Win Button</span>
+                  <v-switch 
+                    primary
+                    :label="winButtonLabel"
+                    v-model="winButton"
+                    :disabled="!isConnected"
+                    :hide-details="true"
+                    @click.native="triggerWinButton"
+                  ></v-switch>
+                </div>
+              </v-flex>
+              <v-flex xs6>
+                <div style="display:block">
+                  <span>Force Win</span>
+                  <div>
+                  <v-btn 
+                    class="ma-0"
+                    small dark color="accent"
+                    @click.native="confirmWinDiag = true">WIN
+                  </v-btn>
+                  </div>
+                </div>
+              </v-flex>
+            </div>
 
             <div style="display:flex;margin-top:0px;padding-top:10px;margin-bottom:15px">
               <v-flex>
@@ -207,6 +234,17 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <v-dialog v-model="confirmWinDiag" max-width="410">
+    <v-card>
+      <v-card-title class="headline">Really trigger a win?</v-card-title>
+      <v-card-text>Are you sure you want to trigger a win for the device?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="confirmWinDiag = false;">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="triggerWin">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
   <v-dialog v-model="resetTntDiag" max-width="410">
     <v-card>
       <v-card-title class="headline">Really reset the device?</v-card-title>
@@ -268,6 +306,7 @@ export default {
       // dialogs
       confirmKeyDiag: false,
       confirmWireDiag: false,
+      confirmWinDiag: false,
       resetTimeDiag: false,
       resetTntDiag: false,
       setTime: {
@@ -306,6 +345,7 @@ export default {
       allSolvedState: STATE.UNKNOWN,
       switchErrors: false,
       wireErrors: false,
+      winButton: false,
       lastBadPassword: 'xxxxxxxxxxxxxxx',
       timeLeftSolved: '',
       timerTimeStamp: null,
@@ -333,6 +373,9 @@ export default {
     },
     wireErrorLabel: function () {
       return this.wireErrors ? 'Disabled' : 'Enabled'
+    },
+    winButtonLabel: function () {
+      return this.winButton ? 'Disabled' : 'Enabled'
     },
     pass1: function() {
       if (this.lastBadPassword === '') return '#'
@@ -568,6 +611,7 @@ export default {
         this.lastBadPassword  = 'xxxxxxxxxxxxxxx'
         this.timeLeftSolved   = ''
         this.switchErrors     = this.wireErrors = false
+        this.winButton        = false
       } else {
           this.lightState      = state.lightDetected ? STATE.OK : STATE.UNKNOWN
           this.toggle1State    = state.toggle1
@@ -579,6 +623,7 @@ export default {
           this.timeLeftSolved  = state.timeLeftSolved
           this.switchErrors    = state.switchErrors
           this.wireErrors      = state.wireErrors
+          this.winButton       = state.winButton
       }
     },
 
@@ -714,6 +759,23 @@ export default {
       this.operations.add({ command: cmd }).on("value", (snapshot) => {
       });
     },
+
+    triggerWinButton() {
+      this.operations.add({ command: 'triggerWinButton' }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Win button toggled successfully.')
+          }
+      });
+    },
+    triggerWin() {
+      this.confirmWinDiag = false;
+      this.operations.add({ command: 'triggerWin' }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Win triggered successfully.')
+          }
+      });
+    },
+
     switchErrorsClicked() {
       if (this.switchErrors) {
         this.operations.add({ command: 'switchErrors' }).on("value", (snapshot) => {
