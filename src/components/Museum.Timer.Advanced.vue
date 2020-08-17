@@ -96,6 +96,11 @@
         this.clue = dash.clue
         this.adhoc = dash.adhoc
 
+        // Added to not reset the form when its changed
+        if (this.form.adhoc != "" && this.form.adhoc != this.adhoc) {
+          this.adhoc = this.form.adhoc
+        }
+
         if (dash.clues) {
           this.clues = dash.clues
           this.clues.forEach(clue => {

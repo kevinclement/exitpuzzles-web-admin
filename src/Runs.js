@@ -37,9 +37,11 @@ export default class Runs {
     }
 
     addTime(seconds) {
-        this.runsRef.child(this.currentDate).update({
-            timeAdded: this.current.timeAdded + seconds
-        })
+        if (this.runsRef && this.currentDate) {
+            this.runsRef.child(this.currentDate).update({
+                timeAdded: this.current.timeAdded + seconds
+            })
+        }
     }
 
     create() {

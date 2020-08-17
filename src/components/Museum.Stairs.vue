@@ -80,8 +80,6 @@
         this.unsolvable = stairs.unsolvable;
         this.sensorsDisabled = stairs.sensorsDisabled;
         this.isConnected = stairs.info.isConnected;
-
-        console.log("sensors: " + this.sensorsDisabled);
       })
     },
     methods: {
