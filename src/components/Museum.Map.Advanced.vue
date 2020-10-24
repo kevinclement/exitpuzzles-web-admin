@@ -14,25 +14,25 @@
   <div class="row" style="padding-top:15px;">
     <table border=0>
       <tr>
-        <td>Fiji:</td><td class="ans"><span :class="fiji ? 'yes' : 'no'">{{boolToString(fiji)}}</span></td>
+        <td>Fiji:</td><td class="ans"><span :class="locToClass(fiji)">{{locToString(fiji)}}</span></td>
       </tr>
       <tr>
-        <td>Madagascar:</td><td class="ans"><span :class="madagascar ? 'yes' : 'no'">{{boolToString(madagascar)}}</span></td>
+        <td>Madagascar:</td><td class="ans"><span :class="locToClass(madagascar)">{{locToString(madagascar)}}</span></td>
       </tr>
       <tr>
-        <td>Alaska:</td><td class="ans"><span :class="alaska ? 'yes' : 'no'">{{boolToString(alaska)}}</span></td>
+        <td>Alaska:</td><td class="ans"><span :class="locToClass(alaska)">{{locToString(alaska)}}</span></td>
       </tr>
       <tr>
-        <td>India:</td><td class="ans"><span :class="india ? 'yes' : 'no'">{{boolToString(india)}}</span></td>
+        <td>India:</td><td class="ans"><span :class="locToClass(india)">{{locToString(india)}}</span></td>
       </tr>
       <tr>
-        <td>Seattle:</td><td class="ans"><span :class="seattle ? 'yes' : 'no'">{{boolToString(seattle)}}</span></td>
+        <td>Seattle:</td><td class="ans"><span :class="locToClass(seattle)">{{locToString(seattle)}}</span></td>
       </tr>
       <tr>
-        <td>Spain:</td><td class="ans"><span :class="spain ? 'yes' : 'no'">{{boolToString(spain)}}</span></td>
+        <td>Spain:</td><td class="ans"><span :class="locToClass(spain)">{{locToString(spain)}}</span></td>
       </tr>
       <tr>
-        <td>Argentina:</td><td class="ans"><span :class="argentina ? 'yes' : 'no'">{{boolToString(argentina)}}</span></td>
+        <td>Argentina:</td><td class="ans"><span :class="locToClass(argentina)">{{locToString(argentina)}}</span></td>
       </tr>
 
       <tr>
@@ -51,13 +51,13 @@
     props: ['operations'],
 
     data: () => ({
-      fiji: false,
-      madagascar: false,
-      alaska: false,
-      india: false,
-      seattle: false,
-      spain: false,
-      argentina: false,
+      fiji:       { state: false, override: false },
+      madagascar: { state: false, override: false },
+      alaska:     { state: false, override: false },
+      india:      { state: false, override: false },
+      seattle:    { state: false, override: false },
+      spain:      { state: false, override: false },
+      argentina:  { state: false, override: false },
 
       curImg: "",
       solved: false
@@ -69,21 +69,31 @@
         let map = snapshot.val()
         if (map == null) return
 
-        this.fiji = map.magnets.fiji
-        this.madagascar = map.magnets.madagascar
-        this.alaska = map.magnets.alaska
-        this.india = map.magnets.india
-        this.seattle = map.magnets.seattle
-        this.spain = map.magnets.spain
-        this.argentina = map.magnets.argentina
+        this.fiji.state          = map.magnets.fiji
+        this.fiji.override       = map.overrides.fiji
+        this.madagascar.state    = map.magnets.madagascar
+        this.madagascar.override = map.overrides.madagascar
+        this.alaska.state        = map.magnets.alaska
+        this.alaska.override     = map.overrides.alaska
+        this.india.state         = map.magnets.india
+        this.india.override      = map.overrides.india
+        this.seattle.state       = map.magnets.seattle
+        this.seattle.override    = map.overrides.seattle
+        this.spain.state         = map.magnets.spain
+        this.spain.override      = map.overrides.spain
+        this.argentina.state     = map.magnets.argentina
+        this.argentina.override  = map.overrides.argentina
 
         this.curImg = map.image
         this.solved = map.solved
       })
     },
     methods: {
-      boolToString(b) {
-        return b ? "Yes" : "No"
+      locToString(loc) {
+        return loc.override ? "Force" : loc.state ? "Yes" : "No"
+      },
+      locToClass(loc) {
+        return loc.override ? "force" : loc.state ? 'yes' : 'no'
       }
     }
   }
@@ -96,15 +106,18 @@
     font-family: Monaco, monospace;
     font-size:16px;
   }
-  .no, .yes {
+  .no, .yes, .force {
     display: inline-block;
-    width: 36px;
+    width: 60px;
     height: 22px;
     line-height: 22px;
     padding-left:5px;
     color: white;
   }
   .yes {
+    background: green;
+  }
+  .force {
     background: green;
   }
   .no {
