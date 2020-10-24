@@ -169,7 +169,10 @@
         this.form.hours = this.hours
         this.form.minutes = this.minutes
         this.form.clue = this.clue
-        this.form.adhoc = this.adhoc
+        
+        // turning this off for now to not clear every second
+        // this.form.adhoc = this.adhoc
+
         this.resetSel(this.selectedClue)
       },
       showUpload(e) {
