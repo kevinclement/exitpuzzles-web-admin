@@ -61,7 +61,9 @@
     methods: {
       trigger() {
         this.dialog = false
-        this.operations.addWithToast('map.force', this.snack('Forced solved successfully'))
+        this.operations.addWithToast('map.force', () => {
+          this.snack('Forced solved successfully')
+        })
       }
     }
   }
