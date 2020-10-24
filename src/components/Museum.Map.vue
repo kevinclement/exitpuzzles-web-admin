@@ -61,10 +61,8 @@
     methods: {
       trigger() {
         this.dialog = false
-        this.$root.$data.museumRoot.child('devices/map').update({
-          force: true
-        })
-      },
+        this.operations.addWithToast('map.force', this.snack('Forced solved successfully'))
+      }
     }
   }
 </script>

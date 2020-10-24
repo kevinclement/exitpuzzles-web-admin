@@ -8,7 +8,7 @@
   </v-toolbar>
 
   <div class="actionRow">
-    <v-btn small color="red lighten-3" @click.native="dialog=true">Reboot</v-btn>
+    <v-btn small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'map')">Reboot</v-btn>
   </div>
 
   <div class="row" style="padding-top:15px;">
@@ -41,24 +41,8 @@
       <tr>
         <td style="">Solved:</td><td class="resCel">{{solved}}</td>
       </tr>
-      <tr>
-        <td style="">Forced:</td><td class="resCel">{{forced}}</td>
-      </tr>
     </table>
   </div>
-
-  <v-dialog v-model="dialog" max-width="410">
-    <v-card>
-      <v-card-title class="headline">Really reboot the map?</v-card-title>
-      <v-card-text>This will reboot the map and all current state lost.  Are you <i>sure</i> you want to do that?</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="dialog = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="reboot">Yes</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-
 </div>
 </template>
 
@@ -67,7 +51,6 @@
     props: ['operations'],
 
     data: () => ({
-      dialog: false,
       fiji: false,
       madagascar: false,
       alaska: false,
@@ -75,9 +58,9 @@
       seattle: false,
       spain: false,
       argentina: false,
-      curImg: "Map",
-      solved: false,
-      forced: false
+
+      curImg: "",
+      solved: false
     }),
     computed: {
     },
@@ -94,20 +77,13 @@
         this.spain = map.magnets.spain
         this.argentina = map.magnets.argentina
 
-        this.curImg = map.image === "images/FINAL.bmp" ? "map" : "code"
+        this.curImg = map.image
         this.solved = map.solved
-        this.forced = map.force
       })
     },
     methods: {
       boolToString(b) {
         return b ? "Yes" : "No"
-      },
-      reboot() {
-        this.dialog = false
-        this.$root.$data.museumRoot.child('devices/map').update({
-          force: false
-        })
       }
     }
   }

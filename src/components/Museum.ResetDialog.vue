@@ -140,18 +140,10 @@
           })
         })
 
-        // reset the map forced
-        this.work.push(() => {
-          this.$root.$data.museumRoot.child('devices/map').update({ force:false }, () => {
-            this.devices.map.received = true
-            this.devices.map.reset = true
-          })
-        })
-
         // reset all the devices
         for (const [dev, d] of Object.entries(this.devices)) {
           // ignore special case ones
-          if (dev == 'dashboard' || dev == 'map') continue;
+          if (dev == 'dashboard') continue;
 
           this.work.push(this.resetDevice.bind(this, dev));
         }
