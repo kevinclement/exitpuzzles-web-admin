@@ -13,26 +13,12 @@
 
   <div class="row" style="padding-top:15px;">
     <table border=0>
-      <tr>
-        <td>Fiji:</td><td class="ans"><span :class="locToClass(fiji)">{{locToString(fiji)}}</span></td>
-      </tr>
-      <tr>
-        <td>Madagascar:</td><td class="ans"><span :class="locToClass(madagascar)">{{locToString(madagascar)}}</span></td>
-      </tr>
-      <tr>
-        <td>Alaska:</td><td class="ans"><span :class="locToClass(alaska)">{{locToString(alaska)}}</span></td>
-      </tr>
-      <tr>
-        <td>India:</td><td class="ans"><span :class="locToClass(india)">{{locToString(india)}}</span></td>
-      </tr>
-      <tr>
-        <td>Seattle:</td><td class="ans"><span :class="locToClass(seattle)">{{locToString(seattle)}}</span></td>
-      </tr>
-      <tr>
-        <td>Spain:</td><td class="ans"><span :class="locToClass(spain)">{{locToString(spain)}}</span></td>
-      </tr>
-      <tr>
-        <td>Argentina:</td><td class="ans"><span :class="locToClass(argentina)">{{locToString(argentina)}}</span></td>
+    
+      <tr v-for="loc in Object.keys(locations)" :key="loc">
+        <td>{{ formatLocation(loc) }}:</td>
+        <td class="ans">
+          <span @click="clickToOverride(loc)" :class="locToClass(locations[loc])">{{locToString(locations[loc])}}</span>
+        </td>
       </tr>
 
       <tr>
@@ -51,14 +37,16 @@
     props: ['operations'],
 
     data: () => ({
-      fiji:       { state: false, override: false },
-      madagascar: { state: false, override: false },
-      alaska:     { state: false, override: false },
-      india:      { state: false, override: false },
-      seattle:    { state: false, override: false },
-      spain:      { state: false, override: false },
-      argentina:  { state: false, override: false },
-
+      locations: {
+        fiji:       { state: false, override: false },
+        madagascar: { state: false, override: false },
+        alaska:     { state: false, override: false },
+        india:      { state: false, override: false },
+        seattle:    { state: false, override: false },
+        spain:      { state: false, override: false },
+        argentina:  { state: false, override: false },
+      },
+      
       curImg: "",
       solved: false
     }),
@@ -69,31 +57,27 @@
         let map = snapshot.val()
         if (map == null) return
 
-        this.fiji.state          = map.magnets.fiji
-        this.fiji.override       = map.overrides.fiji
-        this.madagascar.state    = map.magnets.madagascar
-        this.madagascar.override = map.overrides.madagascar
-        this.alaska.state        = map.magnets.alaska
-        this.alaska.override     = map.overrides.alaska
-        this.india.state         = map.magnets.india
-        this.india.override      = map.overrides.india
-        this.seattle.state       = map.magnets.seattle
-        this.seattle.override    = map.overrides.seattle
-        this.spain.state         = map.magnets.spain
-        this.spain.override      = map.overrides.spain
-        this.argentina.state     = map.magnets.argentina
-        this.argentina.override  = map.overrides.argentina
+        Object.entries(this.locations).forEach(([loc, locObj]) => {
+          locObj.state = map.magnets[loc];
+          locObj.override = map.overrides[loc];
+        });
 
         this.curImg = map.image
         this.solved = map.solved
       })
     },
     methods: {
+      formatLocation(loc) {
+        return loc.charAt(0).toUpperCase() + loc.slice(1);
+      },
       locToString(loc) {
         return loc.override ? "Force" : loc.state ? "Yes" : "No"
       },
       locToClass(loc) {
         return loc.override ? "force" : loc.state ? 'yes' : 'no'
+      },
+      clickToOverride(loc) {
+        console.log("overriding: " + loc);
       }
     }
   }
@@ -113,6 +97,7 @@
     line-height: 22px;
     padding-left:5px;
     color: white;
+    cursor: pointer;
   }
   .yes {
     background: green;
