@@ -77,7 +77,7 @@
         return loc.override ? "force" : loc.state ? 'yes' : 'no'
       },
       clickToOverride(loc) {
-        console.log("overriding: " + loc);
+        this.$root.$data.museumRoot.child('devices/map/overrides').child(loc).set(!this.locations[loc].override)
       }
     }
   }
