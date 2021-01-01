@@ -233,11 +233,6 @@
 </template>
 
 <script>
-let STATE = {
-  UNKNOWN: 1,
-  OK: 2,
-  BAD: 3
-}
 export default {
   props: ['snack'],
   data () {
@@ -287,9 +282,7 @@ export default {
       wires: [false, false, false, false],
       wiresFailing: false,
       wireErrors: false,
-      wireState: STATE.UNKNOWN,
 
-      keySolvedState: STATE.UNKNOWN,
       finished: false,
       winButton: false,
       password: 'xxxxxxxxxxxxxxx',
