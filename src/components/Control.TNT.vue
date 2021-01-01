@@ -17,52 +17,27 @@
         <v-layout row wrap>
           <v-flex id="tntSection" xs12 md6>
             <v-toolbar flat dense color="grey lighten-3">
-              <v-toolbar-title class="mx-0"><a @click="refreshTimer()">Time</a></v-toolbar-title>
-              <v-btn icon title="Set timer" @click.native="resetTimeDiag = true"><v-icon >snooze</v-icon></v-btn>
+              <v-toolbar-title class="mx-0" style="margin-left: 0px !important;"><a @click="refreshTimer()">Time</a></v-toolbar-title>
+              <v-btn icon title="Set timer" @click.native="resetTimeDiag = true"><v-icon >access_alarm</v-icon></v-btn>
             </v-toolbar>
 
             <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">
               {{timer}}
             </div>
+            
+            <v-flex xs12>
+                <div style="display:block">
+                  <span>Actions</span>
+                  <div>
+                    <v-btn flat icon title="Shoot Key" class="actionBtn" @click.native="confirmKeyDiag = true"><v-icon>vpn_key</v-icon></v-btn>
+                    <v-btn flat icon title="Give Wire Error" class="actionBtn" @click.native="confirmWireDiag = true"><v-icon>gesture</v-icon></v-btn>
+                    <v-btn flat icon title="Force Win" class="actionBtn" @click.native="confirmWinDiag = true"><v-icon>emoji_events</v-icon></v-btn>
 
-            <div style="display:flex">
-              <v-flex xs6>
-                <div style="display:block">
-                  <span>Key</span>
-                  <div>
-                  <v-btn 
-                    id="keyLoading"
-                    class="ma-0"
-                    small dark color="accent"
-                    :loading="keyLoading"
-                    @click.native="confirmKeyDiag = true"
-                    :disabled="keyLoading"
-                    >
-                    Trigger
-                    <span slot="loader">Triggering...</span>
-                  </v-btn>
+                    <v-btn flat icon title="Blink Display" class="actionBtn" @click.native="triggerBlink()"><v-icon>visibility</v-icon></v-btn>
+                    <v-btn flat icon title="Give Door Code Verbally" class="actionBtn" @click.native="triggerBlink(true)"><v-icon>campaign</v-icon></v-btn>
                   </div>
                 </div>
               </v-flex>
-              <v-flex xs6>
-                <div style="display:block">
-                  <span>Wires</span>
-                  <div>
-                  <v-btn 
-                    id="wireLoading"
-                    class="ma-0"
-                    small dark color="accent"
-                    :loading="wireLoading"
-                    @click.native="confirmWireDiag = true"
-                    :disabled="wireLoading"
-                    >
-                    Trigger
-                    <span slot="loader">Triggering...</span>
-                  </v-btn>
-                  </div>
-                </div>
-              </v-flex>
-            </div>
 
             <div style="display:flex;margin-top:10px;">
               <v-flex xs6>
@@ -92,7 +67,7 @@
                 </div>
               </v-flex>
             </div>
-            <div style="display:flex;margin-top:0px;">
+            <div style="display:flex;margin-top:0px;margin-bottom:15px">
               <v-flex xs6>
                 <div style="display:block">
                   <span>Win Button</span>
@@ -104,40 +79,6 @@
                     :hide-details="true"
                     @click.native="triggerWinButton"
                   ></v-switch>
-                </div>
-              </v-flex>
-              <v-flex xs6>
-                <div style="display:block">
-                  <span>Force Win</span>
-                  <div>
-                  <v-btn 
-                    class="ma-0"
-                    small dark color="accent"
-                    @click.native="confirmWinDiag = true">WIN
-                  </v-btn>
-                  </div>
-                </div>
-              </v-flex>
-            </div>
-
-            <div style="display:flex;margin-top:0px;padding-top:10px;margin-bottom:15px">
-              <v-flex>
-                <div style="display:block">
-                  <span>Blink</span>
-                  <div>
-                  <v-btn 
-                    class="ma-0"
-                    small dark color="accent"
-                    @click.native="triggerBlink()">No Code
-                  </v-btn>
-                  <v-btn 
-                    class="ma-0"
-                    small dark color="accent"
-                    @click.native="triggerBlink(true)">With Audio
-                  </v-btn>
-                  </div>
-                  <div>
-                  </div>
                 </div>
               </v-flex>
             </div>
@@ -326,10 +267,6 @@ export default {
           msg: ''
         },
       },
-
-      // loading states
-      keyLoading:false,
-      wireLoading:false,
 
       // device status states
       hours: null,
@@ -658,49 +595,19 @@ export default {
     },
     triggerKey() {
       this.confirmKeyDiag = false;
-      this.keyLoading = true;
 
-      // HACK: total hack to get around disabled styling.  don't have time to figure out proper
-      let btn = document.getElementById('keyLoading');
-      btn.id = 'disabled'
-
-      this.operations.add({ command: 'triggerKey' }).on("value", (snapshot) => {
-        let command = snapshot.val()
-
-        // check for received, that means pi registered it
-        if (command.received) {
-
-          // pop snack letting user know  we triggered it
+      this.operations.add({ command: 'tnt.triggerKey' }).on("value", (snapshot) => {
+        if (snapshot.val().received) {
           this.snack('Key triggered successfully.')
-          this.keyLoading = false
-          btn.id = 'keyLoading'
-
-          // disable further update notifications
-          snapshot.ref.off()
         }
       });
     },
     triggerWire() {
       this.confirmWireDiag = false;
-      this.wireLoading = true;
 
-      // HACK: total hack to get around disabled styling.  don't have time to figure out proper
-      let btn = document.getElementById('wireLoading');
-      btn.id = 'disabled'
-
-      this.operations.add({ command: 'triggerWire' }).on("value", (snapshot) => {
-        let command = snapshot.val()
-
-        // check for received, that means pi registered it
-        if (command.received) {
-
-          // pop snack letting user know  we triggered it
+      this.operations.add({ command: 'tnt.triggerWireError' }).on("value", (snapshot) => {
+        if (snapshot.val().received) {
           this.snack('Wire error triggered successfully.')
-          this.wireLoading = false;
-          btn.id = 'wireLoading'
-
-          // disable further update notifications
-          snapshot.ref.off()
         }
       });
     },
@@ -715,8 +622,14 @@ export default {
       this.resetTntDiag = false;
     },
     triggerBlink(withCode) {
-      var cmd = withCode ? 'triggerBlinkWithCode' : 'triggerBlink'
+      
+      let cmd = withCode ? 'triggerBlinkWithCode' : 'triggerBlink'
+      let cmdTxt = twithCode ? 'Door Code sent' : 'Blinked'
+
       this.operations.add({ command: cmd }).on("value", (snapshot) => {
+        if (snapshot.val().received) {
+          this.snack(`${cmtTxt} successfully.`)
+        }
       });
     },
 
@@ -817,5 +730,12 @@ td > input {
   #tntSection {
     flex-basis:50%;
   }
+}
+
+.actionBtn {
+  margin:0px; 
+  padding:0px;
+  margin-right: 4px !important;
+  color: rgba(0,0,0,.7) !important;
 }
 </style>
