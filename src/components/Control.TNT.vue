@@ -112,15 +112,13 @@
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
-                  <v-list-tile-content :class="{ strikeIt: !toggleErrors }">Toggle 1:</v-list-tile-content>
-                  <v-list-tile-content class="align-end">
-                    <v-icon :style="{ color: iconColor(toggle1State) }">{{icon(toggle1State)}}</v-icon>
-                  </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile>
-                  <v-list-tile-content :class="{ strikeIt: !toggleErrors }">Toggle 2:</v-list-tile-content>
-                  <v-list-tile-content class="align-end">
-                    <v-icon :style="{ color: iconColor(toggle2State) }">{{icon(toggle2State)}}</v-icon>
+                  <v-list-tile-content :class="{ strikeIt: !toggleErrors }">Toggles:</v-list-tile-content>
+                  <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
+                    <span v-bind:class="{ toggleIncorrect: toggles[0] }" class="toggleNumber">1</span>
+                    <span v-bind:class="{ toggleIncorrect: !toggles[1] }" class="toggleNumber">2</span>
+                    <span v-bind:class="{ toggleIncorrect: !toggles[2] }" class="toggleNumber">3</span>
+                    <span v-bind:class="{ toggleIncorrect: toggles[3] }" class="toggleNumber">4</span>
+                    <span v-bind:class="{ toggleIncorrect: !toggles[4] }" class="toggleNumber">5</span>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
@@ -257,8 +255,7 @@ export default {
       minutes: null,
       seconds: null,
       light: false,
-      toggle1State: STATE.UNKNOWN,
-      toggle2State: STATE.UNKNOWN,
+      toggles: [false,false,false,false,false],
       wireState: STATE.UNKNOWN,
       keySolvedState: STATE.UNKNOWN,
       finished: false,
@@ -404,13 +401,16 @@ export default {
       this.isConnected  = tnt.info.isConnected
       this.light        = tnt.light
 
-      // TODO: add other toggles
       // TODO: add other wires
       // TODO: implement
       //   this.timeLeftSolved  = state.timeLeftSolved
       
-      this.toggle1State    = tnt.toggles.toggle1
-      this.toggle2State    = tnt.toggles.toggle2
+      this.toggles[0] = tnt.toggles.toggle1;
+      this.toggles[1] = tnt.toggles.toggle2;
+      this.toggles[2] = tnt.toggles.toggle3;
+      this.toggles[3] = tnt.toggles.toggle4;
+      this.toggles[4] = tnt.toggles.toggle5;
+
       this.wireState       = tnt.wires.wire4
       this.keySolvedState  = tnt.key
       this.finished        = tnt.finished
@@ -721,5 +721,20 @@ td > input {
   padding:0px;
   margin-right: 4px !important;
   color: rgba(0,0,0,.7) !important;
+}
+
+.toggleNumber {
+  border-radius: 20%;
+  background: #4CAF50;
+  height: 16px;
+  width: 20px;
+  margin: 2px;
+  font-size:12px;
+  line-height:16px;
+  color: white;
+  padding-left:6px;
+}
+.toggleIncorrect {
+  background: #F44336 !important;
 }
 </style>
