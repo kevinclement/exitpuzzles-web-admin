@@ -108,7 +108,7 @@
                 <v-list-tile>
                   <v-list-tile-content>Light:</v-list-tile-content>
                   <v-list-tile-content class="align-end">
-                    <v-icon :style="{ color: '#FFC107' }">{{icon(light, 'light')}}</v-icon>
+                    <v-icon :style="{ color: '#FFC107' }">{{light ? 'lightbulb_outline' : ''}}</v-icon>
                   </v-list-tile-content>
                 </v-list-tile>
                 
@@ -150,9 +150,11 @@
 
                 <!-- Solved -->
                 <v-list-tile>
-                  <v-list-tile-content>Key Solved:</v-list-tile-content>
-                  <v-list-tile-content class="align-end">
-                    <v-icon :style="{ color: iconColor(keySolvedState) }">{{icon(keySolvedState, 'key')}}</v-icon>
+                  <v-list-tile-content>Solved:</v-list-tile-content>
+                  <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
+                    <v-icon title="Example Wire Door Open" class="solvedIcon">{{solved.example  ? 'lock_open': ''}}</v-icon>
+                    <v-icon title="Toggles Solved" class="solvedIcon">{{solved.toggles ? 'toggle_on':     ''}}</v-icon>
+                    <v-icon title="Wires Solved" class="solvedIcon">{{solved.wires    ? 'vpn_key':   ''}}</v-icon>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
@@ -298,6 +300,12 @@ export default {
 
       deviceTntReset:false,
       deviceCompassReset: false,
+
+      solved: {
+        example: false,
+        wires: false,
+        toggles: false
+      },
 
       compass: {
         enabled: false,
@@ -474,6 +482,14 @@ export default {
       this.wireErrors      = !tnt.wires.override
       this.winButton       = !tnt.overrideWinButton
 
+      this.solved.example  = tnt.exampleDoor
+      this.solved.wires    = tnt.key
+      this.solved.toggles  = !tnt.toggles.toggle1 &&
+                              tnt.toggles.toggle2 &&
+                              tnt.toggles.toggle3 &&
+                             !tnt.toggles.toggle4 &&
+                              tnt.toggles.toggle5
+
         // update might be partial, so fill out from our state
       let h = tnt.time.hours ? tnt.time.hours : this.hours
       let m = tnt.time.minutes ? tnt.time.minutes : this.minutes
@@ -520,19 +536,9 @@ export default {
       // if offline, dont show icons
       if (!this.isConnected) return ''
 
-      // special case key
-      if (type === 'key') {
-        return state ? 'done' : ''
-      }
-
       // special case all
       if (type === 'all') {
         return state ? 'done_all' : ''
-      }
-
-      // special case light
-      if (type === 'light') {
-        return state ? 'lightbulb_outline' : ''
       }
 
       // TODO: fix/research
@@ -827,5 +833,8 @@ td > input {
 }
 .lightDotOff {
   background: #e0e0e0 !important;
+}
+.solvedIcon {
+  padding-left: 2px;
 }
 </style>
