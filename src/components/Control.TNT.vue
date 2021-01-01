@@ -42,13 +42,13 @@
             <div style="display:flex;margin-top:10px;">
               <v-flex xs6>
                 <div style="display:block">
-                  <span>Switch Errors</span>
+                  <span>Toggle Errors</span>
                   <v-switch 
                     primary
-                    :label="switchErrorLabel"
-                    v-model="switchErrors"
+                    :label="toggleErrorsOverrideLabel"
+                    v-model="toggleErrorsOverride"
                     :disabled="!isConnected"
-                    @click.native="switchErrorsClicked"
+                    @click.native="toggleErrorsOverrideClicked"
                     :hide-details="true"
                   ></v-switch>
                 </div>
@@ -110,13 +110,13 @@
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
-                  <v-list-tile-content :class="{ strikeIt: switchErrors }">Toggle 1:</v-list-tile-content>
+                  <v-list-tile-content :class="{ strikeIt: toggleErrorsOverride }">Toggle 1:</v-list-tile-content>
                   <v-list-tile-content class="align-end">
                     <v-icon :style="{ color: iconColor(toggle1State) }">{{icon(toggle1State)}}</v-icon>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
-                  <v-list-tile-content :class="{ strikeIt: switchErrors }">Toggle 2:</v-list-tile-content>
+                  <v-list-tile-content :class="{ strikeIt: toggleErrorsOverride }">Toggle 2:</v-list-tile-content>
                   <v-list-tile-content class="align-end">
                     <v-icon :style="{ color: iconColor(toggle2State) }">{{icon(toggle2State)}}</v-icon>
                   </v-list-tile-content>
@@ -260,7 +260,6 @@ export default {
       wireState: STATE.UNKNOWN,
       keySolvedState: STATE.UNKNOWN,
       finished: false,
-      switchErrors: false,
       wireErrors: false,
       winButton: false,
       password: 'xxxxxxxxxxxxxxx',
@@ -268,6 +267,8 @@ export default {
       timerTimeStamp: null,
       timeLeftInSeconds: 0,
       isConnected: true,
+
+      toggleErrorsOverride: false,
 
       // TODO: remove
       allSolvedState: STATE.UNKNOWN,
@@ -288,8 +289,8 @@ export default {
     timerEnabled: function() {
       return (this.hours !== null && this.minutes !== null && this.seconds !== null) && this.timeLeftInSeconds > 0
     },
-    switchErrorLabel: function () {
-      return this.switchErrors ? 'Disabled' : 'Enabled'
+    toggleErrorsOverrideLabel: function () {
+      return this.toggleErrorsOverride ? 'Disabled' : 'Enabled'
     },
     wireErrorLabel: function () {
       return this.wireErrors ? 'Disabled' : 'Enabled'
@@ -407,7 +408,7 @@ export default {
       // TODO: add other wires
       // TODO: implement
       //   this.timeLeftSolved  = state.timeLeftSolved
-
+      
       this.toggle1State    = tnt.toggles.toggle1
       this.toggle2State    = tnt.toggles.toggle2
       this.wireState       = tnt.wires.wire4
@@ -416,7 +417,7 @@ export default {
       this.password        = tnt.password
       
       // TODO: rename these to override
-      this.switchErrors    = tnt.toggles.override
+      this.toggleErrorsOverride = tnt.toggles.override
       this.wireErrors      = tnt.wires.override
       this.winButton       = tnt.overrideWinButton
 
@@ -623,15 +624,12 @@ export default {
       });
     },
 
-    switchErrorsClicked() {
-      if (this.switchErrors) {
-        this.operations.add({ command: 'switchErrors' }).on("value", (snapshot) => {
-
+    toggleErrorsOverrideClicked() {
+      this.operations.add({ command: 'tnt.toggleErrorsOverride' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
-            this.snack('Switch errors disabled successfully.')
+            this.snack('Toggle override was toggled successfully.')
           }
-        });
-      }
+      });
     },
     wireErrorsClicked() {
       if (this.wireErrors) {
