@@ -267,13 +267,13 @@ export default {
       timerTimeStamp: null,
       timeLeftInSeconds: 0,
       isConnected: true,
-
       toggleErrors: false,
+
+      deviceTntReset:false,
+      deviceCompassReset: false,
 
       // TODO: remove
       allSolvedState: STATE.UNKNOWN,
-
-      // last state snapshot
       lastStateSnapshot: null
     }
   },
@@ -402,6 +402,7 @@ export default {
         
       this.isConnected     = tnt.info.isConnected
 
+      // TODO: just use a bool
       this.lightState      = tnt.light ? STATE.OK : STATE.UNKNOWN
 
       // TODO: add other toggles
@@ -596,14 +597,28 @@ export default {
     },
 
     triggerReset() {
-      this.operations.add({ command: 'triggerDeviceReset' }).on("value", (snapshot) => {
+      this.resetTntDiag = false;
 
+      // track reset of both devices to confirm they did
+      this.deviceTntReset = this.deviceCompassReset = false;
+
+      this.operations.add({ command: 'tnt.reset' }).on("value", (snapshot) => {
         if (snapshot.val().received) {
-          this.snack('Device reset successfully.')
+          this.deviceTntReset = true;
+          if (!this.deviceTntReset && this.deviceCompassReset) {
+            this.snack('Devices reset successfully.')
+          }
         }
       });
 
-      this.resetTntDiag = false;
+      this.operations.add({ command: 'compass.reset' }).on("value", (snapshot) => {
+        if (snapshot.val().received) {
+          this.deviceCompassReset = true;
+          if (!this.deviceTntResetting && this.deviceTntReset) {
+            this.snack('Devices reset successfully.')
+          }
+        }
+      });
     },
     triggerBlink(withCode) {
       
