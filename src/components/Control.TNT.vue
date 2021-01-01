@@ -112,6 +112,17 @@
                   </v-list-tile-content>
                 </v-list-tile>
                 
+                <!-- Compass -->
+                <v-list-tile>  
+                  <v-list-tile-content>Compass:</v-list-tile-content>
+                  <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
+                    <span :class="{ lightDotOff: !compass.red    }" class="lightDot" style="background:#EF5350"/>
+                    <span :class="{ lightDotOff: !compass.green  }" class="lightDot" style="background:#43A047"/>
+                    <span :class="{ lightDotOff: !compass.blue   }" class="lightDot" style="background:#1E88E5"/>
+                    <span :class="{ lightDotOff: !compass.yellow }" class="lightDot" style="background:#FFCA28"/>
+                  </v-list-tile-content>
+                </v-list-tile>
+
                 <!-- Toggles -->
                 <v-list-tile>  
                   <v-list-tile-content>Toggles:</v-list-tile-content>
@@ -242,6 +253,7 @@ export default {
   data () {
     return {
       tntRef: null,
+      compassRef: null,
 
       // dialogs
       dialog: false,
@@ -298,6 +310,14 @@ export default {
 
       deviceTntReset:false,
       deviceCompassReset: false,
+
+      compass: {
+        enabled: false,
+        red: false,
+        green: false,
+        blue: false,
+        yellow: false
+      },
 
       // TODO: remove
       allSolvedState: STATE.UNKNOWN,
@@ -421,6 +441,18 @@ export default {
   mounted() {
     this.operations = this.$root.$data.operations
     this.tntRef = this.$root.$data.fbdb.ref('landlord/devices/tnt')
+    this.compassRef = this.$root.$data.fbdb.ref('landlord/devices/compass')
+
+    this.compassRef.on('value', (snapshot) => {
+      let compass = snapshot.val()
+      if (compass == null) return
+
+      this.compass.enabled = compass.enabled;
+      this.compass.red = compass.red;
+      this.compass.green = compass.green;
+      this.compass.blue = compass.blue;
+      this.compass.yellow = compass.yellow;
+    });
 
     this.tntRef.on('value', (snapshot) => {
       let tnt = snapshot.val()
@@ -441,7 +473,6 @@ export default {
       this.wires[2]     = tnt.wires.wire3;
       this.wires[3]     = tnt.wires.wire4;
       this.wiresFailing = tnt.wires.failing;
-
 
       // TODO: implement
       //   this.timeLeftSolved  = state.timeLeftSolved
@@ -798,5 +829,15 @@ td > input {
 }
 .failing {
   color: #F44336;
+}
+
+.lightDot {
+  border-radius: 50%;
+  height: 16px;
+  width: 16px;
+  margin: 2px;
+}
+.lightDotOff {
+  background: #e0e0e0 !important;
 }
 </style>
