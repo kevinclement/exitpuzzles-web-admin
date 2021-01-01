@@ -111,30 +111,45 @@
                     <v-icon :style="{ color: '#FFC107' }">{{icon(light, 'light')}}</v-icon>
                   </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile>
+                
+                <!-- Toggles -->
+                <v-list-tile>  
                   <v-list-tile-content>Toggles:</v-list-tile-content>
                   <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
-                    <span v-bind:class="{ toggleIncorrect: toggles[0] }" class="toggleNumber">1</span>
-                    <span v-bind:class="{ toggleIncorrect: !toggles[1] }" class="toggleNumber">2</span>
-                    <span v-bind:class="{ toggleIncorrect: !toggles[2] }" class="toggleNumber">3</span>
-                    <span v-bind:class="{ toggleIncorrect: toggles[3] }" class="toggleNumber">4</span>
-                    <span v-bind:class="{ toggleIncorrect: !toggles[4] }" class="toggleNumber">5</span>
+                    <span :class="{ toggleIncorrect:  toggles[0] }" class="toggleNumber">1</span>
+                    <span :class="{ toggleIncorrect: !toggles[1] }" class="toggleNumber">2</span>
+                    <span :class="{ toggleIncorrect: !toggles[2] }" class="toggleNumber">3</span>
+                    <span :class="{ toggleIncorrect:  toggles[3] }" class="toggleNumber">4</span>
+                    <span :class="{ toggleIncorrect: !toggles[4] }" class="toggleNumber">5</span>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
-                  <v-list-tile-content :class="{ strikeIt: !toggleErrors }">Toggle Penalty:</v-list-tile-content>
+                  <v-list-tile-content :class="{ strikeIt: !toggleErrors }">Toggles Penalty:</v-list-tile-content>
                   <v-list-tile-content class="align-end passing" :class="{ failing: togglesFailing }">
                     {{ togglesFailing ? "ON" : "OFF" }}
                   </v-list-tile-content>
                 </v-list-tile>
 
-                <v-list-tile>
-                  <v-list-tile-content :class="{ strikeIt: wireErrors }">Wire:</v-list-tile-content>
-                  <v-list-tile-content class="align-end">
-                    <v-icon :style="{ color: iconColor(wireState) }">{{icon(wireState)}}</v-icon>
+                <!-- Wires -->
+                <v-list-tile>  
+                  <v-list-tile-content>Wires:</v-list-tile-content>
+                  <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
+                    <span :class="{ wireIncorrect:  !wires[2] }" class="wireNumber">A⇢3</span>
+                    <span :class="{ wireIncorrect:  !wires[1] }" class="wireNumber">B⇢D</span>
+                    <span :class="{ wireIncorrect:  !wires[3] }" class="wireNumber">C⇢2</span>
+                    <span :class="{ wireIncorrect:  !wires[0] }" class="wireNumber">1⇢4</span>
                   </v-list-tile-content>
                 </v-list-tile>
+                <v-list-tile>
+                  <v-list-tile-content :class="{ strikeIt: !wireErrors }">Wires Penalty:</v-list-tile-content>
+                  <v-list-tile-content class="align-end passing" :class="{ failing: wiresFailing }">
+                    {{ wiresFailing ? "ON" : "OFF" }}
+                  </v-list-tile-content>
+                </v-list-tile>
+
                 <v-divider/>
+
+                <!-- Solved -->
                 <v-list-tile>
                   <v-list-tile-content>Key Solved:</v-list-tile-content>
                   <v-list-tile-content class="align-end">
@@ -262,19 +277,24 @@ export default {
       minutes: null,
       seconds: null,
       light: false,
+      
       toggles: [false,false,false,false,false],
       togglesFailing: false,
+      toggleErrors: false,
+
+      wires: [false, false, false, false],
+      wiresFailing: false,
+      wireErrors: false,
       wireState: STATE.UNKNOWN,
+
       keySolvedState: STATE.UNKNOWN,
       finished: false,
-      wireErrors: false,
       winButton: false,
       password: 'xxxxxxxxxxxxxxx',
       timeLeftSolved: '',
       timerTimeStamp: null,
       timeLeftInSeconds: 0,
       isConnected: true,
-      toggleErrors: false,
 
       deviceTntReset:false,
       deviceCompassReset: false,
@@ -416,7 +436,13 @@ export default {
       this.toggles[4]     = tnt.toggles.toggle5;
       this.togglesFailing = tnt.toggles.failing;
 
-      // TODO: add other wires
+      this.wires[0]     = tnt.wires.wire1;
+      this.wires[1]     = tnt.wires.wire2;
+      this.wires[2]     = tnt.wires.wire3;
+      this.wires[3]     = tnt.wires.wire4;
+      this.wiresFailing = tnt.wires.failing;
+
+
       // TODO: implement
       //   this.timeLeftSolved  = state.timeLeftSolved
       
@@ -744,6 +770,20 @@ td > input {
   padding-left:6px;
 }
 .toggleIncorrect {
+  background: #F44336 !important;
+}
+.wireNumber {
+  border-radius: 9%;
+  background: #4CAF50;
+  height: 16px;
+  margin: 2px;
+  font-size:12px;
+  line-height:16px;
+  color: white;
+  padding-left:6px;
+  padding-right:6px;
+}
+.wireIncorrect {
   background: #F44336 !important;
 }
 .passing {
