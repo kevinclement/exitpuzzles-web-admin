@@ -52,7 +52,7 @@ export default {
 
   mounted() {
 
-    this.statusRef = this.$root.$data.fbdb.ref('status')
+    this.statusRef = this.$root.$data.fbdb.ref('landlord/status')
     this.statusRef.on('value', (snapshot) => {
       let status = snapshot.val()
       if (status == null) return

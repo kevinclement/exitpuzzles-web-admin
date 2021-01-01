@@ -157,7 +157,7 @@
           <v-flex xs12 sm6 md4>
             <v-card>
               <v-card-title>
-                <h4><a @click="refreshState()">State</a></h4>
+                <h4>State</h4>
               </v-card-title>
               <v-divider></v-divider>
 
@@ -301,8 +301,6 @@ export default {
     return {
       tntRef: null,
 
-      firstUpdate: true,
-
       // dialogs
       confirmKeyDiag: false,
       confirmWireDiag: false,
@@ -342,15 +340,18 @@ export default {
       toggle2State: STATE.UNKNOWN,
       wireState: STATE.UNKNOWN,
       keySolvedState: STATE.UNKNOWN,
-      allSolvedState: STATE.UNKNOWN,
+      finished: false,
       switchErrors: false,
       wireErrors: false,
       winButton: false,
-      lastBadPassword: 'xxxxxxxxxxxxxxx',
+      password: 'xxxxxxxxxxxxxxx',
       timeLeftSolved: '',
       timerTimeStamp: null,
       timeLeftInSeconds: 0,
       isConnected: true,
+
+      // TODO: remove
+      allSolvedState: STATE.UNKNOWN,
 
       // last state snapshot
       lastStateSnapshot: null
@@ -378,33 +379,33 @@ export default {
       return this.winButton ? 'Disabled' : 'Enabled'
     },
     pass1: function() {
-      if (this.lastBadPassword === '') return '#'
+      if (this.password === '') return '#'
 
-      let code = this.lastBadPassword.substring(0,1)
+      let code = this.password.substring(0,1)
       return code === '' ? 'x' : code
     },
     pass2: function() {
-      if (this.lastBadPassword === '') return '##'
+      if (this.password === '') return '##'
 
-      let code = this.lastBadPassword.substring(1,3)
+      let code = this.password.substring(1,3)
       return code === '' ? 'xx' : code
     },
     pass3: function() {
-      if (this.lastBadPassword === '') return '###'
+      if (this.password === '') return '###'
 
-      let code = this.lastBadPassword.substring(3,6)
+      let code = this.password.substring(3,6)
       return code === '' ? 'xxx' : code
     },
     pass4: function() {
-      if (this.lastBadPassword === '') return '####'
+      if (this.password === '') return '####'
 
-      let code = this.lastBadPassword.substring(6,10)
+      let code = this.password.substring(6,10)
       return code === '' ? 'xxxx' : code
     },
     pass5: function() {
-      if (this.lastBadPassword === '') return '#####'
+      if (this.password === '') return '#####'
 
-      let code =this.lastBadPassword.substring(10,15)
+      let code =this.password.substring(10,15)
       return code === '' ? 'xxxxx' : code
     },
     pass1valid: function() {
@@ -473,47 +474,38 @@ export default {
 
   mounted() {
     this.operations = this.$root.$data.operations
-    this.tntRef = this.$root.$data.fbdb.ref('tnt')
+    this.tntRef = this.$root.$data.fbdb.ref('landlord/devices/tnt')
 
-    this.tntRef.child('state').on('value', (snapshot) => {
-      let state = snapshot.val()
-      if (state == null) return
+    this.tntRef.on('value', (snapshot) => {
+      let tnt = snapshot.val()
+      if (tnt == null) return
+        
+      this.isConnected     = tnt.info.isConnected
 
-      this.lastStateSnapshot = state;
-      if (this.isConnected) {
-        this.updateState(this.lastStateSnapshot)
-      }
+      this.lightState      = tnt.light ? STATE.OK : STATE.UNKNOWN
 
-      // in next tick, mark update done
-      setTimeout(()=> {
-        this.firstUpdate = false;
-      }, 0)
+      // TODO: add other toggles
+      // TODO: add other wires
+      // TODO: implement
+      //   this.timeLeftSolved  = state.timeLeftSolved
+
+      this.toggle1State    = tnt.toggles.toggle1
+      this.toggle2State    = tnt.toggles.toggle2
+      this.wireState       = tnt.wires.wire4
+      this.keySolvedState  = tnt.key
+      this.finished        = tnt.finished
+      this.password        = tnt.password
       
-    });
+      // TODO: rename these to override
+      this.switchErrors    = tnt.toggles.override
+      this.wireErrors      = tnt.wires.override
+      this.winButton       = tnt.overrideWinButton
 
-    this.tntRef.child('isConnected').on('value', (snapshot) => {
-      let isConnected = snapshot.val()
-      if (isConnected == null) return
-
-      this.isConnected = isConnected
-
-      // if offline, clear state
-      if (!this.isConnected) {
-        this.updateState()
-      } else if (this.lastStateSnapshot) {
-        this.updateState(this.lastStateSnapshot)
-      }
-    });
-
-    this.tntRef.child('time').on('value', (snapshot) => {
-      let time = snapshot.val()
-      if (time == null) return
-
-      // update might be partial, so fill out from our state
-      let h = time.hours ? time.hours : this.hours
-      let m = time.minutes ? time.minutes : this.minutes
-      let s = time.seconds ? time.seconds : this.seconds
-      let ts = time.timestamp ? time.timestamp : this.timerTimeStamp
+        // update might be partial, so fill out from our state
+      let h = tnt.time.hours ? tnt.time.hours : this.hours
+      let m = tnt.time.minutes ? tnt.time.minutes : this.minutes
+      let s = tnt.time.seconds ? tnt.time.seconds : this.seconds
+      let ts = tnt.time.timestamp ? tnt.time.timestamp : this.timerTimeStamp
       let elapsed = Math.floor(((new Date()).getTime() - ts) / 1000)
 
       this.timeLeftInSeconds = (h * 3600) + (m * 60) + s - elapsed
@@ -522,7 +514,7 @@ export default {
 
     setInterval(() => {
       // turn off timer if its been solved or our time is not positive
-      if (!this.timerEnabled || this.allSolvedState === STATE.OK) {
+      if (!this.timerEnabled || this.finished) {
         return;
       }
 
@@ -592,39 +584,7 @@ export default {
       // clear out times to indicate were loading
       this.hours = this.minutes = this.seconds = null;
 
-      this.operations.add({ command: 'refreshTime' })
-    },
-    refreshState() {
-      // clear out icons to indicate reloading
-      this.updateState()
-      this.operations.add({ command: 'refreshState' })
-    },
-
-    updateState(state) {
-      if (!state) {
-        this.lightState       =
-          this.toggle1State   =
-          this.toggle2State   =
-          this.wireState      =
-          this.keySolvedState =
-          this.allSolvedState = STATE.UNKNOWN;
-        this.lastBadPassword  = 'xxxxxxxxxxxxxxx'
-        this.timeLeftSolved   = ''
-        this.switchErrors     = this.wireErrors = false
-        this.winButton        = false
-      } else {
-          this.lightState      = state.lightDetected ? STATE.OK : STATE.UNKNOWN
-          this.toggle1State    = state.toggle1
-          this.toggle2State    = state.toggle2
-          this.wireState       = state.wire
-          this.keySolvedState  = state.keySolved
-          this.allSolvedState  = state.allSolved
-          this.lastBadPassword = state.lastBadPassword
-          this.timeLeftSolved  = state.timeLeftSolved
-          this.switchErrors    = state.switchErrors
-          this.wireErrors      = state.wireErrors
-          this.winButton       = state.winButton
-      }
+      this.operations.add({ command: 'tnt.refreshTime' })
     },
 
     validateTimer(section) {
@@ -693,7 +653,7 @@ export default {
       this.hours = this.minutes = this.seconds = null;
 
       this.operations.add({ 
-         command: 'setTime',
+         command: 'tnt.setTime',
          data: { hours: this.setTime.hour, minutes: this.setTime.minute, seconds: this.setTime.second } });
     },
     triggerKey() {
