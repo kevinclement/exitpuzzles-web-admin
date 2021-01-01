@@ -45,10 +45,10 @@
                   <span>Toggle Errors</span>
                   <v-switch 
                     primary
-                    :label="toggleErrorsOverrideLabel"
-                    v-model="toggleErrorsOverride"
+                    :label="toggleErrorsLabel"
+                    v-model="toggleErrors"
                     :disabled="!isConnected"
-                    @click.native="toggleErrorsOverrideClicked"
+                    @click.native="toggleErrorsClicked"
                     :hide-details="true"
                   ></v-switch>
                 </div>
@@ -110,13 +110,13 @@
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
-                  <v-list-tile-content :class="{ strikeIt: toggleErrorsOverride }">Toggle 1:</v-list-tile-content>
+                  <v-list-tile-content :class="{ strikeIt: !toggleErrors }">Toggle 1:</v-list-tile-content>
                   <v-list-tile-content class="align-end">
                     <v-icon :style="{ color: iconColor(toggle1State) }">{{icon(toggle1State)}}</v-icon>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
-                  <v-list-tile-content :class="{ strikeIt: toggleErrorsOverride }">Toggle 2:</v-list-tile-content>
+                  <v-list-tile-content :class="{ strikeIt: !toggleErrors }">Toggle 2:</v-list-tile-content>
                   <v-list-tile-content class="align-end">
                     <v-icon :style="{ color: iconColor(toggle2State) }">{{icon(toggle2State)}}</v-icon>
                   </v-list-tile-content>
@@ -268,7 +268,7 @@ export default {
       timeLeftInSeconds: 0,
       isConnected: true,
 
-      toggleErrorsOverride: false,
+      toggleErrors: false,
 
       // TODO: remove
       allSolvedState: STATE.UNKNOWN,
@@ -289,8 +289,8 @@ export default {
     timerEnabled: function() {
       return (this.hours !== null && this.minutes !== null && this.seconds !== null) && this.timeLeftInSeconds > 0
     },
-    toggleErrorsOverrideLabel: function () {
-      return this.toggleErrorsOverride ? 'Disabled' : 'Enabled'
+    toggleErrorsLabel: function () {
+      return this.toggleErrors ? 'Enabled' : 'Disabled'
     },
     wireErrorLabel: function () {
       return this.wireErrors ? 'Disabled' : 'Enabled'
@@ -417,7 +417,7 @@ export default {
       this.password        = tnt.password
       
       // TODO: rename these to override
-      this.toggleErrorsOverride = tnt.toggles.override
+      this.toggleErrors    = !tnt.toggles.override
       this.wireErrors      = tnt.wires.override
       this.winButton       = tnt.overrideWinButton
 
@@ -624,7 +624,7 @@ export default {
       });
     },
 
-    toggleErrorsOverrideClicked() {
+    toggleErrorsClicked() {
       this.operations.add({ command: 'tnt.toggleErrorsOverride' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Toggle override was toggled successfully.')
