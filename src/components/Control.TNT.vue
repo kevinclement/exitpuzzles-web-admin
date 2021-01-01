@@ -182,7 +182,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" flat="flat" @click.native="confirmWinDiag = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="triggerWin">Yes</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="triggerSolve">Yes</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -640,9 +640,9 @@ export default {
           }
       });
     },
-    triggerWin() {
+    triggerSolve() {
       this.confirmWinDiag = false;
-      this.operations.add({ command: 'triggerWin' }).on("value", (snapshot) => {
+      this.operations.add({ command: 'tnt.solve' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Win triggered successfully.')
           }
