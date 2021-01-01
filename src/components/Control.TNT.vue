@@ -25,6 +25,7 @@
               {{timer}}
             </div>
             
+            <!-- Actions -->
             <v-flex xs12>
                 <div style="display:block">
                   <span>Actions</span>
@@ -32,7 +33,6 @@
                     <v-btn flat icon title="Shoot Key" class="actionBtn" @click.native="confirm('the key', 'launching of the key from', 'tnt.triggerKey', 'Key triggered')"><v-icon>vpn_key</v-icon></v-btn>
                     <v-btn flat icon title="Give Wire Error" class="actionBtn" @click.native="confirm('a wire error', 'a wrong wire error on', 'tnt.triggerWireError', 'Wire error triggered')"><v-icon>gesture</v-icon></v-btn>
                     <v-btn flat icon title="Force Win" class="actionBtn" @click.native="confirm('a win', 'a win for', 'tnt.solve', 'Win triggered')"><v-icon>emoji_events</v-icon></v-btn>
-
                     <v-btn flat icon title="Blink Display" class="actionBtn" @click.native="triggerBlink()"><v-icon>visibility</v-icon></v-btn>
                     <v-btn flat icon title="Give Door Code Verbally" class="actionBtn" @click.native="triggerBlink(true)"><v-icon>campaign</v-icon></v-btn>
                   </div>
@@ -95,6 +95,8 @@
             </div>
 
           </v-flex>
+
+          <!-- State -->
           <v-flex xs12 sm6 md4>
             <v-card>
               <v-card-title>
@@ -106,7 +108,7 @@
                 <v-list-tile>
                   <v-list-tile-content>Light:</v-list-tile-content>
                   <v-list-tile-content class="align-end">
-                    <v-icon :style="{ color: '#FFC107' }">{{icon(lightState, 'light')}}</v-icon>
+                    <v-icon :style="{ color: '#FFC107' }">{{icon(light, 'light')}}</v-icon>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
@@ -254,7 +256,7 @@ export default {
       hours: null,
       minutes: null,
       seconds: null,
-      lightState: STATE.UNKNOWN,
+      light: false,
       toggle1State: STATE.UNKNOWN,
       toggle2State: STATE.UNKNOWN,
       wireState: STATE.UNKNOWN,
@@ -274,7 +276,6 @@ export default {
 
       // TODO: remove
       allSolvedState: STATE.UNKNOWN,
-      lastStateSnapshot: null
     }
   },
 
@@ -400,10 +401,8 @@ export default {
       let tnt = snapshot.val()
       if (tnt == null) return
         
-      this.isConnected     = tnt.info.isConnected
-
-      // TODO: just use a bool
-      this.lightState      = tnt.light ? STATE.OK : STATE.UNKNOWN
+      this.isConnected  = tnt.info.isConnected
+      this.light        = tnt.light
 
       // TODO: add other toggles
       // TODO: add other wires
