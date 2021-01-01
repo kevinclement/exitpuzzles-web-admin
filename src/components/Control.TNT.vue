@@ -29,9 +29,9 @@
                 <div style="display:block">
                   <span>Actions</span>
                   <div>
-                    <v-btn flat icon title="Shoot Key" class="actionBtn" @click.native="confirmKeyDiag = true"><v-icon>vpn_key</v-icon></v-btn>
-                    <v-btn flat icon title="Give Wire Error" class="actionBtn" @click.native="confirmWireDiag = true"><v-icon>gesture</v-icon></v-btn>
-                    <v-btn flat icon title="Force Win" class="actionBtn" @click.native="confirmWinDiag = true"><v-icon>emoji_events</v-icon></v-btn>
+                    <v-btn flat icon title="Shoot Key" class="actionBtn" @click.native="confirm('the key', 'launching of the key from', 'tnt.triggerKey', 'Key triggered')"><v-icon>vpn_key</v-icon></v-btn>
+                    <v-btn flat icon title="Give Wire Error" class="actionBtn" @click.native="confirm('a wire error', 'a wrong wire error on', 'tnt.triggerWireError', 'Wire error triggered')"><v-icon>gesture</v-icon></v-btn>
+                    <v-btn flat icon title="Force Win" class="actionBtn" @click.native="confirm('a win', 'a win for', 'tnt.solve', 'Win triggered')"><v-icon>emoji_events</v-icon></v-btn>
 
                     <v-btn flat icon title="Blink Display" class="actionBtn" @click.native="triggerBlink()"><v-icon>visibility</v-icon></v-btn>
                     <v-btn flat icon title="Give Door Code Verbally" class="actionBtn" @click.native="triggerBlink(true)"><v-icon>campaign</v-icon></v-btn>
@@ -153,39 +153,18 @@
       </v-card-text>
     </v-card>
 
-    <v-dialog v-model="confirmKeyDiag" max-width="410">
+  <v-dialog v-model="dialog" max-width="410">
     <v-card>
-      <v-card-title class="headline">Really trigger the key?</v-card-title>
-      <v-card-text>Are you sure you want to trigger launching of the key from the device?</v-card-text>
+      <v-card-title class="headline">Really trigger {{dialogTitle}}?</v-card-title>
+      <v-card-text>Are you sure you want to trigger {{dialogText}} the device?</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="confirmKeyDiag = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="triggerKey">Yes</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="dialog = false;">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="trigger">Yes</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
-  <v-dialog v-model="confirmWireDiag" max-width="410">
-    <v-card>
-      <v-card-title class="headline">Really trigger a wire error?</v-card-title>
-      <v-card-text>Are you sure you want to trigger a wrong wire error on the device?</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="confirmWireDiag = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="triggerWire">Yes</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-  <v-dialog v-model="confirmWinDiag" max-width="410">
-    <v-card>
-      <v-card-title class="headline">Really trigger a win?</v-card-title>
-      <v-card-text>Are you sure you want to trigger a win for the device?</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" flat="flat" @click.native="confirmWinDiag = false;">No</v-btn>
-        <v-btn color="primary" flat="flat" @click.native="triggerSolve">Yes</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+
   <v-dialog v-model="resetTntDiag" max-width="410">
     <v-card>
       <v-card-title class="headline">Really reset the device?</v-card-title>
@@ -243,9 +222,12 @@ export default {
       tntRef: null,
 
       // dialogs
-      confirmKeyDiag: false,
-      confirmWireDiag: false,
-      confirmWinDiag: false,
+      dialog: false,
+      dialogTitle: "a title",
+      dialogText: "diag text",
+      dialogTrigger: "tnt.xxx",
+      dialogTriggerToast: "toast response",
+      
       resetTimeDiag: false,
       resetTntDiag: false,
       setTime: {
@@ -593,24 +575,24 @@ export default {
          command: 'tnt.setTime',
          data: { hours: this.setTime.hour, minutes: this.setTime.minute, seconds: this.setTime.second } });
     },
-    triggerKey() {
-      this.confirmKeyDiag = false;
 
-      this.operations.add({ command: 'tnt.triggerKey' }).on("value", (snapshot) => {
+    confirm(title, text, command, toastResp) {
+      this.dialogTitle = title;
+      this.dialogText = text;
+      this.dialogTrigger = command;
+      this.dialogTriggerToast = toastResp;
+      this.dialog = true;
+    },
+
+    trigger() {
+      this.dialog = false;
+      this.operations.add({ command: this.dialogTrigger }).on("value", (snapshot) => {
         if (snapshot.val().received) {
-          this.snack('Key triggered successfully.')
+          this.snack(`${this.dialogTriggerToast} successfully.`)
         }
       });
     },
-    triggerWire() {
-      this.confirmWireDiag = false;
 
-      this.operations.add({ command: 'tnt.triggerWireError' }).on("value", (snapshot) => {
-        if (snapshot.val().received) {
-          this.snack('Wire error triggered successfully.')
-        }
-      });
-    },
     triggerReset() {
       this.operations.add({ command: 'triggerDeviceReset' }).on("value", (snapshot) => {
 
@@ -637,14 +619,6 @@ export default {
       this.operations.add({ command: 'triggerWinButton' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Win button toggled successfully.')
-          }
-      });
-    },
-    triggerSolve() {
-      this.confirmWinDiag = false;
-      this.operations.add({ command: 'tnt.solve' }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Win triggered successfully.')
           }
       });
     },
