@@ -116,11 +116,11 @@
                 <v-list-tile>  
                   <v-list-tile-content>Toggles:</v-list-tile-content>
                   <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
-                    <span :class="{ toggleIncorrect:  toggles[0] }" class="toggleNumber">1</span>
-                    <span :class="{ toggleIncorrect: !toggles[1] }" class="toggleNumber">2</span>
-                    <span :class="{ toggleIncorrect: !toggles[2] }" class="toggleNumber">3</span>
-                    <span :class="{ toggleIncorrect:  toggles[3] }" class="toggleNumber">4</span>
-                    <span :class="{ toggleIncorrect: !toggles[4] }" class="toggleNumber">5</span>
+                    <span :class="{ toggleIncorrectPenalty:  toggles[0] }" class="toggleNumber">1</span>
+                    <span :class="{ toggleIncorrect:        !toggles[1] }" class="toggleNumber">2</span>
+                    <span :class="{ toggleIncorrect:        !toggles[2] }" class="toggleNumber">3</span>
+                    <span :class="{ toggleIncorrectPenalty:  toggles[3] }" class="toggleNumber">4</span>
+                    <span :class="{ toggleIncorrect:        !toggles[4] }" class="toggleNumber">5</span>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
@@ -134,10 +134,10 @@
                 <v-list-tile>  
                   <v-list-tile-content>Wires:</v-list-tile-content>
                   <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
-                    <span :class="{ wireIncorrect:  !wires[2] }" class="wireNumber">A⇢3</span>
-                    <span :class="{ wireIncorrect:  !wires[1] }" class="wireNumber">B⇢D</span>
-                    <span :class="{ wireIncorrect:  !wires[3] }" class="wireNumber">C⇢2</span>
-                    <span :class="{ wireIncorrect:  !wires[0] }" class="wireNumber">1⇢4</span>
+                    <span :class="{ wireIncorrect:         !wires[2] }" class="wireNumber">A⇢3</span>
+                    <span :class="{ wireIncorrect:         !wires[1] }" class="wireNumber">B⇢D</span>
+                    <span :class="{ wireIncorrectPenalty:  !wires[3] }" class="wireNumber">C⇢2</span>
+                    <span :class="{ wireIncorrect:         !wires[0] }" class="wireNumber">1⇢4</span>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
@@ -770,8 +770,12 @@ td > input {
   padding-left:6px;
 }
 .toggleIncorrect {
+  background: #BDBDBD !important;
+}
+.toggleIncorrectPenalty {
   background: #F44336 !important;
 }
+
 .wireNumber {
   border-radius: 9%;
   background: #4CAF50;
@@ -784,6 +788,9 @@ td > input {
   padding-right:6px;
 }
 .wireIncorrect {
+  background: #BDBDBD !important;
+}
+.wireIncorrectPenalty {
   background: #F44336 !important;
 }
 .passing {
