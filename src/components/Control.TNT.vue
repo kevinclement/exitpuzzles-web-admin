@@ -160,7 +160,7 @@
                 <v-list-tile>
                   <v-list-tile-content>All Solved: {{timeLeftSolved}}</v-list-tile-content>
                   <v-list-tile-content class="align-end">
-                    <v-icon :style="{ color: iconColor(allSolvedState) }">{{icon(allSolvedState, 'all')}}</v-icon>
+                    <v-icon style="color:'#4CAF50';">{{ solved.all ? 'done_all': '' }}</v-icon>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile v-if="timeTaken">
@@ -304,7 +304,8 @@ export default {
       solved: {
         example: false,
         wires: false,
-        toggles: false
+        toggles: false,
+        all: false
       },
 
       compass: {
@@ -314,9 +315,6 @@ export default {
         blue: false,
         yellow: false
       },
-
-      // TODO: remove
-      allSolvedState: STATE.UNKNOWN,
     }
   },
 
@@ -470,9 +468,6 @@ export default {
       this.wires[3]     = tnt.wires.wire4;
       this.wiresFailing = tnt.wires.failing;
 
-      // TODO: implement
-      //   this.timeLeftSolved  = state.timeLeftSolved
-      
       this.wireState       = tnt.wires.wire4
       this.keySolvedState  = tnt.key
       this.finished        = tnt.finished
@@ -489,8 +484,9 @@ export default {
                               tnt.toggles.toggle3 &&
                              !tnt.toggles.toggle4 &&
                               tnt.toggles.toggle5
-
-        // update might be partial, so fill out from our state
+      this.solved.all      = tnt.solved
+      
+      // update might be partial, so fill out from our state
       let h = tnt.time.hours ? tnt.time.hours : this.hours
       let m = tnt.time.minutes ? tnt.time.minutes : this.minutes
       let s = tnt.time.seconds ? tnt.time.seconds : this.seconds
@@ -531,34 +527,6 @@ export default {
       this.hours = hours;
       this.minutes = minutes;
       this.seconds = seconds;
-    },
-    icon: function(state, type) {
-      // if offline, dont show icons
-      if (!this.isConnected) return ''
-
-      // special case all
-      if (type === 'all') {
-        return state ? 'done_all' : ''
-      }
-
-      // TODO: fix/research
-      return state ? 'check_circle' : ''
-      // if (state === STATE.OK) {
-      //   return 'check_circle'
-      // } else if (state === STATE.BAD) {
-      //   return 'error'
-      // } else {
-      //   return ''
-      // }
-    },
-    iconColor: function(state) {
-      if (state === STATE.OK) {
-        return '#4CAF50'
-      } else if (state === STATE.BAD) {
-        return '#F44336'
-      } else {
-        return '#BDBDBD'
-      }
     },
 
     refreshTimer() {
