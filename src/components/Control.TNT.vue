@@ -293,10 +293,10 @@ export default {
       return this.toggleErrors ? 'Enabled' : 'Disabled'
     },
     wireErrorLabel: function () {
-      return this.wireErrors ? 'Disabled' : 'Enabled'
+      return this.wireErrors ? 'Enabled' : 'Disabled'
     },
     winButtonLabel: function () {
-      return this.winButton ? 'Disabled' : 'Enabled'
+      return this.winButton ? 'Enabled' : 'Disabled'
     },
     pass1: function() {
       if (this.password === '') return '#'
@@ -416,10 +416,9 @@ export default {
       this.finished        = tnt.finished
       this.password        = tnt.password
       
-      // TODO: rename these to override
       this.toggleErrors    = !tnt.toggles.override
-      this.wireErrors      = tnt.wires.override
-      this.winButton       = tnt.overrideWinButton
+      this.wireErrors      = !tnt.wires.override
+      this.winButton       = !tnt.overrideWinButton
 
         // update might be partial, so fill out from our state
       let h = tnt.time.hours ? tnt.time.hours : this.hours
@@ -619,7 +618,7 @@ export default {
     },
 
     triggerWinButton() {
-      this.operations.add({ command: 'triggerWinButton' }).on("value", (snapshot) => {
+      this.operations.add({ command: 'tnt.toggleWinButton' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Win button toggled successfully.')
           }
@@ -629,19 +628,16 @@ export default {
     toggleErrorsClicked() {
       this.operations.add({ command: 'tnt.toggleErrorsOverride' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
-            this.snack('Toggle override was toggled successfully.')
+            this.snack('Toggle override toggled successfully.')
           }
       });
     },
     wireErrorsClicked() {
-      if (this.wireErrors) {
-        this.operations.add({ command: 'wireErrors' }).on("value", (snapshot) => {
-
-          if (snapshot.val().received) {
-            this.snack('Wire errors disabled successfully.')
-          }
-        });
-      }
+      this.operations.add({ command: 'tnt.toggleWireErrorsOverride' }).on("value", (snapshot) => {
+        if (snapshot.val().received) {
+          this.snack('Wire errors toggled successfully.')
+        }
+      });
     },
 
     formatTime(num) {
