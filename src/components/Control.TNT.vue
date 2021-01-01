@@ -469,26 +469,28 @@ export default {
 
       // special case key
       if (type === 'key') {
-        return state === STATE.OK ? 'done' : ''
+        return state ? 'done' : ''
       }
 
       // special case all
       if (type === 'all') {
-        return state === STATE.OK ? 'done_all' : ''
+        return state ? 'done_all' : ''
       }
 
       // special case light
       if (type === 'light') {
-        return state === STATE.OK ? 'lightbulb_outline' : ''
+        return state ? 'lightbulb_outline' : ''
       }
 
-      if (state === STATE.OK) {
-        return 'check_circle'
-      } else if (state === STATE.BAD) {
-        return 'error'
-      } else {
-        return ''
-      }
+      // TODO: fix/research
+      return state ? 'check_circle' : ''
+      // if (state === STATE.OK) {
+      //   return 'check_circle'
+      // } else if (state === STATE.BAD) {
+      //   return 'error'
+      // } else {
+      //   return ''
+      // }
     },
     iconColor: function(state) {
       if (state === STATE.OK) {
