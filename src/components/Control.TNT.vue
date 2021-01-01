@@ -152,15 +152,16 @@
                 <v-list-tile>
                   <v-list-tile-content>Solved:</v-list-tile-content>
                   <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
-                    <v-icon title="Example Wire Door Open" class="solvedIcon">{{solved.example  ? 'lock_open': ''}}</v-icon>
-                    <v-icon title="Toggles Solved" class="solvedIcon">{{solved.toggles ? 'toggle_on':     ''}}</v-icon>
-                    <v-icon title="Wires Solved" class="solvedIcon">{{solved.wires    ? 'vpn_key':   ''}}</v-icon>
+                    <v-icon title="Example Wire Door Open" class="solvedIcon">{{solved.example  ? 'inventory_2': ''}}</v-icon>
+                    <v-icon title="Toggles Solved"         class="solvedIcon">{{solved.toggles  ? 'toggle_on': ''}}</v-icon>
+                    <v-icon title="Wires Solved"           class="solvedIcon">{{solved.wires    ? 'vpn_key': ''}}</v-icon>
+                    <v-icon title="Password Solved"        class="solvedIcon">{{solved.all      ? 'apps': ''}}</v-icon>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
                   <v-list-tile-content>All Solved: {{timeLeftSolved}}</v-list-tile-content>
                   <v-list-tile-content class="align-end">
-                    <v-icon style="color:'#4CAF50';">{{ solved.all ? 'done_all': '' }}</v-icon>
+                    <v-icon style="color:#4CAF50;">{{ solved.all ? 'done_all': '' }}</v-icon>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile v-if="timeTaken">
