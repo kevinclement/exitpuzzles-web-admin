@@ -134,12 +134,6 @@
                     <span :class="{ toggleIncorrect:        !toggles[4] }" class="toggleNumber">5</span>
                   </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile>
-                  <v-list-tile-content :class="{ strikeIt: !toggleErrors }">Toggles Penalty:</v-list-tile-content>
-                  <v-list-tile-content class="align-end passing" :class="{ failing: togglesFailing }">
-                    {{ togglesFailing ? "ON" : "OFF" }}
-                  </v-list-tile-content>
-                </v-list-tile>
 
                 <!-- Wires -->
                 <v-list-tile>  
@@ -149,12 +143,6 @@
                     <span :class="{ wireIncorrect:         !wires[1] }" class="wireNumber">B⇢D</span>
                     <span :class="{ wireIncorrectPenalty:  !wires[3] }" class="wireNumber">C⇢2</span>
                     <span :class="{ wireIncorrect:         !wires[0] }" class="wireNumber">1⇢4</span>
-                  </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile>
-                  <v-list-tile-content :class="{ strikeIt: !wireErrors }">Wires Penalty:</v-list-tile-content>
-                  <v-list-tile-content class="align-end passing" :class="{ failing: wiresFailing }">
-                    {{ wiresFailing ? "ON" : "OFF" }}
                   </v-list-tile-content>
                 </v-list-tile>
 
