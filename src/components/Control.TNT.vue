@@ -81,6 +81,19 @@
                   ></v-switch>
                 </div>
               </v-flex>
+              <v-flex xs6>
+                <div style="display:block">
+                  <span>Door Ajar</span>
+                  <v-switch 
+                    primary
+                    :label="`${boolToString(doorAjarEnabled)}`"
+                    v-model="doorAjarEnabled"
+                    :disabled="!isConnected"
+                    :hide-details="true"
+                    @click.native="triggerDoorAjar"
+                  ></v-switch>
+                </div>
+              </v-flex>
             </div>
 
             <div style="display:flex;margin-bottom:15px">
@@ -291,6 +304,7 @@ export default {
       timerTimeStamp: null,
       timeLeftInSeconds: 0,
       isConnected: true,
+      doorAjarEnabled: false,
 
       deviceTntReset:false,
       deviceCompassReset: false,
@@ -470,6 +484,7 @@ export default {
       this.toggleErrors    = !tnt.toggles.override
       this.wireErrors      = !tnt.wires.override
       this.winButton       = !tnt.overrideWinButton
+      this.doorAjarEnabled = !tnt.overrideDoorAjar
 
       this.solved.example  = tnt.exampleDoor
       this.solved.wires    = tnt.key
@@ -502,6 +517,9 @@ export default {
   },
 
   methods: {
+    boolToString: function(b) {
+      return b ? "Enabled" : "Disabled"
+    },
     timeFromSeconds: function(ts) {
       // if we ever go past time, just set it all to 0
       if (ts <= 0) {
@@ -657,6 +675,15 @@ export default {
       this.operations.add({ command: 'tnt.toggleWinButton' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Win button toggled successfully.')
+          }
+      });
+    },
+    triggerDoorAjar() {
+      let disabling = !this.doorAjarEnabled
+      let cmd = disabling ? 'tnt.disableDoorAjarSensor' : 'tnt.enableDoorAjarSensor'
+      this.operations.add({ command: cmd }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack(`Door Ajar sensor ${disabling ? 'disabled' : 'enabled'} successfully.`)
           }
       });
     },
