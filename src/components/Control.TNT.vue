@@ -623,8 +623,8 @@ export default {
     },
     triggerBlink(withCode) {
       
-      let cmd = withCode ? 'triggerBlinkWithCode' : 'triggerBlink'
-      let cmdTxt = twithCode ? 'Door Code sent' : 'Blinked'
+      let cmd = withCode ? 'tnt.triggerBlinkWithCode' : 'tnt.triggerBlink'
+      let cmdTxt = withCode ? 'Door Code sent' : 'Blinked'
 
       this.operations.add({ command: cmd }).on("value", (snapshot) => {
         if (snapshot.val().received) {
