@@ -71,7 +71,7 @@ export default {
   },
 
   mounted() {
-    this.logsRef = this.$root.$data.fbdb.ref('logs').orderByKey()
+    this.logsRef = this.$root.$data.fbdb.ref('landlord/logs').orderByKey()
 
     // default should be to be on last page, which should enable streaming
     this.last();
