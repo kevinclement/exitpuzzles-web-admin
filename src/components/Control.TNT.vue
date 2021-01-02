@@ -340,8 +340,9 @@ export default {
 
     pass4valid: function() {
       // HACK: total hack we have in place in bomb code currently to allow any digit in 1st character
-      var hackpass4 = this.passn(4).substring(1,4)
-      return hackpass4 === '284' || this.pass4 === 'xxxx' || this.pass4 === '####'
+      let pass4 = this.passn(4);
+      var hackpass4 = pass4.substring(1,4)
+      return hackpass4 === '284' || pass4 === 'xxxx' || pass4 === '####'
     },
 
     timeTaken: function() {
@@ -429,9 +430,7 @@ export default {
       this.wireState       = tnt.wires.wire4
       this.keySolvedState  = tnt.key
       this.finished        = tnt.finished
-      //this.password        = tnt.password
-      // TMP
-      this.password = "419268128453464";
+      this.password        = tnt.password
       
       this.toggleErrors    = !tnt.toggles.override
       this.wireErrors      = !tnt.wires.override
@@ -480,7 +479,7 @@ export default {
       if (this.password === '') {
         let str = ''
         for (let i=0; i<n; i++) {
-          str += '*'
+          str += '#'
         }
         return str
       }
