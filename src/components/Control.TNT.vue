@@ -152,10 +152,10 @@
                 <v-list-tile>  
                   <v-list-tile-content>Wires:</v-list-tile-content>
                   <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
-                    <span :class="{ wireIncorrect:         wires.wire3 != 'A' }" class="wireNumber">A⇢3</span>
-                    <span :class="{ wireIncorrect:         wires.wireD != 'B' }" class="wireNumber">B⇢D</span>
-                    <span :class="{ wireIncorrectPenalty:  wires.wire2 != 'C' }" class="wireNumber">C⇢2</span>
-                    <span :class="{ wireIncorrect:         wires.wire4 != '1' }" class="wireNumber">1⇢4</span>
+                    <span :class="{ wireIncorrect:         wires.wire3 != 'A' }" class="wireNumber">A⇢{{wireDest(srcWires['A'])}}</span>
+                    <span :class="{ wireIncorrect:         wires.wireD != 'B' }" class="wireNumber">B⇢{{wireDest(srcWires['B'])}}</span>
+                    <span :class="{ wireIncorrectPenalty:  wires.wire2 != 'C' }" class="wireNumber">C⇢{{wireDest(srcWires['C'])}}</span>
+                    <span :class="{ wireIncorrect:         wires.wire4 != '1' }" class="wireNumber">1⇢{{wireDest(srcWires['1'])}}</span>
                   </v-list-tile-content>
                 </v-list-tile>
 
@@ -294,12 +294,19 @@ export default {
       toggleErrors: false,
 
       wires: {
-            wireD: false,
-            wire2: false,
-            wire3: false,
-            wire4: false,
+            wireD: 'U',
+            wire2: 'U',
+            wire3: 'C', // default to passing
+            wire4: 'U',
+
             failing: false,
             override: false
+      },
+      srcWires: {
+        'A': 'U',
+        'B': 'U',
+        'C': 'U',
+        '1': 'U'
       },
 
       finished: false,
@@ -427,6 +434,26 @@ export default {
       this.togglesFailing = tnt.toggles.failing;
 
       this.wires           = tnt.wires;
+      
+      
+      // I have to reset them since I'm not sure they will show up
+      // probably a better way to do this and not trigger something but it's late
+      this.srcWires['A'] = this.srcWires['B'] = this.srcWires['C'] = this.srcWires['1'] = 'U';
+      
+      // wires come in with destination only, so reverse
+      // so display is easier
+      if (tnt.wires.wireD != 'U') {
+        this.srcWires[tnt.wires.wireD] = 'D';
+      }
+      if (tnt.wires.wire2 != 'U') {
+        this.srcWires[tnt.wires.wire2] = '2';
+      }
+      if (tnt.wires.wire3 != 'U') {
+        this.srcWires[tnt.wires.wire3] = '3';
+      }
+      if (tnt.wires.wire4 != 'U') {
+        this.srcWires[tnt.wires.wire4] = '4';
+      }
 
       this.finished        = tnt.finished
       this.password        = tnt.password
@@ -469,6 +496,14 @@ export default {
   methods: {
     boolToString: function(b) {
       return b ? "Enabled" : "Disabled"
+    },
+    wireDest: function(w) {
+      if (w != 'D' && w != '2' && w != '3' && w != '4') {
+        return '';
+      }
+      else {
+        return w;
+      }
     },
 
     // this was a fun one to see if I could write
@@ -779,6 +814,7 @@ td > input {
   border-radius: 9%;
   background: #4CAF50;
   height: 16px;
+  width: 40px;
   margin: 2px;
   font-size:12px;
   line-height:16px;
