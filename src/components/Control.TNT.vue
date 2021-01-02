@@ -445,6 +445,7 @@ export default {
                              !tnt.toggles.toggle4 &&
                               tnt.toggles.toggle5
       this.solved.all      = tnt.solved
+      this.timeLeftSolved  = tnt.timeLeftSolved
       
       // update might be partial, so fill out from our state
       let h = tnt.time.hours ? tnt.time.hours : this.hours
