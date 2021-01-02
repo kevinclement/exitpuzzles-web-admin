@@ -58,8 +58,8 @@
                   <span>Wire Errors</span>
                   <v-switch 
                     primary
-                    :label="`${boolToString(wireErrors)}`"
-                    v-model="wireErrors"
+                    :label="`${boolToString(!wires.override)}`"
+                    v-model="!wires.override"
                     :disabled="!isConnected"
                     :hide-details="true"
                     @click.native="wireErrorsClicked"
@@ -152,10 +152,10 @@
                 <v-list-tile>  
                   <v-list-tile-content>Wires:</v-list-tile-content>
                   <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
-                    <span :class="{ wireIncorrect:         !wires[2] }" class="wireNumber">A⇢3</span>
-                    <span :class="{ wireIncorrect:         !wires[1] }" class="wireNumber">B⇢D</span>
-                    <span :class="{ wireIncorrectPenalty:  !wires[3] }" class="wireNumber">C⇢2</span>
-                    <span :class="{ wireIncorrect:         !wires[0] }" class="wireNumber">1⇢4</span>
+                    <span :class="{ wireIncorrect:         wires.wire3 != 'A' }" class="wireNumber">A⇢3</span>
+                    <span :class="{ wireIncorrect:         wires.wireD != 'B' }" class="wireNumber">B⇢D</span>
+                    <span :class="{ wireIncorrectPenalty:  wires.wire2 != 'C' }" class="wireNumber">C⇢2</span>
+                    <span :class="{ wireIncorrect:         wires.wire4 != '1' }" class="wireNumber">1⇢4</span>
                   </v-list-tile-content>
                 </v-list-tile>
 
@@ -293,9 +293,14 @@ export default {
       togglesFailing: false,
       toggleErrors: false,
 
-      wires: [false, false, false, false],
-      wiresFailing: false,
-      wireErrors: false,
+      wires: {
+            wireD: false,
+            wire2: false,
+            wire3: false,
+            wire4: false,
+            failing: false,
+            override: false
+      },
 
       finished: false,
       winButton: false,
@@ -421,19 +426,12 @@ export default {
       this.toggles[4]     = tnt.toggles.toggle5;
       this.togglesFailing = tnt.toggles.failing;
 
-      this.wires[0]     = tnt.wires.wire1;
-      this.wires[1]     = tnt.wires.wire2;
-      this.wires[2]     = tnt.wires.wire3;
-      this.wires[3]     = tnt.wires.wire4;
-      this.wiresFailing = tnt.wires.failing;
+      this.wires           = tnt.wires;
 
-      this.wireState       = tnt.wires.wire4
-      this.keySolvedState  = tnt.key
       this.finished        = tnt.finished
       this.password        = tnt.password
       
       this.toggleErrors    = !tnt.toggles.override
-      this.wireErrors      = !tnt.wires.override
       this.winButton       = !tnt.overrideWinButton
       this.doorAjarEnabled = !tnt.overrideDoorAjar
 
