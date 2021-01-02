@@ -101,8 +101,7 @@
     },
     created () {
       this.operations = this.$root.$data.operations
-
-      this.$root.$data.fbdb.ref('morse').child('clues').on('value', (snapshot) => {
+      this.$root.$data.fbdb.ref('landlord/devices/morse').child('clues').on('value', (snapshot) => {
         let clues = snapshot.val()
         if (clues == null) return
 
@@ -110,13 +109,13 @@
         Object.keys(clues).forEach(key => {
           cats.push( { 
             name: clues[key].name,
-            ref: this.$root.$data.fbdb.ref('morse/clues/' + key + '/clues')
+            ref: this.$root.$data.fbdb.ref('landlord/devices/morse/clues/' + key + '/clues')
           })
         })
         this.categories = cats
       })
 
-      this.$root.$data.fbdb.ref('morse').child('isConnected').on('value', (snapshot) => {
+      this.$root.$data.fbdb.ref('landlord/devices/morse/info').child('isConnected').on('value', (snapshot) => {
         let isConnected = snapshot.val()
         if (isConnected == null) return
         this.isConnected = isConnected
@@ -169,7 +168,7 @@
       },
       send(clue, adhoc) {
         let sendOp = () => {
-          this.operations.add({ command: 'clue', clue: clue }).on("value", (snapshot) => {
+          this.operations.add({ command: 'morse.clue', clue: clue }).on("value", (snapshot) => {
             let command = snapshot.val()
             if (command.received) {
               // pop snack letting user know  we triggered it
