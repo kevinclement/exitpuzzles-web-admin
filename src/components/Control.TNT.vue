@@ -45,7 +45,7 @@
                   <span>Toggle Errors</span>
                   <v-switch 
                     primary
-                    :label="toggleErrorsLabel"
+                    :label="`${boolToString(toggleErrors)}`"
                     v-model="toggleErrors"
                     :disabled="!isConnected"
                     @click.native="toggleErrorsClicked"
@@ -58,7 +58,7 @@
                   <span>Wire Errors</span>
                   <v-switch 
                     primary
-                    :label="wireErrorLabel"
+                    :label="`${boolToString(wireErrors)}`"
                     v-model="wireErrors"
                     :disabled="!isConnected"
                     :hide-details="true"
@@ -73,7 +73,7 @@
                   <span>Win Button</span>
                   <v-switch 
                     primary
-                    :label="winButtonLabel"
+                    :label="`${boolToString(winButton)}`"
                     v-model="winButton"
                     :disabled="!isConnected"
                     :hide-details="true"
@@ -101,7 +101,7 @@
                 <div style="display:block">
                   <span>Last Password</span>
                   <div style="font-size:18px;font-family: Monaco, monospace;">
-                    <span :class='{ ip: !pass1valid }'>{{pass1}}</span>-<span :class='{ ip: !pass2valid }'>{{pass2}}</span>-<span :class='{ ip: !pass3valid }'>{{pass3}}</span>-<span :class='{ ip: !pass4valid }'>{{pass4}}</span>-<span :class='{ ip: !pass5valid }'>{{pass5}}</span>
+                    <span :class='{ ip: !passnValid("4", 1) }'>{{passn(1)}}</span>-<span :class='{ ip: !passnValid("19", 2) }'>{{passn(2)}}</span>-<span :class='{ ip: !passnValid("268", 3) }'>{{passn(3)}}</span>-<span :class='{ ip: !pass4valid }'>{{passn(4)}}</span>-<span :class='{ ip: !passnValid("53464", 5) }'>{{passn(5)}}</span>
                   </div>
                 </div>
               </v-flex>
@@ -337,63 +337,13 @@ export default {
     timerEnabled: function() {
       return (this.hours !== null && this.minutes !== null && this.seconds !== null) && this.timeLeftInSeconds > 0
     },
-    toggleErrorsLabel: function () {
-      return this.toggleErrors ? 'Enabled' : 'Disabled'
-    },
-    wireErrorLabel: function () {
-      return this.wireErrors ? 'Enabled' : 'Disabled'
-    },
-    winButtonLabel: function () {
-      return this.winButton ? 'Enabled' : 'Disabled'
-    },
-    pass1: function() {
-      if (this.password === '') return '#'
 
-      let code = this.password.substring(0,1)
-      return code === '' ? 'x' : code
-    },
-    pass2: function() {
-      if (this.password === '') return '##'
-
-      let code = this.password.substring(1,3)
-      return code === '' ? 'xx' : code
-    },
-    pass3: function() {
-      if (this.password === '') return '###'
-
-      let code = this.password.substring(3,6)
-      return code === '' ? 'xxx' : code
-    },
-    pass4: function() {
-      if (this.password === '') return '####'
-
-      let code = this.password.substring(6,10)
-      return code === '' ? 'xxxx' : code
-    },
-    pass5: function() {
-      if (this.password === '') return '#####'
-
-      let code =this.password.substring(10,15)
-      return code === '' ? 'xxxxx' : code
-    },
-    pass1valid: function() {
-      return this.pass1 === '4' || this.pass1 === 'x' || this.pass1 === '#'
-    },
-    pass2valid: function() {
-      return this.pass2 === '19' || this.pass2 === 'xx' || this.pass2 === '##'
-    },
-    pass3valid: function() {
-      return this.pass3 === '268' || this.pass3 === 'xxx' || this.pass3 === '###'
-    },
     pass4valid: function() {
       // HACK: total hack we have in place in bomb code currently to allow any digit in 1st character
-      var hackpass4 = this.pass4.substring(1,4)
-
+      var hackpass4 = this.passn(4).substring(1,4)
       return hackpass4 === '284' || this.pass4 === 'xxxx' || this.pass4 === '####'
     },
-    pass5valid: function() {
-      return this.pass5 === '53464' || this.pass5 === 'xxxxx' || this.pass5 === '#####'
-    },
+
     timeTaken: function() {
       if (this.timeLeftSolved) {
         let totalTimeMinutes = 0;
@@ -479,7 +429,9 @@ export default {
       this.wireState       = tnt.wires.wire4
       this.keySolvedState  = tnt.key
       this.finished        = tnt.finished
-      this.password        = tnt.password
+      //this.password        = tnt.password
+      // TMP
+      this.password = "419268128453464";
       
       this.toggleErrors    = !tnt.toggles.override
       this.wireErrors      = !tnt.wires.override
@@ -519,6 +471,41 @@ export default {
   methods: {
     boolToString: function(b) {
       return b ? "Enabled" : "Disabled"
+    },
+
+    // this was a fun one to see if I could write
+    // i'm proud of myself
+    passn: function(n) 
+    {
+      if (this.password === '') {
+        let str = ''
+        for (let i=0; i<n; i++) {
+          str += '*'
+        }
+        return str
+      }
+
+      let beg = 0;
+      let ph = '';
+      for(let i=0;i<n;i++) {
+        beg += i;
+        ph += 'x';
+      }
+      let end = beg + n;
+      let code = this.password.substring(beg,end)
+
+      return code === '' ? ph : code
+    },
+    passnValid: function(expected,n) {
+      let p = this.passn(n);
+      let expPH = '';
+      let expPHX = '';
+      for(let i=0;i<n;i++) {
+        expPH += '#'
+        expPHX += 'x'
+      }
+
+      return p === expected || p === expPH || p === expPHX
     },
     timeFromSeconds: function(ts) {
       // if we ever go past time, just set it all to 0
