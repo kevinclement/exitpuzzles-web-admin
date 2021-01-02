@@ -128,11 +128,11 @@
     created () {
       this.operations = this.$root.$data.operations
 
-      this.$root.$data.fbdb.ref('painting').on('value', (snapshot) => {
+      this.$root.$data.fbdb.ref('landlord/devices/painting').on('value', (snapshot) => {
         let painting = snapshot.val()
         if (painting == null) return
 
-        this.isConnected = painting.isConnected;
+        this.isConnected = painting.info.isConnected;
         this.threshold = painting.threshold;
         this.wait = painting.wait;
         this.isEnabled = painting.enabled;
@@ -149,7 +149,7 @@
         this.wait = 1000
       },
       toggleEnable() {        
-        this.operations.add({ command: 'paint.set.enabled' , data: { enabled: !this.isEnabled } }).on("value", (snapshot) => {
+        this.operations.add({ command: 'paint.setEnabled' , data: { enabled: !this.isEnabled } }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             let snackStr = !this.isEnabled ? 'Succesfully enabled.' : 'Succesfully disabled.'
             this.snack(snackStr)
@@ -160,7 +160,7 @@
         this.confirmManual = false
         this.manualModeDB = this.manualModeUI
         
-        this.operations.add({ command: 'paint.set.manual' , data: { manual: this.manualModeUI } }).on("value", (snapshot) => {
+        this.operations.add({ command: 'paint.setManual' , data: { manual: this.manualModeUI } }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             let modeStr = this.manualModeUI == 0 ? 'Turned magnet off permanently' : 
                           this.manualModeUI == 1 ? 'Turned magnet on permanently' : 
@@ -183,21 +183,21 @@
         });
       },
       triggerGetStatus() {
-        this.operations.add({ command: 'paint.get.status' }).on("value", (snapshot) => {
+        this.operations.add({ command: 'paint.getStatus' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Get status successfull.')
           }
         });
       },
       thresholdSend() {
-        this.operations.add({ command: 'paint.set.threshold', data: { threshold: this.threshold } }).on("value", (snapshot) => {
+        this.operations.add({ command: 'paint.setThreshold', data: { threshold: this.threshold } }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Set device threshold successfully.')
           }
         });
       },
       waitSend() {
-        this.operations.add({ command: 'paint.set.wait', data: { wait: this.wait } }).on("value", (snapshot) => {
+        this.operations.add({ command: 'paint.setWait', data: { wait: this.wait } }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Set wait time successfully.')
           }

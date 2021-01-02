@@ -67,12 +67,10 @@ export default {
   methods: {
     play(file) {
 
-      this.operations.add({ command: 'audio', file: file }).on("value", (snapshot) => {
+      this.operations.add({ command: 'tnt.playAudio', file: file }).on("value", (snapshot) => {
         let command = snapshot.val()
         if (command.received) {
-          // pop snack letting user know  we triggered it
           this.snack('Playing \'' + file.file + '\'.')
-          // disable further update notifications
           snapshot.ref.off()
         }
       });
@@ -125,7 +123,7 @@ export default {
 
   mounted() {
     this.operations = this.$root.$data.operations
-    this.audioRef = this.$root.$data.fbdb.ref('audio')
+    this.audioRef = this.$root.$data.fbdb.ref('landlord/audio')
 
     // TMP: used to build out files in DB
     // for (var i=0;i<11;i++) {
