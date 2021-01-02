@@ -138,8 +138,8 @@ export default {
     });
 
     // listen for solved state change so we can play song
-    this.tntRef = this.$root.$data.fbdb.ref('tnt')
-    this.tntRef.child('state').on('value', (snapshot) => {
+    this.tntRef = this.$root.$data.fbdb.ref('landlord/devices/tnt')
+    this.tntRef.on('value', (snapshot) => {
       let state = snapshot.val()
       if (state == null) return
 
