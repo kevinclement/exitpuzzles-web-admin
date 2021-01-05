@@ -19,7 +19,7 @@
             <v-toolbar flat dense color="grey lighten-3">
               <v-toolbar-title class="mx-0" style="margin-left: 0px !important;"><a @click="refreshTimer()">Time</a></v-toolbar-title>
               <v-btn style="" icon title="Add 30s" @click.native="triggerAddThirty()"><v-icon >forward_30</v-icon></v-btn>
-              <v-btn style="margin:0px;" icon title="Set timer" @click.native="resetTimeDiag = true"><v-icon >access_alarm</v-icon></v-btn>
+              <v-btn style="margin:0px;" icon title="Set timer" @click.native="popResetTimeDialog()"><v-icon >access_alarm</v-icon></v-btn>
             </v-toolbar>
 
             <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">
@@ -642,6 +642,13 @@ export default {
          data: this.timeObjPadded(this.setTime.hour, this.setTime.minute, this.setTime.second ) });
     },
 
+    popResetTimeDialog() {
+      this.setTime.hour = this.formatTime(this.hours)
+      this.setTime.minute = this.formatTime(this.minutes)
+      this.setTime.second = this.formatTime(this.seconds)
+
+      this.resetTimeDiag = true
+    },
     confirm(title, text, command, toastResp) {
       this.dialogTitle = title;
       this.dialogText = text;
