@@ -18,7 +18,8 @@
           <v-flex id="tntSection" xs12 md6>
             <v-toolbar flat dense color="grey lighten-3">
               <v-toolbar-title class="mx-0" style="margin-left: 0px !important;"><a @click="refreshTimer()">Time</a></v-toolbar-title>
-              <v-btn icon title="Set timer" @click.native="resetTimeDiag = true"><v-icon >access_alarm</v-icon></v-btn>
+              <v-btn style="" icon title="Add 30s" @click.native="triggerAddThirty()"><v-icon >forward_30</v-icon></v-btn>
+              <v-btn style="margin:0px;" icon title="Set timer" @click.native="resetTimeDiag = true"><v-icon >access_alarm</v-icon></v-btn>
             </v-toolbar>
 
             <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">
@@ -560,6 +561,9 @@ export default {
       this.minutes = minutes;
       this.seconds = seconds;
     },
+    timeObjPadded(h,m,s) {
+      return { hours: this.formatTime(h), minutes: this.formatTime(m), seconds: this.formatTime(s) }
+    },
 
     refreshTimer() {
       // clear out times to indicate were loading
@@ -635,7 +639,7 @@ export default {
 
       this.operations.add({ 
          command: 'tnt.setTime',
-         data: { hours: this.setTime.hour, minutes: this.setTime.minute, seconds: this.setTime.second } });
+         data: this.timeObjPadded(this.setTime.hour, this.setTime.minute, this.setTime.second ) });
     },
 
     confirm(title, text, command, toastResp) {
@@ -678,6 +682,26 @@ export default {
           }
         }
       });
+    },
+    triggerAddThirty() {
+      let h = this.hours;
+      let m = this.minutes;
+      let s = this.seconds + 30;
+
+      // handle any overflow
+      if (s >= 60) {
+        s = s - 60;
+        m++;
+        if (m >= 60) {
+          m = m - 60;
+          h++;
+        }
+      }
+
+      this.hours = this.minutes = this.seconds = null;
+      this.operations.add({
+         command: 'tnt.setTime',
+         data: this.timeObjPadded(h,m,s) });
     },
     triggerBlink(withCode) {
       
