@@ -32,14 +32,39 @@
                 <div style="display:block">
                   <span>Actions</span>
                   <div>
-                    <v-btn flat icon title="Shoot Key" class="actionBtn" @click.native="confirm('the key', 'launching of the key from', 'tnt.triggerKey', 'Key triggered')"><v-icon>vpn_key</v-icon></v-btn>
-                    <v-btn flat icon title="Give Wire Error" class="actionBtn" @click.native="confirm('a wire error', 'a wrong wire error on', 'tnt.triggerWireError', 'Wire error triggered')"><v-icon>gesture</v-icon></v-btn>
-                    <v-btn flat icon title="Force Win" class="actionBtn" @click.native="confirm('a win', 'a win for', 'tnt.solve', 'Win triggered')"><v-icon>emoji_events</v-icon></v-btn>
-                    <v-btn flat icon title="Blink Display" class="actionBtn" @click.native="triggerBlink()"><v-icon>visibility</v-icon></v-btn>
-                    <v-btn flat icon title="Give Door Code Verbally" class="actionBtn" @click.native="triggerBlink(true)"><v-icon>campaign</v-icon></v-btn>
+                    <v-btn flat icon class="actionBtn" title="Shoot Key" 
+                      @click.native="confirm('the key', 'launching of the key from', 'tnt.triggerKey', 'Key triggered')">
+                      <v-icon>vpn_key</v-icon>
+                    </v-btn>
+                    <v-btn flat icon class="actionBtn" :title="`${keySolenoid ? 'Lower' : 'Raise'} Key`"
+                      :class="{ solenoidEngaged: keySolenoid }"
+                      @click.native="triggerKeySolenoid()">
+                      <v-icon>{{keySolenoid ? "arrow_downward" : "arrow_upward" }}</v-icon>
+                    </v-btn>
+                    <v-btn flat icon class="actionBtn" :title="`${lockSolenoid ? 'Close' : 'Open'} Lock`"
+                      :class="{ solenoidEngaged: lockSolenoid }"
+                      @click.native="triggerLockSolenoid()">
+                      <v-icon>{{lockSolenoid ? "arrow_back" : "arrow_forward" }}</v-icon>
+                    </v-btn>
+                    <v-btn flat icon class="actionBtn" title="Give Wire Error"
+                      @click.native="confirm('a wire error', 'a wrong wire error on', 'tnt.triggerWireError', 'Wire error triggered')">
+                      <v-icon>gesture</v-icon>
+                    </v-btn>
+                    <v-btn flat icon class="actionBtn" title="Force Win" 
+                      @click.native="confirm('a win', 'a win for', 'tnt.solve', 'Win triggered')">
+                      <v-icon>emoji_events</v-icon>
+                    </v-btn>
+                    <v-btn flat icon class="actionBtn" title="Blink Display" 
+                      @click.native="triggerBlink()">
+                      <v-icon>visibility</v-icon>
+                    </v-btn>
+                    <v-btn flat icon class="actionBtn" title="Give Door Code Verbally"
+                      @click.native="triggerBlink(true)">
+                      <v-icon>campaign</v-icon>
+                    </v-btn>
                   </div>
                 </div>
-              </v-flex>
+            </v-flex>
 
             <div style="display:flex;margin-top:10px;">
               <v-flex xs6>
@@ -330,6 +355,9 @@ export default {
         all: false
       },
 
+      keySolenoid: false,
+      lockSolenoid: false,
+
       compass: {
         enabled: false,
         red: false,
@@ -437,7 +465,6 @@ export default {
 
       this.wires           = tnt.wires;
       
-      
       // I have to reset them since I'm not sure they will show up
       // probably a better way to do this and not trigger something but it's late
       this.srcWires['A'] = this.srcWires['B'] = this.srcWires['C'] = this.srcWires['1'] = 'U';
@@ -473,6 +500,9 @@ export default {
                               tnt.toggles.toggle5
       this.solved.all      = tnt.solved
       this.timeLeftSolved  = tnt.timeLeftSolved
+
+      this.keySolenoid = tnt.keySolenoid
+      this.lockSolenoid = tnt.lockSolenoid
       
       // update might be partial, so fill out from our state
       let h = tnt.time.hours ? tnt.time.hours : this.hours
@@ -716,8 +746,37 @@ export default {
 
       this.hours = this.minutes = this.seconds = null;
       this.operations.add({
-         command: 'tnt.setTime',
-         data: this.timeObjPadded(h,m,s) });
+        command: 'tnt.setTime',
+        data: this.timeObjPadded(h,m,s)}).on("value", (snapshot) => 
+      {
+        if (snapshot.val().received) {
+          this.snack(`Added 30s successfully.`)
+        }
+      });
+    },
+    triggerKeySolenoid() {
+      let snackCmd = this.keySolenoid ? "lowered" : "raised"
+
+      this.operations.add({
+         command: 'tnt.triggerKeySolenoid',
+         data: { enable: !this.keySolenoid } }).on("value", (snapshot) => 
+      {
+        if (snapshot.val().received) {
+          this.snack(`Key solenoid ${snackCmd} successfully`)
+        }
+      })
+    },
+    triggerLockSolenoid() {
+      let snackCmd = this.lockSolenoid ? "closed" : "opened"
+
+      this.operations.add({
+         command: 'tnt.triggerLockSolenoid',
+         data: { enable: !this.lockSolenoid } }).on("value", (snapshot) => 
+      {
+        if (snapshot.val().received) {
+          this.snack(`Lock ${snackCmd} successfully.`)
+        }
+      });
     },
     triggerBlink(withCode) {
       
@@ -886,5 +945,8 @@ td > input {
 }
 .solvedIcon {
   padding-left: 2px;
+}
+.solenoidEngaged {
+  color: #E53935 !important;
 }
 </style>
