@@ -1,7 +1,7 @@
 <template>
 
   <v-flex>
-
+  
     <!-- tnt card -->
     <v-card>
       <v-toolbar card>
@@ -17,9 +17,10 @@
         <v-layout row wrap>
           <v-flex id="tntSection" xs12 md6>
             <v-toolbar flat dense color="grey lighten-3">
-              <v-toolbar-title class="mx-0" style="margin-left: 0px !important;"><a @click="refreshTimer()">Time</a></v-toolbar-title>
-              <v-btn style="" icon title="Add 30s" @click.native="triggerAddThirty()"><v-icon >forward_30</v-icon></v-btn>
-              <v-btn style="margin:0px;" icon title="Set timer" @click.native="popResetTimeDialog()"><v-icon >access_alarm</v-icon></v-btn>
+              <v-toolbar-title class="mx-0" style="margin-left: 0px !important;margin-right:10px !important;"><a @click="refreshTimer()">Time</a></v-toolbar-title>
+              <v-btn style="margin:0px;margin-right:4px;" icon title="Set timer" @click.native="popResetTimeDialog()"><v-icon >access_alarm</v-icon></v-btn>
+              <v-btn style="margin:0px;margin-right:4px;" icon title="Set to 01:01" @click.native="triggerSetToMinute()"><v-icon >rotate_left</v-icon></v-btn>
+              <v-btn style="margin:0px;margin-right:4px;" icon title="Add 30s" @click.native="triggerAddThirty()"><v-icon >forward_30</v-icon></v-btn>             
             </v-toolbar>
 
             <div style="font-size:34px;font-family: Monaco, monospace;margin-bottom:16px">
@@ -687,6 +688,14 @@ export default {
           if (!this.deviceTntResetting && this.deviceTntReset) {
             this.snack('Devices reset successfully.')
           }
+        }
+      });
+    },
+    triggerSetToMinute() {    
+      this.hours = this.minutes = this.seconds = null;
+      this.operations.add({command: 'tnt.setTime', data: this.timeObjPadded(0,1,1) }).on("value", (snapshot) => {
+        if (snapshot.val().received) {
+          this.snack(`Set to 01:01 successfully.`)
         }
       });
     },
