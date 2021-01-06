@@ -22,10 +22,10 @@
 </template>
 
 <script>
-import TNT from '@/components/Control.TNT'
-import Morse from '@/components/Control.Morse'
-import Audio from '@/components/Control.Audio'
-import Painting from '@/components/Control.Painting'
+import TNT from '@/components/Landlord.TNT'
+import Morse from '@/components/Landlord.Morse'
+import Audio from '@/components/Landlord.Audio'
+import Painting from '@/components/Landlord.Painting'
 
 // how much time before we know pi isn't connected (in seconds)
 const PI_TIMEOUT_SECONDS = 95

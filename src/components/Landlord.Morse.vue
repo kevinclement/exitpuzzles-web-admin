@@ -67,7 +67,7 @@
 </template>
 
 <script>
-  import MorseCategory from '@/components/Control.Morse.Category'
+  import MorseCategory from '@/components/Landlord.Morse.Category'
 
   export default {
     props: ['snack'],

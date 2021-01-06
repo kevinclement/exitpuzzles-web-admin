@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Control from '@/components/Control'
+import Landlord from '@/components/Landlord'
 import Museum from '@/components/Museum'
 import Stats from '@/components/Stats'
 import Logs from '@/components/Logs'
@@ -19,11 +19,11 @@ let router = new Router({
 
     { path: '/invite_token=:token',       component: Verify,     meta: { anonymous: true },    props:true                },
     { path: '/login',                     component: Login,      meta: { anonymous: true }                               },
-    { path: '/landlord',                  component: Control,    meta: { title: 'Landlord',    icon: 'business' }        },
+    { path: '/landlord',                  component: Landlord,   meta: { title: 'Landlord',    icon: 'business' }        },
     { path: '/museum',                    component: Museum,     meta: { title: 'Museum',      icon: 'account_balance' } },
     { path: '/logs',                      component: Logs,       meta: { title: 'Logs',        icon: 'dvr' }             },
     { path: '/stats',                     component: Stats,      meta: { title: 'Stats',       icon: 'poll' }            },
-    { path: '/',                          component: Control,                                                            }
+    { path: '/',                          component: Landlord,                                                           }
   ]
 })
 
