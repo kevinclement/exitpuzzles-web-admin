@@ -46,14 +46,12 @@ export default {
     return {
       audioRef: null,
       firstLoad: true,
-      timeLeftSolved: 'UNKNOWN',
-      lastTime: 'UNKNOWN',
       files: [],
       music: [
-        { title: 'Jump in Line', name:'jump_in_line_karaoke_45s_fade_out.mp3', icon:'star',           playing: false, onWin: true },
-        { title: 'Losing Horn',  name:'losing_horn.mp3',                       icon:'volume_mute',    playing: false, onFail: true },
-        { title: 'Blue Moon',    name:'blue_moon.mp3',                         icon:'language',       playing: false              },
-        { title: 'Science',      name:'success.m4a',                           icon:'surround_sound', playing: false              },
+        { title: 'Jump in Line',         name:'jump_in_line_karaoke_45s_fade_out.mp3', icon:'star',           playing: false, onWin: true  },
+        { title: 'Losing Horn',          name:'losing_horn.mp3',                       icon:'volume_up',      playing: false, onFail:true  },
+        { title: 'Blue Moon',            name:'blue_moon.mp3',                         icon:'language',       playing: false               },
+        { title: 'Science',              name:'success.m4a',                           icon:'surround_sound', playing: false               },
       ]
     }
   },
@@ -142,32 +140,25 @@ export default {
       if (state == null) return
 
       // there was a state change for time left, so we witnessed a solve, so lets play song
-      if (state.timeLeftSolved != '' && this.timeLeftSolved !== 'UNKNOWN' && this.timeLeftSolved != state.timeLeftSolved) {
-        for(var i=0; i < this.music.length; i++) {
-          if (this.music[i].onWin && !this.music[i].playing) {
-            this.playSong(this.music[i]);
-          }
-        }
-      }
-
-      this.timeLeftSolved = state.timeLeftSolved;
-    });
-
-    this.tntRef.child('time').on('value', (snapshot) => {
-      let state = snapshot.val()
-      if (state == null) return
-
-      if (state.timestamp != '' && this.lastTime !== 'UNKNOWN' && this.lastTime != state.timestamp) {
-        if (state.hours === 0 && state.minutes === 0 && state.seconds === 0) {
+      if (this.pSong != state.playSong && state.playSong != "") {
+        if (this.firstLoad) {
+          console.log(`Got a db playsong for '${state.playSong}' but this is page first load so ignoring`)
+        } else {
           for(var i=0; i < this.music.length; i++) {
-            if (this.music[i].onFail && !this.music[i].playing) {
+            if (!this.music[i].playing && 
+                ( 
+                  (state.playSong == "WIN" && this.music[i].onWin) ||
+                  (state.playSong == "FAIL" && this.music[i].onFail) 
+                )
+              ){
               this.playSong(this.music[i]);
             }
           }
         }
       }
 
-      this.lastTime = state.timestamp;
+      this.pSong = state.playSong;
+      this.firstLoad = false;
     });
   }
 }
