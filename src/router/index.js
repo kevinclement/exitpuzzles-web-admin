@@ -42,6 +42,8 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to, from) => {
   if (!to.meta.title && to.path == '/') {
     to.meta.title = 'Landlord'
+  } else if (!to.meta.title && to.path == '/login') {
+    to.meta.title = 'Login'
   }
 
   document.title = to.meta.title
