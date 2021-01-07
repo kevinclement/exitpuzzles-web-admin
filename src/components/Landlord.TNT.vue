@@ -179,10 +179,20 @@
                 <v-list-tile>  
                   <v-list-tile-content>Wires:</v-list-tile-content>
                   <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
-                    <span :class="{ wireIncorrect:         wires.wire3 != 'A' }" class="wireNumber">A⇢{{wireDest(srcWires['A'])}}</span>
-                    <span :class="{ wireIncorrect:         wires.wireD != 'B' }" class="wireNumber">B⇢{{wireDest(srcWires['B'])}}</span>
+                    <span class="wireNumber" :class="{ 
+                        wireIncorrect:           wires.wire3 != 'A',
+                        wireIncorrectDoorClosed: !solved.example && wires.wire3 != 'U' }">
+                        A⇢{{wireDest(srcWires['A'])}}</span>
+                    <span class="wireNumber" :class="{
+                        wireIncorrect:           wires.wireD != 'B',
+                        wireIncorrectDoorClosed: !solved.example && wires.wireD != 'U' }">
+                        B⇢{{wireDest(srcWires['B'])}}</span>
                     <span :class="{ wireIncorrectPenalty:  wires.wire2 != 'C' }" class="wireNumber">C⇢{{wireDest(srcWires['C'])}}</span>
-                    <span :class="{ wireIncorrect:         wires.wire4 != '1' }" class="wireNumber">1⇢{{wireDest(srcWires['1'])}}</span>
+                    <span class="wireNumber" :class="{
+                        wireIncorrect:           wires.wire4 != '1',
+                        wireIncorrectDoorClosed: !solved.example && wires.wire4 != 'U' }">
+                        1⇢{{wireDest(srcWires['1'])}}</span>
+                    
                   </v-list-tile-content>
                 </v-list-tile>
 
@@ -935,6 +945,9 @@ td > input {
   padding-right:6px;
 }
 .wireIncorrect {
+  background: #BDBDBD !important;
+}
+.wireIncorrectDoorClosed {
   background: #BDBDBD !important;
 }
 .wireIncorrectPenalty {
