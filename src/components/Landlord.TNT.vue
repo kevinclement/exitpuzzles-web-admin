@@ -19,7 +19,7 @@
             <v-toolbar flat dense color="grey lighten-3">
               <v-toolbar-title class="mx-0" style="margin-left: 0px !important;margin-right:10px !important;"><a @click="refreshTimer()">Time</a></v-toolbar-title>
               <v-btn style="margin:0px;margin-right:4px;" icon title="Set timer" @click.native="popResetTimeDialog()"><v-icon >access_alarm</v-icon></v-btn>
-              <v-btn style="margin:0px;margin-right:4px;" icon title="Set to 01:01" @click.native="triggerSetToMinute()"><v-icon >rotate_left</v-icon></v-btn>
+              <v-btn style="margin:0px;margin-right:4px;" icon title="Set to a minute left" @click.native="setMinuteDialog=true"><v-icon >rotate_left</v-icon></v-btn>
               <v-btn style="margin:0px;margin-right:4px;" icon title="Add 30s" @click.native="triggerAddThirty()"><v-icon >forward_30</v-icon></v-btn>             
             </v-toolbar>
 
@@ -228,6 +228,17 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <v-dialog v-model="setMinuteDialog" max-width="410">
+    <v-card>
+      <v-card-title class="headline">Really set time to a minute left?</v-card-title>
+      <v-card-text>Are you sure you want to change the time to a minute left?</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat="flat" @click.native="setMinuteDialog = false;">No</v-btn>
+        <v-btn color="primary" flat="flat" @click.native="triggerSetToMinute()">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 
   <v-dialog v-model="resetTntDiag" max-width="410">
     <v-card>
@@ -287,9 +298,10 @@ export default {
       dialogText: "diag text",
       dialogTrigger: "tnt.xxx",
       dialogTriggerToast: "toast response",
-      
       resetTimeDiag: false,
       resetTntDiag: false,
+      setMinuteDialog: false,
+
       setTime: {
         hour: null,
         minute: null,
@@ -721,7 +733,8 @@ export default {
         }
       });
     },
-    triggerSetToMinute() {    
+    triggerSetToMinute() {
+      this.setMinuteDialog = false;
       this.hours = this.minutes = this.seconds = null;
       this.operations.add({command: 'tnt.setTime', data: this.timeObjPadded(0,1,1) }).on("value", (snapshot) => {
         if (snapshot.val().received) {
