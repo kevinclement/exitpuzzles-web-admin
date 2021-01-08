@@ -5,7 +5,8 @@
         <v-flex>
           <v-card height="100%" class="logCard">
             <v-card-title class="titleRow">
-                <h3 class="headline">Logs from pi</h3>
+                <h3 style="display:flex" class="headline">Logs from </h3>
+                <v-select solo class="logSel" :hide-details="true" v-model="logSrc" hide-details :items="logLocations" item-text="text" item-value="path"></v-select>
                 <span class="spacer" />
                 <v-btn icon @click="showTimeStamps = !showTimeStamps">
                   <v-icon v-bind:title="timestampButtonTitle">{{timestampButtonIcon}}</v-icon>
@@ -21,7 +22,7 @@
             </v-card-text>
             <v-card-text class="controlsRow">
               <span>
-                 Logs from {{firstTimestampStr}} to {{lastTimestampStr}}
+                 Logs from {{combinedTimestampStr}}
               </span>
               <span class="spacer" />
               <span class="controls">
@@ -51,16 +52,38 @@ export default {
       lastTime: null,
       updating: false,
       showTimeStamps: false,
-      logsRef: null
+      logsRef: null,
+      logSrc: null,
+      logLocations: [
+        { 
+          text: 'Landlord | TNT',
+          path: 'landlord/logs/tnt'
+        },
+        { 
+          text: 'Museum | Bulbs',
+          path: 'museum/logs/bulbs'
+        },
+        { 
+          text: 'Museum | Map',
+          path: 'museum/logs/map'
+        },
+        { 
+          text: 'Museum | Mausoleum',
+          path: 'museum/logs/mausoleum'
+        },
+        { 
+          text: 'Museum | Trivia',
+          path: 'museum/logs/comp'
+        },
+      ]
     }
   },
 
   computed: {
-    firstTimestampStr: function () {
-      return formatDate(new Date(this.firstTime))
-    },
-    lastTimestampStr: function () {
-      return formatDate(new Date(this.lastTime))
+    combinedTimestampStr: function() {
+      if (!this.firstTime || !this.lastTime) return ""
+
+      return `${formatDate(this.firstTime)} to ${formatDate(this.lastTime)}`
     },
     timestampButtonTitle: function() {
       return this.showTimeStamps ? "hide time stamps" : "show time stamps"
@@ -70,11 +93,17 @@ export default {
     }
   },
 
-  mounted() {
-    this.logsRef = this.$root.$data.fbdb.ref('landlord/logs').orderByKey()
+  watch: {
+    logSrc: function(newLogSrc) {
+      this.logsRef = this.$root.$data.fbdb.ref(this.logSrc).orderByKey()
 
-    // default should be to be on last page, which should enable streaming
-    this.last();
+      // default should be to be on last page, which should enable streaming
+      this.last();
+    },
+  },
+
+  mounted() {
+    this.logSrc = this.logLocations[0].path
   },
 
   methods: {
@@ -130,7 +159,10 @@ export default {
 }
 
 // Helper functions to display nice dates
-function formatDate(d) {
+function formatDate(dateStr) {
+    if (!dateStr) return "";
+
+    let d = new Date(dateStr);
     let day = d.getDate();
     let month = d.getMonth() + 1; //Months are zero based
     let year = d.getFullYear();
@@ -200,5 +232,20 @@ function formatDate(d) {
   letter-spacing: .010em;
   line-height: 20px;
   position: relative;
+}
+.logSel {
+  padding: 2px 10px;
+  margin-left: 12px;
+  flex-grow:.6;
+}
+.logSel >>> .input-group__input {
+  padding:0px;
+  min-height:0px;
+}
+.logSel >>> .input-group__details {
+  min-height:0px;
+}
+.input-group--hide-details {
+  min-height:0px !important;
 }
 </style>
