@@ -4,6 +4,8 @@
 // Note: fullBackup.json is passed as argument, and is a result of backup run
 // by firebase in the cloud and downloaded.
 //
+// see: https://console.firebase.google.com/project/exitpuzzles-admin/database/backups
+//
 const fs = require('fs');
 let JSONStream = require('JSONStream')
 let es = require('event-stream')
