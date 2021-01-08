@@ -1,0 +1,235 @@
+{
+  "compass": {
+    "blue": false,
+    "enabled": false,
+    "green": false,
+    "info": {
+      "build": {
+        "date": "2021-01-06 02:08:27",
+        "gitDate": "2021-01-06 02:08:04",
+        "version": "884df8a"
+      },
+      "isConnected": true,
+      "lastActivity": "1/1/2021, 01:45:30"
+    },
+    "red": false,
+    "yellow": false
+  },
+  "morse": {
+    "clues": [
+      null,
+      {
+        "clues": {
+          "-LDyJ3fr9OK36UaZLYMx": {
+            "errorType": true,
+            "line1": "translate on",
+            "line2": "chalkboard first"
+          },
+          "-LDyJUgZQt6ehghuB2k_": {
+            "errorType": false,
+            "line1": "AWAITING A",
+            "line2": "RESPONSE"
+          },
+          "-LE17Kj5abuycOZMcILr": {
+            "errorType": false,
+            "line1": "cigar labels",
+            "line2": "spell something"
+          },
+          "-LE1bDyvUwwp3naP77iU": {
+            "errorType": true,
+            "line1": "dots should",
+            "line2": "be shorter"
+          },
+          "-LF5ovS5z19lYxezqiuB": {
+            "errorType": true,
+            "line1": "use code sheet",
+            "line2": "to translate"
+          },
+          "-LF5rU93NTejd7eF5SQp": {
+            "errorType": true,
+            "line1": "INCORRECT",
+            "line2": "TRANSLATION"
+          },
+          "-LFe-MiJFuBR1QmuJyVb": {
+            "errorType": true,
+            "line1": "UNDER",
+            "line2": "FERN?"
+          },
+          "-LfB_GcnWlX2M7fKFBsf": {
+            "errorType": false,
+            "line1": "AWAITING A ",
+            "line2": "TRANSLATION"
+          }
+        },
+        "name": "Unsolved Morse"
+      },
+      {
+        "clues": {
+          "-L9czAx1gRafFYCG1wq5": {
+            "errorType": false,
+            "line1": "Objects on shelf",
+            "line2": "Match something"
+          },
+          "-LDyOSfNn4-iYLzeaiV7": {
+            "errorType": false,
+            "line1": "symbol hidden",
+            "line2": "under parts"
+          },
+          "-LDyOjgddKX1Ueiuny0v": {
+            "errorType": false,
+            "line1": "try extending",
+            "line2": "tape further"
+          },
+          "-LDyPKw-vElyiwPHZoKH": {
+            "errorType": false,
+            "line1": "what do 4 words",
+            "line2": "have in common?"
+          },
+          "-LE1AxoF4g82yHotpFwh": {
+            "errorType": false,
+            "line1": "maybe recheck ",
+            "line2": "your book math"
+          },
+          "-LE1B3YrMX8ZS52A_cT1": {
+            "errorType": false,
+            "line1": "is that EVERY",
+            "line2": "book?"
+          },
+          "-LFjC0x-sr1qPS7nWQl_": {
+            "errorType": false,
+            "line1": "READ QUOTE",
+            "line2": "ON BOOKSHELF"
+          }
+        },
+        "name": "Before Trunk"
+      },
+      {
+        "clues": {
+          "1": {
+            "errorType": false,
+            "line1": "CHECK BACKSIDE",
+            "line2": "OF BUSINESS CARD"
+          },
+          "-LDySIUh41ino79tNLqM": {
+            "errorType": false,
+            "line1": "red card will",
+            "line2": "need red lense"
+          },
+          "-LE1edqPFeBWMbTagcbE": {
+            "errorType": false,
+            "line1": "read me",
+            "line2": "under trunk lid"
+          },
+          "-LE_qQzK7gsIeW0wnlMC": {
+            "errorType": false,
+            "line1": "DEGREES ARE ON",
+            "line2": "BUSINESS CARD"
+          },
+          "-LFe7eacMRzhAKUR0mhm": {
+            "errorType": false,
+            "line1": "TOGGLES UNLOCK",
+            "line2": "THE BOMB DOOR"
+          },
+          "-LFe7hyVZQRfnlC4E8fY": {
+            "errorType": false,
+            "line1": "look WALL above",
+            "line2": "BOMB to solution"
+          }
+        },
+        "name": "After Trunk"
+      }
+    ],
+    "cluesPost": {
+      "1": {
+        "errorType": false,
+        "line1": "line 1 value",
+        "line2": "line 2 value"
+      },
+      "-L8foLGNCBB8MWHILEMK": {
+        "errorType": false,
+        "line1": "Maybe re-check",
+        "line2": "your book math"
+      },
+      "-L8foOMF2q9QnRyTANoU": {
+        "errorType": false,
+        "line1": "Objects on shelf",
+        "line2": "Match something"
+      }
+    },
+    "cluesPre": {
+      "-L8fo3RAJNFBUrSreq06": {
+        "errorType": true,
+        "line1": "Cigar labels",
+        "line2": "Spell something"
+      },
+      "-L8fo7CWHXioCmuuN_VK": {
+        "errorType": true,
+        "line1": "Translate on",
+        "line2": "Chalkboard 1st"
+      },
+      "-L9IK0biAhUmSb763U4N": {
+        "errorType": true,
+        "line1": "Still waiting ",
+        "line2": "For a code"
+      }
+    },
+    "info": {
+      "isConnected": false
+    }
+  },
+  "painting": {
+    "enabled": true,
+    "enabledOverride": false,
+    "info": {
+      "isConnected": true
+    },
+    "manualMode": 2,
+    "threshold": "300",
+    "wait": "1000"
+  },
+  "tnt": {
+    "exampleDoor": true,
+    "finished": true,
+    "info": {
+      "build": {
+        "date": "2021-01-06 20:17:26",
+        "gitDate": "2021-01-06 20:00:54",
+        "version": "v2.0-13-g84acf34-dirty"
+      },
+      "isConnected": true
+    },
+    "key": false,
+    "keySolenoid": false,
+    "light": false,
+    "lockSolenoid": false,
+    "overrideDoorAjar": false,
+    "overrideWinButton": false,
+    "password": "",
+    "playSong": "",
+    "solved": false,
+    "time": {
+      "hours": 0,
+      "minutes": 0,
+      "seconds": 0,
+      "timestamp": 1609996614830
+    },
+    "timeLeftSolved": "",
+    "toggles": {
+      "failing": false,
+      "override": false,
+      "toggle1": false,
+      "toggle2": false,
+      "toggle3": true,
+      "toggle4": false,
+      "toggle5": false
+    },
+    "wires": {
+      "failing": false,
+      "override": false,
+      "wire2": "C",
+      "wire3": "U",
+      "wire4": "U",
+      "wireD": "B"
+    }
+  }
+}

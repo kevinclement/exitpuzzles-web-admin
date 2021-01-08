@@ -1,0 +1,286 @@
+{
+  "bird": {
+    "darkDetection": true,
+    "info": {
+      "build": {
+        "date": "2020-12-19 12:51:58",
+        "gitDate": "2020-01-20 17:29:02",
+        "version": "c32e83f"
+      },
+      "isConnected": true,
+      "lastActivity": "1/6/2021, 3:17:22 PM"
+    },
+    "isLight": false,
+    "lightValue": 0,
+    "opened": false,
+    "password": "",
+    "solved": true,
+    "trayOpened": false
+  },
+  "bulbs": {
+    "1-1": {
+      "color": "white"
+    },
+    "1-2": {
+      "color": "white"
+    },
+    "1-3": {
+      "color": "white"
+    },
+    "2-1": {
+      "color": "white"
+    },
+    "2-2": {
+      "color": "white"
+    },
+    "2-3": {
+      "color": "white"
+    },
+    "3-1": {
+      "color": "white"
+    },
+    "3-2": {
+      "color": "white"
+    },
+    "3-3": {
+      "color": "white"
+    },
+    "4-1": {
+      "color": "white"
+    },
+    "4-2": {
+      "color": "white"
+    },
+    "4-3": {
+      "color": "white"
+    },
+    "5-1": {
+      "color": "white"
+    },
+    "5-2": {
+      "color": "white"
+    },
+    "5-3": {
+      "color": "white"
+    },
+    "6-1": {
+      "color": "white"
+    },
+    "6-2": {
+      "color": "white"
+    },
+    "6-3": {
+      "color": "white"
+    }
+  },
+  "cabinet": {
+    "idol": 0,
+    "info": {
+      "build": {
+        "date": "2019-11-02 11:27:22",
+        "gitDate": "2019-10-27 23:45:59",
+        "version": "65f625b-dirty"
+      },
+      "isConnected": true,
+      "lastActivity": "1/6/2021, 15:09:35"
+    },
+    "lights": false,
+    "magnet": false,
+    "solved": true
+  },
+  "clock": {
+    "hs": false,
+    "info": {
+      "build": {
+        "date": "2020-12-18 20:21:25",
+        "gitDate": "2020-01-20 18:20:47",
+        "version": "283ff1d-dirty"
+      },
+      "isConnected": true,
+      "lastActivity": "1/6/2021, 3:17:22 PM"
+    },
+    "motor": false,
+    "ms": false,
+    "solved": true
+  },
+  "dashboard": {
+    "adhoc": "",
+    "clue": "home",
+    "clues": [
+      {
+        "name": "home"
+      },
+      {
+        "name": "totem"
+      },
+      {
+        "name": "clock"
+      },
+      {
+        "name": "dodo"
+      },
+      {
+        "name": "hands"
+      },
+      {
+        "name": "color"
+      },
+      {
+        "name": "map"
+      },
+      {
+        "name": "space"
+      },
+      {
+        "name": "safe"
+      },
+      {
+        "name": "chair"
+      },
+      {
+        "name": "laser"
+      },
+      {
+        "name": "column"
+      },
+      {
+        "name": "readme"
+      },
+      {
+        "name": "translate"
+      },
+      {
+        "name": "totem pole clue2"
+      }
+    ],
+    "hours": 0,
+    "minutes": 0,
+    "reload": false,
+    "route": "home"
+  },
+  "hands": {
+    "info": {
+      "build": {
+        "date": "2019-09-30 18:57:20",
+        "gitDate": "2019-09-25 01:10:08",
+        "version": "f179380-dirty"
+      },
+      "description": "Detects hands being pressed on walls.",
+      "isConnected": true,
+      "lastActivity": "1/6/2021, 3:03:41 PM",
+      "name": "Hands"
+    },
+    "toggle": false,
+    "touching": false
+  },
+  "laser": {
+    "enabled": false,
+    "info": {
+      "isConnected": true,
+      "lastActivity": "1/6/2021, 3:04:04 PM"
+    }
+  },
+  "map": {
+    "force": false,
+    "image": "legend",
+    "info": {
+      "lastActivity": "11/16/2020, 15:51:29"
+    },
+    "magnets": {
+      "alaska": false,
+      "argentina": false,
+      "fiji": false,
+      "india": false,
+      "madagascar": false,
+      "seattle": false,
+      "spain": false
+    },
+    "overrides": {
+      "alaska": false,
+      "argentina": false,
+      "fiji": false,
+      "india": false,
+      "madagascar": false,
+      "seattle": false,
+      "spain": false
+    },
+    "solved": false
+  },
+  "mausoleum": {
+    "idol_1": false,
+    "idol_2": false,
+    "idol_3": false,
+    "idol_4": false,
+    "idol_5": false,
+    "info": {
+      "build": {
+        "date": "2019-10-25 17:33:44",
+        "gitDate": "2019-10-09 18:23:20",
+        "version": "718bee4-dirty"
+      },
+      "isConnected": true,
+      "lastActivity": "1/6/2021, 3:11:31 PM"
+    },
+    "solved": false,
+    "unsolvable": false
+  },
+  "mummy": {
+    "info": {
+      "build": {
+        "date": "2019-09-26 01:18:25",
+        "gitDate": "2019-09-25 15:28:36",
+        "version": "c5ad2d5"
+      },
+      "isConnected": true,
+      "lastActivity": "1/6/2021, 3:11:29 PM"
+    },
+    "opened": false
+  },
+  "quiz": {
+    "currentTotal": 5,
+    "info": {
+      "lastActivity": "12/19/2020, 12:59:25 PM"
+    },
+    "questionIndex": 0,
+    "state": "INSERT_DISK",
+    "timeout": "90",
+    "total": "4"
+  },
+  "stairs": {
+    "bowl": true,
+    "info": {
+      "build": {
+        "date": "2020-06-14 22:30:21",
+        "gitDate": "2020-06-14 22:30:00",
+        "version": "00a14b9"
+      },
+      "isConnected": true,
+      "lastActivity": "1/6/2021, 3:11:29 PM"
+    },
+    "level": "8",
+    "magnet": false,
+    "magnetLight": true,
+    "sensorsDisabled": false,
+    "solved": true,
+    "unsolvable": false,
+    "volumeHigh": 48,
+    "volumeLow": 42,
+    "volumeWhosh": 50
+  },
+  "zoltar": {
+    "coins": 0,
+    "donations": 0,
+    "info": {
+      "build": {
+        "date": "2020-01-19 22:15:41",
+        "gitDate": "2019-09-29 15:45:22",
+        "version": "2106573-dirty"
+      },
+      "description": "Detects coin inserted into Zoltar machine and turns on LED lights and flashes overhead light in machine.",
+      "isConnected": true,
+      "lastActivity": "1/6/2021, 3:03:41 PM",
+      "name": "Zoltar"
+    },
+    "solved": false
+  }
+}

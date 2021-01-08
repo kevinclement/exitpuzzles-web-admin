@@ -1,0 +1,2034 @@
+{
+  "-MQ0ytwc5WJZkzjzXGhh": {
+    "clue": {
+      "errorType": true,
+      "id": "-LDyJ3fr9OK36UaZLYMx",
+      "line1": "translate on",
+      "line2": "chalkboard first"
+    },
+    "command": "morse.clue",
+    "completed": "Fri Jan 01 2021 23:24:21 GMT-0800 (Pacific Standard Time)",
+    "created": 1609572261691,
+    "received": "Fri Jan 01 2021 23:24:21 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ0z2U8SzaaOOo5Labe": {
+    "clue": {
+      "errorType": false,
+      "id": "-L9czAx1gRafFYCG1wq5",
+      "line1": "Objects on shelf",
+      "line2": "Match something"
+    },
+    "command": "morse.clue",
+    "completed": "Fri Jan 01 2021 23:25:00 GMT-0800 (Pacific Standard Time)",
+    "created": 1609572300765,
+    "received": "Fri Jan 01 2021 23:25:00 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ0z7JSM97qcxm9yUmO": {
+    "clue": {
+      "errorType": false,
+      "line1": "test line 1",
+      "line2": "test line 2"
+    },
+    "command": "morse.clue",
+    "completed": "Fri Jan 01 2021 23:25:21 GMT-0800 (Pacific Standard Time)",
+    "created": 1609572320561,
+    "received": "Fri Jan 01 2021 23:25:21 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ0zBiYxdSM_0QzYYht": {
+    "clue": {
+      "errorType": true,
+      "line1": "test 2 l1",
+      "line2": "test 2 l2"
+    },
+    "command": "morse.clue",
+    "completed": "Fri Jan 01 2021 23:25:38 GMT-0800 (Pacific Standard Time)",
+    "created": 1609572338614,
+    "received": "Fri Jan 01 2021 23:25:38 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ13M-VMeZuPmIGuZW8": {
+    "command": "paint.getStatus",
+    "completed": "Fri Jan 01 2021 23:48:11 GMT-0800 (Pacific Standard Time)",
+    "created": 1609573691446,
+    "received": "Fri Jan 01 2021 23:48:11 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ13dAIIBn7rALmu3We": {
+    "command": "paint.getStatus",
+    "completed": "Fri Jan 01 2021 23:49:26 GMT-0800 (Pacific Standard Time)",
+    "created": 1609573765866,
+    "received": "Fri Jan 01 2021 23:49:25 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ17YZ1TrCub39RpRDj": {
+    "command": "paint.setThreshold",
+    "completed": "Sat Jan 02 2021 00:06:31 GMT-0800 (Pacific Standard Time)",
+    "created": 1609574791458,
+    "data": {
+      "threshold": "301"
+    },
+    "received": "Sat Jan 02 2021 00:06:31 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ17agt8oyJ9SXkgR-J": {
+    "command": "paint.setWait",
+    "completed": "Sat Jan 02 2021 00:06:44 GMT-0800 (Pacific Standard Time)",
+    "created": 1609574804313,
+    "data": {
+      "wait": "1001"
+    },
+    "received": "Sat Jan 02 2021 00:06:44 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ17dTdCYfiLUl98dOs": {
+    "command": "paint.setWait",
+    "completed": "Sat Jan 02 2021 00:06:55 GMT-0800 (Pacific Standard Time)",
+    "created": 1609574815689,
+    "data": {
+      "wait": "1000"
+    },
+    "received": "Sat Jan 02 2021 00:06:55 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ17eN_DWagi24cjdgU": {
+    "command": "paint.setThreshold",
+    "completed": "Sat Jan 02 2021 00:06:59 GMT-0800 (Pacific Standard Time)",
+    "created": 1609574819397,
+    "data": {
+      "threshold": "300"
+    },
+    "received": "Sat Jan 02 2021 00:06:59 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ17gBHg-YaOpxsT8Lb": {
+    "command": "paint.setManual",
+    "completed": "Sat Jan 02 2021 00:07:06 GMT-0800 (Pacific Standard Time)",
+    "created": 1609574826802,
+    "data": {
+      "manual": 1
+    },
+    "received": "Sat Jan 02 2021 00:07:06 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ17hUp64fcrhY5prS2": {
+    "command": "paint.setManual",
+    "completed": "Sat Jan 02 2021 00:07:12 GMT-0800 (Pacific Standard Time)",
+    "created": 1609574832149,
+    "data": {
+      "manual": 0
+    },
+    "received": "Sat Jan 02 2021 00:07:12 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ17ia1m7AdRFmAxcst": {
+    "command": "paint.setManual",
+    "completed": "Sat Jan 02 2021 00:07:16 GMT-0800 (Pacific Standard Time)",
+    "created": 1609574836642,
+    "data": {
+      "manual": 2
+    },
+    "received": "Sat Jan 02 2021 00:07:16 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ17m9oGI210v3dtGh5": {
+    "command": "paint.getStatus",
+    "completed": "Sat Jan 02 2021 00:07:31 GMT-0800 (Pacific Standard Time)",
+    "created": 1609574851284,
+    "received": "Sat Jan 02 2021 00:07:31 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ17oO8DueF2ZuVsLBU": {
+    "command": "paint.setEnabled",
+    "completed": "Sat Jan 02 2021 00:07:40 GMT-0800 (Pacific Standard Time)",
+    "created": 1609574860392,
+    "data": {
+      "enabled": false
+    },
+    "received": "Sat Jan 02 2021 00:07:40 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ17qq0LNggXzyZEaTi": {
+    "command": "paint.setEnabled",
+    "completed": "Sat Jan 02 2021 00:07:50 GMT-0800 (Pacific Standard Time)",
+    "created": 1609574870433,
+    "data": {
+      "enabled": true
+    },
+    "received": "Sat Jan 02 2021 00:07:50 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ17ySfFH2xFHXukE3A": {
+    "command": "paint.getStatus",
+    "completed": "Sat Jan 02 2021 00:08:21 GMT-0800 (Pacific Standard Time)",
+    "created": 1609574901643,
+    "received": "Sat Jan 02 2021 00:08:21 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ19gXyZIJU3fO7wIiH": {
+    "command": "paint.drop",
+    "completed": "Sat Jan 02 2021 00:15:52 GMT-0800 (Pacific Standard Time)",
+    "created": 1609575352541,
+    "received": "Sat Jan 02 2021 00:15:52 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ1A7WO6rcP0XXBwXzR": {
+    "command": "paint.drop",
+    "completed": "Sat Jan 02 2021 00:17:47 GMT-0800 (Pacific Standard Time)",
+    "created": 1609575467129,
+    "received": "Sat Jan 02 2021 00:17:47 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ1EhsLPlcNOoMMs5qq": {
+    "command": "tnt.reset",
+    "completed": "Sat Jan 02 2021 00:37:48 GMT-0800 (Pacific Standard Time)",
+    "created": 1609576668725,
+    "received": "Sat Jan 02 2021 00:37:48 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ1EhsPgsLzfFR1yYaA": {
+    "canceled": "Sat Jan 02 2021 01:20:58 GMT-0800 (Pacific Standard Time)",
+    "command": "compass.reset",
+    "completed": "Sat Jan 02 2021 01:20:58 GMT-0800 (Pacific Standard Time)",
+    "created": 1609576668730
+  },
+  "-MQ1Jqh_yqTJmlbO0_AW": {
+    "canceled": "Sat Jan 02 2021 01:00:26 GMT-0800 (Pacific Standard Time)",
+    "command": "tnt.playAudio",
+    "completed": "Sat Jan 02 2021 01:00:26 GMT-0800 (Pacific Standard Time)",
+    "created": 1609578015611,
+    "file": {
+      "file": "siren.wav",
+      "icon": "notifications_active",
+      "name": "Siren"
+    }
+  },
+  "-MQ1K1Is6O9RYz-H7Ap_": {
+    "command": "tnt.playAudio",
+    "completed": "Sat Jan 02 2021 01:01:05 GMT-0800 (Pacific Standard Time)",
+    "created": 1609578063119,
+    "file": {
+      "file": "siren.wav",
+      "icon": "notifications_active",
+      "name": "Siren"
+    },
+    "received": "Sat Jan 02 2021 01:01:03 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ1K2b0Oq2gd1jX_EmI": {
+    "command": "tnt.playAudio",
+    "completed": "Sat Jan 02 2021 01:01:11 GMT-0800 (Pacific Standard Time)",
+    "created": 1609578068440,
+    "file": {
+      "file": "warningRedWire.wav",
+      "foreground": "red lighten-1",
+      "icon": "gesture",
+      "name": "Warning: Replace red wire"
+    },
+    "received": "Sat Jan 02 2021 01:01:08 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ1PQ5RfvjGni6Xq34L": {
+    "command": "tnt.playAudio",
+    "completed": "Sat Jan 02 2021 01:24:37 GMT-0800 (Pacific Standard Time)",
+    "created": 1609579475395,
+    "file": {
+      "file": "siren.wav",
+      "icon": "notifications_active",
+      "name": "Siren"
+    },
+    "received": "Sat Jan 02 2021 01:24:35 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ1PoFkVay9A4nOO772": {
+    "command": "tnt.playAudio",
+    "completed": "Sat Jan 02 2021 01:26:20 GMT-0800 (Pacific Standard Time)",
+    "created": 1609579578448,
+    "file": {
+      "file": "siren.wav",
+      "icon": "notifications_active",
+      "name": "Siren"
+    },
+    "received": "Sat Jan 02 2021 01:26:18 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ1PsBwO4N26KWjJeUY": {
+    "command": "tnt.setTime",
+    "completed": "Sat Jan 02 2021 01:26:34 GMT-0800 (Pacific Standard Time)",
+    "created": 1609579594588,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "10"
+    },
+    "received": "Sat Jan 02 2021 01:26:34 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ3F-pjSwxzeQq4TZM_": {
+    "command": "tnt.solve",
+    "completed": "Sat Jan 02 2021 09:58:20 GMT-0800 (Pacific Standard Time)",
+    "created": 1609610300807,
+    "received": "Sat Jan 02 2021 09:58:20 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ3F9CeShXqj5MlBuSB": {
+    "command": "tnt.reset",
+    "completed": "Sat Jan 02 2021 09:58:59 GMT-0800 (Pacific Standard Time)",
+    "created": 1609610339202,
+    "received": "Sat Jan 02 2021 09:58:59 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ3F9Cf9ojYWwWf8xhF": {
+    "command": "compass.reset",
+    "completed": "Sat Jan 02 2021 09:58:59 GMT-0800 (Pacific Standard Time)",
+    "created": 1609610339204,
+    "received": "Sat Jan 02 2021 09:58:59 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ3K50Zm4lzS7QYw1gp": {
+    "command": "tnt.reset",
+    "completed": "Sat Jan 02 2021 10:20:32 GMT-0800 (Pacific Standard Time)",
+    "created": 1609611632764,
+    "received": "Sat Jan 02 2021 10:20:32 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQ3K50bpjyDuzZi_Zfa": {
+    "command": "compass.reset",
+    "completed": "Sat Jan 02 2021 10:20:32 GMT-0800 (Pacific Standard Time)",
+    "created": 1609611632768,
+    "received": "Sat Jan 02 2021 10:20:32 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQG7LtAn1e1LJVMzlmr": {
+    "canceled": "Tue Jan 05 2021 00:31:37 GMT-0800 (Pacific Standard Time)",
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:31:37 GMT-0800 (Pacific Standard Time)",
+    "created": 1609826397790,
+    "data": {
+      "hours": "01",
+      "minutes": "22",
+      "seconds": "22"
+    }
+  },
+  "-MQGizjLoaF5EQz7Su8G": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:48:46 GMT-0800 (Pacific Standard Time)",
+    "created": 1609836526566,
+    "data": {
+      "hours": 0,
+      "minutes": 55,
+      "seconds": 56
+    },
+    "received": "Tue Jan 05 2021 00:48:46 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGj6FI9QMQYcZyOxvA": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:49:17 GMT-0800 (Pacific Standard Time)",
+    "created": 1609836557347,
+    "data": {
+      "hours": "01",
+      "minutes": "11",
+      "seconds": "22"
+    },
+    "received": "Tue Jan 05 2021 00:49:17 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGj6wXxU--4b19Faag": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:49:20 GMT-0800 (Pacific Standard Time)",
+    "created": 1609836560179,
+    "data": {
+      "hours": 1,
+      "minutes": 11,
+      "seconds": 49
+    },
+    "received": "Tue Jan 05 2021 00:49:20 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGj7V8NywIFQSfS3b9": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:49:22 GMT-0800 (Pacific Standard Time)",
+    "created": 1609836562458,
+    "data": {
+      "hours": 1,
+      "minutes": 1,
+      "seconds": 37
+    },
+    "received": "Tue Jan 05 2021 00:49:22 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGjgKvGQZI4OkVEdTb": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:51:49 GMT-0800 (Pacific Standard Time)",
+    "created": 1609836709259,
+    "data": {
+      "hours": 1,
+      "minutes": 7,
+      "seconds": 48
+    },
+    "received": "Tue Jan 05 2021 00:51:49 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGjlqIvw2bdZxRb0uJ": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:52:11 GMT-0800 (Pacific Standard Time)",
+    "created": 1609836731811,
+    "data": {
+      "hours": "01",
+      "minutes": "07",
+      "seconds": "22"
+    },
+    "received": "Tue Jan 05 2021 00:52:11 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGk0mnk6d9XscTAPzn": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:53:17 GMT-0800 (Pacific Standard Time)",
+    "created": 1609836797123,
+    "data": {
+      "hours": "1",
+      "minutes": "7",
+      "seconds": "22"
+    },
+    "received": "Tue Jan 05 2021 00:53:17 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGk3hYsHPO5JgdBuxo": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:53:29 GMT-0800 (Pacific Standard Time)",
+    "created": 1609836809076,
+    "data": {
+      "hours": "01",
+      "minutes": "07",
+      "seconds": "22"
+    },
+    "received": "Tue Jan 05 2021 00:53:29 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGkuk2n4L74FGPWWTo": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:57:10 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837030427,
+    "data": {
+      "hours": 1,
+      "minutes": 3,
+      "seconds": 70
+    },
+    "received": "Tue Jan 05 2021 00:57:10 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGl8clGpITtrUbOCZb": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:58:11 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837091400,
+    "data": {
+      "hours": "00",
+      "minutes": "58",
+      "seconds": "89"
+    },
+    "received": "Tue Jan 05 2021 00:58:11 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGlBfDXiF72nLsdjGc": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:58:23 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837103845,
+    "data": {
+      "hours": "01",
+      "minutes": "06",
+      "seconds": "22"
+    },
+    "received": "Tue Jan 05 2021 00:58:23 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGlC88KIPpCDyiYKwa": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:58:25 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837105760,
+    "data": {
+      "hours": "01",
+      "minutes": "06",
+      "seconds": "50"
+    },
+    "received": "Tue Jan 05 2021 00:58:25 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGlTczW7FnFJ4qbrwL": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 00:59:37 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837177429,
+    "data": {
+      "hours": "01",
+      "minutes": "02",
+      "seconds": "22"
+    },
+    "received": "Tue Jan 05 2021 00:59:37 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGlvWN1QawUlAuw5uZ": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 01:01:35 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837295725,
+    "data": {
+      "hours": "01",
+      "minutes": "00",
+      "seconds": "53"
+    },
+    "received": "Tue Jan 05 2021 01:01:35 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGlxZc0ogC8l-5CQeO": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 01:01:44 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837304126,
+    "data": {
+      "hours": "01",
+      "minutes": "01",
+      "seconds": "15"
+    },
+    "received": "Tue Jan 05 2021 01:01:44 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGlyGRMxRs-k4fDa2K": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 01:01:47 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837306994,
+    "data": {
+      "hours": "01",
+      "minutes": "01",
+      "seconds": "43"
+    },
+    "received": "Tue Jan 05 2021 01:01:47 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGlzByf2FOXV69dwg8": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 01:01:50 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837310804,
+    "data": {
+      "hours": "01",
+      "minutes": "02",
+      "seconds": "09"
+    },
+    "received": "Tue Jan 05 2021 01:01:50 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGlzqo-vivikrOJfEi": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 01:01:53 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837313482,
+    "data": {
+      "hours": "01",
+      "minutes": "02",
+      "seconds": "36"
+    },
+    "received": "Tue Jan 05 2021 01:01:53 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGm-FBApyTpaxS0iLt": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 01:01:55 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837315106,
+    "data": {
+      "hours": "01",
+      "minutes": "03",
+      "seconds": "05"
+    },
+    "received": "Tue Jan 05 2021 01:01:55 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGmB_qKWCaf2yYBt9c": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 01:02:45 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837365643,
+    "data": {
+      "hours": "01",
+      "minutes": "02",
+      "seconds": "45"
+    },
+    "received": "Tue Jan 05 2021 01:02:45 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGmC2mksCBiSRANwQj": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 01:02:47 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837367560,
+    "data": {
+      "hours": "01",
+      "minutes": "03",
+      "seconds": "13"
+    },
+    "received": "Tue Jan 05 2021 01:02:47 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGnW5m5btyO5OR0Jyo": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 01:08:31 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837711815,
+    "data": {
+      "hours": "01",
+      "minutes": "07",
+      "seconds": "11"
+    },
+    "received": "Tue Jan 05 2021 01:08:31 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGncwOGD2_757GIqMi": {
+    "command": "tnt.refreshTime",
+    "completed": "Tue Jan 05 2021 01:09:04 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837743919,
+    "received": "Tue Jan 05 2021 01:09:04 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGndY1uQKzfX16oqGN": {
+    "command": "tnt.refreshTime",
+    "completed": "Tue Jan 05 2021 01:09:06 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837746392,
+    "received": "Tue Jan 05 2021 01:09:06 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGoEMSOQ-tixbOLQob": {
+    "command": "tnt.refreshTime",
+    "completed": "Tue Jan 05 2021 01:11:41 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837901298,
+    "received": "Tue Jan 05 2021 01:11:41 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGoF-GV-lWn8kjjqHh": {
+    "command": "tnt.refreshTime",
+    "completed": "Tue Jan 05 2021 01:11:44 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837903911,
+    "received": "Tue Jan 05 2021 01:11:43 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGoFaDTqUKzO9z5RQL": {
+    "command": "tnt.refreshTime",
+    "completed": "Tue Jan 05 2021 01:11:47 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837906340,
+    "received": "Tue Jan 05 2021 01:11:47 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGoGW7YHA7cA0Ss1lA": {
+    "command": "tnt.refreshTime",
+    "completed": "Tue Jan 05 2021 01:11:50 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837910110,
+    "received": "Tue Jan 05 2021 01:11:50 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGoHWJZwujHaoEe4gl": {
+    "command": "tnt.refreshTime",
+    "completed": "Tue Jan 05 2021 01:11:54 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837914218,
+    "received": "Tue Jan 05 2021 01:11:54 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGoHt108hhi0EK6nu4": {
+    "command": "tnt.refreshTime",
+    "completed": "Tue Jan 05 2021 01:11:55 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837915736,
+    "received": "Tue Jan 05 2021 01:11:55 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGoIEQhWhr0P0GbRxu": {
+    "command": "tnt.refreshTime",
+    "completed": "Tue Jan 05 2021 01:11:57 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837917169,
+    "received": "Tue Jan 05 2021 01:11:57 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGoIXkWkd5vRVkdm_9": {
+    "command": "tnt.refreshTime",
+    "completed": "Tue Jan 05 2021 01:11:58 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837918406,
+    "received": "Tue Jan 05 2021 01:11:58 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGoIyjMJ3lpyjaeB3C": {
+    "command": "tnt.refreshTime",
+    "completed": "Tue Jan 05 2021 01:12:00 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837920197,
+    "received": "Tue Jan 05 2021 01:12:00 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGoLm0whRjTFIUZLGK": {
+    "command": "tnt.refreshTime",
+    "completed": "Tue Jan 05 2021 01:12:11 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837931671,
+    "received": "Tue Jan 05 2021 01:12:11 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQGoMODAq0Czb-3z4r1": {
+    "command": "tnt.refreshTime",
+    "completed": "Tue Jan 05 2021 01:12:14 GMT-0800 (Pacific Standard Time)",
+    "created": 1609837934180,
+    "received": "Tue Jan 05 2021 01:12:14 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQKq_DUbxGY3y43o8cZ": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 20:00:24 GMT-0800 (Pacific Standard Time)",
+    "created": 1609905624009,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "10"
+    },
+    "received": "Tue Jan 05 2021 20:00:24 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQKrcSgMoyiRBU-hb1p": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 20:04:59 GMT-0800 (Pacific Standard Time)",
+    "created": 1609905899418,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "15"
+    },
+    "received": "Tue Jan 05 2021 20:04:59 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQKstAnVd1JHXlwncCt": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 20:10:30 GMT-0800 (Pacific Standard Time)",
+    "created": 1609906230049,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "15"
+    },
+    "received": "Tue Jan 05 2021 20:10:30 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQKtO-CDuQZFeLEVQxI": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 20:12:40 GMT-0800 (Pacific Standard Time)",
+    "created": 1609906360379,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "15"
+    },
+    "received": "Tue Jan 05 2021 20:12:40 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQL5qc6MZIyADK1Drcd": {
+    "command": "tnt.solve",
+    "completed": "Tue Jan 05 2021 21:11:29 GMT-0800 (Pacific Standard Time)",
+    "created": 1609909889568,
+    "received": "Tue Jan 05 2021 21:11:29 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQL60EGSz4Qfo06vmFb": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 21:12:13 GMT-0800 (Pacific Standard Time)",
+    "created": 1609909933034,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "15"
+    },
+    "received": "Tue Jan 05 2021 21:12:13 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQL60EowvhaZI4FrDFU": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 21:12:13 GMT-0800 (Pacific Standard Time)",
+    "created": 1609909933069,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "15"
+    },
+    "received": "Tue Jan 05 2021 21:12:13 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQL6T2Mr63BsERbYkOK": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 21:14:11 GMT-0800 (Pacific Standard Time)",
+    "created": 1609910051056,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "07"
+    },
+    "received": "Tue Jan 05 2021 21:14:11 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLCYs9vpp2EFapoPvi": {
+    "command": "tnt.reset",
+    "completed": "Tue Jan 05 2021 21:40:47 GMT-0800 (Pacific Standard Time)",
+    "created": 1609911647778,
+    "received": "Tue Jan 05 2021 21:40:47 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLCYsGlQW55V6z8RG8": {
+    "command": "compass.reset",
+    "completed": "Tue Jan 05 2021 21:40:47 GMT-0800 (Pacific Standard Time)",
+    "created": 1609911647786,
+    "received": "Tue Jan 05 2021 21:40:47 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLCcHWM7Fo78w8sJ9d": {
+    "command": "tnt.reset",
+    "completed": "Tue Jan 05 2021 21:41:05 GMT-0800 (Pacific Standard Time)",
+    "created": 1609911665850,
+    "received": "Tue Jan 05 2021 21:41:05 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLCcHYDc1wdHfijZJT": {
+    "command": "compass.reset",
+    "completed": "Tue Jan 05 2021 21:41:05 GMT-0800 (Pacific Standard Time)",
+    "created": 1609911665852,
+    "received": "Tue Jan 05 2021 21:41:05 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLCgIubNfLFZndRoKW": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 21:41:22 GMT-0800 (Pacific Standard Time)",
+    "created": 1609911682322,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "11"
+    },
+    "received": "Tue Jan 05 2021 21:41:22 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLD8xuNc8rD32zSAY8": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 21:43:23 GMT-0800 (Pacific Standard Time)",
+    "created": 1609911803795,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "06"
+    },
+    "received": "Tue Jan 05 2021 21:43:23 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLDOUcOq8VehvCpXHS": {
+    "command": "tnt.reset",
+    "completed": "Tue Jan 05 2021 21:44:27 GMT-0800 (Pacific Standard Time)",
+    "created": 1609911867393,
+    "received": "Tue Jan 05 2021 21:44:27 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLDOUhs8jS4yFB9E-2": {
+    "command": "compass.reset",
+    "completed": "Tue Jan 05 2021 21:44:27 GMT-0800 (Pacific Standard Time)",
+    "created": 1609911867398,
+    "received": "Tue Jan 05 2021 21:44:27 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLDQOomI9gCXY7mxj-": {
+    "command": "tnt.solve",
+    "completed": "Tue Jan 05 2021 21:44:35 GMT-0800 (Pacific Standard Time)",
+    "created": 1609911875213,
+    "received": "Tue Jan 05 2021 21:44:35 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLFP00BprQGEEnAOq7": {
+    "command": "tnt.reset",
+    "completed": "Tue Jan 05 2021 21:53:13 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912393816,
+    "received": "Tue Jan 05 2021 21:53:13 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLFP04c1jxuxjZJ6kj": {
+    "command": "compass.reset",
+    "completed": "Tue Jan 05 2021 21:53:13 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912393821,
+    "received": "Tue Jan 05 2021 21:53:13 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLGUB6X1uLdB0CcWdR": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 21:57:57 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912677151,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 21:57:57 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLGaKmkV_boCj2B0HN": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 21:58:26 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912706442,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 21:58:26 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLGgTVaQOPqPnl7GcA": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 21:58:51 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912731570,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 21:58:51 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLGhCnCSAQMSpoA7gu": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 21:58:54 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912734598,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 21:58:54 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLGlu_QCVxwDJDltZe": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 21:59:13 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912753847,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 21:59:13 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLGoraeY6MZWdRbnt5": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 21:59:26 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912765945,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 21:59:26 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLGtWMbtrc3JBZhrEl": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 21:59:45 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912785004,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 21:59:45 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLGxjTNZjtmTIXBDc2": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 22:00:02 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912802292,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 22:00:02 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLH-IKa-yQPw_D4CSG": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 22:00:12 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912812779,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 22:00:12 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLHcSb6tK2vPg4T965": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 22:02:57 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912977276,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 22:02:57 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLHdqRBbls8-3Pcic1": {
+    "command": "tnt.reset",
+    "completed": "Tue Jan 05 2021 22:03:03 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912982962,
+    "received": "Tue Jan 05 2021 22:03:03 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLHdqUOaVKtPz1QX9L": {
+    "command": "compass.reset",
+    "completed": "Tue Jan 05 2021 22:03:03 GMT-0800 (Pacific Standard Time)",
+    "created": 1609912982965,
+    "received": "Tue Jan 05 2021 22:03:03 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLQ8fRiI6KDz2ag7eU": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 22:40:10 GMT-0800 (Pacific Standard Time)",
+    "created": 1609915210480,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 22:40:10 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLVyW7upFwm5yA9Z_x": {
+    "command": "tnt.reset",
+    "completed": "Tue Jan 05 2021 23:05:37 GMT-0800 (Pacific Standard Time)",
+    "created": 1609916737629,
+    "received": "Tue Jan 05 2021 23:05:37 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLVyWBsekiHlfzIGjW": {
+    "command": "compass.reset",
+    "completed": "Tue Jan 05 2021 23:05:37 GMT-0800 (Pacific Standard Time)",
+    "created": 1609916737633,
+    "received": "Tue Jan 05 2021 23:05:37 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLW-APPLwAAgCvdgap": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 23:05:44 GMT-0800 (Pacific Standard Time)",
+    "created": 1609916744430,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 23:05:44 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLW-vc8oGcQZIAIUN1": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 23:05:47 GMT-0800 (Pacific Standard Time)",
+    "created": 1609916747517,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 23:05:47 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLW6cbwU4I5WdlJ6oO": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 23:06:15 GMT-0800 (Pacific Standard Time)",
+    "created": 1609916774972,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 23:06:15 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLWExy2vt5PZ7DF921": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 23:06:49 GMT-0800 (Pacific Standard Time)",
+    "created": 1609916809118,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "06"
+    },
+    "received": "Tue Jan 05 2021 23:06:49 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLWNtA39YOvLZeUgfb": {
+    "command": "tnt.reset",
+    "completed": "Tue Jan 05 2021 23:07:25 GMT-0800 (Pacific Standard Time)",
+    "created": 1609916845674,
+    "received": "Tue Jan 05 2021 23:07:25 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLWNtFixeVBFWHgduM": {
+    "command": "compass.reset",
+    "completed": "Tue Jan 05 2021 23:07:25 GMT-0800 (Pacific Standard Time)",
+    "created": 1609916845680,
+    "received": "Tue Jan 05 2021 23:07:25 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLWQC_qSL2TFQPleBD": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 23:07:35 GMT-0800 (Pacific Standard Time)",
+    "created": 1609916855173,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 23:07:35 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLWUT3BXfL6ypEFDKE": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 23:07:52 GMT-0800 (Pacific Standard Time)",
+    "created": 1609916872612,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Tue Jan 05 2021 23:07:52 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLWXsEEuROyMdn4NBH": {
+    "command": "tnt.setTime",
+    "completed": "Tue Jan 05 2021 23:08:06 GMT-0800 (Pacific Standard Time)",
+    "created": 1609916886575,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "06"
+    },
+    "received": "Tue Jan 05 2021 23:08:06 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLYcQyP7LdHUnlqMNt": {
+    "command": "tnt.reset",
+    "completed": "Tue Jan 05 2021 23:17:13 GMT-0800 (Pacific Standard Time)",
+    "created": 1609917433630,
+    "received": "Tue Jan 05 2021 23:17:13 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLYcR2vELhQtd1Sg37": {
+    "command": "compass.reset",
+    "completed": "Tue Jan 05 2021 23:17:13 GMT-0800 (Pacific Standard Time)",
+    "created": 1609917433635,
+    "received": "Tue Jan 05 2021 23:17:13 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLn3PBeok0N8C6qB4G": {
+    "canceled": "Wed Jan 06 2021 00:26:36 GMT-0800 (Pacific Standard Time)",
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 00:26:36 GMT-0800 (Pacific Standard Time)",
+    "created": 1609921480359,
+    "data": {
+      "enabled": true
+    },
+    "received": "Wed Jan 06 2021 00:24:40 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLnGeV9QKr8cdTTLeq": {
+    "canceled": "Wed Jan 06 2021 00:26:36 GMT-0800 (Pacific Standard Time)",
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 00:26:36 GMT-0800 (Pacific Standard Time)",
+    "created": 1609921534651,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 00:25:34 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLnHXA4umKbYTQR52t": {
+    "canceled": "Wed Jan 06 2021 00:26:36 GMT-0800 (Pacific Standard Time)",
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 00:26:36 GMT-0800 (Pacific Standard Time)",
+    "created": 1609921538213,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 00:25:38 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLnaRfygObcDAwTcHx": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 00:26:59 GMT-0800 (Pacific Standard Time)",
+    "created": 1609921619782,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 00:26:59 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLnbpQsmJRqQWW9Ebh": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 00:27:05 GMT-0800 (Pacific Standard Time)",
+    "created": 1609921625461,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 00:27:05 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLoCmfjPt1ESkSx4ru": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 00:29:41 GMT-0800 (Pacific Standard Time)",
+    "created": 1609921780930,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 00:29:41 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLoDwlCeNXkwE8oF6e": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 00:29:45 GMT-0800 (Pacific Standard Time)",
+    "created": 1609921785672,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 00:29:45 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLql1HmZLzfjo5qGw6": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 00:40:49 GMT-0800 (Pacific Standard Time)",
+    "created": 1609922449578,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 00:40:49 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLqm9461lV0ReRuEH0": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 00:40:54 GMT-0800 (Pacific Standard Time)",
+    "created": 1609922454174,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 00:40:54 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLqmz53p5drOpf_PoP": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 00:40:57 GMT-0800 (Pacific Standard Time)",
+    "created": 1609922457567,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 00:40:57 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLqnY9llampgHVr9nA": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 00:40:59 GMT-0800 (Pacific Standard Time)",
+    "created": 1609922459875,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 00:40:59 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLqozcu6AYI2-EbL-E": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 00:41:05 GMT-0800 (Pacific Standard Time)",
+    "created": 1609922465793,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 00:41:05 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLqpo0jBowOI7Zc5-x": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 00:41:09 GMT-0800 (Pacific Standard Time)",
+    "created": 1609922469146,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 00:41:09 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLvXG-30_TCOcoFuJC": {
+    "command": "tnt.triggerKey",
+    "completed": "Wed Jan 06 2021 01:01:39 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923699792,
+    "received": "Wed Jan 06 2021 01:01:39 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLvY7XsMldUI2D7TFl": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 01:01:43 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923703345,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 01:01:43 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLvZNcTes1xSk2PRpP": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 01:01:49 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923708471,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 01:01:49 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLv_UDHNzTL3r2a2iW": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 01:01:53 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923712990,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 01:01:53 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLva3eUMrbCWcXhsw-": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 01:01:55 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923715385,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 01:01:55 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLvaYrGTBfb5givz2v": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 01:01:57 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923717383,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 01:01:57 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLvauiki2orHQoOKWQ": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 01:01:58 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923718846,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 01:01:58 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLvbBAZLJy5Koof6py": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 01:02:00 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923719962,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 01:02:00 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLwLCy2zNxijFV_Hx4": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 01:05:12 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923912590,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 01:05:12 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLwLpleJHW8wmFDhVK": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 01:05:15 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923915137,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 01:05:15 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLwY7ac_MKXlOkzaBO": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 01:06:06 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923965494,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 01:06:06 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLwYyXnNPixNqOaKP8": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 01:06:09 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923968946,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 01:06:09 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLwabm4FOYzevs0gA6": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 01:06:19 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923979778,
+    "data": {
+      "hours": "00",
+      "minutes": "30",
+      "seconds": "00"
+    },
+    "received": "Wed Jan 06 2021 01:06:19 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLwcl6O0atNRjPF9gO": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 01:06:28 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923988567,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Wed Jan 06 2021 01:06:28 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLwea3ZQ4DXEaRJMEG": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 01:06:36 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923996051,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "23"
+    },
+    "received": "Wed Jan 06 2021 01:06:36 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQLweogBwMfo7v31ibw": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 01:06:37 GMT-0800 (Pacific Standard Time)",
+    "created": 1609923996988,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "52"
+    },
+    "received": "Wed Jan 06 2021 01:06:37 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPL1Lfo95HRwTi0x5a": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 16:56:18 GMT-0800 (Pacific Standard Time)",
+    "created": 1609980978626,
+    "received": "Wed Jan 06 2021 16:56:18 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPL1LhAelhUhKXXMIf": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 16:56:18 GMT-0800 (Pacific Standard Time)",
+    "created": 1609980978628,
+    "received": "Wed Jan 06 2021 16:56:18 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPLICNwRbtGTh6GvFG": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 16:57:27 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981047663,
+    "received": "Wed Jan 06 2021 16:57:27 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPLICPa_PjIlzRLp13": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 16:57:27 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981047665,
+    "received": "Wed Jan 06 2021 16:57:27 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPLSa7Jl5QE1O9fVAj": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 16:58:10 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981090207,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 16:58:10 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPLSztZLtXvZWsk9JS": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 16:58:11 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981091856,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 16:58:11 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPLTBmDWVgkngXdtD0": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 16:58:12 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981092681,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 16:58:12 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPLTPVG16hXCMxU7D1": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 16:58:13 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981093559,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 16:58:13 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPMVsKhUfqAzFRNy2N": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 17:02:45 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981365803,
+    "received": "Wed Jan 06 2021 17:02:45 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPMVsNVmh-OG8xF2DM": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 17:02:45 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981365807,
+    "received": "Wed Jan 06 2021 17:02:45 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPNnfCoxOZjT_e9Onu": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 17:08:25 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981704932,
+    "received": "Wed Jan 06 2021 17:08:25 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPNnfGEfNUmdxYg8AL": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 17:08:25 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981704936,
+    "received": "Wed Jan 06 2021 17:08:25 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPO8e1HP5FV0bQaGNi": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 17:09:55 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981794988,
+    "received": "Wed Jan 06 2021 17:09:55 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPO8e5f-_CMHWukRU5": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 17:09:55 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981794992,
+    "received": "Wed Jan 06 2021 17:09:55 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPOfcIyV99o0S2TRQs": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 17:12:14 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981934141,
+    "received": "Wed Jan 06 2021 17:12:14 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPOfcJY3FUtzS7OKM9": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 17:12:14 GMT-0800 (Pacific Standard Time)",
+    "created": 1609981934142,
+    "received": "Wed Jan 06 2021 17:12:14 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPPLITbkEQCjnK3Osn": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 17:15:09 GMT-0800 (Pacific Standard Time)",
+    "created": 1609982108932,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "06"
+    },
+    "received": "Wed Jan 06 2021 17:15:08 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPQ701g_Ovt52fQirf": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 17:18:32 GMT-0800 (Pacific Standard Time)",
+    "created": 1609982312556,
+    "received": "Wed Jan 06 2021 17:18:32 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPQ704_7VsxN4BiYDH": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 17:18:32 GMT-0800 (Pacific Standard Time)",
+    "created": 1609982312559,
+    "received": "Wed Jan 06 2021 17:18:32 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPQBjfOQvXHGvs13XG": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 17:18:51 GMT-0800 (Pacific Standard Time)",
+    "created": 1609982331925,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "06"
+    },
+    "received": "Wed Jan 06 2021 17:18:51 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPSQJq0ZYrUYnh1TRt": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 17:28:36 GMT-0800 (Pacific Standard Time)",
+    "created": 1609982915936,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "06"
+    },
+    "received": "Wed Jan 06 2021 17:28:35 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPSjwjevOjnIMPnrst": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 17:30:00 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983000409,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "07"
+    },
+    "received": "Wed Jan 06 2021 17:30:00 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPSxRr-Gtvei0Es91U": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 17:30:55 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983055713,
+    "received": "Wed Jan 06 2021 17:30:55 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPSxRxspDIBb-uK_-v": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 17:30:55 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983055719,
+    "received": "Wed Jan 06 2021 17:30:55 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPSyzp08gWMsSQkxJm": {
+    "command": "tnt.solve",
+    "completed": "Wed Jan 06 2021 17:31:02 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983062047,
+    "received": "Wed Jan 06 2021 17:31:02 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPT43g60L8R50e8Xy0": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 17:31:27 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983086933,
+    "received": "Wed Jan 06 2021 17:31:26 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPT43hYVWGAp32qrTz": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 17:31:27 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983086935,
+    "received": "Wed Jan 06 2021 17:31:26 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPTAiagH-7Qg1qrSbn": {
+    "command": "tnt.solve",
+    "completed": "Wed Jan 06 2021 17:31:54 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983114192,
+    "received": "Wed Jan 06 2021 17:31:54 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPThLTulTrD2RfyZgH": {
+    "command": "tnt.solve",
+    "completed": "Wed Jan 06 2021 17:34:11 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983251912,
+    "received": "Wed Jan 06 2021 17:34:11 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPTvHmsBtq_qoFHXUz": {
+    "command": "tnt.solve",
+    "completed": "Wed Jan 06 2021 17:35:09 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983309020,
+    "received": "Wed Jan 06 2021 17:35:09 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPUCEVWrmcdjNC-MgY": {
+    "command": "tnt.solve",
+    "completed": "Wed Jan 06 2021 17:36:22 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983382538,
+    "received": "Wed Jan 06 2021 17:36:22 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPUbGbqFeTJwMtFl87": {
+    "command": "tnt.solve",
+    "completed": "Wed Jan 06 2021 17:38:09 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983489169,
+    "received": "Wed Jan 06 2021 17:38:09 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPUpKytImz150gFwDb": {
+    "command": "tnt.solve",
+    "completed": "Wed Jan 06 2021 17:39:06 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983546792,
+    "received": "Wed Jan 06 2021 17:39:06 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPV0ZAaRNPcILdZorh": {
+    "canceled": "Wed Jan 06 2021 17:40:09 GMT-0800 (Pacific Standard Time)",
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 17:40:09 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983596853
+  },
+  "-MQPV0ZBd9E-AQDBbjAK": {
+    "canceled": "Wed Jan 06 2021 17:40:09 GMT-0800 (Pacific Standard Time)",
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 17:40:09 GMT-0800 (Pacific Standard Time)",
+    "created": 1609983596854
+  },
+  "-MQPoZWZZwpd6MGy6QVa": {
+    "command": "tnt.disableDoorAjarSensor",
+    "completed": "Wed Jan 06 2021 19:09:42 GMT-0800 (Pacific Standard Time)",
+    "created": 1609988982910,
+    "received": "Wed Jan 06 2021 19:09:42 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPoeJqEOCbt677nM3R": {
+    "command": "tnt.enableDoorAjarSensor",
+    "completed": "Wed Jan 06 2021 19:10:06 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989006673,
+    "received": "Wed Jan 06 2021 19:10:06 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPpCZVqUzjF4USfssH": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 19:12:31 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989151035,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Wed Jan 06 2021 19:12:31 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPpEiaeSECulIpgpja": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 19:12:39 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989159872,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "22"
+    },
+    "received": "Wed Jan 06 2021 19:12:39 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPpdjvg05e1yoqMlxi": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 19:14:26 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989266454,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:14:26 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPpe6aY8JVcbcbBdc1": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 19:14:28 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989267969,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:14:28 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPpeJsHdTxxanxcVMR": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 19:14:28 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989268819,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:14:28 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPpeYjbQeiOVFG8Ppt": {
+    "command": "tnt.triggerLockSolenoid",
+    "completed": "Wed Jan 06 2021 19:14:29 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989269770,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:14:29 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPpg7eh9HFLDZDCEij": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:14:36 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989276229,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:14:36 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPpgY3HW9c4Ds82E1u": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:14:38 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989277919,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:14:37 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPph6vVwr6OXqK_nJz": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:14:41 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989280278,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:14:41 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPphWnEKHRKqnq7QjS": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:14:42 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989281934,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:14:42 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPpjLWD3b0VVYCxB9j": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:14:49 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989289404,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:14:49 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPpjw44nFn7qWvH_RG": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:14:51 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989291807,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:14:51 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPpnHYDCKH2doz-E5e": {
+    "command": "tnt.triggerKey",
+    "completed": "Wed Jan 06 2021 19:15:05 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989305534,
+    "received": "Wed Jan 06 2021 19:15:05 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPpomo9aAGLDrlNQb0": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:15:11 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989311695,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:15:11 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPrWobZKs8l-BMcZzZ": {
+    "command": "tnt.triggerKey",
+    "completed": "Wed Jan 06 2021 19:22:38 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989761648,
+    "received": "Wed Jan 06 2021 19:22:38 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPr_ju1-AvlcsuepaT": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:22:54 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989774357,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:22:54 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPrc2AMI2NY-uQuLQD": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:23:03 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989783781,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:23:03 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPrprQcNrz_IA4Kh9O": {
+    "command": "paint.drop",
+    "completed": "Wed Jan 06 2021 19:24:00 GMT-0800 (Pacific Standard Time)",
+    "created": 1609989840374,
+    "received": "Wed Jan 06 2021 19:24:00 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPuiN1pPchKkrgEqiu": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 19:36:36 GMT-0800 (Pacific Standard Time)",
+    "created": 1609990596117,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "06"
+    },
+    "received": "Wed Jan 06 2021 19:36:36 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPuucdlCDYyfM9jKA9": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 19:37:26 GMT-0800 (Pacific Standard Time)",
+    "created": 1609990646336,
+    "received": "Wed Jan 06 2021 19:37:26 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPuuci7ag8fo1DNkHD": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 19:37:26 GMT-0800 (Pacific Standard Time)",
+    "created": 1609990646341,
+    "received": "Wed Jan 06 2021 19:37:26 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPv0KI9_h6Cq29rYox": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 19:37:53 GMT-0800 (Pacific Standard Time)",
+    "created": 1609990673770,
+    "data": {
+      "hours": "00",
+      "minutes": "00",
+      "seconds": "06"
+    },
+    "received": "Wed Jan 06 2021 19:37:53 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxO11NVSX-xHLLOnh": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 19:48:15 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991295129,
+    "received": "Wed Jan 06 2021 19:48:15 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxO12QKzx1gNEamvP": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 19:48:15 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991295130,
+    "received": "Wed Jan 06 2021 19:48:15 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxSM9YTOMLYxJOG3f": {
+    "command": "tnt.triggerKey",
+    "completed": "Wed Jan 06 2021 19:48:32 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991312865,
+    "received": "Wed Jan 06 2021 19:48:32 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPx_fCQg8M5W59whOE": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:49:06 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991346916,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:49:06 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxbrz3XvyMK7JIzoy": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:49:16 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991355926,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:49:15 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxdycTTd5xg6uYT_3": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:49:24 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991364543,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:49:24 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxlskkuw4k0uxlJtv": {
+    "command": "tnt.triggerKey",
+    "completed": "Wed Jan 06 2021 19:49:57 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991396935,
+    "received": "Wed Jan 06 2021 19:49:57 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxnNMUPcwlyvPnpRi": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 19:50:03 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991403054,
+    "received": "Wed Jan 06 2021 19:50:03 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxnNNVbqgqQDX9RE4": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 19:50:03 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991403055,
+    "received": "Wed Jan 06 2021 19:50:03 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxqERJqUbts3twgDF": {
+    "command": "tnt.triggerKey",
+    "completed": "Wed Jan 06 2021 19:50:14 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991414770,
+    "received": "Wed Jan 06 2021 19:50:14 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxtn8QaHMrNwKH3Gc": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 19:50:29 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991429344,
+    "received": "Wed Jan 06 2021 19:50:29 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxtn9hbz4pIPAdQuM": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 19:50:29 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991429344,
+    "received": "Wed Jan 06 2021 19:50:29 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxwEeBPb_C_kpyqaO": {
+    "command": "tnt.triggerKey",
+    "completed": "Wed Jan 06 2021 19:50:39 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991439361,
+    "received": "Wed Jan 06 2021 19:50:39 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxxqtE0ch5DZl8Mjd": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 19:50:46 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991445968,
+    "received": "Wed Jan 06 2021 19:50:46 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPxxquPWU5Twe0MGDz": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 19:50:46 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991445969,
+    "received": "Wed Jan 06 2021 19:50:46 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPy4W0nt_9lrHW9rj-": {
+    "command": "tnt.reset",
+    "completed": "Wed Jan 06 2021 19:51:17 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991477336,
+    "received": "Wed Jan 06 2021 19:51:17 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPy4W1H2UDidyOb0oI": {
+    "command": "compass.reset",
+    "completed": "Wed Jan 06 2021 19:51:17 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991477337,
+    "received": "Wed Jan 06 2021 19:51:17 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPy87CbJXfUvB75520": {
+    "command": "tnt.triggerKey",
+    "completed": "Wed Jan 06 2021 19:51:32 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991492132,
+    "received": "Wed Jan 06 2021 19:51:32 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPy8z1a0OpItYFGSg6": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:51:35 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991495641,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:51:35 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyBpNVwYWqEEpWZbB": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:51:47 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991507311,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:51:47 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyCLjf7AhFlguILMB": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:51:49 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991509446,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:51:49 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyDGM9dvAa9V61HOk": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:51:53 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991513198,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:51:53 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyDf-pq7FxbxOzh2y": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:51:54 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991514839,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:51:54 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyEt6O_Lw5JnVTTUv": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:51:59 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991519838,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:51:59 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyFMLY9nTEJ6Uy_iu": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:52:01 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991521773,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:52:01 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyHP_Ecwjn9QYQEO1": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:52:10 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991530172,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:52:10 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyIkpmDnxaZH7Gprw": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:52:15 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991535692,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:52:15 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyKSzV_i5yI9plwCf": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:52:22 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991542678,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:52:22 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyLXUSozCuEuc1Mmm": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:52:27 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991547062,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:52:27 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyMuacHr8MMfB6HQt": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:52:32 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991552701,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:52:32 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyNOPp4J7HLR7Cxzd": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:52:34 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991554673,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:52:34 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyOHfRrLSJwja9ASt": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:52:38 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991558338,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:52:38 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyO_I7azztmwJJhCg": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:52:39 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991559530,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:52:39 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyRNkihJRJTWPshSb": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:52:51 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991571015,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:52:51 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyRyqhYAZCzH80gat": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:52:53 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991573453,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:52:53 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyW7QPwFJ__joqjfv": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:53:10 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991590449,
+    "data": {
+      "enable": true
+    },
+    "received": "Wed Jan 06 2021 19:53:10 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQPyX4-GEq8cDnrpPW-": {
+    "command": "tnt.triggerKeySolenoid",
+    "completed": "Wed Jan 06 2021 19:53:14 GMT-0800 (Pacific Standard Time)",
+    "created": 1609991594327,
+    "data": {
+      "enable": false
+    },
+    "received": "Wed Jan 06 2021 19:53:14 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQQ5yKmh707Yvfbw0m9": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 20:30:07 GMT-0800 (Pacific Standard Time)",
+    "created": 1609993807238,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Wed Jan 06 2021 20:30:07 GMT-0800 (Pacific Standard Time)"
+  },
+  "-MQQ68CvFVXFLr2qWnXI": {
+    "command": "tnt.setTime",
+    "completed": "Wed Jan 06 2021 20:30:51 GMT-0800 (Pacific Standard Time)",
+    "created": 1609993851795,
+    "data": {
+      "hours": "00",
+      "minutes": "01",
+      "seconds": "01"
+    },
+    "received": "Wed Jan 06 2021 20:30:51 GMT-0800 (Pacific Standard Time)"
+  }
+}
