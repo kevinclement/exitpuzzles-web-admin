@@ -45,7 +45,7 @@ export default {
   data () {
     return {
       logs: [],
-      limit: 50 + 1,
+      limit: 500 + 1,
       firstKey: null,
       lastKey: null,
       firstTime: null,
