@@ -189,6 +189,9 @@ function formatDate(dateStr) {
   display: flex;
   flex-direction: row
 }
+.controls {
+  user-select: none;
+}
 .spacer {
   flex-basis: 0%;
   flex-grow: 1;
