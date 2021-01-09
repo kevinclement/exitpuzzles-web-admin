@@ -6,7 +6,6 @@ import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import Firebase from 'firebase'
-import VueFire from 'vuefire'
 import Operations from './Operations'
 import Runs from './Runs'
 import GoTrue from 'gotrue-js'
@@ -31,7 +30,6 @@ let museumOps = new Operations(db, 'museum/operations')
 let museumRoot = db.ref('museum')
 
 Vue.use(Vuetify)
-Vue.use(VueFire)
 
 Vue.config.productionTip = false
 Vue.config.devtools = false

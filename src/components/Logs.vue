@@ -109,9 +109,15 @@ export default {
   methods: {
     setQuery(query) {
 
+      // clear out logs
+      this.logs = [];
+
       // hookup handler to process each item in the snapshot
       query.on("child_added", (snapshot) => {
         let log = snapshot.val()
+
+        // add to logs array in data
+        this.logs.push(log)
 
         // track first item found
         if (this.updating) {
@@ -132,7 +138,6 @@ export default {
 
       // bind it to vue
       this.updating = true
-      this.$bindAsArray('logs', query)
     },
 
     first() {
