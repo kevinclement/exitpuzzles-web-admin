@@ -51,7 +51,7 @@
         return this.encoder ? "disable heads" : "enable heads"
       },
       encoderIcon: function() {
-        return this.encoder ? "timer" : "timer_off"
+        return this.encoder ? "face_retouching_natural" : "face_retouching_off"
       }
     },
     created () {
