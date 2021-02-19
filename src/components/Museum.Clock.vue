@@ -7,7 +7,7 @@
         <span class="secTitle" @click="$root.$emit('show-details', 'clock')"><v-icon class="cardIcon">access_time</v-icon>Clock</span>
       </v-toolbar-title>
 
-      <v-btn v-if="isConnected" flat icon class="actionButton" @click.native="toggleMotor" :title="motorTitle"><v-icon>{{motorIcon}}</v-icon></v-btn>
+      <v-btn v-if="isConnected" flat icon class="actionButton" @click.native="toggleEncoder" :title="encoderTitle"><v-icon>{{encoderIcon}}</v-icon></v-btn>
       <v-btn v-if="!solved && isConnected" flat icon class="actionButton" @click.native="dialog = true"><v-icon>lock</v-icon></v-btn>
 
       <span class="spacer" />
@@ -41,18 +41,17 @@
     data: () => ({
       isConnected: true,
       solved: false,
-      motor: false,
+      encoder: false,
       hour: false,
       minute: false,
-      motor: false,
       dialog: false,
     }),
     computed: {
-      motorTitle: function() {
-        return this.motor ? "disable motor" : "enable motor"
+      encoderTitle: function() {
+        return this.encoder ? "disable heads" : "enable heads"
       },
-      motorIcon: function() {
-        return this.motor ? "timer" : "timer_off"
+      encoderIcon: function() {
+        return this.encoder ? "timer" : "timer_off"
       }
     },
     created () {
@@ -64,7 +63,7 @@
         this.isConnected = clock.info.isConnected
         this.hour = clock.hs
         this.minute = clock.ms
-        this.motor = clock.motor
+        this.encoder = clock.encoder
       })
     },
     methods: {
@@ -72,8 +71,8 @@
         this.dialog = false
         this.operations.addWithToast('clock.open', this.snack('Opened successfully'))
       },
-      toggleMotor() {
-        this.operations.addWithToast('clock.motor', this.snack('Motor toggled'))
+      toggleEncoder() {
+        this.operations.addWithToast('clock.encoder', this.snack('Encoder toggled'))
       }
     }
   }
