@@ -527,10 +527,10 @@ export default {
       this.lockSolenoid = tnt.lockSolenoid
       
       // update might be partial, so fill out from our state
-      let h = tnt.time.hours ? tnt.time.hours : this.hours
-      let m = tnt.time.minutes ? tnt.time.minutes : this.minutes
-      let s = tnt.time.seconds ? tnt.time.seconds : this.seconds
-      let ts = tnt.time.timestamp ? tnt.time.timestamp : this.timerTimeStamp
+      let h = tnt.time.hours !== undefined ? tnt.time.hours : this.hours
+      let m = tnt.time.minutes !== undefined ? tnt.time.minutes : this.minutes
+      let s = tnt.time.seconds !== undefined ? tnt.time.seconds : this.seconds
+      let ts = tnt.time.timestamp !== undefined ? tnt.time.timestamp : this.timerTimeStamp
       let elapsed = Math.floor(((new Date()).getTime() - ts) / 1000)
 
       this.timeLeftInSeconds = (h * 3600) + (m * 60) + s - elapsed
