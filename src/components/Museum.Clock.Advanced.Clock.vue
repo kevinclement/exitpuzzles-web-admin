@@ -104,8 +104,6 @@
       },
 
       drawTime(ctx, radius, hour, minute){        
-        console.log(`hour: ${hour} min: ${minute}`);
-
         // calculate angle of hour hand
         hour = (hour*Math.PI/6);
 
