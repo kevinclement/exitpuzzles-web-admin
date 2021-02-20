@@ -13,10 +13,10 @@
 
   <!-- Analog Clock -->
   <analog-clock 
-    v-bind:hourPos="hourPos"
-    v-bind:minPos="minPos"
-    v-bind:hourSolved="hourSolved"
-    v-bind:minSolved="minSolved"
+    :hourPos="hourPos"
+    :minPos="minPos"
+    :hourSolved="hourSolved"
+    :minSolved="minSolved"
   />
 
   <div class="actionRow" style="padding-left:15px;font-size:18px;font-weight:400;">
