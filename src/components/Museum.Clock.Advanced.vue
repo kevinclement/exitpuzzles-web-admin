@@ -12,7 +12,12 @@
   </div>
 
   <!-- Analog Clock -->
-  <analog-clock v-bind:hourPos="hourPos" v-bind:minPos="minPos"/>
+  <analog-clock 
+    v-bind:hourPos="hourPos"
+    v-bind:minPos="minPos"
+    v-bind:hourSolved="hourSolved"
+    v-bind:minSolved="minSolved"
+  />
 
   <div class="actionRow" style="padding-left:15px;font-size:18px;font-weight:400;">
     HOUR
@@ -40,7 +45,9 @@
 
     data: () => ({
       hourPos: 0,
-      minPos: 0
+      hourSolved: false,
+      minPos: 0,
+      minSolved: false,
     }),
     computed: {},
     watch: {},
@@ -50,7 +57,9 @@
         if (clock == null) return
 
         this.hourPos = clock.hourMotorPos
+        this.hourSolved = clock.hs
         this.minPos = clock.minMotorPos
+        this.minSolved = clock.ms
       })
     },
     mounted() {},

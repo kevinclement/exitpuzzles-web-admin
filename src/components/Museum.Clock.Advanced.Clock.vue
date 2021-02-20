@@ -9,7 +9,7 @@
 <script>
   const NUM_STEPS = 720
   export default {
-    props: ['hourPos', 'minPos'],
+    props: ['hourPos', 'minPos', 'hourSolved', 'minSolved'],
 
     data: () => ({
       ctx: null,
@@ -69,7 +69,6 @@
         grad.addColorStop(1, '#9e9e9e');
 
         // define gradient as stroke style
-        //ctx.strokeStyle = "red";
         ctx.strokeStyle = grad;
         ctx.lineWidth = radius*0.1;
         ctx.stroke(); 
@@ -78,9 +77,9 @@
         ctx.beginPath();
         ctx.arc(0,0, radius*0.1,0,2*Math.PI);
         
-        // #333
-        ctx.fillStyle = '#000000de';
+        ctx.fillStyle = '#9E9E9E';
         ctx.fill();
+        ctx.fillStyle = '#333';
       },
 
       drawNumbers(ctx, radius) {
@@ -110,10 +109,10 @@
         minute=(minute*Math.PI/30);
 
         // make minute hand 80% of canvas's radius
-        this.drawHand(ctx, minute, radius*0.7, radius*0.07, "#eee");
+        this.drawHand(ctx, minute, radius*0.7, radius*0.07, this.minSolved ? "#4CAF50" : "#9E9E9E");
 
         // make hour hand 50% of canvas's radius
-        this.drawHand(ctx, hour, radius*0.5, radius*0.07, "#eee");
+        this.drawHand(ctx, hour, radius*0.5, radius*0.07, this.hourSolved ? "#4CAF50" : "#9E9E9E");
       },
 
       drawHand(ctx, pos, length, width, color){
@@ -124,8 +123,7 @@
         ctx.rotate(pos);
         ctx.lineTo(0, -length);
 
-        // todo: make green on solve
-        ctx.strokeStyle = "#000000de";
+        ctx.strokeStyle = color;
         ctx.stroke();
         ctx.rotate(-pos);
       }
