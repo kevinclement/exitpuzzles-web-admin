@@ -1,10 +1,6 @@
 <template>
 <div>
   <div class="actionRow" style="padding-left:15px;font-size:18px;font-weight:400;">
-    <v-btn @click.native="tmpModHour(true)" style="margin-bottom:10px;min-width:10px;width:40px;">h+</v-btn>
-    <v-btn @click.native="tmpModHour(false)" style="margin-bottom:10px;min-width:10px;width:40px;">h-</v-btn>
-    <v-btn @click.native="tmpModMin(true)" style="margin-bottom:10px;min-width:10px;width:40px;">m+</v-btn>
-    <v-btn @click.native="tmpModMin(false)" style="margin-bottom:10px;min-width:10px;width:40px;">m-</v-btn>
     <canvas id="clockCanvas" width="200" height="200" style=""></canvas>
   </div>
 </div>
@@ -18,9 +14,6 @@
     data: () => ({
       ctx: null,
       radius: 0,
-
-      tmpHour: 1,
-      tmpMin: 30,
     }),
     computed: {
     },
@@ -44,36 +37,6 @@
       this.tmp();
     },
     methods: {
-      tmpModHour(inc) {
-        if (inc) {
-          this.tmpHour++;
-        } else {
-          this.tmpHour--;
-        }
-        
-        if (this.tmpHour == 0) {
-          this.tmpHour = 12;
-        }
-        if (this.tmpHour == 13) {
-          this.tmpHour = 1;
-        }
-        this.tmp();
-      },
-      tmpModMin(inc) {
-        if (inc) {
-          this.tmpMin = this.tmpMin + 5;
-        } else {
-          this.tmpMin = this.tmpMin - 5;
-        }
-        
-        if (this.tmpMin == 0) {
-          this.tmpMin = 60;
-        }
-        if (this.tmpMin == 65) {
-          this.tmpMin = 5;
-        }
-        this.tmp();
-      },
       tmp() {
 
         // minuteDec => i => 145,150,155,etc
