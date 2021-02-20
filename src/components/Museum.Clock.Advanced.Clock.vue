@@ -15,8 +15,7 @@
       ctx: null,
       radius: 0,
     }),
-    computed: {
-    },
+    computed: {},
     watch: {
       hourPos: function(newTime) {
         this.draw();
@@ -25,8 +24,7 @@
         this.draw();
       },
     },
-    created() {
-    },
+    created() {},
     mounted() {
       let canvas = document.getElementById('clockCanvas');    
       this.ctx = canvas.getContext('2d');
