@@ -19,10 +19,10 @@
     },
     watch: {
       hourPos: function(newTime) {
-        this.tmp();
+        this.draw();
       },
       minPos: function(newTime) {
-        this.tmp();
+        this.draw();
       },
     },
     created() {
@@ -34,30 +34,26 @@
       this.ctx.translate(this.radius, this.radius);
       this.radius = this.radius * 0.90;
 
-      this.tmp();
+      this.draw();
     },
     methods: {
-      tmp() {
-
-        // minuteDec => i => 145,150,155,etc
-        // minute => m => 155,145,140
-        // encHour:-319,encMinute:312,encoder:true,hs:true,ms:true,hourMotor:530,minuteMotor:160,solved:false
-
+      draw() {
         this.drawFace(this.ctx, this.radius);
         this.drawNumbers(this.ctx, this.radius);
-        this.drawTime(this.ctx, this.radius, this.tmpCalcNum('hour', this.hourPos), this.tmpCalcNum('min', this.minPos) * 5);
+        this.drawTime(
+          this.ctx,
+          this.radius,
+          this.calcPosition('hour', this.hourPos),
+          this.calcPosition('min', this.minPos) * 5);
       },
-      tmpCalcNum(label, pos) {
-        let frac = (pos / NUM_STEPS);
-        let fracH = frac * 12;
-        let absH =  6 - fracH;
-        if (absH <= 0) {
-          absH = 12 + absH;
+      calcPosition(label, motorPos) {
+        let pos =  6 - ((motorPos / NUM_STEPS) * 12);
+        if (pos <= 0) {
+          pos = 12 + pos;
         }
 
-        console.log(`${label} ${pos} => ${absH}    frac:${frac} fracH:${fracH}`)
-
-        return absH;
+        // console.log(`${label} ${motorPos} => ${pos}`)
+        return pos;
       },
       drawFace(ctx, radius) {
         var grad;
