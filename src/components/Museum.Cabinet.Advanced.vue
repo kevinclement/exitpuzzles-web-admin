@@ -41,6 +41,11 @@
     },
     methods: {
       ping() {
+        // clear data object before issuing command
+        this.status = "";
+        this.statusCheckTime = "";
+        this.statusError = "";
+
         this.operations.add({ command: 'cabinet.ping' }).on("value", (snapshot) => {
           let ping = snapshot.val()
           if (ping == null) return;
