@@ -10,6 +10,14 @@
   <div class="actionRow">
     <v-btn small color="red lighten-3" @click.native="$root.$emit('reboot-device', 'cabinet')">Reboot</v-btn>
   </div>
+  <div class="actionRow" style="padding-top:50px;">
+    <v-btn @click.native="ping"><v-icon style="padding-right:5px;">offline_bolt</v-icon>Check Status</v-btn>
+  </div>
+  <div class="actionRow" style="padding-left:15px;padding-top:5px;" v-if="status != ''" :class="statusToClass()">
+        <div style="font-family: Monaco, monospace;">{{status}} @ {{statusCheckTime}}!</div>
+        <div style="font-family: Monaco, monospace;">{{statusError}}</div>
+  </div>
+
 
 </div>
 </template>
@@ -19,6 +27,9 @@
     props: ['operations'],
 
     data: () => ({
+      status: "",
+      statusCheckTime: "",
+      statusError: "",
     }),
     computed: {
     },
@@ -29,10 +40,42 @@
       })
     },
     methods: {
+      ping() {
+        this.operations.add({ command: 'cabinet.ping' }).on("value", (snapshot) => {
+          let ping = snapshot.val()
+          if (ping == null) return;
+          
+           if (ping.completed) {
+            this.status = "OK";
+            let compTime = new Date(ping.completed);
+            this.statusCheckTime = compTime.toLocaleString();
+          }
+
+          if (ping.error) {
+            this.status = "ERROR";
+            this.statusError = ping.error;
+          }
+        });
+      },
+
+      statusToClass() {
+        if (this.status == "ERROR") {
+          return "statusError";
+        } 
+        else {
+          return "statusOkay";
+        }
+      },
     }
   }
 </script>
 
 <style scoped>
+  .statusOkay {
+    color: green;
+  }
+  .statusError {
+    color: red;
+  }
 </style>
 
