@@ -8,9 +8,10 @@
       </v-toolbar-title>
   
       <div v-if="isConnected">
-        <v-btn :disabled="level < 2" v-if="!isOpened" class="actionButton" flat icon @click.native="forceFail" title="force fail"><v-icon>reply_all</v-icon></v-btn>
+        <v-btn v-if="!isOpened" class="actionButton hideIfNarrow" flat icon @click.native="toggleSensors" :title="sensorTitle"><v-icon>{{sensorIcon}}</v-icon></v-btn>
         <v-btn :disabled="level < 2" v-if="!isOpened" class="actionButton" flat icon @click.native="levelDown" title="level down"><v-icon>arrow_downward</v-icon></v-btn>
         <v-btn :disabled="level > 7" v-if="!isOpened" class="actionButton" flat icon @click.native="levelUp" title="level up"><v-icon>arrow_upward</v-icon></v-btn>
+        <v-btn :disabled="level < 2" v-if="!isOpened" class="actionButton" flat icon @click.native="forceFail" title="force fail"><v-icon>reply_all</v-icon></v-btn>
         <v-btn v-if="!isOpened" class="actionButton" flat icon @click.native="dialog = true" title="solve and open"><v-icon>emoji_events</v-icon></v-btn>
       </div>
 
@@ -50,10 +51,17 @@
     data: () => ({
       isConnected: true,
       isOpened: false,
+      sensorsDisabled: false,
       dialog: false,
       level: 0,
     }),
     computed: {
+      sensorTitle: function() {
+        return this.sensorsDisabled ? "enable sensors" : "disable sensors"
+      },
+      sensorIcon: function() {
+        return this.sensorsDisabled ? "gps_not_fixed" : "gps_off"
+      }
     },
     created () {
       this.$root.$data.museumRoot.child('devices/stairs').on('value', (snapshot) => {
@@ -62,6 +70,7 @@
 
         this.isOpened = !stairs.magnet;
         this.level = stairs.level;
+        this.sensorsDisabled = stairs.sensorsDisabled;
         this.isConnected = stairs.info.isConnected;
       })
     },
@@ -74,6 +83,9 @@
       },
       levelDown() {
         this.operations.add({ command: 'stairs.down' })
+      },
+      toggleSensors() {
+        this.operations.add({ command: 'stairs.sensors' })
       },
       solved() {
         this.dialog = false
