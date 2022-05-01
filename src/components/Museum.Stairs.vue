@@ -8,7 +8,7 @@
       </v-toolbar-title>
   
       <div v-if="isConnected">
-        <v-btn v-if="!isOpened" class="actionButton" flat icon @click.native="forceFail" title="force fail"><v-icon>reply_all</v-icon></v-btn>
+        <v-btn :disabled="level < 2" v-if="!isOpened" class="actionButton" flat icon @click.native="forceFail" title="force fail"><v-icon>reply_all</v-icon></v-btn>
         <v-btn :disabled="level < 2" v-if="!isOpened" class="actionButton" flat icon @click.native="levelDown" title="level down"><v-icon>arrow_downward</v-icon></v-btn>
         <v-btn :disabled="level > 7" v-if="!isOpened" class="actionButton" flat icon @click.native="levelUp" title="level up"><v-icon>arrow_upward</v-icon></v-btn>
         <v-btn v-if="!isOpened" class="actionButton" flat icon @click.native="dialog = true" title="solve and open"><v-icon>emoji_events</v-icon></v-btn>
