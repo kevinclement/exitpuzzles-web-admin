@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "exitpuzzles-admin"
-  }
+    "default": "exitpuzzles-admin",
+    "prod": "exitpuzzles-admin"
+  },
+  "targets": {},
+  "etags": {}
 }
