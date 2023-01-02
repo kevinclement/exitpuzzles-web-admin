@@ -52,6 +52,19 @@
                   ></v-switch>
                 </div>
               </v-flex>
+              <v-flex xs6>
+                <div style="display:block">
+                  <span>Pieces</span>
+                  <v-switch 
+                    primary
+                    :label="`${boolToString(!chess.piecesDisabled)}`"
+                    v-model="!chess.piecesDisabled"
+                    :disabled="!isConnected"
+                    :hide-details="true"
+                    @click.native="togglePiecesClicked"
+                  ></v-switch>
+                </div>
+              </v-flex>
             </div>
 
           </v-flex>
@@ -164,6 +177,7 @@ export default {
         piece_2: false,
         rfid_solved: false,
         lights: false,
+        piecesDisabled: false,
         solved: false,
       },
       mailbox: {
@@ -196,6 +210,7 @@ export default {
       this.chess.piece_2 = chess.piece_2;
       this.chess.rfid_solved = chess.rfid_solved;
       this.chess.lights = chess.lights;
+      this.chess.piecesDisabled = chess.piecesDisabled;
       this.chess.solved = chess.solved;
     });
 
@@ -293,7 +308,17 @@ export default {
             }
         });
       }
+    },
+
+    togglePiecesClicked() {
+      let cmd = !this.chess.piecesDisabled ? "chess.piecesOff" : "chess.piecesOn"
+      let resTxt = !this.chess.piecesDisabled ? "off" : "on"
       
+      this.operations.add({ command: cmd }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack(`Pieces turned ${resTxt} successfully.`)
+          }
+      });
     },
 
   }
