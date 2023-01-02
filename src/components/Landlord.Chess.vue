@@ -66,20 +66,22 @@
 
               <v-list dense>
                 <v-list-tile>
-                  <v-list-tile-content>Light:</v-list-tile-content>
+                  <v-list-tile-content>Bust:</v-list-tile-content>
+                  <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
+                    <span :class="{ lightDotOff: !chess.bust }" class="lightDot" style="background:#66BB6A"/>
+                  </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile>
+                  <v-list-tile-content>Pieces:</v-list-tile-content>
                   <v-list-tile-content class="align-end">
                     <!-- <v-icon :style="{ color: '#FFC107' }">{{light ? 'lightbulb_outline' : ''}}</v-icon> -->
                   </v-list-tile-content>
                 </v-list-tile>
-                
-                <v-list-tile>  
-                  <v-list-tile-content>Compass:</v-list-tile-content>
-                  <!-- <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
-                    <span :class="{ lightDotOff: !compass.red    }" class="lightDot" style="background:#EF5350"/>
-                    <span :class="{ lightDotOff: !compass.green  }" class="lightDot" style="background:#43A047"/>
-                    <span :class="{ lightDotOff: !compass.blue   }" class="lightDot" style="background:#1E88E5"/>
-                    <span :class="{ lightDotOff: !compass.yellow }" class="lightDot" style="background:#FFCA28"/>
-                  </v-list-tile-content> -->
+                <v-list-tile>
+                  <v-list-tile-content>Solved:</v-list-tile-content>
+                  <v-list-tile-content class="align-end">
+                    <!-- <v-icon :style="{ color: '#FFC107' }">{{light ? 'lightbulb_outline' : ''}}</v-icon> -->
+                  </v-list-tile-content>
                 </v-list-tile>
 
                 <v-divider/>
