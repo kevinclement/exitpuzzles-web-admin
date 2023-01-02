@@ -38,7 +38,8 @@
                 </div>
             </v-flex>
 
-            <div style="display:flex;margin-top:10px;">
+            <!-- Toggles -->
+            <div style="display:flex;margin-top:10px;margin-bottom:15px">
               <v-flex xs6>
                 <div style="display:block">
                   <span>Lights</span>
