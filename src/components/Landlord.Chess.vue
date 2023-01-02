@@ -41,15 +41,15 @@
             <div style="display:flex;margin-top:10px;">
               <v-flex xs6>
                 <div style="display:block">
-                  <span>Toggle Foo</span>
-                  <!-- <v-switch 
+                  <span>Lights</span>
+                  <v-switch 
                     primary
-                    :label="`${boolToString(toggleErrors)}`"
-                    v-model="toggleErrors"
-                    :disabled="!isConnected"
-                    @click.native="toggleErrorsClicked"
+                    :label="`${boolToOnOff(chess.lights)}`"
+                    v-model="chess.lights"
+                    :disabled="!chess.lights"
+                    @click.native="toggleLightsClicked"
                     :hide-details="true"
-                  ></v-switch> -->
+                  ></v-switch>
                 </div>
               </v-flex>
             </div>
@@ -163,6 +163,7 @@ export default {
         piece_1: false,
         piece_2: false,
         rfid_solved: false,
+        lights: false,
         solved: false,
       },
       mailbox: {
@@ -194,6 +195,7 @@ export default {
       this.chess.piece_1 = chess.piece_1;
       this.chess.piece_2 = chess.piece_2;
       this.chess.rfid_solved = chess.rfid_solved;
+      this.chess.lights = chess.lights;
       this.chess.solved = chess.solved;
     });
 
@@ -210,6 +212,10 @@ export default {
   methods: {
     boolToString: function(b) {
       return b ? "Enabled" : "Disabled"
+    },
+
+    boolToOnOff: function(b) {
+      return b ? "ON" : "OFF"
     },
 
     confirm(title, text, command, toastResp) {
@@ -276,6 +282,18 @@ export default {
             this.snack('Chess solve board triggered successfully.')
           }
       });
+    },
+
+    toggleLightsClicked() {
+      // Should only trigger for on->off override
+      if (!this.chess.lights) {
+        this.operations.add({ command: 'chess.lightsOff' }).on("value", (snapshot) => {
+            if (snapshot.val().received) {
+              this.snack('Lights turned off successfully.')
+            }
+        });
+      }
+      
     },
 
   }
