@@ -110,7 +110,7 @@
                 <v-list-tile>
                   <v-list-tile-content>Mailbox:</v-list-tile-content>
                   <v-list-tile-content class="align-end">
-                    {{ mailbox.state }}
+                    {{ prettyMailboxState() }}
                   </v-list-tile-content>
                 </v-list-tile>
 
@@ -231,6 +231,30 @@ export default {
 
     boolToOnOff: function(b) {
       return b ? "ON" : "OFF"
+    },
+
+    prettyMailboxState() {
+      let txt = ""
+      switch(this.mailbox.state) {
+        case "WAITING":
+          txt = "READY"
+          break;
+        case "STARTING":
+          txt = "VACUUM"
+          break;
+        case "DROPPING":
+          txt = "DROPPING"
+          break;
+        case "SETTLING":
+          txt = "WAITING"
+          break;
+        case "DONE":
+          txt = "DONE"
+          break;
+        default:
+          txt = this.mailbox.state
+      }
+      return txt
     },
 
     confirm(title, text, command, toastResp) {
