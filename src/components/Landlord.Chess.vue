@@ -22,16 +22,16 @@
                 <div style="display:block">
                   <span>Actions</span>
                   <div>
-                    <v-btn flat icon class="actionBtn" title="Drop mail"
-                      @click.native="triggerDropMail()">
+                    <v-btn flat icon class="actionBtn" title="Drop mail" 
+                      @click.native="confirm('dropping mail', 'dropping mail', 'mailbox.drop', 'Mail dropped')">
                       <v-icon>markunread_mailbox</v-icon>
                     </v-btn>
-                    <v-btn flat icon class="actionBtn" title="Solve Chess Head"
-                      @click.native="triggerChessSolveHead()">
+                    <v-btn flat icon class="actionBtn" title="Solve bust" 
+                      @click.native="confirm('solving the bust', 'solving the bust', 'chess.solveHead', 'Bust solved')">
                       <v-icon>psychology</v-icon>
                     </v-btn>
-                    <v-btn flat icon class="actionBtn" title="Solve Chess Board"
-                      @click.native="triggerChessSolveBoard()">
+                    <v-btn flat icon class="actionBtn" title="Solve board" 
+                      @click.native="confirm('solving the board', 'solving the board', 'chess.solveBoard', 'Board solved')">
                       <v-icon>grid_on</v-icon>
                     </v-btn>
                   </div>
@@ -125,7 +125,7 @@
   <v-dialog v-model="dialog" max-width="410">
     <v-card>
       <v-card-title class="headline">Really trigger {{dialogTitle}}?</v-card-title>
-      <v-card-text>Are you sure you want to trigger {{dialogText}} the device?</v-card-text>
+      <v-card-text>Are you sure you want to trigger {{dialogText}}?</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" flat="flat" @click.native="dialog = false;">No</v-btn>
@@ -272,30 +272,6 @@ export default {
             this.snack('Devices reset successfully.')
           }
         }
-      });
-    },
-
-    triggerDropMail() {
-      this.operations.add({ command: 'mailbox.drop' }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Dropped mail successfully.')
-          }
-      });
-    },
-
-    triggerSolveHead() {
-      this.operations.add({ command: 'chess.solveHead' }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Chess solve head triggered successfully.')
-          }
-      });
-    },
-
-    triggerSolveBoard() {
-      this.operations.add({ command: 'chess.solveBoard' }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Chess solve board triggered successfully.')
-          }
       });
     },
 
