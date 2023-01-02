@@ -26,10 +26,6 @@
                       @click.native="triggerDropMail()">
                       <v-icon>markunread_mailbox</v-icon>
                     </v-btn>
-                    <v-btn flat icon class="actionBtn" title="Reset Mailbox"
-                      @click.native="triggerMailboxReset()">
-                      <v-icon>restart_alt</v-icon>
-                    </v-btn>
                     <v-btn flat icon class="actionBtn" title="Solve Chess Head"
                       @click.native="triggerChessSolveHead()">
                       <v-icon>psychology</v-icon>
@@ -37,10 +33,6 @@
                     <v-btn flat icon class="actionBtn" title="Solve Chess Board"
                       @click.native="triggerChessSolveBoard()">
                       <v-icon>grid_on</v-icon>
-                    </v-btn>
-                    <v-btn flat icon class="actionBtn" title="Reset Chess"
-                      @click.native="triggerChessReset()">
-                      <v-icon>restart_alt </v-icon>
                     </v-btn>
                   </div>
                 </div>
@@ -153,6 +145,10 @@ export default {
       dialogTriggerToast: "toast response",
       resetChessDiag: false,
 
+      // reset states
+      deviceChessReset: false,
+      deviceMailboxReset: false,
+
       // device status states
       bust: false,
       bust_solved: false,
@@ -213,10 +209,25 @@ export default {
     triggerReset() {
       this.resetChessDiag = false;
 
+      // track reset of both devices to confirm they did
+      this.deviceChessReset = this.deviceMailboxReset = false;
+
       this.operations.add({ command: 'chess.reset' }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Chess reset triggered successfully.')
+        if (snapshot.val().received) {
+          this.deviceChessReset = true;
+          if (this.deviceMailboxReset) {
+            this.snack('Devices reset successfully.')
           }
+        }
+      });
+
+      this.operations.add({ command: 'mailbox.reset' }).on("value", (snapshot) => {
+        if (snapshot.val().received) {
+          this.deviceMailboxReset = true;
+          if (this.deviceChessReset) {
+            this.snack('Devices reset successfully.')
+          }
+        }
       });
     },
 
@@ -224,14 +235,6 @@ export default {
       this.operations.add({ command: 'mailbox.drop' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Dropped mail successfully.')
-          }
-      });
-    },
-
-    triggerMailboxReset() {
-      this.operations.add({ command: 'mailbox.reboot' }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Mailbox reset triggered successfully.')
           }
       });
     },
