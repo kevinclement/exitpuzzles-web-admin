@@ -84,14 +84,16 @@
 
                 <v-divider/>
 
-                <!-- Solved -->
                 <v-list-tile>
-                  <v-list-tile-content>Solved:</v-list-tile-content>
-                  <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
-                    <!-- <v-icon title="Left Door Open"         class="solvedIcon">{{solved.example  ? 'inventory_2': ''}}</v-icon>
-                    <v-icon title="Toggles Solved"         class="solvedIcon">{{solved.toggles  ? 'toggle_on': ''}}</v-icon>
-                    <v-icon title="Wires Solved"           class="solvedIcon">{{solved.wires    ? 'vpn_key': ''}}</v-icon>
-                    <v-icon title="Password Solved"        class="solvedIcon">{{solved.all      ? 'apps': ''}}</v-icon> -->
+                  <v-list-tile-content>Vacuum:</v-list-tile-content>
+                  <v-list-tile-content class="align-end">
+                    <v-icon :style="[!mailbox.vacuum ? {'color': '#F5F5F5'} : '']">outlet</v-icon>          
+                  </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile>
+                  <v-list-tile-content>Mailbox:</v-list-tile-content>
+                  <v-list-tile-content class="align-end">
+                    {{ mailbox.state }}
                   </v-list-tile-content>
                 </v-list-tile>
 
@@ -136,6 +138,7 @@ export default {
   data () {
     return {
       chessRef: null,
+      mailboxRef: null,
 
       // dialogs
       dialog: false,
@@ -150,12 +153,18 @@ export default {
       deviceMailboxReset: false,
 
       // device status states
-      bust: false,
-      bust_solved: false,
-      piece_1: false,
-      piece_2: false,
-      rfid_solved: false,
-      solved: false,
+      chess: {
+        bust: false,
+        bust_solved: false,
+        piece_1: false,
+        piece_2: false,
+        rfid_solved: false,
+        solved: false,
+      },
+      mailbox: {
+        vacuum: false,
+        state: "UNKNOWN",
+      },
 
       isConnected: true,
     }
@@ -170,18 +179,28 @@ export default {
   mounted() {
     this.operations = this.$root.$data.operations
     this.chessRef = this.$root.$data.fbdb.ref('landlord/devices/chess')
+    this.mailboxRef = this.$root.$data.fbdb.ref('landlord/devices/mailbox')
 
     this.chessRef.on('value', (snapshot) => {
       let chess = snapshot.val()
       if (chess == null) return
 
-      this.bust = chess.bust;
-      this.bust_solved = chess.bust_solved;
-      this.piece_1 = chess.piece_1;
-      this.piece_2 = chess.piece_2;
-      this.rfid_solved = chess.rfid_solved;
-      this.solved = chess.solved;
+      this.chess.bust = chess.bust;
+      this.chess.bust_solved = chess.bust_solved;
+      this.chess.piece_1 = chess.piece_1;
+      this.chess.piece_2 = chess.piece_2;
+      this.chess.rfid_solved = chess.rfid_solved;
+      this.chess.solved = chess.solved;
     });
+
+    this.mailboxRef.on('value', (snapshot) => {
+      let mailbox = snapshot.val()
+      if (mailbox == null) return
+
+      this.mailbox.vacuum = mailbox.vacuum;
+      this.mailbox.state = mailbox.state;
+    });
+
   },
 
   methods: {
