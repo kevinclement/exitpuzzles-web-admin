@@ -6,7 +6,7 @@
     <v-card>
       <v-toolbar card>
         <v-toolbar-title>
-          TNT
+          🧨 TNT
           <v-icon v-if="!isConnected" style="margin-bottom:4px;margin-left:7px;color:red" title="Device disconnected">report_problem</v-icon>
         </v-toolbar-title>
         <span class="spacer" />
@@ -62,27 +62,6 @@
                       @click.native="triggerBlink(true)">
                       <v-icon>campaign</v-icon>
                     </v-btn>
-                    <v-btn flat icon class="actionBtn" title="Drop mail"
-                      @click.native="triggerDropMail()">
-                      <v-icon>markunread_mailbox</v-icon>
-                    </v-btn>
-                    <v-btn flat icon class="actionBtn" title="Reset Mailbox"
-                      @click.native="triggerMailboxReset()">
-                      <v-icon>restart_alt</v-icon>
-                    </v-btn>
-                    <v-btn flat icon class="actionBtn" title="Solve Chess Head"
-                      @click.native="triggerChessSolveHead()">
-                      <v-icon>psychology</v-icon>
-                    </v-btn>
-                    <v-btn flat icon class="actionBtn" title="Solve Chess Board"
-                      @click.native="triggerChessSolveBoard()">
-                      <v-icon>grid_on</v-icon>
-                    </v-btn>
-                    <v-btn flat icon class="actionBtn" title="Reset Chess"
-                      @click.native="triggerChessReset()">
-                      <v-icon>restart_alt </v-icon>
-                    </v-btn>
-                    
                   </div>
                 </div>
             </v-flex>
@@ -847,46 +826,6 @@ export default {
       this.operations.add({ command: cmd }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack(`Door Ajar sensor ${disabling ? 'disabled' : 'enabled'} successfully.`)
-          }
-      });
-    },
-
-    triggerDropMail() {
-      this.operations.add({ command: 'mailbox.drop' }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Dropped mail successfully.')
-          }
-      });
-    },
-
-    triggerMailboxReset() {
-      this.operations.add({ command: 'mailbox.reboot' }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Mailbox reset triggered successfully.')
-          }
-      });
-    },
-
-    triggerChessReset() {
-      this.operations.add({ command: 'chess.reset' }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Chess reset triggered successfully.')
-          }
-      });
-    },
-
-    triggerChessSolveHead() {
-      this.operations.add({ command: 'chess.solveHead' }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Chess solve head triggered successfully.')
-          }
-      });
-    },
-
-    triggerChessSolveBoard() {
-      this.operations.add({ command: 'chess.solveBoard' }).on("value", (snapshot) => {
-          if (snapshot.val().received) {
-            this.snack('Chess solve board triggered successfully.')
           }
       });
     },
