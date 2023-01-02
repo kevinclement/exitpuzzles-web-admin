@@ -331,13 +331,6 @@ export default {
   margin-top: 30px;
 }
 
-/* disable gui stepper in input box */
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
-}
-
 table {
   margin: 0 auto;
 }
@@ -365,12 +358,6 @@ td > input {
   color: grey !important;
   font-size: 10px;
 }
-.strikeIt {
-  text-decoration: line-through;
-}
-.ip {
-  color:#EF5350
-}
 
 @media (min-width: 500px) {
   #chessSection {
@@ -385,13 +372,6 @@ td > input {
   color: rgba(0,0,0,.7) !important;
 }
 
-.passing {
-  color: #4CAF50;
-}
-.failing {
-  color: #F44336;
-}
-
 .lightDot {
   border-radius: 50%;
   height: 16px;
@@ -403,8 +383,5 @@ td > input {
 }
 .solvedIcon {
   padding-left: 2px;
-}
-.solenoidEngaged {
-  color: #E53935 !important;
 }
 </style>
