@@ -73,14 +73,16 @@
                 </v-list-tile>
                 <v-list-tile>
                   <v-list-tile-content>Pieces:</v-list-tile-content>
-                  <v-list-tile-content class="align-end">
-                    <!-- <v-icon :style="{ color: '#FFC107' }">{{light ? 'lightbulb_outline' : ''}}</v-icon> -->
+                  <v-list-tile-content class="align-end" style="font-size:32px;">
+                    {{ chess.piece_1 ? '♔' : '' }}
+                    {{ chess.piece_2 ? '♛' : '' }} 
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
                   <v-list-tile-content>Solved:</v-list-tile-content>
-                  <v-list-tile-content class="align-end">
-                    <!-- <v-icon :style="{ color: '#FFC107' }">{{light ? 'lightbulb_outline' : ''}}</v-icon> -->
+                  <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
+                    <v-icon title="Bust Solved"  class="solvedIcon">{{chess.bust_solved  ? 'psychology': ''}}</v-icon>
+                    <v-icon title="Chess Pieces Solved"  class="solvedIcon">{{chess.rfid_solved  ? 'grid_on': ''}}</v-icon>
                   </v-list-tile-content>
                 </v-list-tile>
 
