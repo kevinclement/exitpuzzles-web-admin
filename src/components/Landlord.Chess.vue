@@ -7,10 +7,10 @@
       <v-toolbar card>
         <v-toolbar-title>
           ♟️ Chess | Mailbox
-          <v-icon v-if="!isConnected" style="margin-bottom:4px;margin-left:7px;color:red" title="Device disconnected">report_problem</v-icon>
+          <v-icon v-if="!piStatusConnected" style="margin-bottom:4px;margin-left:7px;color:red" :title="piStatusString">report_problem</v-icon>
         </v-toolbar-title>
         <span class="spacer" />
-        <v-btn flat small color="red lighten-3" @click.native="resetChessDiag = true">Reset</v-btn>
+        <v-btn :disabled="!piStatusConnected" flat small color="red lighten-3" @click.native="resetChessDiag = true">Reset</v-btn>
       </v-toolbar>
 
       <v-card-text class="grey lighten-3">
@@ -23,14 +23,17 @@
                   <span>Actions</span>
                   <div>
                     <v-btn flat icon class="actionBtn" title="Drop mail" 
+                      :disabled="!piStatusConnected"
                       @click.native="confirm('dropping mail', 'dropping mail', 'mailbox.drop', 'Mail dropped')">
                       <v-icon>markunread_mailbox</v-icon>
                     </v-btn>
                     <v-btn flat icon class="actionBtn" title="Solve bust" 
+                      :disabled="!piStatusConnected"
                       @click.native="confirm('solving the bust', 'solving the bust', 'chess.solveHead', 'Bust solved')">
                       <v-icon>psychology</v-icon>
                     </v-btn>
                     <v-btn flat icon class="actionBtn" title="Solve board" 
+                      :disabled="!piStatusConnected"
                       @click.native="confirm('solving the board', 'solving the board', 'chess.solveBoard', 'Board solved')">
                       <v-icon>grid_on</v-icon>
                     </v-btn>
@@ -47,7 +50,7 @@
                     primary
                     :label="`${boolToOnOff(chess.lights)}`"
                     v-model="chess.lights"
-                    :disabled="!chess.lights"
+                    :disabled="!piStatusConnected || !chess.lights"
                     @click.native="toggleLightsClicked"
                     :hide-details="true"
                   ></v-switch>
@@ -60,7 +63,7 @@
                     primary
                     :label="`${boolToString(!chess.piecesDisabled)}`"
                     v-model="!chess.piecesDisabled"
-                    :disabled="!isConnected"
+                    :disabled="!piStatusConnected"
                     :hide-details="true"
                     @click.native="togglePiecesClicked"
                   ></v-switch>
@@ -170,6 +173,9 @@ export default {
       deviceChessReset: false,
       deviceMailboxReset: false,
 
+      // pi connected status
+      piStatus: [],
+
       // device status states
       chess: {
         bust: false,
@@ -186,11 +192,33 @@ export default {
         state: "UNKNOWN",
       },
 
-      isConnected: true,
     }
   },
 
   computed: {
+    piStatusString: function() {
+      let status = ""
+
+      for (const [name, device] of Object.entries(this.piStatus)) {
+        let dev = this.piStatus[name]
+        if (!dev.connected) {
+          status += `Device '${dev.name}' is offline.  Last ping at ${dev.ping}\n`
+        }
+      }
+
+      return status
+    },
+
+    piStatusConnected: function() {
+      let conn = true;
+      for (const [name, device] of Object.entries(this.piStatus)) {
+        if (!this.piStatus[name].connected) {
+          conn = false;
+        }
+      }
+
+      return conn;
+    },
   },
 
   watch: {
@@ -223,6 +251,35 @@ export default {
       this.mailbox.state = mailbox.state;
     });
 
+    // TODO: probably should have a setTimeout here for handling case where device
+    // goes offline and page is already loaded.  
+    this.$root.$data.fbdb.ref('landlord/status').on('value', (snapshot) => {
+      let status = snapshot.val()
+      if (status == null) return
+
+      let ds = {}
+      for (const [name, device] of Object.entries(status)) {
+        let connected = true
+        let dev = status[name]
+
+        // only check objects, those are devices that are smart with children status objects
+        if (typeof(dev) === "object") {
+          let delta = (new Date()).getTime() - (new Date(dev.ping)).getTime()
+
+          if (delta > (DEVICE_TIMEOUT_SECONDS * 1000)) {
+            connected = false
+          }
+
+          ds[name] = {
+            "name": name,
+            "ping": dev.ping,
+            "connected": connected
+          }
+        }
+      }
+
+      this.piStatus = ds
+    });
   },
 
   methods: {
