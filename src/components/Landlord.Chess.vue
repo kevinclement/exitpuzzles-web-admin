@@ -90,9 +90,9 @@
                 </v-list-tile>
                 <v-list-tile>
                   <v-list-tile-content>Pieces:</v-list-tile-content>
-                  <v-list-tile-content class="align-end" style="font-size:32px;">
-                    {{ chess.piece_1 ? '♔' : '' }}
-                    {{ chess.piece_2 ? '♛' : '' }} 
+                  <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
+                    <span class="chessPiece" v-if="chess.piece_1" title="Black Queen (F2)">♛</span>
+                    <span class="chessPiece" v-if="chess.piece_2" title="White King (C7)">♔</span>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
@@ -154,6 +154,8 @@
 </template>
 
 <script>
+const DEVICE_TIMEOUT_SECONDS = 95
+
 export default {
   props: ['snack'],
   data () {
@@ -427,6 +429,11 @@ td > input {
   padding:0px;
   margin-right: 4px !important;
   color: rgba(0,0,0,.7) !important;
+}
+
+.chessPiece {
+  font-size:32px;
+  padding-left:5px;
 }
 
 .lightDot {
