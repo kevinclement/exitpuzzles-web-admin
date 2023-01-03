@@ -91,8 +91,8 @@
                 <v-list-tile>
                   <v-list-tile-content>Pieces:</v-list-tile-content>
                   <v-list-tile-content class="align-end" style="flex-direction: row; align-items: center;justify-content: flex-end;">
-                    <span class="chessPiece" v-if="chess.piece_1" title="Black Queen (F2)">♛</span>
-                    <span class="chessPiece" v-if="chess.piece_2" title="White King (C7)">♔</span>
+                    <span class="chessPiece" v-if="chess.piece_1" title="Black Queen (C7)">♛</span>
+                    <span class="chessPiece" v-if="chess.piece_2" title="White King (F2)">♔</span>
                   </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile>
