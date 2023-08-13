@@ -94,7 +94,7 @@
                 </div>
               </v-flex>
             </div>
-            <div style="display:flex;margin-top:0px;margin-bottom:15px">
+            <div style="display:flex;margin-top:0px;">
               <v-flex xs6>
                 <div style="display:block">
                   <span>Win Button</span>
@@ -118,6 +118,21 @@
                     :disabled="!isConnected"
                     :hide-details="true"
                     @click.native="triggerDoorAjar"
+                  ></v-switch>
+                </div>
+              </v-flex>
+            </div>
+            <div style="display:flex;margin-top:0px;margin-bottom:15px">
+              <v-flex xs6>
+                <div style="display:block">
+                  <span>Exit Code</span>
+                  <v-switch 
+                    primary
+                    :label="`${boolToString(exitCodeEnabled)}`"
+                    v-model="exitCodeEnabled"
+                    :disabled="!isConnected"
+                    :hide-details="true"
+                    @click.native="triggerExitCode"
                   ></v-switch>
                 </div>
               </v-flex>
@@ -366,6 +381,7 @@ export default {
       timeLeftInSeconds: 0,
       isConnected: true,
       doorAjarEnabled: false,
+      exitCodeEnabled: true,
 
       deviceTntReset:false,
       deviceCompassReset: false,
@@ -512,6 +528,7 @@ export default {
       this.toggleErrors    = !tnt.toggles.override
       this.winButton       = !tnt.overrideWinButton
       this.doorAjarEnabled = !tnt.overrideDoorAjar
+      this.exitCodeEnabled = tnt.exitCode
 
       this.solved.example  = tnt.exampleDoor
       this.solved.wires    = tnt.key
@@ -826,6 +843,15 @@ export default {
       this.operations.add({ command: cmd }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack(`Door Ajar sensor ${disabling ? 'disabled' : 'enabled'} successfully.`)
+          }
+      });
+    },
+    triggerExitCode() {
+      let disabling = !this.exitCodeEnabled
+      let cmd = disabling ? 'tnt.disableExitCode' : 'tnt.enableExitCode'
+      this.operations.add({ command: cmd }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack(`Exit Code ${disabling ? 'disabled' : 'enabled'} successfully.`)
           }
       });
     },
