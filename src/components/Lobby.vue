@@ -23,9 +23,7 @@
     </v-navigation-drawer>
 
     <!-- controls -->
-    <v-subheader class="roomHeader" style="padding-right:0px;">
-      Lobby:
-    </v-subheader>
+    
     <lobby-raven
       :snack="showSnack" 
       :operations="operations"/>
