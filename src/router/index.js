@@ -20,9 +20,9 @@ let router = new Router({
 
     { path: '/invite_token=:token',       component: Verify,     meta: { anonymous: true },    props:true                },
     { path: '/login',                     component: Login,      meta: { anonymous: true }                               },
+    { path: '/lobby',                     component: Lobby,      meta: { title: 'Lobby',       icon: 'chair' } },
     { path: '/landlord',                  component: Landlord,   meta: { title: 'Landlord',    icon: 'business' }        },
     { path: '/museum',                    component: Museum,     meta: { title: 'Museum',      icon: 'account_balance' } },
-    { path: '/lobby',                     component: Lobby,      meta: { title: 'Lobby',       icon: 'account_balance' } },
     { path: '/logs',                      component: Logs,       meta: { title: 'Logs',        icon: 'dvr' }             },
     { path: '/stats',                     component: Stats,      meta: { title: 'Stats',       icon: 'poll' }            },
     { path: '/',                          component: Landlord,                                                           }
