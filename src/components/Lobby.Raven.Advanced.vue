@@ -9,14 +9,13 @@
 
   <div class="advForm">
 
-    <!-- <v-text-field type="number" v-model="form.time_out" label="Timeout" :disabled="loading"/>
-    <v-text-field type="number" v-model="form.total_questions" label="Total" :disabled="loading" /> -->
+    <v-text-field type="number" v-model="form.wait_time" label="Wait Time (min)" :disabled="loading"/>
 
   </div>
-  <!-- <div style="margin:5px 10px 0px 10px">
+  <div style="margin:5px 10px 0px 10px">
     <v-btn small @click.native="save" :disabled="saveDisabled">save</v-btn>
     <v-btn small @click.native="reset"> reset</v-btn>
-  </div> -->
+  </div>
 
 </div>
 </template>
@@ -28,12 +27,10 @@
     data: () => ({
       loading: true,
 
-      timeout:0,
-      total:0,
+      waitTime:0,
 
       form:  {
-        time_out: 0,
-        total_questions: 0
+        wait_time: 0
       },
     }),
     computed: {
@@ -42,7 +39,7 @@
         return !(!this.loading && this.dirty) 
       },
       dirty: function() {
-        return this.form.time_out != this.timeout || this.form.total_questions != this.total
+        return this.form.wait_time != this.waitTime
       },
     },
     created () {
@@ -50,30 +47,26 @@
         let raven = snapshot.val()
         if (raven == null) return
 
-        // this.timeout = quiz.timeout
-        // this.total = quiz.total
+        this.waitTime = raven.animationWaitTimeMin
 
-        // this.reset();
+        this.reset();
 
         this.loading = false;
       })
     },
     methods: {
       save() {
-        // this.timeout = this.form.time_out
-        // this.total = this.form.total_questions
+        this.waitTime = this.form.wait_time
 
-        // // save the new config and force a quiz restart
-        // this.$root.$data.museumRoot.child('devices/quiz').update({
-        //   timeout: this.timeout,
-        //   total: this.total
-        // })
+        // save the new config 
+        this.$root.$data.lobbyRoot.child('devices/raven').update({
+          animationWaitTimeMin: parseInt(this.waitTime)
+        })
 
         this.$root.$emit('close-details')
       },
       reset() {
-        this.form.time_out = this.timeout
-        this.form.total_questions = this.total
+        this.form.wait_time = this.waitTime
       },
     }
   }
