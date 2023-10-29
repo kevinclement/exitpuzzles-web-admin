@@ -10,6 +10,18 @@
         <span v-html="deviceStatusString"/>
     </v-alert>
 
+    <!-- advanced panels -->
+    <v-navigation-drawer fixed app clipped right dense
+      v-model="showDetails"
+      class="rightDrawer"
+      :hide-overlay="true"
+      :stateless="true"
+    >
+      <lobby-raven-advanced 
+        v-if="advanced.raven == true"
+        :operations="operations"/>
+    </v-navigation-drawer>
+
     <!-- controls -->
     <v-subheader class="roomHeader" style="padding-right:0px;">
       Lobby:
@@ -30,6 +42,7 @@
 <script>
 
 import Raven from '@/components/Lobby.Raven'
+import RavenAdvanced from '@/components/Lobby.Raven.Advanced'
 
 const DEVICE_TIMEOUT_SECONDS = 95
 
@@ -41,7 +54,11 @@ export default {
       snackTimeout: 4000,
       snackText: '',
       status: [],
-      operations: {}
+      operations: {},
+      advanced: {
+        lobby: false,
+      },
+      showDetails: false,
     }
   },
   computed: {
@@ -60,6 +77,11 @@ export default {
   },
   created () {
     this.operations =  this.$root.$data.lobbyOps
+    
+    // event handlers for children
+    this.$root.$on('show-details', this.showAdvanced)
+    this.$root.$on('close-details', this.hideAdvanced)
+
 
     this.$root.$data.lobbyRoot.child('status').on('value', (snapshot) => {
         let status = snapshot.val()
@@ -87,6 +109,23 @@ export default {
   },
 
   methods: {
+    showAdvanced(panel) {
+      let show = !this.advanced[panel]
+
+      // make sure others are closed first, this also acts as a toggle
+      this.hideAdvanced();
+
+      if (show) {
+        this.advanced[panel] = true;
+        this.showDetails = true;
+      }
+    },
+    hideAdvanced() {
+      for (const panel of Object.keys(this.advanced)) {
+        this.advanced[panel] = false
+      }
+      this.showDetails = false;
+    },
     showSnack(msg) {
       this.snackText = msg 
       this.snackbar = true
@@ -95,11 +134,15 @@ export default {
 
   components: {
      'lobby-raven': Raven,
+     'lobby-raven-advanced': RavenAdvanced,
   }
 }
 </script>
 
 <style scoped>
+  .rightDrawer {
+    z-index:1;
+  }
   .roomHeader {
     font-size:18px;
     padding-left:0px;
@@ -112,5 +155,9 @@ export default {
 
 <!-- GLOBAL CSS -->
 <style>
-  
+  .toolbar .toolbar__content>:not(.btn):not(.menu):first-child:not(:only-child),
+  .toolbar .toolbar__extension>:not(.btn):not(.menu):first-child:not(:only-child) {
+    margin-left: 10px !important;
+  }
+
 </style>

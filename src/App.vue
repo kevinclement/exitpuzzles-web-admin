@@ -141,3 +141,35 @@ export default {
   padding-left:5px;
 }
 </style>
+
+<!-- GLOBAL CSS -->
+<style>
+  .secTitle {
+    cursor:pointer;
+    user-select: none;
+  }
+  .actionRow {
+    padding-left:10px;
+    padding-right: 10px;
+    padding-top:0px;
+    padding-bottom:10px;
+  }
+  .actionRow button {
+    margin-top:0px;
+    margin-bottom:0px;
+  }
+  .cardIcon {
+   margin-bottom:3px;
+    margin-left:7px;
+    padding-right:10px;
+  }
+  .notConnected {
+    color:red !important;
+    padding-right: 0px;
+  }
+  .actionButton {
+    margin-left:0px !important;
+    margin-right: 4px !important;
+    color: rgb(158,158,158) !important;
+  }
+</style>
