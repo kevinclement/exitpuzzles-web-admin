@@ -28,6 +28,8 @@ let operations = new Operations(db, 'landlord/operations')
 let museumRuns = new Runs(db, 'museum/runs')
 let museumOps = new Operations(db, 'museum/operations')
 let museumRoot = db.ref('museum')
+let lobbyOps = new Operations(db, 'lobby/operations')
+let lobbyRoot = db.ref('lobby')
 
 Vue.use(Vuetify)
 
@@ -47,6 +49,8 @@ new Vue({
     museumOps: museumOps,
     museumRoot: museumRoot,
     museumRuns: museumRuns,
+    lobbyOps: lobbyOps,
+    lobbyRoot: lobbyRoot,
     auth: auth,
     loggedInCallback: null
   }

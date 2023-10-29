@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Landlord from '@/components/Landlord'
 import Museum from '@/components/Museum'
+import Lobby from '@/components/Lobby'
 import Stats from '@/components/Stats'
 import Logs from '@/components/Logs'
 import Verify from '@/components/Verify'
@@ -21,6 +22,7 @@ let router = new Router({
     { path: '/login',                     component: Login,      meta: { anonymous: true }                               },
     { path: '/landlord',                  component: Landlord,   meta: { title: 'Landlord',    icon: 'business' }        },
     { path: '/museum',                    component: Museum,     meta: { title: 'Museum',      icon: 'account_balance' } },
+    { path: '/lobby',                     component: Lobby,      meta: { title: 'Lobby',       icon: 'account_balance' } },
     { path: '/logs',                      component: Logs,       meta: { title: 'Logs',        icon: 'dvr' }             },
     { path: '/stats',                     component: Stats,      meta: { title: 'Stats',       icon: 'poll' }            },
     { path: '/',                          component: Landlord,                                                           }
