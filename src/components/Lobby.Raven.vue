@@ -53,13 +53,12 @@
       triggerTripleCaw() {
       },
       updateAnimationEnabled() {
-        // var cmd = this.enabled ? 'enable' : 'disable'
-        // this.operations.add({ command: 'laser.' + cmd }).on("value", (snapshot) => {
-        //   if (snapshot.val().received) {
-        //     this.snack('Laser ' + cmd + 'd successfully.')
-        //   }
-        // });
-
+        var cmd = this.animationEnabled ? 'enable' : 'disable'
+        this.operations.add({ command: 'raven.' + cmd }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Raven ' + cmd + 'd successfully.')
+          }
+        });
       },
     }
   }
