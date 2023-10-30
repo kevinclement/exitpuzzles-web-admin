@@ -51,14 +51,14 @@
       triggerAnimation() {
         this.operations.add({ command: 'raven.animate' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
-            this.snack('Raven animated ' + cmd + ' successfully.')
+            this.snack('Raven animated successfully.')
           }
         });
       },
       triggerTripleCaw() {
         this.operations.add({ command: 'raven.caw' }).on("value", (snapshot) => {
           if (snapshot.val().received) {
-            this.snack('Raven cawed ' + cmd + ' successfully.')
+            this.snack('Raven cawed successfully.')
           }
         });
       },
