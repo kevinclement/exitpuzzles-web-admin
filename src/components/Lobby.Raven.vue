@@ -13,7 +13,7 @@
         </v-toolbar-title>
         
         <v-btn icon class="actionButton" @click.native="triggerAnimation" title="run animation"><v-icon>play_circle</v-icon></v-btn>
-        <v-btn icon class="actionButton" @click.native="triggerAnimation" title="trigger 3 caws"><v-icon>record_voice_over</v-icon></v-btn>
+        <v-btn icon class="actionButton" @click.native="triggerTripleCaw" title="trigger 3 caws"><v-icon>record_voice_over</v-icon></v-btn>
 
         <div style="display:block;padding-left:10px;">
           <v-switch
