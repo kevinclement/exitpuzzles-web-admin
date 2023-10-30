@@ -49,8 +49,18 @@
     },
     methods: {
       triggerAnimation() {
+        this.operations.add({ command: 'raven.animate' }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Raven animated ' + cmd + ' successfully.')
+          }
+        });
       },
       triggerTripleCaw() {
+        this.operations.add({ command: 'raven.caw' }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Raven cawed ' + cmd + ' successfully.')
+          }
+        });
       },
       updateAnimationEnabled() {
         var cmd = this.animationEnabled ? 'enable' : 'disable'
