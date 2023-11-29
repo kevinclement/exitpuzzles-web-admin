@@ -22,7 +22,19 @@
           primary
           v-model="animationEnabled"
           :hide-details="true"
+          v-bind:title="animationTitle"
           @change="updateAnimationEnabled" />
+        </div>
+        <div style="display:block;padding-left:10px;">
+          <v-switch
+          style="width:100px;"
+          v-if="isConnected" 
+          primary
+          v-model="buttonEnabled"
+          :hide-details="true"
+          v-bind:title="buttonTitle"
+          @change="updateButtonEnabled">
+          </v-switch>
         </div>
 
       </v-toolbar>
@@ -38,6 +50,7 @@
     data: () => ({
       isConnected: true,
       animationEnabled: false,
+      buttonEnabled:false,
     }),
     created () {
       this.$root.$data.lobbyRoot.child('devices/raven').on('value', (snapshot) => {
@@ -45,7 +58,16 @@
         if (raven == null) return
 
         this.animationEnabled = raven.animationEnabled
+        this.buttonEnabled = raven.buttonEnabled
       })
+    },
+    computed: {
+      animationTitle: function() {
+        return this.animationEnabled ? "animation enabled" : "animation disabled"
+      },
+      buttonTitle: function() {
+        return this.buttonEnabled ? "button enabled" : "button disabled"
+      },
     },
     methods: {
       triggerAnimation() {
@@ -67,6 +89,14 @@
         this.operations.add({ command: 'raven.' + cmd }).on("value", (snapshot) => {
           if (snapshot.val().received) {
             this.snack('Raven ' + cmd + 'd successfully.')
+          }
+        });
+      },
+      updateButtonEnabled() {
+        var cmd = this.buttonEnabled ? 'enable' : 'disable'
+        this.operations.add({ command: 'raven.' + cmd + 'Button' }).on("value", (snapshot) => {
+          if (snapshot.val().received) {
+            this.snack('Raven button ' + cmd + 'd successfully.')
           }
         });
       },
