@@ -22,6 +22,28 @@
     <v-btn small @click.native="reset"> reset</v-btn>
   </div>
 
+  <div class="row" style="padding-top:15px;">
+    CURRENT: {{ this.questionIndex + 1 }} / {{ this.total }} 
+  </div>
+  
+  <div class="row" style="padding-top:15px;">
+    <table border=0>    
+      <thead>CORRECT {{ this.correctQuestions.length  }} / {{ this.total }}</thead>
+      <tr class="correctRow" v-for="(q, index) in this.correctQuestions" :key="index" >
+        <td>{{ q.question }} </td>
+      </tr>
+    </table>
+  </div>
+  <div class="row" style="padding-top:15px;">
+    <table>
+      <thead>MISSED {{ this.missedQuestions.length  }} / {{ this.total }}</thead>
+      <tr class="missedRow" v-for="(q, index) in this.missedQuestions" :key="index" >
+        <td>{{ q.question }} </td>
+      </tr>
+    </table>
+  </div>
+
+
   <v-dialog v-model="dialogReset" max-width="410">
     <v-card>
       <v-card-title class="headline">Really reset the quiz?</v-card-title>
@@ -43,6 +65,8 @@
     data: () => ({
       loading: true,
       dialogReset: false,
+      correctQuestions: [],
+      missedQuestions: [],
 
       timeout:0,
       total:0,
@@ -62,12 +86,19 @@
       },
     },
     created () {
-      this.$root.$data.museumRoot.child('devices/quiz').once('value', (snapshot) => {
+      this.$root.$data.museumRoot.child('devices/quiz').on('value', (snapshot) => {
         let quiz = snapshot.val()
         if (quiz == null) return
 
         this.timeout = quiz.timeout
         this.total = quiz.total
+        if (quiz.correctQuestions == null) quiz.correctQuestions = [] 
+        if (quiz.missedQuestions == null) quiz.missedQuestions = []
+
+        this.correctQuestions = quiz.correctQuestions.concat()
+        this.missedQuestions = quiz.missedQuestions.concat()
+        
+        this.questionIndex = quiz.questionIndex
 
         this.reset();
 
@@ -106,8 +137,23 @@
 <style scoped>
   .advForm {
     padding-left:15px;
-    padding-right: 15px;
+    padding-right:15px;
   }
+  .row {
+    padding-left:15px;
+    padding-right: 15px;
+    font-family: Monaco, monospace;
+    font-size:10px;
+  }
+  .correctRow {
+    color:green;
+    font-size: 9px;
+  }
+  .missedRow {
+    color:darkred;
+    font-size: 9px;
+  }
+  
 </style>
 <style>
   input[type=number]::-webkit-inner-spin-button {
